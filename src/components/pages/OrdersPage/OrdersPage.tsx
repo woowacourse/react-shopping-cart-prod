@@ -1,15 +1,18 @@
-import { OrderBox } from '@components/OrderBox/OrderBox';
+import { useEffect } from 'react';
+import { useRecoilCallback } from 'recoil';
 
-import { useFetchOrderList } from '@recoils/ordersAtoms';
+import { OrderList } from './OrderList/OrderList';
+
+import { orderListSelector } from '@recoils/ordersAtoms';
 
 export const OrdersPage = () => {
-  const orderList = useFetchOrderList();
+  const refreshOrderList = useRecoilCallback(({ refresh }) => () => {
+    refresh(orderListSelector);
+  });
 
-  return (
-    <ul>
-      {orderList.map((order: any) => (
-        <OrderBox key={order.orderId} orderInfo={order} />
-      ))}
-    </ul>
-  );
+  useEffect(() => {
+    refreshOrderList();
+  }, [refreshOrderList]);
+
+  return <OrderList />;
 };

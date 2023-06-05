@@ -13,10 +13,12 @@ export const OrderItem = ({ detailData }: OrderItemProps) => {
 
   return (
     <styled.OrderItem>
-      <styled.ProductImage />
+      <styled.ProductImage path={product.imageUrl} />
       <styled.OrderInfo>
-        <styled.ProductName>친환경 실링용기 - ECO 19153</styled.ProductName>
-        <styled.TotalPriceWithQuantity>180,600원 / 수량 : 3개</styled.TotalPriceWithQuantity>
+        <styled.ProductName>{product.name}</styled.ProductName>
+        <styled.TotalPriceWithQuantity>
+          {(product.price * quantity).toLocaleString('ko-kr')}원 / 수량 : {quantity}개
+        </styled.TotalPriceWithQuantity>
       </styled.OrderInfo>
     </styled.OrderItem>
   );
