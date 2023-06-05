@@ -4,6 +4,7 @@ import OrderSheetPayment from './OrderSheetPayment/OrderSheetPayment';
 import OrderSheetItemList from './OrderSheetProduct/OrderSheetProductList';
 import OrderSheetCouponList from './OrderSheetCoupon/OrderSheetCouponList';
 import useOrderSheet from './useOrderSheet';
+import ErrorBoundary from '../../../errorHandler/ErrorBoundary';
 
 const OrderSheet = () => {
   const {
@@ -25,7 +26,9 @@ const OrderSheet = () => {
         </div>
         <div>
           <Title>쿠폰 목록</Title>
-          <OrderSheetCouponList onChangeCoupon={handleChangeCoupon} />
+          <ErrorBoundary>
+            <OrderSheetCouponList onChangeCoupon={handleChangeCoupon} />
+          </ErrorBoundary>
         </div>
 
         <div>
