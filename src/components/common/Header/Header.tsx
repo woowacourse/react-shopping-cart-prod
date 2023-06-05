@@ -26,6 +26,7 @@ const Header = ({ children }: HeaderProps) => {
             <CartTotalQuantity>{cart.length}</CartTotalQuantity>
           )}
         </CartButton>
+        <OrderHistoryButton to="/order-history">주문내역</OrderHistoryButton>
       </RightContainer>
     </HeaderContainer>
   );
@@ -79,8 +80,11 @@ const CartButton = styled(Link)`
   column-gap: 6px;
   font-size: 22px;
   font-weight: 700;
-  cursor: pointer;
-  background-color: ${colors.pureBlack};
+`;
+
+const OrderHistoryButton = styled(Link)`
+  font-size: 22px;
+  font-weight: 700;
 `;
 
 const CartTotalQuantity = styled.span`
