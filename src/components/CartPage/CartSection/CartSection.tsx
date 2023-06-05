@@ -6,13 +6,15 @@ import AllCouponSelectContainer from '../CouponSelect/AllCouponSelectContainer';
 import * as S from './CartSection.styles';
 
 const CartSection = () => {
-  const selectedItemsAmount = useRefreshableRecoilValue(
+  const selectedItemIds = useRefreshableRecoilValue(
     selectedCartItemIdsSelector
-  ).size;
+  );
 
   return (
     <S.Root>
-      <S.SelectedCount>든든배송 상품 ({selectedItemsAmount}개)</S.SelectedCount>
+      <S.SelectedCount>
+        든든배송 상품 ({selectedItemIds.size}개)
+      </S.SelectedCount>
       <CartItemList />
       <CartItemController />
       <AllCouponSelectContainer />
