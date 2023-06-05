@@ -21,3 +21,11 @@ export const OrderListDivider = styled.div`
 
   margin: 29px 0px 29px 0px;
 `;
+
+export const GoToOrderListButton = styled.button`
+  text-align: center;
+  border: 1px gray solid;
+  border-radius: 5px;
+  padding: 5px;
+  margin-top: 20px;
+`;

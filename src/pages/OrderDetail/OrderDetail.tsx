@@ -1,5 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import {
+  GoToOrderListButton,
   OrderListDivider,
   OrderListTitle,
   OrderListWrapper,
@@ -22,12 +23,12 @@ function OrderDetail() {
   const params = useParams();
 
   const [orderedItem, setOrderedItem] = useState<OrderedGroup>({
-    createAt: '',
+    createAt: "",
     orderId: -1,
     orderItems: [],
     paymentPrice: 0,
     usedCoupons: [],
-    usedPoint: 0
+    usedPoint: 0,
   });
 
   const loadOrderedItem = async () => {
@@ -48,7 +49,9 @@ function OrderDetail() {
       <PaidBoxWrapper>
         <PaidBox paymentPrice={orderedItem.paymentPrice} />
       </PaidBoxWrapper>
-      <button onClick={() => navigate('/order')}>주문 목록으로 돌아가기</button>
+      <GoToOrderListButton onClick={() => navigate("/order")}>
+        {`<`} 주문 목록으로 돌아가기
+      </GoToOrderListButton>
     </OrderListWrapper>
   );
 }
