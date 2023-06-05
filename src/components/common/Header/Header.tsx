@@ -44,7 +44,10 @@ const Header = () => {
         <Title>SHOP</Title>
       </Logo>
       <RightContainer>
-        <Modal title="쿠폰 받기" trigger={<button>클릭</button>}>
+        <Modal
+          title="쿠폰 받기"
+          trigger={<GetCouponButton>쿠폰 받기</GetCouponButton>}
+        >
           <CouponList />
         </Modal>
         <select onChange={handleServerNameSelectChange} value={serverName}>
@@ -110,6 +113,13 @@ const Title = styled.h1`
 const RightContainer = styled.div`
   display: flex;
   gap: 25px;
+`;
+
+const GetCouponButton = styled.button`
+  border: none;
+  background: none;
+
+  color: white;
 `;
 
 const CartButton = styled.button`
