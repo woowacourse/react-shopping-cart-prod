@@ -5,3 +5,8 @@ export const PAGE_PATH = {
   ORDER: '/order',
   ORDER_DETAIL: '/order/:orderId',
 };
+
+export const LOCAL_STORAGE_KEY = {
+  CURRENT_MEMBER_ID: 'currentMemberId',
+  SERVER: 'server',
+};

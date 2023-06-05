@@ -4,6 +4,7 @@ import { Member, Point } from '../types/types';
 import { encrypt } from '../utils/authorization';
 import { fetchMemberList } from '../api/fetcher';
 import { serverState } from './serverAtom';
+import { LOCAL_STORAGE_KEY } from '../constants/path';
 
 export const memberListState = atom<Member[]>({
   key: 'memberListState',
@@ -29,7 +30,7 @@ export const memberIdState = atom<number>({
       return members[0].id;
     },
   }),
-  effects: [localStorageEffect<number>('currentMemberId')],
+  effects: [localStorageEffect<number>(LOCAL_STORAGE_KEY.CURRENT_MEMBER_ID)],
 });
 
 export const memberAuthorization = selector<string>({

@@ -23,6 +23,13 @@ export const Description = styled.p`
   color: #777;
 `;
 
+export const ButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 40px;
+`;
+
 export const HomeButton = styled.button`
   width: 200px;
   height: 40px;
@@ -30,5 +37,13 @@ export const HomeButton = styled.button`
   color: #fff;
   border-radius: 4px;
   font-weight: 500;
-  margin-top: 40px;
+`;
+
+export const ResetButton = styled.button`
+  width: 200px;
+  height: 40px;
+  background-color: ${({ theme }) => theme.color.secondary};
+  color: #fff;
+  border-radius: 4px;
+  font-weight: 500;
 `;
