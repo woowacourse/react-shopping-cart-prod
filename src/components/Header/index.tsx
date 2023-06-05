@@ -18,7 +18,7 @@ function Header() {
   const Toast = useToast();
 
   const userNameList = Object.keys(userServerUrlList);
-  const index = userNameList.findIndex(name => name === getLocalStorage('name', '로지'));
+  const index = userNameList.findIndex(name => name === getLocalStorage('name', 'MSW'));
 
   const serverSelectChange = (target: HTMLLIElement) => {
     const { textContent } = target;
