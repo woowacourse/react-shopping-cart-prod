@@ -25,6 +25,7 @@ const Wrapper = styled.section`
 `;
 
 const DescribeText = styled.p`
+  text-align: center;
   font-size: 25px;
   font-weight: 400;
 `;
