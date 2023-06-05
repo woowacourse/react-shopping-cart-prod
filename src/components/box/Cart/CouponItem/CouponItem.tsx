@@ -83,4 +83,5 @@ const CouponRadioInner = styled.div<{ isClicked: boolean; usable: boolean }>`
 const CouponInfo = styled.div`
   display: flex;
   flex-direction: column;
+  width: 223px;
 `;
