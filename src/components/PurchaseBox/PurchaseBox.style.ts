@@ -31,6 +31,14 @@ export const PurchaseText = styled.div`
   line-height: 27px;
 
   letter-spacing: 0.5px;
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    font-size: 16px;
+  }
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.xl}) {
+    font-size: 19px;
+  }
 `;
 
 export const DiscountText = styled.div`
@@ -49,6 +57,13 @@ export const RealPriceText = styled.div`
   line-height: 27px;
 
   letter-spacing: 0.5px;
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    font-size: 18px;
+  }
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.xl}) {
+    font-size: 22px;
+  }
 `;
 
 export const PurchasePropertyWrapper = styled.div`

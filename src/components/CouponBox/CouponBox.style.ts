@@ -4,8 +4,6 @@ export const CouponWrapper = styled.div`
   border-radius: 10px;
   border: cornflowerblue solid 1px;
 
-  height: 100px;
-
   margin: 10px 0px 10px 0px;
   padding: 20px;
 

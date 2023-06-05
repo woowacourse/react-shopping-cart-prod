@@ -34,13 +34,13 @@ function PurchaseBox() {
           </PurchasePropertyWrapper>
           <PurchasePropertyWrapper>
             <PurchaseText>총 배송비</PurchaseText>
-            <PurchaseText>+{DELIVERY_FEE.toLocaleString()}원</PurchaseText>
+            <PurchaseText>+{totalPrice > 0 ? DELIVERY_FEE.toLocaleString() : 0}원</PurchaseText>
           </PurchasePropertyWrapper>
           <Vacant />
           <PurchasePropertyWrapper>
             <RealPriceText>총 주문 금액</RealPriceText>
             <RealPriceText>
-              {(totalPrice + DELIVERY_FEE).toLocaleString()}원
+              {totalPrice > 0 ? (totalPrice + DELIVERY_FEE).toLocaleString() : 0}원
             </RealPriceText>
           </PurchasePropertyWrapper>
           <PurchaseButtonWrapper>

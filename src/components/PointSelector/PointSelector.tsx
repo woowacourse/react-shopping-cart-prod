@@ -44,7 +44,7 @@ function PointSelector() {
   return (
     <PointSelectorWrapper>
       <PointSelectorHeader>
-        <PointInputTitle>포인트 사용하기</PointInputTitle>
+        <PointInputTitle>포인트</PointInputTitle>
         <PointInputWrapper>
           <PointText>
             잔여 포인트: {point.totalPoint.toLocaleString()}점
