@@ -8,19 +8,22 @@ import OrderDetail from 'src/Page/OrderDetail';
 import Root from './Root';
 
 function Router() {
-  const router = createBrowserRouter([
-    {
-      path: ROUTE_PATH.DEFAULT,
-      element: <Root />,
-      errorElement: <NotFound />,
-      children: [
-        { index: true, element: <Home /> },
-        { path: ROUTE_PATH.CART, element: <Cart /> },
-        { path: ROUTE_PATH.ORDER, element: <Order /> },
-        { path: ROUTE_PATH.ORDER_DETAIL, element: <OrderDetail /> },
-      ],
-    },
-  ]);
+  const router = createBrowserRouter(
+    [
+      {
+        path: ROUTE_PATH.DEFAULT,
+        element: <Root />,
+        errorElement: <NotFound />,
+        children: [
+          { index: true, element: <Home /> },
+          { path: ROUTE_PATH.CART, element: <Cart /> },
+          { path: ROUTE_PATH.ORDER, element: <Order /> },
+          { path: ROUTE_PATH.ORDER_DETAIL, element: <OrderDetail /> },
+        ],
+      },
+    ],
+    { basename: process.env.PUBLIC_URL },
+  );
 
   return <RouterProvider router={router} />;
 }
