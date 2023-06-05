@@ -39,7 +39,9 @@ const OrderDetailPage = () => {
           <S.List>
             <Price price={totalPrice} tag="li" description="상품금액" />
             <Price price={deliveryFee} tag="li" description="배송비" />
-            {coupon ? <Price price={-coupon.priceDiscount} tag="li" description={coupon.name} /> : null}
+            {coupon && coupon.priceDiscount !== 0 ? (
+              <Price price={-coupon.priceDiscount} tag="li" description={coupon.name} />
+            ) : null}
             <Price price={totalPayments} tag="li" description="총 결제금액" />
           </S.List>
         </S.Wrapper>
