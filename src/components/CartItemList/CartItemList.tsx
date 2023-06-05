@@ -1,58 +1,20 @@
-import { useEffect, useState } from 'react';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
-import {
-  cartAtom,
-  checkedValue,
-  selectedItemListAtom,
-  selectedItemSelector,
-} from '../../store/cart';
+import { cartAtom, selectedItemSelector } from '../../store/cart';
 import { WIDTH } from '../../constants/mediaQuery';
 import CartItem from './CartItem/CartItem';
 import CheckBox from '../common/CheckBox/CheckBox';
-import useFetchCart from '../../hooks/useFetchCart';
-import { serverAtom } from '../../store/server';
-import { totalProductPriceAtom } from '../../store/bill';
+import useSelectedItem from '../../hooks/useSelectedItem';
 
 const CartItemList = () => {
-  const { deleteCartItem } = useFetchCart();
-  const [cartList, setCartList] = useRecoilState(cartAtom);
-  const { ALL_CHECKED, NO_CHECKED } = useRecoilValue(checkedValue);
-  const [isAllSelected, setIsAllSelected] = useState<boolean>(true);
-  const [selectedItemList, setSelectedItemList] =
-    useRecoilState(selectedItemListAtom);
-  const setTotalProductPrice = useSetRecoilState(totalProductPriceAtom);
-  const serverName = useRecoilValue(serverAtom);
+  const cartList = useRecoilValue(cartAtom);
   const { selectedItemCount } = useRecoilValue(selectedItemSelector);
-
-  useEffect(() => {
-    setSelectedItemList(ALL_CHECKED);
-  }, [serverName]);
-
-  useEffect(() => {
-    const total = selectedItemList.reduce((a, b) => {
-      if (b.isSelected) {
-        let cart = cartList.find((item) => item.id === b.id);
-        if (cart) return a + cart.quantity * cart.product.price;
-      }
-      return a;
-    }, 0);
-    setTotalProductPrice(total);
-  }, [selectedItemList, cartList]); //총 주문금액은 quantity랑 선택 상태에 의존하니까
-
-  const toggleSelectAll = () => {
-    setIsAllSelected(!isAllSelected);
-    setSelectedItemList(!isAllSelected ? ALL_CHECKED : NO_CHECKED);
-  };
-
-  const deleteSelectedItems = () => {
-    selectedItemList.forEach((item) => {
-      if (item.isSelected) {
-        deleteCartItem(item.id);
-        setCartList((prev) => [...prev.filter((cart) => cart.id !== item.id)]);
-      }
-    });
-  };
+  const {
+    isAllSelected,
+    toggleSelectAll,
+    setIsAllSelected,
+    deleteSelectedItems,
+  } = useSelectedItem();
 
   return (
     <Wrapper>
