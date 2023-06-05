@@ -31,7 +31,7 @@ const CouponListContainer = ({ type }: CouponListContainerProps) => {
     <Suspense fallback={<LoadingSpinner />}>
       <div className={type === 'all' ? styles.pageContainer : styles.modalContainer}>
         <CouponList type={type} />
-        <CartOrderButton />
+        {type === 'usable' ? <CartOrderButton /> : <></>}
       </div>
     </Suspense>
   );

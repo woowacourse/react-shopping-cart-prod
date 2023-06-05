@@ -4,10 +4,10 @@ import ReactDOM from 'react-dom/client';
 import { RecoilRoot } from 'recoil';
 
 import './index.css';
-import { worker } from './mocks/browser';
+// import { worker } from './mocks/browser';
 import AppRouter from './router/AppRouter';
 
-worker.start();
+// worker.start();
 
 const queryClient = new QueryClient({
   defaultOptions: {

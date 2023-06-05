@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
+import { tokenized } from '../../constants';
 import { cartItemState, cartListState } from '../../store/cart';
 import { originState } from '../../store/origin';
 import { ProductItemType } from '../../types';
@@ -30,6 +31,10 @@ const ProductAddition = ({ product, closeModalByClick }: ProductAdditionProps) =
       await fetch(`${origin}cart-items`, {
         method: 'POST',
         body: JSON.stringify(data),
+        headers: {
+          Authorization: `Basic ${tokenized}`,
+          'Content-Type': `application/json`, // application/json 타입 선언
+        },
       });
     },
     onSuccess: (data, variable, context) => {

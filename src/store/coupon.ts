@@ -11,7 +11,6 @@ export const checkedCouponIdState = selector({
   key: 'couponChecked',
   get: ({ get }) => {
     const couponList = get(couponListState);
-
     return couponList.find((coupon) => coupon.isChecked)?.couponId;
   },
 });

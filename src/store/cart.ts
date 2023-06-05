@@ -68,6 +68,6 @@ export const cartOrderDataState = selector({
       .filter((item) => {
         return item.isChecked === true;
       })
-      .map((item) => ({ id: item.id, quantity: item.quantity }));
+      .map((item) => ({ id: item.product.id, quantity: item.quantity }));
   },
 });

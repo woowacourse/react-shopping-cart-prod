@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
+import { tokenized } from '../../constants';
 import { useCoupon } from '../../hooks/useCouponList';
 import { cartTotalAmountState } from '../../store/cart';
 import { couponDiscountState } from '../../store/coupon';
@@ -20,6 +21,10 @@ const CouponItem = ({ coupon, type }: { coupon: CouponItemType; type: 'all' | 'u
     mutationFn: async () => {
       await fetch(`${origin}coupons/${coupon.couponId}`, {
         method: 'POST',
+        headers: {
+          'Content-Type': `application/json`,
+          Authorization: `Basic ${tokenized}`,
+        },
       });
     },
     onSuccess: () => {
@@ -31,7 +36,7 @@ const CouponItem = ({ coupon, type }: { coupon: CouponItemType; type: 'all' | 'u
   const discountCouponEvent = useMutation({
     mutationFn: async () => {
       const response = await fetch(
-        `${origin}coupons/discount/${coupon.couponId}?total=${cartTotalAmount + 3000}`,
+        `${origin}coupons/${coupon.couponId}/discount?total=${cartTotalAmount + 3000}`,
         {
           method: 'GET',
         }

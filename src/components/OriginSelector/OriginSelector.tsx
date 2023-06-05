@@ -3,13 +3,13 @@ import { useRecoilState } from 'recoil';
 
 import { originState } from '../../store/origin';
 import { ORIGIN } from '../../utils/origin';
-
 import styles from './style.module.css';
 
 const OriginSelector = () => {
   const [origin, setOrigin] = useRecoilState(originState);
 
   const onChangeOrigin = (e: ChangeEvent<HTMLSelectElement>) => {
+    console.log(2);
     setOrigin(ORIGIN[e.target.value]);
   };
 

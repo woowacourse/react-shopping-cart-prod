@@ -5,7 +5,8 @@ import { orderListState } from '../store/order';
 import { originState } from '../store/origin';
 import productListState from '../store/product';
 import { ProductItemType } from '../types';
-import { cartListState } from './../store/cart';
+import { tokenized } from './../constants/index';
+import { cartListState, cartTotalAmountState } from './../store/cart';
 import { couponListState } from './../store/coupon';
 import { OrderItemType } from './../store/order';
 import { CartItemType, CouponItemType } from './../types/index';
@@ -13,15 +14,39 @@ import { CartItemType, CouponItemType } from './../types/index';
 const useGetFetchData = <T>(query: string, setState: SetterOrUpdater<T>) => {
   const origin = useRecoilValue(originState);
   const { data } = useQuery<T>({
-    queryKey: [query],
-
+    queryKey: [origin, query],
     queryFn: async () => {
       const response = await fetch(`${origin}${query}`);
+      if (!response.ok) {
+        throw new Error(`${response.status} Response was not ok`);
+      }
+      return response.json();
+    },
+    onSuccess(data) {
+      setState(data);
+    },
+  });
+
+  return data;
+};
+
+const useGetAuthFetchData = <T>(query: string, setState: SetterOrUpdater<T>) => {
+  const origin = useRecoilValue(originState);
+  const { data } = useQuery<T>({
+    queryKey: [origin, query],
+
+    queryFn: async () => {
+      const response = await fetch(`${origin}${query}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': `application/json`,
+          Authorization: `Basic ${tokenized}`,
+        },
+      });
 
       if (!response.ok) {
         throw new Error(`${response.status} Response was not ok`);
       }
-
       return response.json();
     },
 
@@ -68,19 +93,19 @@ export const useGetProductList = () => {
 
 export const useCouponList = (type: 'all' | 'usable') => {
   const setCoupons = useSetRecoilState(couponListState);
-  const targetQuery = type === 'all' ? `coupons` : `coupons/active?total=10000`;
-  const data = useGetFetchData<CouponItemType[]>(targetQuery, setCoupons);
+  const cartTotalAmount = useRecoilValue(cartTotalAmountState);
+  const targetQuery = type === 'all' ? `coupons` : `coupons/active?total=${cartTotalAmount}`;
+  const data = useGetAuthFetchData<CouponItemType[]>(targetQuery, setCoupons);
 
   return data;
 };
 
 export const useGetCartList = () => {
   const setCartList = useSetRecoilState(cartListState);
-  return useGetFetchData<CartItemType[]>('cart-items', setCartList);
+  return useGetAuthFetchData<CartItemType[]>('cart-items', setCartList);
 };
 
 export const useOrderList = () => {
   const setOrderList = useSetRecoilState(orderListState);
-  return useGetFetchData<OrderItemType[]>('orders', setOrderList);
+  return useGetAuthFetchData<OrderItemType[]>('orders', setOrderList);
 };
-
