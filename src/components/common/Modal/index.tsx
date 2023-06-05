@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useRef } from 'react';
+import React, { PropsWithChildren, useEffect, useRef } from 'react';
 import { styled } from 'styled-components';
 import { theme } from '@styles/theme';
 import Button from '../Button';
@@ -10,6 +10,14 @@ interface ModalProps extends PropsWithChildren {
 
 function Modal({ title, onModalClose, children }: ModalProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
+
+  useEffect(() => {
+    document.body.dataset.hideScroll = 'true';
+
+    return () => {
+      document.body.dataset.hideScroll = 'false';
+    };
+  }, []);
 
   return (
     <Container ref={dialogRef}>

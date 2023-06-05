@@ -9,6 +9,10 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Noto Sans KR',system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     -moz-osx-font-smoothing: grayscale;
   }
+  
+  body[data-hide-scroll='true']{
+    overflow: hidden;
+  }
 
   
   * {
