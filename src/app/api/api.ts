@@ -114,7 +114,12 @@ export const fetchMembers = async (server: string) => {
 
 export const fetchCoupons = async (server: string) => {
   try {
-    const response = await fetch(`${url[server]}/coupons`);
+    const base64 = getSessionStorage(SESSION_STORAGE_KEY_BASE64, "");
+    const response = await fetch(`${url[server]}/coupons`, {
+      headers: {
+        Authorization: `Basic ${base64}`,
+      },
+    });
     if (response.ok) {
       const data: Coupon[] = await response.json();
       return data;
@@ -130,7 +135,12 @@ export const fetchCoupons = async (server: string) => {
 
 export const fetchPoint = async (server: string) => {
   try {
-    const response = await fetch(`${url[server]}/point`);
+    const base64 = getSessionStorage(SESSION_STORAGE_KEY_BASE64, "");
+    const response = await fetch(`${url[server]}/point`, {
+      headers: {
+        Authorization: `Basic ${base64}`,
+      },
+    });
     if (response.ok) {
       const data: Point = await response.json();
       return data;
