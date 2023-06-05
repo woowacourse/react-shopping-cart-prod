@@ -67,7 +67,9 @@ export const orderHandlers = [
       return prev + quantity * price;
     }, 0);
     const totalOrderPrice =
-      totalPrice >= 30000 ? totalPrice : totalPrice + SHIPPING_FEE;
+      totalPrice >= 30000
+        ? totalPrice - usePoint
+        : totalPrice + SHIPPING_FEE - usePoint;
 
     const newOrder = {
       id: Date.now(),
@@ -76,6 +78,7 @@ export const orderHandlers = [
       orders: _orders,
     } satisfies Order;
 
+    console.log(totalOrderPrice, usePoint);
     const addedPoint = Math.floor(totalOrderPrice * 0.025);
 
     orders = [...orders, newOrder];
