@@ -22,26 +22,14 @@ const ServerSelector = () => {
 
   useEffect(() => {
     resetCartList();
-    resetCouponList();
     getCartItems(serverState).then((res) => {
-      setCartList(
-        res.map((item) => {
-          return {
-            ...item,
-            isChecked: true,
-          };
-        })
-      );
+      setCartList(res.map((item) => Object.assign(item, { isChecked: true })));
     });
 
+    resetCouponList();
     getCoupons(serverState).then((res) => {
       setCouponList(
-        res.map((coupon) => {
-          return {
-            ...coupon,
-            isSelected: false,
-          };
-        })
+        res.map((coupon) => Object.assign(coupon, { isSelected: false }))
       );
     });
   }, [serverState]);
@@ -51,6 +39,7 @@ const ServerSelector = () => {
     "ttaengchil-server": "땡칠 서버",
     "ori-server": "오리 서버",
   };
+
   return (
     <Wrapper>
       <label>
