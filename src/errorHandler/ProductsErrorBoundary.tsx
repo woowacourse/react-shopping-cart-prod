@@ -7,17 +7,17 @@ class PageContentErrorBoundary extends ErrorBoundary {
     const { children, message } = this.props;
 
     return hasError ? (
-      <ErorrDiv>
+      <ErrorDiv>
         {message}
         <RetryButton onClick={() => this.retry()}>다시 시도하기</RetryButton>
-      </ErorrDiv>
+      </ErrorDiv>
     ) : (
       children
     );
   }
 }
 
-const ErorrDiv = styled.div`
+const ErrorDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
