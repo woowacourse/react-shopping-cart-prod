@@ -12,11 +12,18 @@ import OrderCompletePage from './pages/OrderCompletePage';
 import OrderListPage from './pages/OrderListPage';
 import OrderDetailPage from './pages/OrderDetailPage';
 
-worker.start({
-  serviceWorker: {
-    url: '/mockServiceWorker.js',
-  },
-});
+(async () => {
+  if (window.location.pathname === '/react-shopping-cart-prod') {
+    window.location.pathname += '/';
+    return;
+  }
+
+  await worker.start({
+    serviceWorker: {
+      url: `/react-shopping-cart-prod/mockServiceWorker.js`,
+    },
+  });
+})();
 
 const router = createHashRouter([
   {
