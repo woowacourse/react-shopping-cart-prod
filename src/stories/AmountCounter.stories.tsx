@@ -6,7 +6,7 @@ import AmountCounter from '../components/Common/AmountCounter';
 type DesignType = 'main' | 'cart';
 
 interface AmountCounterProps {
-  designType: DesignType;
+  designtype: DesignType;
   count: number;
   addCount: () => void;
   subtractCount: () => void;
@@ -21,7 +21,7 @@ const meta: Meta = {
     count: 1,
     addCount: () => {},
     subtractCount: () => {},
-    designType: 'main',
+    designtype: 'main',
   },
 };
 

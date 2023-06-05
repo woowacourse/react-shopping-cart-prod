@@ -34,7 +34,7 @@ const CartProductItem = ({ cartProduct }: CartProductItemProps) => {
           <TrashCanIcon />
         </button>
         <AmountCounter
-          designType='cart'
+          designtype='cart'
           count={quantity}
           addCount={addCount}
           subtractCount={subtractCount}

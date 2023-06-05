@@ -3,11 +3,11 @@ import styled, { css } from 'styled-components';
 import ArrowUpIcon from '../../assets/ArrowUpIcon';
 import ArrowDownIcon from '../../assets/ArrowDownIcon';
 
-type DesignType = 'main' | 'cart';
-type DesignProps = Pick<AmountCounterProps, 'designType'>;
+type designtype = 'main' | 'cart';
+type DesignProps = Pick<AmountCounterProps, 'designtype'>;
 
 interface AmountCounterProps {
-  designType: DesignType;
+  designtype: designtype;
   count: number;
   addCount: () => void;
   subtractCount: () => void;
@@ -15,30 +15,30 @@ interface AmountCounterProps {
 }
 
 const AmountCounter = ({
-  designType,
+  designtype,
   count,
   addCount,
   subtractCount,
   maxCount,
 }: AmountCounterProps) => {
   return (
-    <InputGroup designType={designType}>
+    <InputGroup designtype={designtype}>
       <CounterInput
         type='number'
-        value={count}
-        designType={designType}
+        defaultValue={count}
+        designtype={designtype}
         max={maxCount}
       />
       <CountBtnContainer>
         <CountBtn
-          designType={designType}
+          designtype={designtype}
           onClick={addCount}
           aria-label='수량 더하기 버튼'
         >
           <ArrowUpIcon />
         </CountBtn>
         <CountBtn
-          designType={designType}
+          designtype={designtype}
           onClick={subtractCount}
           aria-label='수량 빼기 버튼'
         >
@@ -79,14 +79,14 @@ const counterStyles = {
 
 const InputGroup = styled.div<DesignProps>`
   display: flex;
-  ${({ designType }) => counterStyles[designType].group}
+  ${({ designtype }) => counterStyles[designtype].group}
 `;
 
 const CounterInput = styled.input<DesignProps>`
   border: 1px solid ${({ theme }) => theme.colors.gray100};
   text-align: center;
   outline: none;
-  ${({ designType }) => counterStyles[designType].input}
+  ${({ designtype }) => counterStyles[designtype].input}
 
   &::-webkit-inner-spin-button,
   &::-webkit-outer-spin-button {
@@ -105,7 +105,7 @@ const CountBtn = styled.button<DesignProps>`
   border: 1px solid ${({ theme }) => theme.colors.gray100};
   flex: 1;
 
-  ${({ designType }) => counterStyles[designType].button}
+  ${({ designtype }) => counterStyles[designtype].button}
 `;
 
 export default AmountCounter;

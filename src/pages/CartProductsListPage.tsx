@@ -37,7 +37,7 @@ const CartProductsListPage = () => {
               전체선택 ({checkedCartProductCount}/{totalCartProductCount})
             </TotalSelectedCount>
             <Button
-              designType='delete'
+              designtype='delete'
               buttonLabel='선택삭제'
               onClick={removeCheckedProducts}
             />

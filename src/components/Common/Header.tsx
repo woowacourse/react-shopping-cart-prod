@@ -1,12 +1,14 @@
 import styled from 'styled-components';
 
 import { Link } from 'react-router-dom';
-import CartIcon from '../../assets/CartIcon';
 import { useRecoilState, useRecoilValue } from 'recoil';
+
+import CartIcon from '../../assets/CartIcon';
 import { totalCartProductSelect } from '../../recoil/cartProductData';
 import { servers } from '../../constants/server';
 import { hostNameAtom } from '../../recoil/hostData';
 import { HostNameType } from '../../types/server';
+import React from 'react';
 
 const Header = () => {
   const totalCartProduct = useRecoilValue(totalCartProductSelect);
@@ -27,8 +29,10 @@ const Header = () => {
         </Link>
         <ControlContainer>
           <SelectBox value={hostName} onChange={handleSelect}>
-            {Object.keys(servers).map((server) => (
-              <option>{server}</option>
+            {Object.keys(servers).map((server, index) => (
+              <React.Fragment key={index}>
+                <option>{server}</option>
+              </React.Fragment>
             ))}
           </SelectBox>
           <Link to='/cart'>

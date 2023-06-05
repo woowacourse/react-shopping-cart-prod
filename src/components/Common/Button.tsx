@@ -3,13 +3,13 @@ import styled, { css } from 'styled-components';
 import { ButtonHTMLAttributes } from 'react';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  designType: 'delete' | 'order';
+  designtype: 'delete' | 'order';
   buttonLabel?: string;
 }
 
-const Button = ({ designType, buttonLabel, ...props }: ButtonProps) => {
+const Button = ({ designtype, buttonLabel, ...props }: ButtonProps) => {
   return (
-    <ButtonBox designType={designType} {...props}>
+    <ButtonBox designtype={designtype} {...props}>
       {buttonLabel}
     </ButtonBox>
   );
@@ -39,7 +39,7 @@ const buttonStyles = {
 };
 
 const ButtonBox = styled.button<ButtonProps>`
-  ${({ designType }) => buttonStyles[designType]}
+  ${({ designtype }) => buttonStyles[designtype]}
 `;
 
 export default Button;

@@ -33,7 +33,7 @@ const ProductItem = ({ product }: ProductItemProps) => {
           <>
             {isProductExistInCart ? (
               <AmountCounter
-                designType='main'
+                designtype='main'
                 count={target.quantity}
                 addCount={addCount}
                 subtractCount={subtractCount}

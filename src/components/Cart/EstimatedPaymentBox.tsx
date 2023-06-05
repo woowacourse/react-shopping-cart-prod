@@ -107,7 +107,7 @@ const EstimatedPaymentBox = () => {
       </EstimatedPaymentContent>
       <OrderButtonWrapper>
         <Button
-          designType='order'
+          designtype='order'
           buttonLabel='주문하기'
           onClick={handleClickOrderButton}
         />

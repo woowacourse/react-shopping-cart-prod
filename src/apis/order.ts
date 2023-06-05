@@ -48,7 +48,7 @@ export const api = async (hostName: HostNameType) => {
         Authorization: `Basic ${base64}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ order }),
+      body: JSON.stringify({ ...order }),
     });
 
     if (!response.ok) {
