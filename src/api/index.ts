@@ -191,3 +191,17 @@ export const postPurchaseCartItem = async <T>(
 
   const locationHeader = response.headers.get('Location');
 };
+
+export const getOrder = async <T>(serverName: ServerNameType, loginCredential: string) => {
+  const response = await fetch(`${BASE_URL_MAP[serverName]}/orders`, {
+    headers: {
+      Authorization: `Basic ${loginCredential}`,
+    },
+  });
+
+  if (!response.ok) throw new Error(`cart-items GET error`);
+
+  const data: T = await response.json();
+
+  return data;
+};

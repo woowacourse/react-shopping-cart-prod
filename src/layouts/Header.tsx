@@ -29,6 +29,7 @@ export default function Header() {
               장바구니
               <S.CartCount>{cartCount}</S.CartCount>
             </S.LinkBox>
+            <S.LinkBox to="/order">주문목록</S.LinkBox>
             <S.LinkBox to="/coupon">쿠폰함</S.LinkBox>
             <S.LinkBox to="/" onClick={initLoginAndCouponState}>
               로그아웃

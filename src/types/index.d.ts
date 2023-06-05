@@ -41,3 +41,9 @@ export interface PurchasingCartItemType {
   productId: number;
   quantity: number;
 }
+
+export interface OrderInfo {
+  orderId: number;
+  items: { product: ProductType; quantity: number }[];
+  orderedAt: string;
+}
