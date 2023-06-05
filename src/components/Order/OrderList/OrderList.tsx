@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import * as S from './OrderList.style';
 import type { OrderItem as OrderItemType } from '../../../types/types';
 import { OrderItem } from '../OrderItem';
+import { GMTToLocalTime } from '../../../utils/time';
 
 type OrderListProps = {
   orderId: number;
@@ -13,21 +14,11 @@ type OrderListProps = {
 function OrderList({ orderId, orderItems, createdAt, detail = true }: OrderListProps) {
   const navigate = useNavigate();
 
-  const [datePart, timePart] = createdAt.split(' ');
-  const [year, month, day] = datePart.split('-');
-  const [hour, minute, second] = timePart.split(':');
-  const fixedSecond = second.split('.')[0];
-  const isoString = `${year}-${month}-${day}T${hour}:${minute}:${fixedSecond}.000Z`;
-  const date = new Date(isoString);
-  date.setHours(date.getHours() + 9);
-  const updatedDateString = date.toISOString().replace('T', ' ').slice(0, -5);
-  console.log(createdAt, updatedDateString);
-
   return (
     <S.OrderItemList>
       <S.OrderInfo>
         <span>주문번호: {orderId}</span>
-        <span>{updatedDateString}</span>
+        <span>{GMTToLocalTime(createdAt)}</span>
         {detail && <S.DetailButton onClick={() => navigate(`/order/${orderId}`)}>상세보기 &gt;</S.DetailButton>}
       </S.OrderInfo>
       {orderItems.map((item) => (

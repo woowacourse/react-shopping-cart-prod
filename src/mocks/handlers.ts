@@ -159,7 +159,7 @@ export const handlers = [
       usedPoint: orderInfo.orderDiscounts.point,
       paymentPrice:
         totalPrice.reduce((acc, cur) => acc + cur, 0) - orderInfo.orderDiscounts.point - couponDiscountAmount,
-      createdAt: new Date(uniqueId + 9 * 60 * 60 * 1000).toISOString().replace('T', ' ').slice(0, -5),
+      createdAt: new Date(uniqueId).toISOString().replace('T', ' ').slice(0, -5),
     };
 
     const newOrderList: OrdersResponses = {
