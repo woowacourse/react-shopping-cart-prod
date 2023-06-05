@@ -7,15 +7,15 @@ import OrderItemInfo from './OrderItemInfo';
 type OrderItemProps = {
   orderId: number;
   products: ProductInOrder[];
-  orderStatus?: string;
-  createdAt?: string;
+  orderStatus: string;
+  createdAt: string;
 };
 
 const OrderItem: React.FC<OrderItemProps> = ({ orderId, products, orderStatus, createdAt }) => {
   const params = useParams();
   const isDetailPage = 'id' in params;
 
-  const orderTitle = isDetailPage ? '상세정보' : `${orderStatus}: ${createdAt}`;
+  const orderTitle = isDetailPage ? '상세정보' : `${orderStatus}: ${new Date(createdAt).toLocaleDateString('ko-KR')}`;
 
   return (
     <Item>
