@@ -1,15 +1,26 @@
 import { styled } from 'styled-components';
 import SummaryPriceInfo from './SummaryPriceInfo/SummaryPriceInfo';
 import parcel from '../../../assets/image/parcel.png';
+import useOrderSummary from './useSummary';
 
 const OrderSummary = () => {
+  const { savedPoints, currentPoints, price } = useOrderSummary();
+
   return (
     <Container>
       <Main>
         <Image src={parcel} />
-        <SummaryPriceInfo type="price" name="총 주문금액" price={12340} />
-        <SummaryPriceInfo type="points" name="적립 포인트" price={150} />
-        <SummaryPriceInfo type="points" name="보유 포인트" price={12490} />
+        <SummaryPriceInfo type="price" name="총 주문금액" price={price} />
+        <SummaryPriceInfo
+          type="points"
+          name="적립 포인트"
+          price={savedPoints}
+        />
+        <SummaryPriceInfo
+          type="points"
+          name="보유 포인트"
+          price={currentPoints}
+        />
       </Main>
     </Container>
   );
