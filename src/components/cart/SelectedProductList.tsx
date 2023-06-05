@@ -165,6 +165,11 @@ const modalStyle = css`
   width: 400px;
   padding: 28px 20px 32px;
   background: #fafafa;
+
+  @media (max-width: 420px) {
+    width: 100%;
+    padding: 28px 16px 32px;
+  }
 `;
 
 const closeButtonStyle = css`

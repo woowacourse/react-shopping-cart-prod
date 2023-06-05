@@ -48,6 +48,10 @@ const S = {
       right: 16px;
       align-self: center;
       fill: #767676;
+
+      @media (max-width: 420px) {
+        display: none;
+      }
     }
 
     & + input {
@@ -101,6 +105,10 @@ const S = {
     align-self: center;
     font-size: 14.5px;
     font-weight: 500;
+
+    @media (max-width: 420px) {
+      font-size: 13px;
+    }
   `,
 
   dottedLine: styled.div`
@@ -109,6 +117,10 @@ const S = {
     height: 66.33px;
     border: 1px dotted var(--gray-color-200);
     border-top: 0;
+
+    @media (max-width: 420px) {
+      display: none;
+    }
   `,
 
   SmallCircle: styled.div`
@@ -135,6 +147,10 @@ const S = {
       border-left: 1px solid transparent;
       border-radius: 50%;
       transform: rotate(-46.5deg);
+    }
+
+    @media (max-width: 420px) {
+      display: none;
     }
   `,
 };
