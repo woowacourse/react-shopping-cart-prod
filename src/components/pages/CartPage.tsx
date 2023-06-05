@@ -1,4 +1,4 @@
-import TotalPriceBox from '../box/TotalPriceBox/TotalPriceBox';
+import TotalPriceBox from '../box/Cart/TotalPriceBox/TotalPriceBox';
 import { Text } from '../common/Text/Text';
 import CartList from '../list/CartList/CartList';
 import PageTemplate from '../templates/PageTemplate';
@@ -7,7 +7,9 @@ import Modal from '../common/Modal/Modal';
 import DeleteCartItemModal from '../common/Modal/DeleteCartItemModal';
 import { useCartFetch } from '../../hooks/useCartFetch';
 import { useRecoilValue } from 'recoil';
-import { checkCartListState } from '../../service/atom';
+import { checkCartListState, couponListModalState, deleteModalState } from '../../service/atom';
+import CouponBox from '../box/Cart/CouponBox/CouponBox';
+import CouponListModal from '../common/Modal/CouponListModal';
 
 const CartPage = () => {
   const { cartData } = useCartFetch();
@@ -38,6 +40,7 @@ const CartPage = () => {
         <CartPageContent>
           <CartListWrapper>
             <CartList />
+            <CouponBox />
           </CartListWrapper>
           <PriceBox>
             <TotalPriceBox
@@ -48,8 +51,11 @@ const CartPage = () => {
           </PriceBox>
         </CartPageContent>
       </CartPageWrapper>
-      <Modal>
+      <Modal modalState={deleteModalState}>
         <DeleteCartItemModal />
+      </Modal>
+      <Modal modalState={couponListModalState}>
+        <CouponListModal />
       </Modal>
     </PageTemplate>
   );
@@ -79,6 +85,7 @@ const CartPageWrapper = styled.div`
 const CartListWrapper = styled.div`
   width: 740px;
   margin-top: -50px;
+  margin-bottom: 200px;
   @media screen and (max-width: 1320px) {
     width: 100%;
     margin-bottom: 50px;
