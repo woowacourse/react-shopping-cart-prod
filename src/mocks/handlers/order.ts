@@ -52,8 +52,7 @@ const orderHandlers = [
     return res(
       ctx.delay(500),
       ctx.status(HTTP_STATUS_CODE.CREATED),
-      ctx.set('Location', `${API_ENDPOINT.ORDERS}/${newOrderId}`),
-      ctx.json(productListData)
+      ctx.set('Location', `${API_ENDPOINT.ORDERS}/${newOrderId}`)
     );
   }),
 
