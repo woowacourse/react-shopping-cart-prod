@@ -39,7 +39,7 @@ export const BASE_URL_MAP: Record<ServerNameType, string> = {
   MSW: MOCK_URL,
   라온: 'http://jourzura.kro.kr:8080',
   져니: 'http://journey-shop.kro.kr:8080',
-  쥬니: 'http://jourzura.kro.kr:8080',
+  쥬니: 'http://jourzura2.kro.kr:8080',
 };
 
 export const USER_ID = 'a@a.com';
