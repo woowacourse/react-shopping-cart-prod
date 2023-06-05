@@ -3,9 +3,9 @@ import { Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import ProductList from '../components/product/ProductList/ProductList';
 import ProductFallBack from '../components/product/ProductFallBack/ProductFallBack';
-import ErrorBoundary from '../errorHandler/ErrorBoundary';
 import CouponBannerImage from '../assets/CouponBanner.png';
 import CouponBannerImageSmall from '../assets/CouponBannerSmall.png';
+import PageContentErrorBoundary from '../errorHandler/ProductsErrorBoundary';
 
 const ProductListPage = () => {
   return (
@@ -23,11 +23,11 @@ const ProductListPage = () => {
           </picture>
         </Link>
       </BannerDiv>
-      <ErrorBoundary>
+      <PageContentErrorBoundary message="서버로부터 물건 정보를 불러오는 데 실패했어요.">
         <Suspense fallback={<ProductFallBack />}>
           <ProductList />
         </Suspense>
-      </ErrorBoundary>
+      </PageContentErrorBoundary>
     </Layout>
   );
 };

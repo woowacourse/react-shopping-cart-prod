@@ -1,14 +1,14 @@
 import { styled } from 'styled-components';
 import { Suspense } from 'react';
 import CouponList from '../components/coupon/CounponList/CouponList';
-import ErrorBoundary from '../errorHandler/ErrorBoundary';
 import LoadingSpinner from '../components/common/LoadingSpinner/LoadingSpinner';
+import PageContentErrorBoundary from '../errorHandler/ProductsErrorBoundary';
 
 const CouponPage = () => {
   return (
     <Layout>
       <Title>쿠폰 받기</Title>
-      <ErrorBoundary>
+      <PageContentErrorBoundary message="서버로부터 쿠폰 목록을 가져오는 데 실패했어요.">
         <Suspense
           fallback={
             <Fallback>
@@ -18,7 +18,7 @@ const CouponPage = () => {
         >
           <CouponList />
         </Suspense>
-      </ErrorBoundary>
+      </PageContentErrorBoundary>
     </Layout>
   );
 };

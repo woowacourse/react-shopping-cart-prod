@@ -1,14 +1,14 @@
 import { styled } from 'styled-components';
 import { Suspense } from 'react';
-import ErrorBoundary from '../errorHandler/ErrorBoundary';
 import LoadingSpinner from '../components/common/LoadingSpinner/LoadingSpinner';
 import OrderList from '../components/order/OrderList/OrderList';
+import PageContentErrorBoundary from '../errorHandler/ProductsErrorBoundary';
 
 const OrderListPage = () => {
   return (
     <Layout>
       <Title>주문 목록</Title>
-      <ErrorBoundary>
+      <PageContentErrorBoundary message="서버로부터 주문 목록을 불러오는 데 실패했어요.">
         <Suspense
           fallback={
             <Fallback>
@@ -18,7 +18,7 @@ const OrderListPage = () => {
         >
           <OrderList />
         </Suspense>
-      </ErrorBoundary>
+      </PageContentErrorBoundary>
     </Layout>
   );
 };
