@@ -9,11 +9,15 @@ interface Props {
 export default function OrderList({ orders }: Props) {
   return (
     <ul>
-      {orders.map((order) => (
-        <Style.OrderItemWrapper key={order.orderNumber}>
-          <OrderItem orderItemInfo={order} />
-        </Style.OrderItemWrapper>
-      ))}
+      {orders.length === 0 ? (
+        <Style.Span>주문한 상품이 없습니다.</Style.Span>
+      ) : (
+        orders.map((order) => (
+          <Style.OrderItemWrapper key={order.orderNumber}>
+            <OrderItem orderItemInfo={order} />
+          </Style.OrderItemWrapper>
+        ))
+      )}
     </ul>
   );
 }
@@ -35,5 +39,11 @@ const Style = {
     @media screen and (max-width: 767px) {
       width: 315px;
     }
+  `,
+
+  Span: styled.span`
+    margin: 0 5px;
+
+    color: var(--grey-200);
   `,
 };
