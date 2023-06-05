@@ -19,5 +19,5 @@ export const menuState = atom<boolean>({
 
 export const serverOriginState = atom<string>({
   key: 'serverOriginState',
-  default: BASE_URLS['baron'],
+  default: BASE_URLS['mock'],
 });

@@ -9,7 +9,7 @@ import usePoint from '../../../hooks/usePoint';
 import { serverOriginState } from '../../../recoil/atoms/common';
 
 const ServerSelect = () => {
-  const [value, setValue] = useState('baron');
+  const [value, setValue] = useState('mock');
   const [serverOrigin, setServerOrigin] = useRecoilState(serverOriginState);
   const { updateCart } = useCart();
   const { updateOrders } = useOrder();
@@ -33,10 +33,10 @@ const ServerSelect = () => {
   return (
     <Label>
       <Select value={value} onChange={changeServer}>
+        <option value="mock">MSW</option>
         <option value="baron">바론</option>
         <option value="blackCat">블랙캣</option>
         <option value="kkero">케로</option>
-        <option value="mock">MSW</option>
       </Select>
     </Label>
   );
