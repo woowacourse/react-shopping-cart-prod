@@ -1,10 +1,13 @@
-import { useRecoilState } from 'recoil';
-import { pointsState } from '../../../recoil/atoms';
-import { ChangeEvent } from 'react';
+import { useEffect, ChangeEvent } from 'react';
+import usePoints from '../../../hooks/usePoints';
 
 const usePointsUpdater = () => {
-  const [{ selectedPoints, maxPoints }, setPoints] =
-    useRecoilState(pointsState);
+  const { selectedPoints, maxPoints, syncPoints, setSelectedPoints } =
+    usePoints();
+
+  useEffect(() => {
+    syncPoints();
+  }, []);
 
   const sanitizePoints = (points: string) => {
     const numericPoints = Number(points.replace(/[^0-9]/g, ''));
@@ -15,10 +18,7 @@ const usePointsUpdater = () => {
   const updatePoints = (e: ChangeEvent<HTMLInputElement>) => {
     const originalPoints = e.target.value;
 
-    setPoints(({ maxPoints }) => ({
-      selectedPoints: sanitizePoints(originalPoints),
-      maxPoints,
-    }));
+    setSelectedPoints(sanitizePoints(originalPoints));
   };
 
   return {
