@@ -78,6 +78,7 @@ const useCart = () => {
       method: 'DELETE',
       headers: {
         Authorization: `Basic ${btoa(USER)}`,
+        'Content-Type': 'application/json',
       },
     });
   };
