@@ -31,9 +31,10 @@ const ProductAddition = ({ product, closeModalByClick }: ProductAdditionProps) =
       await fetch(`${origin}cart-items`, {
         method: 'POST',
         body: JSON.stringify(data),
+
         headers: {
           Authorization: `Basic ${tokenized}`,
-          'Content-Type': `application/json`, // application/json 타입 선언
+          'Content-Type': `application/json`,
         },
       });
     },
@@ -100,6 +101,7 @@ const ProductAddition = ({ product, closeModalByClick }: ProductAdditionProps) =
               productId: product.id,
               quantity: quantity,
             });
+            closeModalByClick();
           }}
         >
           장바구니 담기
