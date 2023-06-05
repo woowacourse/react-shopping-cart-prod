@@ -5,7 +5,7 @@ import { FaRegTrashAlt } from 'react-icons/fa';
 import CheckBox from '../../common/CheckBox/CheckBox';
 import Image from '../../common/Image/Image';
 import Counter from '../../common/Counter/Counter';
-import useCartService from '../../../hooks/useCartService';
+import useCartItemApi from '../../../hooks/api/useCartItemApi';
 import { formatPrice } from '../../../utils/formatPrice';
 import { useCheckedCartListValue } from '../../../provider/CheckedListProvider';
 import type { CartProduct } from '../../../types/product';
@@ -19,7 +19,7 @@ const CartItem = ({ cartItem }: CartItemProps) => {
   const { id: cartItemId, quantity } = cartItem;
   const { imageUrl, name, price } = cartItem.product;
 
-  const { updateCartItemQuantity, deleteCartItem } = useCartService();
+  const { updateCartItemQuantity, deleteCartItem } = useCartItemApi();
   const { isChecked, addCheckedItem, deleteCheckedItem } = useCheckedCartListValue();
   const [count, setCount] = useState(quantity);
 

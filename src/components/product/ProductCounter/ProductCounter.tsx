@@ -5,14 +5,14 @@ import { BsCart4 } from 'react-icons/bs';
 import getCartItemId from '../../../globalState/selectors/getCartItemId';
 import getCartStateController from '../../../globalState/selectors/getCartStateController';
 import productQuantityInCart from '../../../globalState/selectors/productQuantityInCart';
-import useCartService from '../../../hooks/useCartService';
+import useCartItemApi from '../../../hooks/api/useCartItemApi';
 import Counter from '../../common/Counter/Counter';
 import { Product } from '../../../types/product';
 
 const ProductCounter = (product: Product) => {
   const { id: productId } = product;
 
-  const { addCartItem, updateCartItemQuantity, deleteCartItem } = useCartService();
+  const { addCartItem, updateCartItemQuantity, deleteCartItem } = useCartItemApi();
 
   const cartItemId = useRecoilValue(getCartItemId(productId));
   const quantityInCart = useRecoilValue(productQuantityInCart(productId));

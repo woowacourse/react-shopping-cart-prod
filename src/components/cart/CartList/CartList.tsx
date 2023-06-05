@@ -2,14 +2,14 @@ import { styled } from 'styled-components';
 import { useRecoilState } from 'recoil';
 import CartItem from '../CartItem/CartItem';
 import CheckBox from '../../common/CheckBox/CheckBox';
-import useCartService from '../../../hooks/useCartService';
+import useCartItemApi from '../../../hooks/api/useCartItemApi';
 import { useCheckedCartListValue } from '../../../provider/CheckedListProvider';
 import cartState from '../../../globalState/atoms/cartState';
 
 const CartList = () => {
   const { checkedCartList, addAllCheckedItem, deleteAllCheckedItem, isAllChecked } =
     useCheckedCartListValue();
-  const { deleteCartItem } = useCartService();
+  const { deleteCartItem } = useCartItemApi();
   const [cartList, setCartList] = useRecoilState(cartState);
 
   const handleAllCheckBoxChange = () => {

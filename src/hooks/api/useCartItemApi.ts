@@ -1,9 +1,9 @@
 import { useRecoilValue } from 'recoil';
-import type { CartProduct, Product } from '../types/product';
-import serverNameState from '../globalState/atoms/serverName';
-import ServerUtil from '../utils/ServerUrl';
-import { USER_AUTH_TOKEN } from '../constant';
-import { ServerName } from '../types/server';
+import type { CartProduct, Product } from '../../types/product';
+import serverNameState from '../../globalState/atoms/serverName';
+import ServerUtil from '../../utils/ServerUrl';
+import { USER_AUTH_TOKEN } from '../../constant';
+import { ServerName } from '../../types/server';
 
 const getCartItemId = async (serverName: ServerName, productId: number) => {
   const cartItemsUrl = ServerUtil.getCartItemsUrl(serverName);
@@ -21,7 +21,7 @@ const getCartItemId = async (serverName: ServerName, productId: number) => {
   return product ? product.id : null;
 };
 
-const useCartService = () => {
+const useCartItemApi = () => {
   const serverName = useRecoilValue(serverNameState);
   const cartItemsUrl = ServerUtil.getCartItemsUrl(serverName);
 
@@ -104,4 +104,4 @@ const useCartService = () => {
     deleteCartItem,
   } as const;
 };
-export default useCartService;
+export default useCartItemApi;
