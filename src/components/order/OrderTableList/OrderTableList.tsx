@@ -4,22 +4,27 @@ import { ordersQuery } from '../../../recoil/selectors';
 import OrderTable from '../OrderTable/OrderTable';
 import Spinner from '../../common/Spinner/Spinner';
 import ErrorComponent from '../../common/Error/ErrorComponent';
+import useOrders from '../../../hooks/useOrders';
 
 const OrderTableList = () => {
-  const orderInfos = useRecoilValueLoadable(ordersQuery);
+  const { orders } = useOrders();
 
-  if (orderInfos.state === 'loading') {
+  if (orders.state === 'loading') {
     return <Spinner />;
   }
 
-  if (orderInfos.state === 'hasError') {
-    return <ErrorComponent>{orderInfos.contents.message}</ErrorComponent>;
+  if (orders.state === 'hasError') {
+    return <ErrorComponent>{orders.contents.message}</ErrorComponent>;
   }
 
   return (
     <Container>
-      {orderInfos.contents.map((orderInfo) => (
-        <OrderTable key={orderInfo.id} orderInfo={orderInfo} />
+      {orders.contents.map((orderInfo) => (
+        <OrderTable
+          key={orderInfo.id}
+          orderInfo={orderInfo}
+          showDetailButton={true}
+        />
       ))}
     </Container>
   );

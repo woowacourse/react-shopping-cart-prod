@@ -30,3 +30,8 @@ export const serverOriginState = atom<string>({
   key: 'serverOriginState',
   default: 'http://somsom.techcourse.store',
 });
+
+export const ordersState = atom<Order[]>({
+  key: 'ordersState',
+  default: [],
+});
