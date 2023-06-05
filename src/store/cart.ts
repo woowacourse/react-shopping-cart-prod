@@ -43,6 +43,15 @@ export const cartCheckedIdState = selector({
   },
 });
 
+export const cartCountState = selector({
+  key: 'cartCount',
+  get: ({ get }) => {
+    const cartList = get(cartListState);
+
+    return cartList ? cartList.length : 0;
+  },
+});
+
 export const cartOrderAmountState = atom({
   key: 'cartOrderAmount',
   default: 0,

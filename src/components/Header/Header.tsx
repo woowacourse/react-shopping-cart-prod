@@ -1,18 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { memo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 
 import CartIcon from '../../assets/cart-icon.svg';
 import CouponIcon from '../../assets/coupon-icon.svg';
 import Logo from '../../assets/logo.png';
 import OrderIcon from '../../assets/order-icon.svg';
-import { useGetCartList } from '../../hooks/useFetchUrl';
+import { cartCountState } from '../../store/cart';
 import OriginSelector from '../OriginSelector/OriginSelector';
 import styles from './style.module.css';
 
 const Header = () => {
   const navigate = useNavigate();
-  const cartList = useGetCartList();
+  const cartCount = useRecoilValue(cartCountState);
 
   const navigateToMainPage = useCallback(() => {
     navigate('/');
@@ -37,9 +38,9 @@ const Header = () => {
         <img src={Logo} alt="logo" className={styles.logo} onClick={navigateToMainPage} />
         <div className={styles.flex}>
           <button type="button">
-            {cartList && cartList?.length > 0 && (
+            {cartCount > 0 && (
               <div className={styles.cartItemCountBox}>
-                <span className={styles.cartItemCount}>{cartList?.length}</span>
+                <span className={styles.cartItemCount}>{cartCount}</span>
               </div>
             )}
             <img
