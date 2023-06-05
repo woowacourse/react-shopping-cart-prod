@@ -30,23 +30,27 @@ const CartItemListPage = () => {
             <CartItemList />
           </Suspense>
           <SelectContainer>
-            <CheckBox
-              onChange={handleAllCheckedCartItems}
-              checked={totalCartProductCount === checkedCartProductCount}
-            />
-            <TotalSelectedCount>
-              전체선택 ({checkedCartProductCount}/{totalCartProductCount})
-            </TotalSelectedCount>
-            <Button
-              designtype='delete'
-              buttonLabel='선택삭제'
-              onClick={removeCheckedProducts}
-            />
+            {totalCartProductCount !== 0 && (
+              <>
+                <CheckBox
+                  onChange={handleAllCheckedCartItems}
+                  checked={totalCartProductCount === checkedCartProductCount}
+                />
+                <TotalSelectedCount>
+                  전체선택 ({checkedCartProductCount}/{totalCartProductCount})
+                </TotalSelectedCount>
+                <Button
+                  designtype='delete'
+                  buttonLabel='선택삭제'
+                  onClick={removeCheckedProducts}
+                />
+              </>
+            )}
           </SelectContainer>
         </CartProductInfo>
       </CartProductContent>
       <PaymentWrapper>
-        <EstimatedPaymentBox />
+        {totalCartProductCount !== 0 && <EstimatedPaymentBox />}
       </PaymentWrapper>
     </Main>
   );
