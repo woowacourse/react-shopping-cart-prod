@@ -8,6 +8,8 @@ import {
 import { CheckBox } from '../../../layout/checkBox/CheckBox';
 import { useCartRecoil } from '../../../hooks/recoil/useCartRecoil';
 import { useCartFetch } from '../../../hooks/fetch/useCartFetch';
+import { useEffect } from 'react';
+import { APIAtom } from '../../../recoil/atoms/serverAtom';
 
 const isAllCheckBoxSelectedState = selector({
   key: 'isAllCheckBoxSelectedState',
@@ -23,7 +25,17 @@ const isAllCheckBoxSelectedState = selector({
 });
 
 export const CartItemsSection = () => {
-  const cartItems = useRecoilValue(cartItemsState);
+  const [cartItems, setCartItems] = useRecoilState(cartItemsState);
+  const apiEndPoint = useRecoilValue(APIAtom);
+
+  const { getCartItems } = useCartFetch();
+
+  useEffect(() => {
+    getCartItems(apiEndPoint).then((data) => {
+      setCartItems(data);
+    });
+  }, [apiEndPoint]);
+
   const isAllCheckBoxChecked = useRecoilValue(isAllCheckBoxSelectedState);
   const [selectedCartIdList, setSelectedCartIdList] = useRecoilState(
     selectedCartIdListState

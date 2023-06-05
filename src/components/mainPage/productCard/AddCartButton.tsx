@@ -14,6 +14,7 @@ interface AddCartButtonProps {
 
 export const AddCartButton = ({ productId }: AddCartButtonProps) => {
   const cartItems = useRecoilValue(cartItemsState);
+
   const initialQuantity =
     cartItems.find((cartItem) => cartItem.product.id === productId)?.quantity ??
     1;

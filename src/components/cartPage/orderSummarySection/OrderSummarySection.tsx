@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import { getCommaAddedNumber } from '../../../utils/number';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { priceSummaryState } from '../../../recoil/selectors/priceSummarySelector';
 import { selectedCartIdListState } from '../../../recoil/atoms/cartAtom';
-import { pointState } from '../../../recoil/atoms/pointAtom';
+import { pointSelector, pointState } from '../../../recoil/atoms/pointAtom';
 import { useEffect } from 'react';
 import { useOrderFetch } from '../../../hooks/fetch/useOrderFetch';
 import { useCartFetch } from '../../../hooks/fetch/useCartFetch';
@@ -23,7 +23,9 @@ export const OrderSummarySection = () => {
   const { usingPoint, setUsingPoint, handleInputValueChange } =
     usePointInput(availablePoint);
 
-  const [point, setPoint] = useRecoilState(pointState);
+  const point = useRecoilValue(pointSelector);
+  const setPoint = useSetRecoilState(pointState);
+
   const checkedProduct = useRecoilValue(selectedCartIdListState);
 
   const { getPoint, orderByCartId } = useOrderFetch();
@@ -42,7 +44,7 @@ export const OrderSummarySection = () => {
     const order = orderByCartId(
       checkedProduct,
       totalProductPrice,
-      availablePoint,
+      usingPoint,
       pointToAdd
     );
 
@@ -64,6 +66,7 @@ export const OrderSummarySection = () => {
 
   const handleUsingAllPoint = () => {
     if (checkedProduct.length === 0) return;
+
     setUsingPoint(availablePoint);
   };
 

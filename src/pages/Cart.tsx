@@ -5,6 +5,8 @@ import { OrderSummarySection } from '../components/cartPage/orderSummarySection/
 import { useRecoilValue } from 'recoil';
 import { cartItemsLengthState } from '../recoil/selectors/cartListSelector';
 import { PageTitle } from '../layout/pageTitle/PageTitle';
+import { Suspense } from 'react';
+import Loading from '../components/common/Loading';
 
 export const Cart = () => {
   const cartItemsLength = useRecoilValue(cartItemsLengthState);
@@ -15,8 +17,10 @@ export const Cart = () => {
 
       {cartItemsLength > 0 ? (
         <Style.Content>
-          <CartItemsSection />
-          <OrderSummarySection />
+          <Suspense fallback={<Loading />}>
+            <CartItemsSection />
+            <OrderSummarySection />
+          </Suspense>
         </Style.Content>
       ) : (
         <Style.EmptyCartContainer>

@@ -4,6 +4,7 @@ export const CART_ITEMS_KEY = 'cartItemsKey';
 export const PRODUCT_LIST_KEY = 'productListKey';
 export const ORDER_LIST_KEY = 'orderListKey';
 export const POINT_KEY = 'pointKey';
+export const SERVER_KEY = 'serverKey';
 
 export const getCartItems = () => {
   const localStorageCartItems = localStorage.getItem(CART_ITEMS_KEY) ?? '[]';
@@ -52,4 +53,18 @@ export const getPoint = () => {
   }
 
   return point;
+};
+
+export const getServer = () => {
+  const localStorageSever = localStorage.getItem(SERVER_KEY);
+  const serverName = JSON.parse(
+    localStorageSever ??
+      JSON.stringify({ server: 'https://woowacourse-sunshot.store' })
+  );
+
+  return serverName.server;
+};
+
+export const setServer = (server: string) => {
+  localStorage.setItem(SERVER_KEY, JSON.stringify({ server }));
 };
