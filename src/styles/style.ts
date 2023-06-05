@@ -38,9 +38,7 @@ export const Row = styled.div`
 `;
 
 export const Column = styled.div`
-  margin: auto;
-  width: 90%;
-
+  width: calc(90%-1rem);
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
     width: 48%;
   }

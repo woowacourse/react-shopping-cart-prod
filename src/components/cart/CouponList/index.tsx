@@ -30,9 +30,22 @@ function CouponList({ onCouponSelect, selectedCoupon }: CouponListProps) {
 
 const Container = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(1, 1fr);
+  justify-content: center;
 
   gap: 5rem;
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.xl}) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 `;
 
 export default CouponList;
