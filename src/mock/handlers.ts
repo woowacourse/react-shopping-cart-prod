@@ -106,16 +106,16 @@ export const handlers = [
     }
     return res(ctx.status(400, 'CartItem Does Not Found'));
   }),
-  // rest.get('/coupons', async (_, res, ctx) => {
-  //   await delay(200);
+  rest.get('/coupons', async (_, res, ctx) => {
+    await delay(200);
 
-  //   return res(ctx.status(200), ctx.json(couponList));
-  // }),
-  // rest.get('/user/coupons', async (_, res, ctx) => {
-  //   await delay(200);
+    return res(ctx.status(200), ctx.json(couponList));
+  }),
+  rest.get('/user/coupons', async (_, res, ctx) => {
+    await delay(200);
 
-  //   return res(ctx.status(200), ctx.json(myCouponList));
-  // }),
+    return res(ctx.status(200), ctx.json(myCouponList));
+  }),
   rest.post('/user/coupons', async (req, res, ctx) => {
     const { couponId } = await req.json<{ couponId: number }>();
     const findCoupon = couponList.find((coupon) => coupon.id === couponId);
