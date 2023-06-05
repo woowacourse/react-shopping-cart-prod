@@ -9,6 +9,7 @@ const OriginSelector = () => {
   const [origin, setOrigin] = useRecoilState(originState);
 
   const onChangeOrigin = (e: ChangeEvent<HTMLSelectElement>) => {
+    console.log(2);
     setOrigin(ORIGIN[e.target.value]);
   };
 

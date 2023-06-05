@@ -1,41 +1,63 @@
-import { atom, selectorFamily } from 'recoil';
+import { atom, selector, selectorFamily } from 'recoil';
 
-// import { CART_LIST_LOCAL_STORAGE_KEY } from '../constants';
 import { CartItemType } from '../types';
 
 export const cartListState = atom<CartItemType[]>({
   key: 'cartList',
   default: [],
-  // effects: [
-  //   ({ setSelf, onSet }) => {
-  //     const storeKey = CART_LIST_LOCAL_STORAGE_KEY;
-  //     const savedValue = localStorage.getItem(storeKey);
-
-  //     if (savedValue !== null) {
-  //       setSelf(JSON.parse(savedValue));
-  //     }
-
-  // onSet((newValue, _, isReset) => {
-  //   isReset
-  //     ? localStorage.removeItem(storeKey)
-  //     : localStorage.setItem(
-  //         storeKey,
-  //         JSON.stringify(
-  //           newValue.map((item) => {
-  //             return {
-  //               id: item.id,
-  //               quantity: item.quantity,
-  //               product: item.product,
-  //             };
-  //           })
-  //         )
-  //       );
-  // });
-  // },
-  // ],
 });
 
-export const cartItemQuantityState = selectorFamily({
+export const cartTotalAmountState = selector({
+  key: 'cartTotalAmount',
+  get: ({ get }) => {
+    const cartList = get(cartListState);
+
+    return cartList.reduce((acc, item) => {
+      if (item.isChecked) return acc + item.quantity * item.product.price;
+      return acc;
+    }, 0);
+  },
+});
+
+export const cartCheckedState = selector({
+  key: 'cartCheckedLength',
+  get: ({ get }) => {
+    const cartList = get(cartListState);
+
+    return cartList.filter((item) => {
+      return item.isChecked === true;
+    }).length;
+  },
+});
+
+export const cartCheckedIdState = selector({
+  key: 'cartCheckedId',
+  get: ({ get }) => {
+    const cartList = get(cartListState);
+
+    return cartList
+      .filter((item) => {
+        return item.isChecked === true;
+      })
+      .map((item) => item.id);
+  },
+});
+
+export const cartCountState = selector({
+  key: 'cartCount',
+  get: ({ get }) => {
+    const cartList = get(cartListState);
+
+    return cartList ? cartList.length : 0;
+  },
+});
+
+export const cartOrderAmountState = atom({
+  key: 'cartOrderAmount',
+  default: 0,
+});
+
+export const cartItemState = selectorFamily({
   key: 'cartItemQuantity',
   get:
     (productId) =>
@@ -44,4 +66,29 @@ export const cartItemQuantityState = selectorFamily({
 
       return cartList.find((cartItem) => cartItem.product.id === productId);
     },
+});
+
+export const cartProductQuantityState = selectorFamily({
+  key: 'cartProductQuantity',
+  get:
+    (productId) =>
+    ({ get }) => {
+      const cartList = get(cartListState);
+      const cart = cartList.find((cartItem) => cartItem.product.id === productId);
+
+      return !cart ? 0 : cart.quantity;
+    },
+});
+
+export const cartOrderDataState = selector({
+  key: 'cartOrderData',
+  get: ({ get }) => {
+    const cartList = get(cartListState);
+
+    return cartList
+      .filter((item) => {
+        return item.isChecked === true;
+      })
+      .map((item) => ({ id: item.product.id, quantity: item.quantity }));
+  },
 });

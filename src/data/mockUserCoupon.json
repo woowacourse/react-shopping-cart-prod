@@ -1,0 +1,38 @@
+[
+  {
+    "couponId": 1,
+    "couponName": "오늘만 10%할인 쿠폰",
+    "minAmount": "15000",
+    "isPublished": false
+  },
+  {
+    "couponId": 2,
+    "couponName": "사장님이 미쳤어요! 99%할인 쿠폰",
+    "minAmount": "999999999",
+    "isPublished": true
+  },
+  {
+    "couponId": 2,
+    "couponName": "사장님이 미쳤어요! 99%할인 쿠폰",
+    "minAmount": "999999999",
+    "isPublished": true
+  },
+  {
+    "couponId": 2,
+    "couponName": "사장님이 미쳤어요! 99%할인 쿠폰",
+    "minAmount": "999999999",
+    "isPublished": true
+  },
+  {
+    "couponId": 2,
+    "couponName": "사장님이 미쳤어요! 99%할인 쿠폰",
+    "minAmount": "999999999",
+    "isPublished": true
+  },
+  {
+    "couponId": 2,
+    "couponName": "사장님이 미쳤어요! 99%할인 쿠폰",
+    "minAmount": "999999999",
+    "isPublished": true
+  }
+]
