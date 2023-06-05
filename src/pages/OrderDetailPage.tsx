@@ -5,14 +5,20 @@ import { WIDTH } from '../constants/mediaQuery';
 
 const OrderDetailPage = () => {
   const location = useLocation();
-  const { id, items, productPrice, discountPrice, deliveryFee, totalPrice } =
-    location.state;
+  const {
+    orderId,
+    items,
+    productPrice,
+    discountPrice,
+    deliveryFee,
+    totalPrice,
+  } = location.state;
 
   return (
     <Wrapper>
       <OrderCard
-        key={id}
-        id={id}
+        key={orderId}
+        orderId={orderId}
         items={items}
         productPrice={productPrice}
         discountPrice={discountPrice}

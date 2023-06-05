@@ -14,7 +14,7 @@ const OrderListPage = () => {
       <OrderListContainer>
         {orders.map((order) => {
           const {
-            id,
+            orderId,
             items,
             productPrice,
             discountPrice,
@@ -24,8 +24,8 @@ const OrderListPage = () => {
 
           return (
             <OrderCard
-              key={id}
-              id={id}
+              key={orderId}
+              orderId={orderId}
               items={items}
               productPrice={productPrice}
               discountPrice={discountPrice}
