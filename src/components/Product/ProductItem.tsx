@@ -17,21 +17,21 @@ const ProductItem = ({ product }: ProductItemProps) => {
 
   return (
     <ProductContainer>
-      <Image src={imageUrl} alt={name} loading='lazy' />
+      <Image src={imageUrl} alt={name} loading="lazy" />
       <ProductInfoContainer>
         <dl>
           <ProductName>{name}</ProductName>
           <ProductPrice>{price.toLocaleString('ko-KR')} 원</ProductPrice>
         </dl>
-        {!targetProduct || targetProduct.quantity === 0 ? (
-          <ProductCartBtn type='button' onClick={addProduct}>
-            <CartIcon width={25} height={22} color='gray400' />
+        {!targetProduct || !targetProduct.quantity ? (
+          <ProductCartBtn type="button" onClick={addProduct}>
+            <CartIcon width={25} height={22} color="gray400" />
           </ProductCartBtn>
         ) : (
           <AmountCounter
             count={targetProduct.quantity}
             cartItemId={targetProduct.id}
-            variant='small'
+            variant="small"
           />
         )}
       </ProductInfoContainer>

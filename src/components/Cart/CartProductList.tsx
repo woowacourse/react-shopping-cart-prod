@@ -12,7 +12,7 @@ const CartProductList = () => {
 
   useFetchCartProducts();
 
-  if (cartProducts.length === 0) {
+  if (!cartProducts.length) {
     return (
       <MessageWrapper>
         <Message type="cartEmpty" />

@@ -11,7 +11,7 @@ const ProductList = () => {
   const serverName = useRecoilValue(serverNameState);
   const products = useRecoilValue(productState(serverName));
 
-  if (products.length === 0) {
+  if (!products.length) {
     return <Message type="empty" />;
   }
 

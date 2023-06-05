@@ -9,7 +9,7 @@ interface ToastStyleProps {
 const Toast = () => {
   const toastInfo = useToast();
 
-  if (toastInfo === null) return null;
+  if (!toastInfo) return null;
 
   return <Container variant={toastInfo.variant}>{toastInfo.message}</Container>;
 };
