@@ -5,7 +5,7 @@ import { RouterProvider, createHashRouter } from 'react-router-dom';
 import App from './App';
 import GlobalStyle from './GlobalStyle';
 import ProductListPage from './pages/ProductListPage';
-import CartPage from './pages/CartPages';
+import CartPage from './pages/CartPage';
 import { worker } from './mocks/browser';
 import OrderPage from './pages/OrderPage';
 

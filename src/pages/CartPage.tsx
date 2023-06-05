@@ -6,6 +6,7 @@ import PaymentAmount from '../components/cart/PaymentAmount/PaymentAmount';
 import CheckedCartListProvider from '../provider/CheckedListProvider';
 import EmptyCartSuspense from '../components/cart/EmptyCartSuspense/EmptyCartSuspense';
 import LoadingView from '../components/common/LoadingView/LoadingView';
+import ErrorBoundary from '../errorHandler/ErrorBoundary';
 
 const CartPage = () => {
   return (
@@ -13,16 +14,18 @@ const CartPage = () => {
       <Header />
       <Layout>
         <Title>장바구니</Title>
-        <Suspense fallback={<LoadingView />}>
-          <CheckedCartListProvider>
-            <EmptyCartSuspense>
-              <Contents>
-                <CartList />
-                <PaymentAmount />
-              </Contents>
-            </EmptyCartSuspense>
-          </CheckedCartListProvider>
-        </Suspense>
+        <ErrorBoundary>
+          <Suspense fallback={<LoadingView />}>
+            <CheckedCartListProvider>
+              <EmptyCartSuspense>
+                <Contents>
+                  <CartList />
+                  <PaymentAmount />
+                </Contents>
+              </EmptyCartSuspense>
+            </CheckedCartListProvider>
+          </Suspense>
+        </ErrorBoundary>
       </Layout>
     </>
   );
