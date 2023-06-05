@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { MOCK_ORDER_LIST } from '@mocks/handlers';
-import OrderDetail from './OrderDetail';
+import OrderDetailArea from '.';
 
 const meta = {
-  component: OrderDetail,
-  title: 'Pages',
-} satisfies Meta<typeof OrderDetail>;
+  component: OrderDetailArea,
+  title: 'OrderDetailArea',
+} satisfies Meta<typeof OrderDetailArea>;
 
 export default meta;
 
@@ -13,6 +13,6 @@ type Story = StoryObj<typeof meta>;
 
 export const OrderDetailPage: Story = {
   args: {
-    order: MOCK_ORDER_LIST[0],
+    orderId: MOCK_ORDER_LIST[0].id,
   },
 };
