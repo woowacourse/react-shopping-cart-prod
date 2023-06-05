@@ -6,6 +6,7 @@ export const makeLocalProducts = async (): Promise<LocalProductType[]> => {
   try {
     const productsResponse = await getProductsApi();
     const cartItemsresponse = await getCartItemsApi();
+
     if (!productsResponse.ok)
       throw new Error(productsResponse.status.toString());
     if (!cartItemsresponse.ok)

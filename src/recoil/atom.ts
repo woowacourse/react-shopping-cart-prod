@@ -60,14 +60,12 @@ export const loginState = atom<boolean>({
 
 export const memberState = atom<MemberType>({
   key: "memberState",
-  default: { id: 1, nickname: "라잇" },
-  // default: selector<MemberType>({
-  //   key: "memberState/default",
-  //   get: async () => {
-  //     const response = await getMemberApi();
-  //     if (!response.ok) throw new Error(response.status.toString());
-  //     console.log(response.json());
-  //     return await response.json();
-  //   },
-  // }),
+  default: selector<MemberType>({
+    key: "memberState/default",
+    get: async () => {
+      const response = await getMemberApi();
+      if (!response.ok) throw new Error(response.status.toString());
+      return await response.json();
+    },
+  }),
 });
