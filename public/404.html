@@ -17,7 +17,7 @@
             .split('/')
             .slice(0, 1 + segmentCount)
             .join('/') +
-          '/' +
+          '/?p=/' +
           location.pathname.slice(1).split('/').slice(segmentCount).join('/').replace(/&/g, '~and~') +
           (location.search ? '&q=' + location.search.slice(1).replace(/&/g, '~and~') : '') +
           location.hash
