@@ -7,6 +7,7 @@ import GlobalStyle from './GlobalStyle';
 import ProductListPage from './pages/ProductListPage';
 import CartPage from './pages/CartPages';
 import { worker } from './mocks/browser';
+import OrderPage from './pages/OrderPage';
 
 const main = async () => {
   if (window.location.pathname === '/react-shopping-cart') {
@@ -39,6 +40,10 @@ const router = createHashRouter([
       {
         path: 'cart',
         element: <CartPage />,
+      },
+      {
+        path: 'order',
+        element: <OrderPage />,
       },
     ],
   },
