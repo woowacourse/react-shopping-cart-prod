@@ -13,6 +13,7 @@ const OrderSheet = () => {
     getDiscountAmount,
     getDeliveryFee,
     getTotalOrderAmount,
+    handleOrder,
   } = useOrderSheet();
 
   return (
@@ -36,7 +37,9 @@ const OrderSheet = () => {
           />
         </div>
       </OrderContents>
-      <OrderButton>{formatPrice(getTotalOrderAmount())} 주문하기</OrderButton>
+      <OrderButton onClick={handleOrder}>
+        {formatPrice(getTotalOrderAmount())} 주문하기
+      </OrderButton>
     </OrderSheetContainer>
   );
 };

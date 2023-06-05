@@ -1,8 +1,15 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useCheckedCartListValue } from '../../../provider/CheckedListProvider';
+import { useRecoilValue } from 'recoil';
+import serverNameState from '../../../globalState/atoms/serverName';
+import ServerUtil from '../../../utils/ServerUrl';
 import type { Coupon } from '../../../types/product';
+import { USER_AUTH_TOKEN } from '../../../constant';
 
 const useOrderSheet = () => {
+  const navigate = useNavigate();
+
   const { getCheckedItemList } = useCheckedCartListValue();
   const checkedCartList = getCheckedItemList();
   const [selectedCoupon, setSelectedCoupon] = useState<Coupon | null>(null);
@@ -38,6 +45,33 @@ const useOrderSheet = () => {
     return getProductAmount() + getDeliveryFee() - getDiscountAmount();
   };
 
+  const handleOrder = async () => {
+    const serverName = useRecoilValue(serverNameState);
+    const OrdersUrl = ServerUtil.getOrdersUrl(serverName);
+
+    const couponIds = selectedCoupon ? [selectedCoupon.id] : [];
+    const orderBody = {
+      cartItems: checkedCartList,
+      couponIds: couponIds,
+      deliveryFee: getDeliveryFee(),
+    };
+
+    const response = await fetch(OrdersUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Basic ${USER_AUTH_TOKEN}`,
+      },
+      body: JSON.stringify(orderBody),
+    });
+
+    if (!response.ok) {
+      throw new Error('주문 과정에서 에러가 발생했습니다.');
+    }
+
+    navigate('/order');
+  };
+
   return {
     checkedCartList,
     handleChangeCoupon,
@@ -45,6 +79,7 @@ const useOrderSheet = () => {
     getDiscountAmount,
     getDeliveryFee,
     getTotalOrderAmount,
+    handleOrder,
   };
 };
 
