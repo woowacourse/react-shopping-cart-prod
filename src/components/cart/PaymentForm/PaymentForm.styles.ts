@@ -8,7 +8,7 @@ export const S = {
     width: 70%;
     height: fit-content;
     padding: 20px 0;
-    margin-top: 40px;
+    margin: 40px 0;
     border-radius: 7px;
     border: 2px solid #ddd;
 

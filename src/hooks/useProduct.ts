@@ -54,12 +54,7 @@ export const useProduct = (productId: number) => {
       id: productId,
       cartId: findCartItemId,
       quantity: 1,
-    }); // for real
-    // updateCart({
-    //   id: productId,
-    //   cartId: productId,
-    //   quantity: 1,
-    // }); // for msw
+    });
   };
 
   const updateItem = (quantity: number) => {
@@ -69,8 +64,7 @@ export const useProduct = (productId: number) => {
       {
         url: `${serverUrl}${CART_BASE_URL}/${findCartItemId}`,
         method: 'PATCH',
-        bodyData: { quantity }, // for real
-        // bodyData: { productId, quantity }, // for msw
+        bodyData: { quantity },
         headers: {
           Authorization: `Basic ${base64}`,
           'Content-Type': 'application/json',
@@ -80,8 +74,7 @@ export const useProduct = (productId: number) => {
     );
     if (error) return;
 
-    updateCart({ id: productId, cartId: findCartItemId, quantity }); // for real
-    // updateCart({ id: productId, cartId: productId, quantity }); // for msw
+    updateCart({ id: productId, cartId: findCartItemId, quantity });
   };
 
   const removeItem = () => {

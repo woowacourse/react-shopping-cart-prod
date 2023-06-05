@@ -8,6 +8,7 @@ import useGet from './useGet';
 import { OrderItem } from '../types';
 import { checkedItemsState } from '../store/CartState';
 import { removeProductItemFromCartSelector } from '../store/CartSelector';
+import useNavigatePage from './useNavigatePage';
 
 const useOrder = () => {
   const setOrder = useSetRecoilState(orderState);
@@ -20,6 +21,8 @@ const useOrder = () => {
   const serverUrl = useRecoilValue(serverState);
   const { data: orderData } = useGet<OrderItem[]>(`${serverUrl}${ORDER_BASE_URL}`);
 
+  const { goOrderComplete } = useNavigatePage();
+
   const handleRemoveCheckedItem = (cartIds: number[]) => {
     cartIds.forEach((id) => {
       removeProductItemFromCart(id);
@@ -28,21 +31,26 @@ const useOrder = () => {
   };
 
   const handleOrderItems = (cartIds: number[], point: number, deliveryFee: number) => {
-    mutateOrder(
-      {
-        url: `${serverUrl}${ORDER_BASE_URL}`,
-        method: 'POST',
-        bodyData: { cartIds, point, deliveryFee },
-        headers: {
-          Authorization: `basic ${base64}`,
-          'content-type': 'application/json',
+    const confirmResult = window.confirm('주문을 진행하시겠습니까?');
+    if (confirmResult) {
+      mutateOrder(
+        {
+          url: `${serverUrl}${ORDER_BASE_URL}`,
+          method: 'POST',
+          bodyData: { cartIds, point, deliveryFee },
+          headers: {
+            Authorization: `basic ${base64}`,
+            'content-type': 'application/json',
+          },
         },
-      },
-      ORDER_BASE_URL,
-    );
+        ORDER_BASE_URL,
+      );
 
-    if (orderData) setOrder(orderData);
-    handleRemoveCheckedItem(cartIds);
+      if (orderData) setOrder(orderData);
+      handleRemoveCheckedItem(cartIds);
+
+      goOrderComplete();
+    }
   };
 
   return { handleOrderItems };
