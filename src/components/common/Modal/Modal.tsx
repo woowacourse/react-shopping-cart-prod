@@ -1,4 +1,4 @@
-import React, { Suspense, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 import LoadingView from '../LoadingView/LoadingView';
 
@@ -19,6 +19,12 @@ const Modal = ({ trigger, title, children }: ModalProps) => {
     setIsModalOpen(false);
     document.body.style.removeProperty('overflow');
   };
+
+  useEffect(() => {
+    return () => {
+      handleCloseModal();
+    };
+  }, []);
 
   return (
     <>
