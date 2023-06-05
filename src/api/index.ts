@@ -205,3 +205,22 @@ export const getOrder = async <T>(serverName: ServerNameType, loginCredential: s
 
   return data;
 };
+
+export const getOrderDetail = async <T>(
+  serverName: ServerNameType,
+  loginCredential: string,
+  orderId: string
+) => {
+  const response = await fetch(`${BASE_URL_MAP[serverName]}/orders/${orderId}`, {
+    headers: {
+      Authorization: `Basic ${loginCredential}`,
+    },
+  });
+
+  if (!response.ok) throw new Error(`cart-items GET error`);
+
+  const data: T = await response.json();
+
+  console.log(data);
+  return data;
+};
