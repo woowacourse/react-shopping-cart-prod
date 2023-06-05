@@ -58,16 +58,6 @@ export const isSelectedCartId = selectorFamily({
     },
 });
 
-// TODO: 방어코드가 필요하지 않을까?
-export const getCartItemById = selectorFamily({
-  key: 'hasItemInCart',
-  get:
-    (id: CartItem['id']) =>
-    ({ get }) => {
-      return get(cartSelector).find((item) => item.id === id);
-    },
-});
-
 export const totalPriceSelector = selector({
   key: 'totalPriceSelector',
   get: ({ get }) => {
