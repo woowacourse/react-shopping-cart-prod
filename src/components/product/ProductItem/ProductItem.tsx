@@ -7,7 +7,7 @@ import useCartService from '../../../hooks/useCartService';
 import type { Product } from '../../../types/product';
 import colors from '../../../colors';
 
-interface Foo {
+interface ModeProps {
   mode: unknown;
 }
 
@@ -87,7 +87,7 @@ const ProductImageWrapper = styled.div`
   position: relative;
 `;
 
-const CartButtonWrapper = styled.div<Foo>`
+const CartButtonWrapper = styled.div<ModeProps>`
   position: absolute;
   right: 8px;
   bottom: 8px;
