@@ -6,6 +6,7 @@ import {
 } from '../../constants/api';
 import { fetchCartItems } from '../../remotes/cart';
 import { setLocalStorage } from '../../utils/localStorage';
+import { getBase64 } from '../../constants/auth';
 import type { Order } from '../../types/order';
 import type { CartItem } from '../../types/cart';
 
@@ -35,7 +36,10 @@ export const orderHandlers = [
   // 주문하기
   rest.post(ORDERS_BASE_URL, async (req, res, ctx) => {
     const { cartItemIds } = await req.json();
-    const cart: CartItem[] = await fetchCartItems(CART_BASE_URL);
+    const cart: CartItem[] = await fetchCartItems(
+      CART_BASE_URL,
+      getBase64('유스'),
+    );
 
     const orderItems = cart.filter((cartItem) =>
       cartItemIds.includes(cartItem.id),
