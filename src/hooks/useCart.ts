@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { api } from '../apis/cartItems';
-import { findTargetProduct } from '../domain/cartProductHandler';
+import { findTargetProduct } from '../domain/cartItemHandler';
 import useProductQuantity from './useProductQuantity';
 import { cartAtom } from '../recoil/cartItemData';
 import { hostNameAtom } from '../recoil/hostData';
