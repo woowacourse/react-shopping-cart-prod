@@ -13,7 +13,7 @@ import Home from './components/pages/Home';
 import { CartItemType, CheckedStateType } from './types';
 import { FETCH_URL, PATH } from './constants';
 import { useSetCheckedState } from './recoils/recoilChecked';
-import Loader from './components/loader/Loader';
+import Loader from './components/Loader';
 import ErrorBoundary from './components/ErrorBoundary';
 import NotFound from './components/NotFound';
 

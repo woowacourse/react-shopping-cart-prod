@@ -47,13 +47,10 @@ jobs:
           npm run build
           cp ./build/index.html ./build/404.html
 
-      # 이 부분입니다.
-      # -----------------------------------------
       - name: Build storybook
         run: |
           npm run build-storybook
           mv ./storybook-static ./build/storybook
-      # -----------------------------------------
 
       - name: Deploy to gh-pages branch
         uses: peaceiris/actions-gh-pages@v3
