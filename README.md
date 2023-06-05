@@ -9,6 +9,8 @@
 
 ---
 
+![장바구니 협업 미션 실행화면](https://github.com/woowacourse/react-shopping-cart-prod/assets/24777828/75454e41-a20c-48c8-94ce-e5635a7bc7fc)
+
 ## [🛒 장바구니 페이지 링크](https://hyeryongchoi.github.io/react-shopping-cart-prod/) | [📕 스토리북 페이지 링크](https://hyeryongchoi.github.io/react-shopping-cart-prod/storybook)
 
 ### 📢 MSW서버로 테스트할 경우 로컬스토리지를 비워주세요.
