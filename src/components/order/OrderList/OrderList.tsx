@@ -23,7 +23,7 @@ const OrderList = () => {
           id={id}
           actualPrice={actualPrice}
           cartItems={cartItems}
-          deliveryFee={deliveryFee}
+          deliveryFee={deliveryFee || 3000}
           originalPrice={originalPrice}
         />
       ))}
