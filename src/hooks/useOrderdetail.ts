@@ -26,6 +26,7 @@ export const useOrderDetail = (orderId: number) => {
 
   useEffect(() => {
     getOrderDetailList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return { orderDetailList };

@@ -17,6 +17,7 @@ export const useCoupon = () => {
 
   useEffect(() => {
     getCoupon();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return { coupons };
