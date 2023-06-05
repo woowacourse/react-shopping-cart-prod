@@ -13,7 +13,7 @@ import { COUPON_PATH } from '@constants/urlConstants';
 import { CouponRemote, CouponType } from 'types/CouponType';
 import { cartTotalPrice } from '@views/Cart/recoil/cartState';
 
-const couponListState = atom<CouponType[]>({
+export const couponListState = atom<CouponType[]>({
   key: 'couponListState',
   default: selector({
     key: 'couponListState/default',
@@ -37,7 +37,7 @@ const couponListState = atom<CouponType[]>({
   }),
 });
 
-const couponSelected = selector({
+export const couponSelected = selector({
   key: 'couponSelected',
   get: ({ get }) => {
     const coupon = get(couponListState).find((coupon) => coupon.checked === true);
@@ -66,50 +66,3 @@ export const useRefreshCouponList = () => {
     refreshCoupon();
   };
 };
-
-const useCouponList = () => {
-  const [couponList, setCouponList] = useRecoilState(couponListState);
-
-  const checkCoupon = (couponId: number) => {
-    if (!couponList.some((coupon) => coupon.id === couponId)) {
-      throw new Error('coupon id와 일치하는 coupon이 없어서 coupon을 찾을 수 없습니다.');
-    }
-
-    setCouponList((prevCouponList) => {
-      const couponList: CouponType[] = prevCouponList.map((coupon) => {
-        if (coupon.id === couponId) {
-          return {
-            ...coupon,
-            checked: true,
-          };
-        }
-
-        return {
-          ...coupon,
-          checked: false,
-        };
-      });
-
-      return couponList;
-    });
-  };
-
-  const resetCouponCheck = () => {
-    setCouponList((prev) => {
-      return prev.map((coupon) => {
-        return {
-          ...coupon,
-          checked: false,
-        };
-      });
-    });
-  };
-
-  return {
-    couponList,
-    checkCoupon,
-    resetCouponCheck,
-  };
-};
-
-export default useCouponList;

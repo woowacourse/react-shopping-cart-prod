@@ -1,13 +1,13 @@
 import { Modal } from '@common/Modal';
 
 import { useTotalPrice } from '@views/Cart/recoil/cartState';
-import useCouponList from '@views/Payment/recoil/couponListState';
 
 import { styled } from 'styled-components';
 
 import { CouponItem } from '../CouponItem';
 import { Button } from '@common/Button';
 import { useState } from 'react';
+import useCouponList from '@views/Payment/hooks/useCouponList';
 
 interface CouponModalProps {
   isOpen: boolean;

@@ -2,12 +2,6 @@ import { CouponType } from 'types/CouponType';
 import { DELIVERY_FEE_BASIC } from '../constants/orderConstants';
 import { useTotalPrice } from '@views/Cart/recoil/cartState';
 
-interface GetExpectedPriceParams {
-  totalPrice: number;
-  deliveryFee: number;
-  discountPrice: number;
-}
-
 const getDiscount = (coupon: CouponType | null, totalPrice: number) => {
   if (!coupon || !totalPrice) {
     return 0;

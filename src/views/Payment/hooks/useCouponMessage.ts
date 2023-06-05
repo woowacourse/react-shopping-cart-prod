@@ -1,5 +1,6 @@
 import { useTotalPrice } from '@views/Cart/recoil/cartState';
-import useCouponList, { useCouponSelected } from '../recoil/couponListState';
+import useCouponList from './useCouponList';
+import { useCouponSelected } from '../recoil/couponListState';
 
 const useCouponMessage = () => {
   const { couponList } = useCouponList();
