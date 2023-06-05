@@ -6,13 +6,20 @@ export const Title = styled.h3`
   padding: 3rem;
 
   font-weight: 700;
-  font-size: 2.8rem;
-  line-height: 2.8rem;
+  font-size: 2rem;
 
   letter-spacing: 0.5px;
 
   color: ${theme.colors.primaryColor};
   background: ${theme.colors.grayColor};
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    font-size: 2.4rem;
+  }
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    font-size: 2.8rem;
+  }
 `;
 
 export const InformationWrapper = styled.div`
@@ -31,12 +38,23 @@ export const AmountWrapper = styled.div`
 
   font-weight: 700;
   font-size: 2.4rem;
-  line-height: 2.4rem;
 
   letter-spacing: 0.5px;
 
   color: ${theme.colors.primaryColor};
   background: ${theme.colors.lightColor};
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.sm}) {
+    font-size: 2rem;
+  }
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    font-size: 2.4rem;
+  }
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    font-size: 2.8rem;
+  }
 `;
 
 export const LastAmountWrapper = styled(AmountWrapper)`
