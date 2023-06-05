@@ -69,15 +69,7 @@ const CartPageContent = (props: CartPageContentProps) => {
   const allSelected = selectedCount === cartItems.length;
 
   const { deleteCartItems } = useCartActions();
-  const { selectForOrder, toggleForOrder, unselectAllForOrder } = useCartOrder();
-
-  const handleEnableAll = (cartItems: CartItem[]) => () => {
-    if (allSelected) {
-      unselectAllForOrder();
-      return;
-    }
-    cartItems.forEach((cartItem) => selectForOrder(cartItem.product.id));
-  };
+  const { toggleForOrder, unselectAllForOrder, handleEnableAll } = useCartOrder();
 
   const handleDeleteSelected = (cartItems: CartItem[]) => () => {
     unselectAllForOrder();
@@ -89,7 +81,7 @@ const CartPageContent = (props: CartPageContentProps) => {
       <CartItemListSection>
         <CartItemListController>
           <span>
-            <Checkbox value={allSelected} onChange={handleEnableAll(cartItems)} />
+            <Checkbox value={allSelected} onChange={handleEnableAll(cartItems, allSelected)} />
             <CartItemSelected>전체{cartItems.length}개</CartItemSelected>
           </span>
           <DeleteSelectedButton onClick={handleDeleteSelected(cartItems)}>
