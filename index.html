@@ -10,8 +10,8 @@
 
   <body>
     <div id="root"></div>
-    <script type="text/javascript" src="/src/main.tsx">
-         (function (location) {
+    <script type="text/javascript">
+      (function (location) {
         if (location.search) {
           var q = {};
           location.search
@@ -25,10 +25,7 @@
             window.history.replaceState(
               null,
               null,
-              location.pathname.slice(0, -1) +
-                (q.p || '') +
-                (q.q ? '?' + q.q : '') +
-                location.hash
+              location.pathname.slice(0, -1) + (q.p || '') + (q.q ? '?' + q.q : '') + location.hash
             );
           }
         }
