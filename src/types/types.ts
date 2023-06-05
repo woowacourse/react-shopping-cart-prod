@@ -83,5 +83,27 @@ export interface PointHistory {
 
 export interface Point {
   pointHistories: PointHistory[];
-  totalPoint: 0;
+  totalPoint: number;
+}
+
+export interface OrderedItem {
+  id: number;
+  productName: string;
+  productPrice: number;
+  paymentPrice: number;
+  productQuantity: number;
+  imageUrl: string;
+}
+
+export interface OrderedGroup {
+  orderId: number;
+  orderItems: OrderedItem[];
+  usedCoupons: Coupon[];
+  usedPoint: number;
+  paymentPrice: number;
+  createAt: string;
+}
+
+export interface ResponseOrdered {
+  orderResponses: OrderedGroup[]
 }

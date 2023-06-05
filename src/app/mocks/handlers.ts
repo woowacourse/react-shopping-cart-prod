@@ -7,6 +7,8 @@ import { getSessionStorage, setSessionStorage } from "../utils/storage.ts";
 import {
   Coupon,
   NewOrder,
+  Point,
+  PointHistory,
   ProductItem,
   ResponseCartItem,
 } from "../../types/types.ts";
@@ -137,7 +139,7 @@ export const handlers = [
   rest.get("/point", async (req, res, ctx) => {
     const point = getSessionStorage(SESSION_STORAGE_KEY_POINT, {
       pointHistories: [],
-      totalPoint: 0,
+      totalPoint: 1000,
     });
 
     return res(ctx.delay(100), ctx.status(200), ctx.json(point));
@@ -147,6 +149,8 @@ export const handlers = [
     const body: NewOrder = await req.json();
     const { orderItems, orderDiscounts } = body;
     const { couponIds, point } = orderDiscounts;
+
+    const newOrderId = Date.now();
 
     const totalPrice = orderItems.reduce((acc, orderItem) => {
       const targetPrice = mockProducts.find(
@@ -163,12 +167,12 @@ export const handlers = [
 
     const discountByCoupon = targetCoupon
       ? (totalPrice * targetCoupon.discountPercent) / 100 +
-        targetCoupon.discountAmount
+      targetCoupon.discountAmount
       : 0;
 
     const realPrice = totalPrice - discountByCoupon - point;
-    const newPoint = realPrice * 0.01; // 배송비를 제외한 결제 금액의 1%를 적립하기로 함
 
+    // 기존 장바구니에서 제거하는 기능 시작
     const cartItems = getSessionStorage<ResponseCartItem>(
       SESSION_STORAGE_KEY_CART_ITEMS,
       {
@@ -189,10 +193,34 @@ export const handlers = [
         0
       ),
     });
+    // 끝
+
+    // 포인트를 적립하는 기능 시작
+    const newPoint = Math.floor(realPrice * 0.01); // 배송비를 제외한 결제 금액의 1%를 적립하기로 함
+    const userPoint = getSessionStorage<Point>(
+      SESSION_STORAGE_KEY_POINT,
+      {
+        pointHistories: [],
+        totalPoint: 1000
+      }
+    );
+    const originalPointHistories = [...userPoint.pointHistories];
+    const originalTotalPoint = userPoint.totalPoint;
+    const newHistory: PointHistory = {
+      orderId: newOrderId,
+      earnedPoint: newPoint,
+      usedPoint: point
+    };
+    const newUserPoint: Point = {
+      pointHistories: [...originalPointHistories, newHistory],
+      totalPoint: Math.floor(originalTotalPoint + newPoint - point)
+    };
+
+    setSessionStorage(SESSION_STORAGE_KEY_POINT, newUserPoint);
+    // 끝
+
 
     // 주문 목록에 저장한다.
-    // 기존 장바구니에서 제거한다.
-    // 포인트를 적립한다.
 
     return res(ctx.delay(100), ctx.status(200), ctx.json(true));
   }),
