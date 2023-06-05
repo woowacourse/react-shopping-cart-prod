@@ -10,13 +10,12 @@ import CartItemList from '../components/Cart/CartItemList';
 
 import { totalCartProductSelect } from '../recoil/cartItemData';
 import { checkedListSelector } from '../recoil/checkedCartItemData';
-import useCheckedProducts from '../hooks/useCheckedProducts';
+import useCheckedCart from '../hooks/useCheckedCart';
 
 const CartItemListPage = () => {
   const totalCartProductCount = useRecoilValue(totalCartProductSelect);
   const checkedCartProductCount = useRecoilValue(checkedListSelector);
-  const { removeCheckedProducts, handleAllCheckedCartItems } =
-    useCheckedProducts();
+  const { removeCheckedProducts, handleAllCheckedCartItems } = useCheckedCart();
 
   return (
     <Main>

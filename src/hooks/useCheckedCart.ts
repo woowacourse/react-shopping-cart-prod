@@ -8,7 +8,7 @@ import { hostNameAtom } from '../recoil/hostData';
 import { cartAtom } from '../recoil/cartItemData';
 import { checkedCartItemIdsAtom } from '../recoil/checkedCartItemData';
 
-const useCheckedProducts = () => {
+const useCheckedCart = () => {
   const hostName = useRecoilValue(hostNameAtom);
   const [cart, setCart] = useRecoilState(cartAtom);
   const [checkedCartItemIds, setCheckedCartItemIds] = useRecoilState(
@@ -71,4 +71,4 @@ const useCheckedProducts = () => {
   };
 };
 
-export default useCheckedProducts;
+export default useCheckedCart;

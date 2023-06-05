@@ -8,7 +8,7 @@ import AmountCounter from '../Common/AmountCounter';
 
 import TrashCanIcon from '../../assets/TrashCanIcon';
 import useCart from '../../hooks/useCart';
-import useCheckedProducts from '../../hooks/useCheckedProducts';
+import useCheckedCart from '../../hooks/useCheckedCart';
 
 interface CartItemProps {
   cartItem: CartItemType;
@@ -18,7 +18,7 @@ const CartItem = ({ cartItem }: CartItemProps) => {
   const { quantity, product } = cartItem;
   const { name, price, imageUrl } = product;
   const { removeProduct, addCount, subtractCount } = useCart(product);
-  const { handleCheckBoxChange, isCheckedProduct } = useCheckedProducts();
+  const { handleCheckBoxChange, isCheckedProduct } = useCheckedCart();
 
   return (
     <CartItemContainer>
