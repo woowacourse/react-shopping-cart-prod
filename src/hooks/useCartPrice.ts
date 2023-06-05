@@ -17,17 +17,13 @@ const useExpectedPayment = () => {
   );
 
   const calculateTotalPrice = useCallback(
-    (discountPrice = 0) => {
-      return (totalProductPrice + deliveryFee - discountPrice).toLocaleString(
-        'ko-KR'
-      );
-    },
+    (discountPrice = 0) => totalProductPrice + deliveryFee - discountPrice,
     [deliveryFee, totalProductPrice]
   );
 
   return {
-    totalProductPrice: totalProductPrice.toLocaleString('ko-KR'),
-    deliveryFee: deliveryFee.toLocaleString('ko-KR'),
+    totalProductPrice: totalProductPrice,
+    deliveryFee: deliveryFee,
     calculateTotalPrice,
   };
 };

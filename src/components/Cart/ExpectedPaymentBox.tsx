@@ -9,7 +9,6 @@ import useExpectedPayment from '../../hooks/useCartPrice';
 import { useGetCoupons } from '../../hooks/useGetCoupons';
 import { useOrderProducts } from '../../hooks/useOrderProducts';
 import { useGetSelectedCoupon } from '../../hooks/useGetSelectedCoupon';
-import { removeChar } from '../../utils/stringUtils';
 import { Coupon } from '../../types/coupon';
 import { DEFAULT_COUPON_NAME, NO_DISCOUNT } from '../../constants/coupon';
 
@@ -28,11 +27,8 @@ const ExpectedPaymentBox = () => {
   };
 
   const handleOrderClick = () => {
-    const orderPrice = Number(
-      removeChar(
-        calculateTotalPrice(selectedCoupon ? selectedCoupon.discountPrice : 0),
-        ','
-      )
+    const orderPrice = calculateTotalPrice(
+      selectedCoupon ? selectedCoupon.discountPrice : 0
     );
 
     orderProducts(orderPrice, selectedCoupon ? selectedCoupon.id : NO_DISCOUNT);
@@ -44,18 +40,18 @@ const ExpectedPaymentBox = () => {
       <ExpectedPaymentInfo>
         <PaymentInfoItem>
           <dt>총 상품가격</dt>
-          <dd>{totalProductPrice}원</dd>
+          <dd>{totalProductPrice.toLocaleString('ko-KR')}원</dd>
         </PaymentInfoItem>
         <PaymentInfoItem>
           <dt>총 배송비</dt>
-          <dd>{deliveryFee}원</dd>
+          <dd>{deliveryFee.toLocaleString('ko-KR')}원</dd>
         </PaymentInfoItem>
         <PaymentInfoItem>
           <dt>총 주문금액</dt>
           <dd>
             {calculateTotalPrice(
               selectedCoupon ? selectedCoupon.discountPrice : 0
-            )}
+            ).toLocaleString('ko-KR')}
             원
           </dd>
         </PaymentInfoItem>
