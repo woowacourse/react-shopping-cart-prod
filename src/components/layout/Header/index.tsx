@@ -11,8 +11,8 @@ import { Container } from '@styles/style';
 import * as S from './Header.style';
 
 function Header() {
-  const { onUserChange } = useUser();
-  const { onServerChange } = useServer();
+  const { userInfo, onUserChange } = useUser();
+  const { server, onServerChange } = useServer();
 
   return (
     <S.Navbar>
@@ -22,6 +22,7 @@ function Header() {
           <SelectBox
             options={SERVER_NAME.map((name) => ({ value: name, name }))}
             onChange={onServerChange}
+            value={server}
           />
           <Suspense>
             <SelectBox
@@ -30,6 +31,7 @@ function Header() {
                 name: user.nickname,
               }))}
               onChange={onUserChange}
+              value={userInfo.nickname}
             ></SelectBox>
             <S.HeaderLink to={ROUTER_PATH.ORDERS}>주문 내역</S.HeaderLink>
             <CartStepperWithIcon />
