@@ -4,7 +4,7 @@ import { CartItem } from '../../../types';
 import CartListItem from '../CartListItem';
 import Checkbox from '../../@common/Checkbox';
 import TotalCheckbox from '../TotalCheckbox';
-import PriceWrapper from '../PriceWrapper';
+import PaymentForm from '../PaymentForm';
 import { LoadingSpinner } from '../../@common/LoadingSpinner/LoadingSpinner';
 import { S } from './CartList.styles';
 import { Title } from '../../../style/commonStyle';
@@ -57,7 +57,7 @@ const CartList = ({ cart, isLoading }: Props) => {
         />
         <S.ContentWrapper>
           {itemList}
-          <PriceWrapper totalPrice={totalPrice} />
+          <PaymentForm totalPrice={totalPrice} />
         </S.ContentWrapper>
       </S.Wrapper>
     </>

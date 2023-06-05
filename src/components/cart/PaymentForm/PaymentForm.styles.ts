@@ -1,7 +1,7 @@
 import { styled } from 'styled-components';
 
 export const S = {
-  PriceWrapper: styled.div`
+  PaymentForm: styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -39,6 +39,10 @@ export const S = {
     width: 100%;
     font-size: 20px;
     font-weight: 400;
+
+    @media all and (max-width: 1023px) {
+      font-size: 18px;
+    }
   `,
 
   PriceInfo: styled.div`
@@ -46,6 +50,10 @@ export const S = {
     font-size: 18px;
     font-weight: 700;
     margin-top: 30px;
+
+    @media all and (max-width: 1023px) {
+      font-size: 16px;
+    }
 
     & > :last-child {
       margin-top: 30px;
@@ -61,6 +69,11 @@ export const S = {
     border-radius: 7px;
     color: #fff;
     background-color: ${(props) => (props.disabled ? '#aaa' : '#04c09e')};
+
+    @media all and (max-width: 1023px) {
+      height: 50px;
+      font-size: 18px;
+    }
   `,
 
   PriceSection: styled.section`
