@@ -118,14 +118,4 @@ const DetailInner = styled.div`
   }
 `;
 
-const Point = styled.div`
-  display: flex;
-  align-items: center;
-  column-gap: 5px;
-
-  & > dd {
-    color: ${(props) => props.theme.color.primary};
-  }
-`;
-
 export default OrderDetailPage;
