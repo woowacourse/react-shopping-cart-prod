@@ -17,7 +17,12 @@ const OrderAside = () => {
       </S.TextWrapper>
       <S.TextWrapper>
         <S.Text>할인 금액</S.Text>
-        <S.Text color="red">{(discountPrice * -1).toLocaleString()}원</S.Text>
+        <S.Text color="red">
+          {discountPrice
+            ? (discountPrice * -1).toLocaleString()
+            : discountPrice}
+          원
+        </S.Text>
       </S.TextWrapper>
       <S.TextWrapper>
         <S.Text>총 주문금액</S.Text>

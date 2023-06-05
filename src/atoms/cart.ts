@@ -84,7 +84,17 @@ export const totalPriceSelector = selector({
         { id: cartId, quantity, product: { id: productId, price } }
       ) => {
         let discountedPrice = price;
+        const allCoupon = selectedCoupons.get(-1);
         const selectedCoupon = selectedCoupons.get(cartId);
+
+        if (allCoupon) {
+          const { discountType, value } = allCoupon;
+
+          discountedPrice = getDiscountInfo(price, {
+            discountType,
+            value,
+          }).discountedPrice;
+        }
 
         if (selectedCoupon) {
           const { discountType, value } = selectedCoupon;

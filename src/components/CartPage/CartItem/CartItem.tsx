@@ -29,7 +29,7 @@ const CartItem: React.FC<CartItemProps> = (props) => {
   const quantityRef = useRef<HTMLInputElement>(null);
   const { selectedItems, selectItem } = useCartSelector();
   const { updateCartItemMutation, deleteCartItemMutation } = useMutateCart();
-  const setSelectedCouponState = useSetRecoilState(selectedCouponsState);
+  const setSelectedCouponsState = useSetRecoilState(selectedCouponsState);
 
   const productCoupons = useRefreshableRecoilValue(
     productCouponsSelector(productId)
@@ -49,12 +49,14 @@ const CartItem: React.FC<CartItemProps> = (props) => {
       (coupon) => coupon.id === couponId
     );
 
-    setSelectedCouponState((prevSelectedCoupons) => {
+    setSelectedCouponsState((prevSelectedCoupons) => {
       const updatedSelectedCoupons = new Map(prevSelectedCoupons);
 
       targetCoupon
         ? updatedSelectedCoupons.set(cartId, targetCoupon)
         : updatedSelectedCoupons.delete(cartId);
+
+      updatedSelectedCoupons.delete(-1);
 
       return updatedSelectedCoupons;
     });
@@ -86,6 +88,7 @@ const CartItem: React.FC<CartItemProps> = (props) => {
             <S.DeleteButton onClick={deleteCartItem}>X</S.DeleteButton>
             <select
               defaultValue={-1}
+              value={selectedCoupon?.id ?? -1}
               onChange={({ target: { value } }) => selectCoupon(Number(value))}>
               <option value={-1}>선택 없음</option>
               {productCoupons?.map(({ id, name }) => (

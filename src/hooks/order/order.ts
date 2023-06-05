@@ -1,7 +1,7 @@
 import { useRefreshableRecoilValue } from './../common/useRefreshableAtom';
 import { cartState } from './../../atoms/cart';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilRefresher_UNSTABLE } from 'recoil';
+import { useRecoilRefresher_UNSTABLE, useResetRecoilState } from 'recoil';
 import { postOrder } from '../../apis/order';
 import { selectedItemsState } from '../../atoms/cart';
 import { ordersSelector } from '../../atoms/order';
@@ -17,7 +17,7 @@ export const useOrderMutate = () => {
   const navigate = useNavigate();
   const refreshCart = useRecoilRefresher_UNSTABLE(cartState);
   const refreshOrder = useRecoilRefresher_UNSTABLE(ordersSelector);
-  const refreshCoupons = useRecoilRefresher_UNSTABLE(selectedCouponsState);
+  const resetCoupons = useResetRecoilState(selectedCouponsState);
 
   const selectedItems = useRefreshableRecoilValue(selectedItemsState);
   const couponIds = useRefreshableRecoilValue(selectedItemCouponIdList);
@@ -29,7 +29,7 @@ export const useOrderMutate = () => {
 
       refreshCart();
       refreshOrder();
-      refreshCoupons();
+      resetCoupons();
       navigate(`${PAGE_ROUTES.ORDER_DETAIL}?id=${orderId}`);
     },
   });

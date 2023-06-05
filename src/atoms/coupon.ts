@@ -56,10 +56,15 @@ export const selectedCouponState = selectorFamily<
 
 export const selectedItemCouponIdList = selector({
   key: 'selectedItemCouponIdList',
-  get: ({ get }) =>
-    [...get(selectedCouponsState)].reduce<Coupon['id'][]>(
+  get: ({ get }) => {
+    const selectedCoupons = get(selectedCouponsState);
+    if (selectedCoupons.has(-1))
+      return [...selectedCoupons].map(([_, { id }]) => id);
+
+    return [...selectedCoupons].reduce<Coupon['id'][]>(
       (arr, [cartId, { id }]) =>
-        get(selectedItemsState).has(cartId) ? [...arr, id] : arr,
+        selectedCoupons.has(cartId) ? [...arr, id] : arr,
       []
-    ),
+    );
+  },
 });
