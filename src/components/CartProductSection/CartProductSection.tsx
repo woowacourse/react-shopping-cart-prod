@@ -47,7 +47,7 @@ const ProductSection = styled(Box)`
 
 const CheckBoxTab = styled(Box)`
   position: sticky;
-  top: 80px;
+  top: calc(var(--header-height) - 1px);
   z-index: 10;
 
   padding-bottom: 10px;

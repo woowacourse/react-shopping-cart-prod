@@ -36,7 +36,7 @@ export default CheckOutProductCardList;
 
 const Wrapper = styled.div`
   position: sticky;
-  top: 80px;
+  top: calc(var(--header-height) - 1px);
   z-index: 10;
   background-color: var(--color-pure-white);
   width: 100%;
