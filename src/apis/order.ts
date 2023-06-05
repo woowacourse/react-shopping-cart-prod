@@ -1,14 +1,15 @@
 import type { OrderType, ScheduledOrderType } from '../types/product';
 import type { HostNameType } from '../types/server';
+import type { PointType } from '../types/point';
 
 import { servers } from '../constants/server';
 import base64 from './auth';
 
 export const api = async (hostName: HostNameType) => {
-  const URL = `${servers[hostName]}/orders`;
-
+  const ORDER_URL = `${servers[hostName]}/orders`;
+  const POINT_URL = `${servers[hostName]}/points`;
   const getOrders = async () => {
-    const response = await fetch(URL, {
+    const response = await fetch(ORDER_URL, {
       method: 'GET',
       headers: {
         Authorization: `Basic ${base64}`,
@@ -21,7 +22,7 @@ export const api = async (hostName: HostNameType) => {
   };
 
   const getOrderDetail = async (orderId: number) => {
-    const response = await fetch(`${URL}/${orderId}`, {
+    const response = await fetch(`${ORDER_URL}/${orderId}`, {
       method: 'GET',
       headers: {
         Authorization: `Basic ${base64}`,
@@ -39,7 +40,7 @@ export const api = async (hostName: HostNameType) => {
   };
 
   const createOrder = async (order: ScheduledOrderType) => {
-    const response = await fetch(URL, {
+    const response = await fetch(ORDER_URL, {
       method: 'POST',
       headers: {
         Authorization: `Basic ${base64}`,
@@ -62,9 +63,26 @@ export const api = async (hostName: HostNameType) => {
     return;
   };
 
+  const getPoints = async () => {
+    const response = await fetch(POINT_URL, {
+      method: 'GET',
+      headers: {
+        Authorization: `Basic ${base64}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(response.status.toString());
+    }
+
+    const data: PointType = await response.json();
+    return data;
+  };
+
   return {
     getOrders,
     getOrderDetail,
     createOrder,
+    getPoints,
   };
 };

@@ -1,7 +1,7 @@
 import type { PointType } from '../types/point';
 
 import { atom, selector } from 'recoil';
-import { api } from '../apis/point';
+import { api } from '../apis/order';
 import { hostNameAtom } from './hostData';
 
 export const userPointAtom = atom<PointType>({
@@ -13,6 +13,7 @@ export const userPointAtom = atom<PointType>({
       const response = api(hostName).then((apiInstance) => {
         return apiInstance.getPoints();
       });
+      console.log(response);
       return response;
     },
   }),

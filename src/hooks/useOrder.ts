@@ -32,15 +32,14 @@ const useOrder = () => {
       const updatedCartProducts = cart.filter(
         (item) => !checkedCartItemIds.includes(item.cartItemId)
       );
+      setCart([...updatedCartProducts]);
 
-      const updatedPoints = {
-        ...point,
-        userPoint: point.userPoint - newOrder.usePoint,
-      };
+      const updatedPoints = await api(hostName).then((apiInstance) => {
+        return apiInstance.getPoints();
+      });
+      setPoint({ ...updatedPoints });
 
-      setCart(updatedCartProducts);
       setCheckedCartItemIds([]);
-      setPoint(updatedPoints);
     }
   };
 
