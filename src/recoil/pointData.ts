@@ -13,7 +13,6 @@ export const userPointAtom = atom<PointType>({
       const response = api(hostName).then((apiInstance) => {
         return apiInstance.getPoints();
       });
-      console.log(response);
       return response;
     },
   }),
