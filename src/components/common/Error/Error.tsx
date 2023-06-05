@@ -16,8 +16,8 @@ export interface ErrorProps {
 const Error = ({ message, information, resetError }: ErrorProps) => {
   const navigate = useNavigate();
 
-  const handleReload = () => {
-    navigate(PATH.RELOAD);
+  const handleServerChange = () => {
+    navigate(PATH.ROOT);
   };
 
   return (
@@ -29,7 +29,7 @@ const Error = ({ message, information, resetError }: ErrorProps) => {
         <S.ErrorResetButton variant="primary" onClick={resetError}>
           {information?.BUTTON ?? '새로고침'}
         </S.ErrorResetButton>
-        <ServerSelect onChange={handleReload} />
+        <ServerSelect onChange={handleServerChange} />
       </S.ErrorContentContainer>
     </S.ErrorWrapper>
   );
