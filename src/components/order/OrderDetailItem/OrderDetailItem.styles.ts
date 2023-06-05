@@ -9,6 +9,9 @@ export const S = {
     padding: 20px;
     border-radius: 7px;
     gap: 10px;
+    @media all and (max-width: 479px) {
+      width: 80vw;
+    }
 
     & > :nth-child(5) {
       margin-top: 10px;

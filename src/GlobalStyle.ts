@@ -46,7 +46,7 @@ export const GlobalStyle = createGlobalStyle`
   :root {
     --gray-color-200: #c7c7c7;
     --text-color: #333;
-    --mint-color: #04c092;
+    --mint-color: #04c09e;
     --white-color: #ffffff;
     --mint-color-hover: #439a97;
   }

@@ -22,6 +22,9 @@ export const S = {
     align-items: center;
     font-size: 18px;
     font-weight: 700;
+    @media all and (max-width: 1023px) {
+      font-size: 16px;
+    }
   `,
 
   InputWrapper: styled.div`
@@ -49,6 +52,11 @@ export const S = {
     margin-left: 10px;
     font-weight: 400;
     font-size: 16px;
+
+    @media all and (max-width: 1023px) {
+      width: 60px;
+      font-size: 14px;
+    }
   `,
 
   CloseButton: styled.button`

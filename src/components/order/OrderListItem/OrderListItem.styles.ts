@@ -33,6 +33,9 @@ export const S = {
     font-size: 18px;
     color: white;
     font-weight: 600;
+    @media all and (max-width: 479px) {
+      font-size: 16px;
+    }
   `,
 
   DetailButton: styled.button`
@@ -40,12 +43,19 @@ export const S = {
     background-color: transparent;
     color: white;
     font-weight: 600;
+    @media all and (max-width: 479px) {
+      font-size: 16px;
+    }
   `,
 
   Image: styled.img`
     width: 140px;
     height: auto;
     border-radius: 7px;
+    @media all and (max-width: 479px) {
+      width: 80px;
+      height: 80px;
+    }
   `,
 
   ItemInfoWrapper: styled.div`
@@ -54,14 +64,23 @@ export const S = {
     margin-left: 30px;
     width: 100%;
     gap: 25px;
+    @media all and (max-width: 479px) {
+      margin-left: 15px;
+    }
   `,
 
   Name: styled.label`
     font-size: 20px;
+    @media all and (max-width: 479px) {
+      font-size: 14px;
+    }
   `,
 
   Price: styled.label`
     font-size: 16px;
     color: #888;
+    @media all and (max-width: 479px) {
+      font-size: 14px;
+    }
   `,
 };
