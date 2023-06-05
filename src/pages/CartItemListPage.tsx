@@ -12,7 +12,7 @@ import { totalCartProductSelect } from '../recoil/cartItemData';
 import { checkedListSelector } from '../recoil/checkedCartItemData';
 import useCheckedProducts from '../hooks/useCheckedProducts';
 
-const CartItemsListPage = () => {
+const CartItemListPage = () => {
   const totalCartProductCount = useRecoilValue(totalCartProductSelect);
   const checkedCartProductCount = useRecoilValue(checkedListSelector);
   const { removeCheckedProducts, handleAllCheckedCartItems } =
@@ -120,4 +120,4 @@ const PaymentWrapper = styled.div`
   }
 `;
 
-export default CartItemsListPage;
+export default CartItemListPage;

@@ -6,12 +6,12 @@ import styled from 'styled-components';
 import OrderItem from './OrderItem';
 import { formatDateTime } from '../../utils/timeFormat';
 
-interface OrderProductListProps {
+interface OrderItemListProps {
   order: OrderType;
   isDetailed: boolean;
 }
 
-const OrderProductList = ({ order, isDetailed }: OrderProductListProps) => {
+const OrderItemList = ({ order, isDetailed }: OrderItemListProps) => {
   const { orderId, orderDateTime, orderItems, totalPrice } = order;
 
   return (
@@ -147,4 +147,4 @@ const Content = styled.div`
   padding: 33px 31px;
 `;
 
-export default OrderProductList;
+export default OrderItemList;

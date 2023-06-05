@@ -5,11 +5,11 @@ import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 import ContentListSkeleton from '../components/Common/ContentListSkeleton';
-import OrderProductList from '../components/Order/OrderProductList';
+import OrderItemList from '../components/Order/OrderItemList';
 import Message from '../components/Common/Message';
 import { orderwithIdState } from '../recoil/orderData';
 
-const OrderProductDetailPage = () => {
+const OrderItemDetailPage = () => {
   const { orderId } = useParams();
   const order = useRecoilValue(orderwithIdState(orderId));
 
@@ -20,7 +20,7 @@ const OrderProductDetailPage = () => {
         <OrderProductInfo>
           {order ? (
             <Suspense fallback={<ContentListSkeleton content='cart' />}>
-              <OrderProductList order={order} isDetailed={true} />
+              <OrderItemList order={order} isDetailed={true} />
             </Suspense>
           ) : (
             <Message type='notFound' />
@@ -72,4 +72,4 @@ const OrderProductInfo = styled.div`
   flex-direction: column;
 `;
 
-export default OrderProductDetailPage;
+export default OrderItemDetailPage;

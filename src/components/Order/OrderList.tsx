@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { orderAtom } from '../../recoil/orderData';
-import OrderProductList from './OrderProductList';
+import OrderItemList from './OrderItemList';
 
 const OrderList = () => {
   const orders = useRecoilValue(orderAtom);
@@ -23,9 +23,7 @@ const OrderList = () => {
       {orders &&
         [...orders]
           .reverse()
-          .map((order) => (
-            <OrderProductList order={order} isDetailed={false} />
-          ))}
+          .map((order) => <OrderItemList order={order} isDetailed={false} />)}
     </Wrapper>
   );
 };

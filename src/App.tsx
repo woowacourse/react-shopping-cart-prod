@@ -2,11 +2,11 @@ import { Suspense } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import ProductsListPage from './pages/ProductsListPage';
-import CartItemsListPage from './pages/CartItemsListPage';
+import CartItemListPage from './pages/CartItemListPage';
 import NotFoundPage from './pages/NotFoundPage';
 import Layout from './Layout';
-import OrderProductsListPage from './pages/OrderProductsListPage';
-import OrderProductDetailPage from './pages/OrderProductDetailPage';
+import OrderItemListPage from './pages/OrderItemListPage';
+import OrderItemDetailPage from './pages/OrderItemDetailPage';
 
 function App() {
   return (
@@ -22,12 +22,9 @@ function App() {
                 </Suspense>
               }
             />
-            <Route path='/cart' element={<CartItemsListPage />} />
-            <Route path='/order' element={<OrderProductsListPage />} />
-            <Route
-              path='/order/:orderId'
-              element={<OrderProductDetailPage />}
-            />
+            <Route path='/cart' element={<CartItemListPage />} />
+            <Route path='/order' element={<OrderItemListPage />} />
+            <Route path='/order/:orderId' element={<OrderItemDetailPage />} />
             <Route path='*' element={<NotFoundPage />} />
           </Routes>
         </Layout>
