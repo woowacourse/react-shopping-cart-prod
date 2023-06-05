@@ -1,9 +1,10 @@
 import styled from '@emotion/styled';
 import { Text } from '../Text/Text';
 import { useModal } from '../../../hooks/useModal';
+import { deleteModalState } from '../../../service/atom';
 
 const DeleteCartItemModal = () => {
-  const { modalDataState, closeModal } = useModal();
+  const { modalDataState, closeModal } = useModal(deleteModalState);
 
   const onSubmit = () => {
     modalDataState.callBack && modalDataState.callBack();
@@ -13,18 +14,18 @@ const DeleteCartItemModal = () => {
   return (
     <ModalWrapper>
       <TextWrapper>
-        <Text size="smallest" weight="light">
+        <Text size="smaller" weight="light">
           해당 상품을 삭제하시겠습니까?
         </Text>
       </TextWrapper>
       <ButtonWrapper>
         <CancelButton onClick={closeModal}>
-          <Text size="smallest" weight="light">
+          <Text size="smaller" weight="light">
             취소
           </Text>
         </CancelButton>
         <SubmitButton onClick={onSubmit}>
-          <Text size="smallest" weight="normal">
+          <Text size="smaller" weight="normal">
             확인
           </Text>
         </SubmitButton>
