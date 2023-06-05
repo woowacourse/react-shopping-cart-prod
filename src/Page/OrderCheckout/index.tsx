@@ -44,10 +44,10 @@ function OrderCheckout() {
 
   const handleOrder = async () => {
     await mutateQuery({
-      url: '/orders',
+      url: `${currentServerUrl}/orders`,
       method: 'POST',
       bodyData: { cartItemIds: checkedCartIdList },
-      headers: { Authorization: `Basic ${btoa(USER)}` },
+      headers: { Authorization: `Basic ${btoa(USER)}`, 'Content-Type': 'application/json' },
     });
   };
 

@@ -17,7 +17,7 @@ const usePaymentsData = (currentServerUrl: string) => {
 
   const { data: paymentsData, refreshQuery: refreshPaymentsData } = useGetQuery<PaymentsData>(
     `${currentServerUrl}/total-cart-price?${queryParams.toString()}`,
-    { Authorization: `Basic ${btoa(USER)}` },
+    { Authorization: `Basic ${btoa(USER)}`, 'Content-Type': 'application/json' },
   );
 
   useEffect(() => {

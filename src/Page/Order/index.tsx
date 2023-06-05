@@ -13,6 +13,7 @@ function Order() {
   const currentServerUrl = useRecoilValue($CurrentServerUrl);
   const { data: orderList } = useGetQuery<OrderType[]>(`${currentServerUrl}/orders`, {
     Authorization: `Basic ${btoa(USER)}`,
+    'Content-Type': 'application/json',
   });
 
   return (

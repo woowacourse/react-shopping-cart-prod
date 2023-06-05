@@ -1,14 +1,21 @@
 import { useParams } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 import OrderItemList from '../../components/OrderItemList';
 import PaymentsView from '../../components/PaymentsView';
+import { USER } from '../../constants';
 import useGetQuery from '../../hooks/useGetQuery';
+import { $CurrentServerUrl } from '../../recoil/atom';
 import formatDateToKorean from '../../utils/formatDateToKorean';
 import styles from './index.module.scss';
 import type { OrderDetailType } from '../../types';
 
 function OrderDetail() {
   const { id } = useParams();
-  const { data: orderDetail } = useGetQuery<OrderDetailType>(`/orders/${id}`);
+  const currentServerUrl = useRecoilValue($CurrentServerUrl);
+  const { data: orderDetail } = useGetQuery<OrderDetailType>(`${currentServerUrl}/orders/${id}`, {
+    'Content-Type': 'application/json',
+    Authorization: `Basic ${btoa(USER)}`,
+  });
 
   return (
     <main className={styles.container}>
