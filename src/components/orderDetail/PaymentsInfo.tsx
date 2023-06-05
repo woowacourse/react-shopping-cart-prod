@@ -10,9 +10,15 @@ const PaymentsInfo = () => {
       <S.TitleWrapper>
         <S.Title>결제금액 정보</S.Title>
       </S.TitleWrapper>
+      <S.DeliveryFeeWrapper>
+        <S.Title>배송비</S.Title>
+        <S.DeliveryFee>3,000원</S.DeliveryFee>
+      </S.DeliveryFeeWrapper>
       <S.PointInfoWrapper>
         <S.Title>사용된 포인트</S.Title>
-        <S.PointInfo>{orderDetailList?.usedPoint} 포인트</S.PointInfo>
+        <S.PointInfo>
+          {orderDetailList?.usedPoint === 0 ? 0 : `-${orderDetailList?.usedPoint}`} 포인트
+        </S.PointInfo>
       </S.PointInfoWrapper>
       <S.TotalPaymentAmountWrapper>
         <S.Title>총 결제 금액</S.Title>
@@ -40,10 +46,11 @@ const S = {
 
   Title: styled.h4``,
 
-  PointInfoWrapper: styled.h4`
+  PointInfoWrapper: styled.section`
     display: flex;
     justify-content: space-between;
-    padding: 25px 20px 0 20px;
+    padding: 25px 20px;
+    border-bottom: 1px dashed var(--gray-color-200);
   `,
 
   PointInfo: styled.h4``,
@@ -55,6 +62,14 @@ const S = {
   `,
 
   TotalPaymentAmount: styled.span``,
+
+  DeliveryFeeWrapper: styled.section`
+    display: flex;
+    justify-content: space-between;
+    padding: 25px 20px 0 20px;
+  `,
+
+  DeliveryFee: styled.span``,
 };
 
 export default PaymentsInfo;
