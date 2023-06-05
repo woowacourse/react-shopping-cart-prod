@@ -14,11 +14,11 @@ const main = async () => {
     return;
   }
 
-  // await worker.start({
-  //   serviceWorker: {
-  //     url: '/react-shopping-cart-prod/mockServiceWorker.js',
-  //   },
-  // });
+  await worker.start({
+    serviceWorker: {
+      url: '/react-shopping-cart-prod/mockServiceWorker.js',
+    },
+  });
 };
 
 const root = ReactDOM.createRoot(
