@@ -1,3 +1,4 @@
+export { OrderListContent } from "./OrderListContent";
 export { OrderDetailContent } from "./OrderDetailContent";
 export { CouponSelectBox } from "./CouponSelectBox";
 export { OrderTotalPriceBox } from "./OrderTotalPriceBox";
