@@ -17,5 +17,6 @@ export const OrderCompletePage: Story = {
     totalItemsPrice: 304000,
     deliveryFee: 3000,
     discountPrice: 2000,
+    orderId: 1,
   },
 };
