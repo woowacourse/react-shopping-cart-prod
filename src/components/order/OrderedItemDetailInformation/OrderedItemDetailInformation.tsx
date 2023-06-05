@@ -35,7 +35,7 @@ export const OrderedItemDetailInformation = ({
         </S.RowWrapper>
         <S.RowWrapper>
           <S.ItemKey>등급할인금액</S.ItemKey>
-          <S.ItemValue>{priceFormatter(totalMemberDiscountAmount)}</S.ItemValue>
+          <S.ItemValue>{priceFormatter(totalMemberDiscountAmount, true)}</S.ItemValue>
         </S.RowWrapper>
         <S.RowWrapper>
           <S.ItemKey>배송비</S.ItemKey>
