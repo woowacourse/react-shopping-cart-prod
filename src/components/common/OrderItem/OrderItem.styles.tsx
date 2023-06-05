@@ -14,8 +14,6 @@ export const Thumbnail = styled.img`
   height: 100%;
 
   margin: 0 2rem;
-
-  background: red;
 `;
 
 export const Info = styled(Flex)``;
