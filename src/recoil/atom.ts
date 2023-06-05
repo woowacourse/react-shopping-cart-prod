@@ -30,7 +30,7 @@ export const localProductsState = atom<LocalProductType[]>({
   key: "localProducts",
   default: selector<LocalProductType[]>({
     key: "products/default",
-    get: async ({ get }) => {
+    get: ({ get }) => {
       return get(loginState) ? makeLocalProducts() : makeProducts();
     },
   }),
@@ -62,10 +62,12 @@ export const memberState = atom<MemberType>({
   key: "memberState",
   default: selector<MemberType>({
     key: "memberState/default",
-    get: async () => {
-      const response = await getMemberApi();
-      if (!response.ok) throw new Error(response.status.toString());
-      return await response.json();
+    get: async ({ get }) => {
+      if (get(loginState)) {
+        const response = await getMemberApi();
+        if (!response.ok) throw new Error(response.status.toString());
+        return await response.json();
+      }
     },
   }),
 });
