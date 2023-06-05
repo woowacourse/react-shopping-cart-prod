@@ -1,14 +1,17 @@
 import { styled } from 'styled-components';
 import OrderListItem from '../OrderListItem/OrderListItem';
-import type { Order } from '../../../types/order';
 import { Link } from 'react-router-dom';
 import { getDateFromISOString } from '../../../utils/getDateFromISOString';
+import { ShowMoreIcon } from '../../../assets/svg';
+import type { Order } from '../../../types/order';
 
 interface OrderListProps {
   order: Order;
   needsDetailButton?: boolean;
   isSummary?: boolean;
 }
+
+const SUMMARY_ITEM_COUNT = 3;
 
 const OrderList = ({
   order,
@@ -30,13 +33,18 @@ const OrderList = ({
       <ListWrapper>
         {isSummary
           ? orders
-              .slice(0, 3)
+              .slice(0, SUMMARY_ITEM_COUNT)
               .map((orderItem) => (
                 <OrderListItem key={orderItem.id} orderItem={orderItem} />
               ))
           : orders.map((orderItem) => (
               <OrderListItem key={orderItem.id} orderItem={orderItem} />
             ))}
+        {isSummary && orders.length > SUMMARY_ITEM_COUNT && (
+          <ShowMoreButton to={`/orders/${id}`} aria-label="주문 내역 상세보기">
+            <ShowMoreIcon />
+          </ShowMoreButton>
+        )}
       </ListWrapper>
     </Container>
   );
@@ -67,6 +75,8 @@ const ListHeader = styled.div`
 `;
 
 const ListWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   border: 1px solid ${(props) => props.theme.color.gray300};
   border-top: none;
   border-bottom-left-radius: 8px;
@@ -82,6 +92,13 @@ const DetailButton = styled(Link)`
   line-height: 24px;
   letter-spacing: 0.5px;
   color: ${(props) => props.theme.color.white};
+`;
+
+const ShowMoreButton = styled(Link)`
+  display: flex;
+  align-items: center;
+  height: 50px;
+  margin: 0 auto;
 `;
 
 export default OrderList;
