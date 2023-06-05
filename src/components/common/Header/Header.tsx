@@ -5,6 +5,7 @@ import { GiShoppingCart } from 'react-icons/gi';
 import ServerSelector from '../../ServerSelector/ServerSelector';
 import CartButton from './CartButton';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
+import HeaderCartErrorBoundary from '../../../errorHandler/HeaderCartErrorBoundary';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -23,9 +24,13 @@ const Header = () => {
       </Logo>
       <ServerSelector />
       <RightContainer>
-        <Suspense fallback={<LoadingSpinner color="#04c09e" diameter="32px" spinnerWidth="5px" />}>
-          <CartButton onClick={gotoCart} />
-        </Suspense>
+        <HeaderCartErrorBoundary>
+          <Suspense
+            fallback={<LoadingSpinner color="#04c09e" diameter="32px" spinnerWidth="5px" />}
+          >
+            <CartButton onClick={gotoCart} />
+          </Suspense>
+        </HeaderCartErrorBoundary>
         <Button onClick={gotoOrderList}>주문목록</Button>
       </RightContainer>
     </HeaderContainer>
