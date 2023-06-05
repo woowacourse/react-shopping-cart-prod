@@ -108,7 +108,7 @@ const OrderList = (props: OrderListProps) => {
           <p>적립율</p> <p>{orderList.savingRate}%</p>
         </SavingRate>
         <Point>
-          <p>포인트</p> <p>{orderList.points.toLocaleString()}</p>
+          <p>포인트</p> <p>{orderList.usedPoints.toLocaleString()}</p>
         </Point>
       </PointSection>
     </Container>
