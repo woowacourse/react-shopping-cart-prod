@@ -48,6 +48,11 @@ export default function CartBill() {
     const cartList = (await api.getCart(serverName, loginCredential)) as CartType;
     setCart(cartList);
     setCheckList(new Array(cartList.length).fill(true));
+    setCoupons((prevCoupons) =>
+      prevCoupons.filter((coupon) => {
+        return coupon.id !== couponId;
+      })
+    );
 
     showToast('info', API_SUCCESS_MESSAGE.purchase);
   };
@@ -81,10 +86,10 @@ export default function CartBill() {
           <p>총 배송비</p>
           <p>{deliveryFee.toLocaleString()}원</p>
         </S.BillRow>
-        <S.BillRow>
+        <S.CouponBillRow>
           <p>쿠폰 할인 금액</p>
           <p>{couponDiscountPrice.toLocaleString()}원</p>
-        </S.BillRow>
+        </S.CouponBillRow>
         <S.BillRow>
           <p>총 주문금액</p>
           <p>{(cartBillTotalPrice + deliveryFee - couponDiscountPrice).toLocaleString()}원</p>

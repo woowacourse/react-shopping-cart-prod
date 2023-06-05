@@ -72,6 +72,10 @@ export const BillRow = styled.div`
   }
 `;
 
+export const CouponBillRow = styled(BillRow)`
+  color: var(--primary-color);
+`;
+
 export const OrderButton = styled.button`
   width: 100%;
   height: 73px;
