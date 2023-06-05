@@ -10,9 +10,15 @@ const ProductDataContext = createContext({
   quantity: 0,
 });
 
+interface ProductData {
+  image: string;
+  name: string;
+  price: number;
+  quantity: number;
+}
 interface ProductItemProps {
-  productData: any;
-  containerStyle: any;
+  productData: ProductData;
+  containerStyle: React.CSSProperties;
 }
 
 export const ItemContainer = (props: PropsWithChildren<ProductItemProps>) => {

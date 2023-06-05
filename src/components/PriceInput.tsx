@@ -43,7 +43,7 @@ const Description = styled.strong`
 
 interface PriceInputProps {
   useablePoint: number;
-  handleInputField: (value: any) => void;
+  handleInputField: (value: number) => void;
 }
 
 const PriceInput = (props: PriceInputProps) => {
@@ -68,7 +68,7 @@ const PriceInput = (props: PriceInputProps) => {
   };
 
   const usePoint = () => {
-    handleInputField(inputValue);
+    handleInputField(+inputValue);
   };
 
   return (
