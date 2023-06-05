@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
-import cartItemIdState from '../recoil/atoms/cartItemIdState';
-import clientState from '../recoil/atoms/clientState';
-import type { SyncCartItem } from '../recoil/atoms/syncCartItemState';
+import useOrderFetch from '../hooks/useOrderFetch';
 import userState from '../recoil/atoms/userState';
 import cartOrderPriceState from '../recoil/selectors/cartOrderPriceState';
 import PriceInput from './PriceInput';
@@ -81,34 +79,10 @@ type CartOrderProps = {
 const CartOrder = (props: CartOrderProps) => {
   const { selectedCount } = props;
   const [usingPoint, setUsingPoint] = useState(0);
+  const { order } = useOrderFetch();
 
   const prices = useRecoilValue(cartOrderPriceState);
   const userInfo = useRecoilValue(userState);
-  const client = useRecoilValue(clientState);
-  const cartItemId = useRecoilValue(cartItemIdState);
-
-  const getOrderItems = () => {
-    const userCartData = cartItemId
-      .map((item) => {
-        const { state } = item as { state: SyncCartItem };
-        if (item.checked) {
-          return {
-            id: state.id,
-            productId: state.productId,
-            quantity: state.quantity,
-          };
-        }
-        return null;
-      })
-      .filter((item) => item !== null);
-
-    client
-      .post('/orders', {
-        usedPoints: usingPoint,
-        cartItems: userCartData,
-      })
-      .acceptOrThrow(201);
-  };
 
   const handleInputField = (value: number) => {
     setUsingPoint(value);
@@ -158,7 +132,7 @@ const CartOrder = (props: CartOrderProps) => {
 
             <ContentDivider />
 
-            <OrderButton onClick={getOrderItems}>
+            <OrderButton onClick={() => order(usingPoint)}>
               <strong>총{selectedCount}개</strong> |{' '}
               <strong>{prices.total - usingPoint}원 결제하기</strong>
             </OrderButton>
