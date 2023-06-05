@@ -6,9 +6,6 @@ import GlobalStyle from './GlobalStyle';
 import { ThemeProvider } from 'styled-components';
 import theme from './styles/theme';
 import App from './App';
-import { worker } from './mocks/browsers';
-
-worker.start();
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
