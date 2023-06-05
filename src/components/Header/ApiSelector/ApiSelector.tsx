@@ -12,6 +12,7 @@ export const ApiSelector = () => {
 
   return (
     <styled.Selector onChange={onChange} value={apiBaseUrlKey}>
+      {/* <option value="MSW">MSW</option> */}
       <option value="이리내">이리내</option>
       <option value="채채">채채</option>
     </styled.Selector>
