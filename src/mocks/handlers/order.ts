@@ -78,7 +78,6 @@ export const orderHandlers = [
       orders: _orders,
     } satisfies Order;
 
-    console.log(totalOrderPrice, usePoint);
     const addedPoint = Math.floor(totalOrderPrice * 0.025);
 
     orders = [...orders, newOrder];
