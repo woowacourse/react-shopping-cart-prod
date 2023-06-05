@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
-import pointState from '../recoil/atoms/pointState';
+import cartItemIdState from '../recoil/atoms/cartItemIdState';
+import clientState from '../recoil/atoms/clientState';
+import type { SyncCartItem } from '../recoil/atoms/syncCartItemState';
 import userState from '../recoil/atoms/userState';
-import cartItemsQuery from '../recoil/queries/cartItemsQuery';
 import cartOrderPriceState from '../recoil/selectors/cartOrderPriceState';
 import PriceInput from './PriceInput';
 
@@ -79,34 +80,37 @@ type CartOrderProps = {
 
 const CartOrder = (props: CartOrderProps) => {
   const { selectedCount } = props;
+  const [usingPoint, setUsingPoint] = useState(0);
+
   const prices = useRecoilValue(cartOrderPriceState);
   const userInfo = useRecoilValue(userState);
-  const [usingPoint, setUsingPoint] = useState(0);
-  const cartItems = useRecoilValue(cartItemsQuery);
+  const client = useRecoilValue(clientState);
+  const cartItemId = useRecoilValue(cartItemIdState);
 
   const getOrderItems = () => {
-    const userCartData = cartItems.map((item) => {
-      return {
-        id: item.id,
-        productId: item.product.id,
-        quantity: item.quantity,
-      };
-    });
+    const userCartData = cartItemId
+      .map((item) => {
+        const { state } = item as { state: SyncCartItem };
+        if (item.checked) {
+          return {
+            id: state.id,
+            productId: state.productId,
+            quantity: state.quantity,
+          };
+        }
+        return null;
+      })
+      .filter((item) => item !== null);
 
-    fetch('http://13.124.87.248:8080/orders', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
-        Authorization: `Basic ${btoa('b@b.com:1234')}`,
-      },
-      body: JSON.stringify({
+    client
+      .post('/orders', {
         usedPoints: usingPoint,
         cartItems: userCartData,
-      }),
-    }).then((res) => console.log(res));
+      })
+      .acceptOrThrow(201);
   };
 
-  const handleInputField = (value: any) => {
+  const handleInputField = (value: number) => {
     setUsingPoint(value);
   };
 
