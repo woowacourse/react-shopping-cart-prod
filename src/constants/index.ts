@@ -35,7 +35,7 @@ export const ROUTE_PATH = Object.freeze({
   DEFAULT: '/',
   CART: '/cart',
   ORDER: '/order',
-  ORDER_DETAIL: `/order/:id}`,
+  ORDER_DETAIL: `/order/:id`,
 });
 
 export const API_URL = Object.freeze({
