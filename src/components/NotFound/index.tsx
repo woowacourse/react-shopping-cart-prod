@@ -6,7 +6,6 @@ import { PATH } from '../../constants';
 const NotFound = () => {
   return (
     <Style.NotFoundWrapper>
-      <span>아뇨 뚱인데요?~ 페이지를 찾을 수 없다구요!</span>
       <Style.ImgWrapper />
       <Style.NoExistItemsMessage>
         <p>잘못된 페이지를 요청했거나 에러가 발생했습니다 🥲</p>
@@ -23,8 +22,6 @@ const Style = {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
-    color: #f56e6e;
   `,
 
   ImgWrapper: styled.img.attrs({
