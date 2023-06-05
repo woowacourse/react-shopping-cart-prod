@@ -3,6 +3,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { ReactComponent as Logo } from '../../assets/logo.svg';
 import { ReactComponent as ShoppingCart } from '../../assets/shopping-cart.svg';
 import { ReactComponent as User } from '../../assets/user.svg';
+import { MESSAGE } from '../../constants';
 import userServerUrlList from '../../data/serverData';
 import useToast from '../../hooks/useToast';
 import { $CartList, $CurrentServerUrl } from '../../recoil/atom';
@@ -24,13 +25,15 @@ function Header() {
     const updateOption = userServerUrlList[textContent ?? ''];
 
     if (updateOption === undefined) {
-      Toast.error('해당 서버가 존재하지 않습니다.');
-      throw new Error('해당 서버가 존재하지 않습니다.');
+      Toast.error(MESSAGE.SERVER_NOT_FOUND);
+      throw new Error(MESSAGE.SERVER_NOT_FOUND);
     }
 
-    setLocalStorage('name', textContent);
-    setCurrentServerUrl(updateOption);
-    Toast.success(`${textContent} 서버로 변경 되었습니다!`);
+    if (textContent) {
+      setLocalStorage('name', textContent);
+      setCurrentServerUrl(updateOption);
+      Toast.success(MESSAGE.SERVER_CHANGED_SUCCESSFUL(textContent));
+    }
   };
 
   return (
