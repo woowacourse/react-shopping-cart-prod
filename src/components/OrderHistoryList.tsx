@@ -16,7 +16,7 @@ const Wrapper = styled.section`
   display: flex;
   flex-direction: column;
   align-self: center;
-  width: 85%;
+  width: 100%;
   max-width: 1000px;
 
   max-height: 800px;
