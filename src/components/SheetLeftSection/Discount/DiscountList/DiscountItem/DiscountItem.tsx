@@ -30,14 +30,16 @@ const DiscountItem = ({ type }: DiscountItemProps) => {
     console.log('할인 적용');
   };
 
-  if (isPointLoading || pointError?.isError) {
-    return isPointLoading ? (
+  if (isPointLoading) {
+    return (
       <FlexBox flexDirection="column" justify="center" align="center" gap="8px" role="button">
         <Spinner />
       </FlexBox>
-    ) : (
-      <ReloadRequestUI reloadFunction={fetchUserPoints} />
     );
+  }
+
+  if (pointError?.isError) {
+    return <ReloadRequestUI reloadFunction={fetchUserPoints} />;
   }
 
   return (

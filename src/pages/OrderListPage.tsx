@@ -1,6 +1,7 @@
 import { getOrders } from 'apis/orders';
 import FlexBox from 'components/@common/FlexBox';
 import Spinner from 'components/@common/Loader';
+import LoadingErrorCard from 'components/LoadingErrorCard/LoadingErrorCard';
 import OrderItem from 'components/OrderItem/OrderItem';
 import useFetch from 'hooks/useFetch';
 import styled from 'styled-components';
@@ -10,22 +11,15 @@ const OrderListPage = () => {
   const { data, isLoading, errorState, fetchData } = useFetch<Order[]>(getOrders);
   const orders = data ?? [];
 
-  if (errorState?.isError) {
-    throw errorState.error;
-  }
+  if (errorState?.isError) return <LoadingErrorCard onClickRetryButton={fetchData} />;
+  if (isLoading) return <Spinner />;
 
   return (
     <OrderListPageContainer flexDirection="column">
       <PageTitle>주문 목록</PageTitle>
-      {isLoading ? (
-        <Spinner />
-      ) : (
-        <>
-          {orders.map((order, index) => (
-            <OrderItem key={index} order={order} type="list" />
-          ))}
-        </>
-      )}
+      {orders.map((order, index) => (
+        <OrderItem key={index} order={order} type="list" />
+      ))}
     </OrderListPageContainer>
   );
 };
