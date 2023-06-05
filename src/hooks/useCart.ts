@@ -65,7 +65,6 @@ export const useCart = () => {
         );
         if (error) return;
 
-        // TODO: 옮기기
         toast.success(`${checkedItems.length}개의 상품을 장바구니에서 삭제했습니다.`);
         removeProductItemFromCart(id);
       });
