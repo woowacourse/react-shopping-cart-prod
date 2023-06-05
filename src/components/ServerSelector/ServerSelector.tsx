@@ -27,7 +27,7 @@ const ServerSelector = () => {
       if (selectedServerName === '참새MSW') {
         worker.start({
           serviceWorker: {
-            url: `/react-shopping-cart-prod/mockServiceWorker.js`,
+            url: `${process.env.PUBLIC_URL}/mockServiceWorker.js`,
           },
         });
       } else {

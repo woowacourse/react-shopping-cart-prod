@@ -20,7 +20,7 @@ import OrderDetailPage from './pages/OrderDetailPage';
 
   await worker.start({
     serviceWorker: {
-      url: `/react-shopping-cart-prod/mockServiceWorker.js`,
+      url: `${process.env.PUBLIC_URL}/mockServiceWorker.js`,
     },
   });
 })();
