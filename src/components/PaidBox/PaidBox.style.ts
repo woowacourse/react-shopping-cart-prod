@@ -1,7 +1,12 @@
 import styled from "styled-components";
 
 export const PaidBoxLayout = styled.div`
-  width: 50%;
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    width: 50%;
+  }
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.xl}) {
+    width: 33%;
+  }
 `;
 
 export const PaidBoxHeader = styled.div`
@@ -11,7 +16,7 @@ export const PaidBoxHeader = styled.div`
 
   font-style: normal;
   font-weight: 700;
-  font-size: 28px;
+  font-size: 24px;
   line-height: 28px;
 
   letter-spacing: 0.5px;
@@ -33,11 +38,17 @@ export const PaidProperty = styled.div`
 export const PaidText = styled.div`
   font-style: normal;
   font-weight: 700;
-  font-size: 24px;
+  font-size: 20px;
   line-height: 24px;
   /* identical to box height, or 100% */
 
   letter-spacing: 0.5px;
 
   color: #333333;
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    font-size: 20px;
+  }
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    font-size: 22px;
+  }
 `;

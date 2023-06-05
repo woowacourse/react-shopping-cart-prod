@@ -148,9 +148,17 @@ export const handlers = [
   }),
 
   rest.get("/orders", async (req, res, ctx) => {
-    const originalOrderList = getSessionStorage<ResponseOrdered>(SESSION_STORAGE_KEY_ORDERS, { orderResponses: [] });
+    const orderList = getSessionStorage<ResponseOrdered>(SESSION_STORAGE_KEY_ORDERS, { orderResponses: [] });
 
-    return res(ctx.delay(100), ctx.status(200), ctx.json(originalOrderList));
+    return res(ctx.delay(100), ctx.status(200), ctx.json(orderList));
+  }),
+
+  rest.get("/orders/:orderId", async (req, res, ctx) => {
+    const orderList = getSessionStorage<ResponseOrdered>(SESSION_STORAGE_KEY_ORDERS, { orderResponses: [] });
+    const { orderId } = req.params;
+    const orderItem = orderList.orderResponses.find(orderItem => orderItem.orderId === parseInt(orderId as string));
+
+    return res(ctx.delay(100), ctx.status(200), ctx.json(orderItem));
   }),
 
   rest.post("/orders", async (req, res, ctx) => {
