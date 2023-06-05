@@ -1,16 +1,11 @@
-import { generatePath, useNavigate } from 'react-router-dom';
-
-import { PATH } from '../../../constants/path';
 import { OrderData } from '../../../types';
 import { priceFormatter } from '../../../utils/formatter';
-import { Divider } from '../../common/Divider/Divider.styles';
 import * as S from './DetailOrderedItem.styles';
 
 type OrderedItemProps = OrderData;
 
 export const DetailOrderedItem = ({ ...information }: OrderedItemProps) => {
   const { id, orderedItems } = information;
-  const navigate = useNavigate();
 
   return (
     <S.Container>
@@ -39,9 +34,6 @@ export const DetailOrderedItem = ({ ...information }: OrderedItemProps) => {
                 </S.PriceAndQuantityContainer>
               </S.OrderedItemInformationContainer>
             </S.ImageAndInformationContainer>
-            <S.AddItemToCartButton size="small" variant="secondary">
-              장바구니 담기
-            </S.AddItemToCartButton>
           </S.OrderedItemContainer>
         ))}
       </S.OrderContainer>
