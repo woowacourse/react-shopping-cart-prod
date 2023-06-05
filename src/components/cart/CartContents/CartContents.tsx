@@ -85,7 +85,7 @@ const CouponFallbackDiv = styled.div`
 `;
 
 const PaymentDiv = styled.div`
-  width: 450px;
+  width: 550px;
 
   @media screen and (max-width: 1320px) {
     width: 100%;
