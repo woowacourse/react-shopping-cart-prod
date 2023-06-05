@@ -161,6 +161,7 @@ export const fetchOrder = async (server: string, newOrder: NewOrder) => {
       body: JSON.stringify(newOrder),
       headers: {
         Authorization: `Basic ${base64}`,
+        "Content-Type": "application/json",
       },
     });
 
