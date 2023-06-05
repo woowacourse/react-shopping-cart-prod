@@ -1,14 +1,41 @@
-import { useEffect, useRef } from 'react';
+import { MouseEventHandler, useEffect, useRef } from 'react';
+import { useRecoilState } from 'recoil';
 import { css, keyframes, styled } from 'styled-components';
 import usePoint from '../../../hooks/usePoint';
-import { RewardIcon } from '../../../assets/svg';
+import { RewardIcon, UserChangeIcon } from '../../../assets/svg';
 import { formatPrice } from '../../../utils/formatPrice';
 import useMenu from './useMenu';
+import { userState } from '../../../recoil/atoms/auth';
+import { DEFAULT_USER_NAME, PAIR_USER_NAME } from '../../../constants/auth';
+import useOrder from '../../../hooks/useOrder';
+import useCart from '../../../hooks/useCart';
 
 const UserMenu = ({ isActive }: { isActive: boolean }) => {
   const ref = useRef<HTMLDivElement>(null);
-  const { point } = usePoint();
+  const [user, setUser] = useRecoilState(userState);
+  const { point, updatePoint } = usePoint();
   const { closeMenu } = useMenu();
+  const { updateCart } = useCart();
+  const { updateOrders } = useOrder();
+
+  const handleChangeUserButtonClick: MouseEventHandler = (e) => {
+    e.stopPropagation();
+
+    changeUser();
+    closeMenu();
+  };
+
+  const changeUser = () => {
+    if (user === DEFAULT_USER_NAME) {
+      setUser(PAIR_USER_NAME);
+    } else {
+      setUser(DEFAULT_USER_NAME);
+    }
+
+    updatePoint();
+    updateCart();
+    updateOrders();
+  };
 
   useEffect(() => {
     if (isActive || ref.current === null) {
@@ -25,7 +52,16 @@ const UserMenu = ({ isActive }: { isActive: boolean }) => {
       <Inner>
         <User>
           <dt>닉네임</dt>
-          <dd>유스</dd>
+          <UserInner>
+            <dd>{user}</dd>
+            <ChangeUserButton
+              type="button"
+              aria-label="사용자 전환하기"
+              onClick={handleChangeUserButtonClick}
+            >
+              <UserChangeIcon />
+            </ChangeUserButton>
+          </UserInner>
         </User>
         <Point>
           <dt>보유 포인트</dt>
@@ -92,8 +128,20 @@ const Inner = styled.dl`
 const User = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   font-size: 18px;
   font-weight: 600;
+`;
+
+const UserInner = styled.div`
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+`;
+
+const ChangeUserButton = styled.button`
+  margin-left: auto;
+  font-size: 16px;
 `;
 
 const Point = styled.div`
