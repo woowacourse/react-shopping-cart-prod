@@ -39,3 +39,7 @@ export const ORDER_STATUS: Readonly<Record<string, OrderStatus>> = {
   PAID: '결제완료',
   CANCEL: '결제취소',
 };
+
+export const ERROR = {
+  PREFIX: '[ERROR]',
+};
