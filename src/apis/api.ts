@@ -1,3 +1,4 @@
+import { ENDPOINT } from '../constants/auth';
 import { ERROR_CODE } from '../constants/errors';
 import { getValidURL, handleStatusCode } from '../validation/errorHandler';
 import { CustomError } from '../validation/errors';
@@ -13,10 +14,7 @@ import {
 
 const base64 = 'YUBhLmNvbToxMjM0';
 
-export const BASE =
-  process.env.NODE_ENV === 'development'
-    ? 'http://localhost:3000/react-shopping-cart/'
-    : 'https://n0eyes.github.io/react-shopping-cart/';
+export const BASE = ENDPOINT['말랑'];
 
 class FetchQuery implements FetchQueryInstance {
   private defaultConfig: ExternalConfig = {};
@@ -106,6 +104,7 @@ class FetchQuery implements FetchQueryInstance {
 }
 
 export const fetchQuery = new FetchQuery({ baseURL: BASE });
+
 export const authFetchQuery = new FetchQuery({
   baseURL: BASE,
   headers: {
