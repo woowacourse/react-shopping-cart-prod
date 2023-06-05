@@ -40,6 +40,7 @@ const ProductImage = styled.img`
   height: 100px;
   border-radius: 4px;
   filter: brightness(96%);
+  background-color: var(--color-pure-white);
 `;
 
 const Title = styled.span`

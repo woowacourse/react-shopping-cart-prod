@@ -31,7 +31,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
         </StepperWrapper>
       </ProductImgContainer>
 
-      <ProductInfo sizing={{ width: '100%' }} flex={{ flexDirection: 'column', align: 'flex-start' }}>
+      <ProductInfo sizing={{ width: '100%' }} flex={{ flexDirection: 'column', align: 'flex-start', gap: '6px' }}>
         <Title>{name}</Title>
         <Price>{price.toLocaleString('ko-KR')}원</Price>
       </ProductInfo>
@@ -48,6 +48,7 @@ const ProductImage = styled.img`
   height: 100%;
   border-radius: 4px;
   filter: brightness(96%);
+  background-color: var(--color-pure-white);
 `;
 
 const ProductInfo = styled(Box)`
