@@ -1,6 +1,6 @@
 import { PropsWithChildren, useEffect } from 'react';
 import { useRecoilRefresher_UNSTABLE, useRecoilValue } from 'recoil';
-import { BASE, authFetchQuery, fetchQuery } from '../../apis/api';
+import { authFetchQuery, fetchQuery } from '../../apis/api';
 import { cartSelector } from '../../atoms/cart';
 import { endpointKeyState } from '../../atoms/endpoint';
 import { productsSelector } from '../../atoms/products';
@@ -13,12 +13,10 @@ const EndpointRefresher = ({ children }: PropsWithChildren) => {
 
   useEffect(() => {
     fetchQuery.updateDefaultConfig({
-      baseURL:
-        process.env.NODE_ENV === 'development' ? BASE : ENDPOINT[endpointKey],
+      baseURL: ENDPOINT[endpointKey],
     });
     authFetchQuery.updateDefaultConfig({
-      baseURL:
-        process.env.NODE_ENV === 'development' ? BASE : ENDPOINT[endpointKey],
+      baseURL: ENDPOINT[endpointKey],
     });
     refreshCart();
     refreshProducts();
