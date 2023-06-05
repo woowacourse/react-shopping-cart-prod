@@ -7,12 +7,15 @@ import { ToastItem } from '../../../types';
 const Toast = ({ message, type }: ToastItem) => {
   const [isShow, setIsShow] = useState(false);
   const { resetToast } = useToast();
+
   useEffect(() => {
     setIsShow(true);
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       setIsShow(false);
       resetToast();
     }, 1500);
+
+    clearTimeout(timer);
   }, [setIsShow]);
 
   return (
@@ -41,9 +44,9 @@ const S = {
     justify-content: center;
     position: fixed;
     width: calc(100vw - 70vw);
-    min-width: 130px;
+    min-width: 300px;
     height: 50px;
-    left: 35%;
+    left: 10%;
     bottom: 100px;
     color: #fff;
     font-size: 18px;
@@ -54,7 +57,7 @@ const S = {
       return $isShowToast
         ? css`
             display: flex;
-            animation: ${toastAnimation} 2s forwards;
+            animation: ${toastAnimation} 1.5s forwards;
           `
         : css`
             display: none;
