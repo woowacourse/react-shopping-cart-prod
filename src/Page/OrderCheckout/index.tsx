@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import LoadingSpinner from '../../components/Common/LoadingSpinner';
-import Modal from '../../components/Common/Modal';
+import OrderSuccessModal from '../../components/OrderSuccessModal';
 import useMutation from '../../hooks/useMutation';
 import usePaymentsData from '../../hooks/usePaymentsData';
 import useToast from '../../hooks/useToast';
@@ -11,21 +10,18 @@ import styles from './index.module.scss';
 
 function OrderCheckout() {
   const currentServerUrl = useRecoilValue($CurrentServerUrl);
-  const [cartList, setCartList] = useRecoilState($CartList(currentServerUrl));
-  const [checkedCartIdList, setCheckedCartIdList] = useRecoilState($CheckedCartIdList(currentServerUrl));
+  const cartList = useRecoilValue($CartList(currentServerUrl));
+  const checkedCartIdList = useRecoilValue($CheckedCartIdList(currentServerUrl));
 
   const [checkedPolicyList, setCheckedPolicyList] = useState<string[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const paymentsData = usePaymentsData(currentServerUrl);
-  const navigate = useNavigate();
   const Toast = useToast();
 
   const { mutateQuery, loading } = useMutation({
     onSuccess: () => {
       setIsModalOpen(true);
-      setCartList(prev => prev.filter(item => !checkedCartIdList.includes(item.id)));
-      setCheckedCartIdList([]);
     },
     onFailure: () => {
       Toast.error('결제에 실패했습니다...');
@@ -33,6 +29,8 @@ function OrderCheckout() {
   });
 
   const checkedCartList = cartList.filter(item => checkedCartIdList.includes(item.id));
+  const checkedCartProductNameList = checkedCartList.map(cart => cart.product.name);
+  const deliveryLocation = '서울특별시 강남구 테헤란로411, 성담빌딩 13층 우아한테크코스';
 
   const handleCheckPolicy: React.ChangeEventHandler<HTMLInputElement> = ({ target }) => {
     const policy = target.value;
@@ -53,12 +51,6 @@ function OrderCheckout() {
     });
   };
 
-  const handleClickNavigate =
-    (path: string): React.MouseEventHandler<HTMLButtonElement> =>
-    () => {
-      navigate(path);
-    };
-
   return (
     <main className={styles.container}>
       <h2>주문/결제</h2>
@@ -74,7 +66,7 @@ function OrderCheckout() {
                 <span>김민재</span>
                 <span>기본배송지</span>
               </div>
-              <div>서울특별시 강남구 테헤란로411, 성담빌딩 13층 우아한테크코스</div>
+              <div>{deliveryLocation}</div>
             </div>
           </div>
           <div className={styles['checkout-user-phone']}>
@@ -167,24 +159,13 @@ function OrderCheckout() {
           </button>
         </div>
       </div>
-      <Modal
+      <OrderSuccessModal
         isModalOpen={isModalOpen}
         closeModal={() => setIsModalOpen(false)}
-        direction="center"
-        useBackDropClose={false}
-      >
-        <div className={styles.modal}>
-          <img className={styles['success-image']} src="/payments-success.png" alt="결제 성공" />
-          <div className={styles['modal-button-container']}>
-            <button type="button" onClick={handleClickNavigate('/')}>
-              쇼핑 계속하기
-            </button>
-            <button type="button" onClick={handleClickNavigate('/order')}>
-              주문현황 보기
-            </button>
-          </div>
-        </div>
-      </Modal>
+        orderList={checkedCartProductNameList}
+        deliveryLocation={deliveryLocation}
+        finalPrice={paymentsData?.finalPrice.toLocaleString()}
+      />
     </main>
   );
 }
