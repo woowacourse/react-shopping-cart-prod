@@ -9,8 +9,8 @@ import Coupon from './Coupon';
 
 const CouponList = () => {
   const server = useRecoilValue(serverState);
-  const [coupons, setCoupons] = useState<CouponState[]>([]);
   const { api } = useFetchData();
+  const [coupons, setCoupons] = useState<CouponState[]>([]);
 
   useEffect(() => {
     api

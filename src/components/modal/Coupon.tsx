@@ -1,12 +1,14 @@
 import { ChangeEvent } from 'react';
 import { BsChevronRight } from 'react-icons/bs';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { styled } from 'styled-components';
 import { selectedCoupon } from '../../recoil';
 import { CouponState } from '../../types';
 
 const Coupon = ({ id, priceDiscount, name }: CouponState) => {
-  const setCoupon = useSetRecoilState(selectedCoupon);
+  const [coupon, setCoupon] = useRecoilState(selectedCoupon);
+
+  const isSelected = coupon.id === id;
 
   const handleCouponSelect = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
     setCoupon(() => {
@@ -29,7 +31,14 @@ const Coupon = ({ id, priceDiscount, name }: CouponState) => {
         </S.dottedLine>
         <BsChevronRight aria-hidden='true' />
       </S.Wrapper>
-      <input type='radio' id={`${id}`} name='쿠폰' value={id} onChange={handleCouponSelect} />
+      <input
+        type='radio'
+        id={`${id}`}
+        name='쿠폰'
+        value={id}
+        onChange={handleCouponSelect}
+        checked={isSelected}
+      />
     </>
   );
 };
