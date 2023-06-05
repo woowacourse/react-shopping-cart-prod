@@ -1,6 +1,5 @@
 import type { ServerNameType } from '../../types';
 
-import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
