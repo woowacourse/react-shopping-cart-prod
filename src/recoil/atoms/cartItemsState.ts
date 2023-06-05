@@ -28,6 +28,9 @@ const cartItemsState = selector<CartItem[]>({
     const client = get(clientState);
     const cartItems = get(localCartItemsState(client));
     const unselectedForOrders = get(unselectedForOrdersState);
+    const syncCartItem = cartItems.forEach((item) =>
+      get(syncCartItemState(syncCartItemStateKey(client, item.product.id))),
+    );
 
     return cartItems.map((cartItem) => ({
       ...cartItem,
@@ -70,6 +73,7 @@ const cartItemsState = selector<CartItem[]>({
       set(syncCartItemState(syncCartItemStateKey(client, cartItem.product.id)), (syncCartItem) => ({
         ...syncCartItem,
         enqueuedUpdates: [...syncCartItem.enqueuedUpdates, { quantity: cartItem.quantity }],
+        checked: !cartItem.unselectedForOrder,
       }));
     });
   },
