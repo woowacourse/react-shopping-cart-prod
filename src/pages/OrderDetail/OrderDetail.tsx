@@ -10,6 +10,9 @@ import { OrderedGroup } from "../../types/types.ts";
 import PaidBox from "../../components/PaidBox";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
+import { serverState } from "../../app/recoil/serverAtom.ts";
+import { fetchOrderedItem } from "../../app/api/api.ts";
 
 const PaidBoxWrapper = styled.div`
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
@@ -21,6 +24,7 @@ const PaidBoxWrapper = styled.div`
 function OrderDetail() {
   const navigate = useNavigate();
   const params = useParams();
+  const server = useRecoilValue(serverState);
 
   const [orderedItem, setOrderedItem] = useState<OrderedGroup>({
     createAt: "",
@@ -32,8 +36,8 @@ function OrderDetail() {
   });
 
   const loadOrderedItem = async () => {
-    const response = await fetch(`/orders/${params.orderId}`);
-    const data: OrderedGroup = await response.json();
+    const orderId = params.orderId as string;
+    const data = await fetchOrderedItem(server, orderId);
     setOrderedItem(data);
   };
 

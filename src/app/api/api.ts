@@ -6,6 +6,8 @@ import {
   ResponseCartItem,
   Coupon,
   Point,
+  OrderedGroup,
+  ResponseOrdered,
 } from "../../types/types.ts";
 import { url } from "./url.ts";
 import { getSessionStorage } from "../utils/storage.ts";
@@ -130,6 +132,36 @@ export const fetchPoint = async (server: string) => {
     const response = await fetch(`${url[server]}/point`);
     if (response.ok) {
       const data: Point = await response.json();
+      return data;
+    } else {
+      throw new Error();
+    }
+  } catch (error) {
+    console.error(error);
+    throw new Error();
+  }
+};
+
+export const fetchOrderedItem = async (server: string, orderId: string) => {
+  try {
+    const response = await fetch(`${url[server]}/orders/${orderId}`);
+    if (response.ok) {
+      const data: OrderedGroup = await response.json();
+      return data;
+    } else {
+      throw new Error();
+    }
+  } catch (error) {
+    console.error(error);
+    throw new Error();
+  }
+};
+
+export const fetchOrderedList = async (server: string) => {
+  try {
+    const response = await fetch(`${url[server]}/orders`);
+    if (response.ok) {
+      const data: ResponseOrdered = await response.json();
       return data;
     } else {
       throw new Error();
