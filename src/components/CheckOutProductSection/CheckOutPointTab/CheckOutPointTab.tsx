@@ -7,13 +7,20 @@ import { getUserOwnPoints } from 'apis/points';
 import { useRecoilValue } from 'recoil';
 import { checkedCartProductsTotalPriceState } from 'state/cartProducts';
 import { BASE_SHIPPING_FEE, SHIPPING_FEE_THRESHOLD } from 'constants/policy';
+import reFetchIcon from 'assets/refresh-icon.svg';
 
 const CheckOutPointTab = () => {
-  const { data: userOwnPoints, isLoading, errorState } = useFetch<number>(getUserOwnPoints);
+  const { data: userOwnPoints, isLoading, errorState, fetchData } = useFetch<number>(getUserOwnPoints);
   const { allInPoint, changePointCost, pointCost } = useCheckOutPointCostContext();
   const cartTotalPrice = useRecoilValue(checkedCartProductsTotalPriceState);
   const shippingFee = cartTotalPrice < SHIPPING_FEE_THRESHOLD ? BASE_SHIPPING_FEE : 0;
   const paymentAmount = cartTotalPrice + shippingFee;
+
+  const userOwnPointsText = isLoading
+    ? '포인트 로딩중입니다...'
+    : errorState?.isError
+    ? '포인트 정보를 불러오지 못했어요'
+    : `${userOwnPoints?.toLocaleString('ko-KR') ?? 0}P`;
 
   const handleChangePointCost = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,9 +32,6 @@ const CheckOutPointTab = () => {
   const handleAllInPoint = useCallback(() => {
     allInPoint(paymentAmount, userOwnPoints ?? 0);
   }, [paymentAmount, userOwnPoints, allInPoint]);
-
-  if (isLoading) return <div>포인트 로딩중</div>;
-  if (errorState?.isError) return <div>포인트 로딩 실패</div>;
 
   return (
     <Box
@@ -41,9 +45,15 @@ const CheckOutPointTab = () => {
         <PointInput type="tel" value={pointCost} onChange={handleChangePointCost} pattern="\d*" />
         <PointAllInButton onClick={handleAllInPoint}>전액사용</PointAllInButton>
       </Box>
-      <AvailablePointsText>
-        사용 가능 포인트<AvailablePoints>{`${userOwnPoints ?? 0}P`}</AvailablePoints>
-      </AvailablePointsText>
+      <Box>
+        사용 가능 포인트
+        <AvailablePoints>{userOwnPointsText}</AvailablePoints>
+        {errorState?.isError && (
+          <PointReFetchButton onClick={fetchData}>
+            <ReFetchIcon src={reFetchIcon} alt="다시 조회하기" />
+          </PointReFetchButton>
+        )}
+      </Box>
     </Box>
   );
 };
@@ -95,12 +105,30 @@ const PointAllInButton = styled.button`
   }
 `;
 
-const AvailablePointsText = styled.div`
-  font-size: 16px;
-`;
-
 const AvailablePoints = styled.span`
   margin-left: 6px;
   font-size: 16px;
   color: var(--color-primary-tone-down);
+`;
+
+const PointReFetchButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: 0;
+  margin-left: 16px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+`;
+
+const ReFetchIcon = styled.img`
+  width: 20px;
+  height: 20px;
+
+  transition: transform 100ms ease;
+
+  :hover {
+    transform: scale(1.1);
+  }
 `;
