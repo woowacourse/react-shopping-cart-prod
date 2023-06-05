@@ -14,7 +14,7 @@ import { CouponMessage } from '../CouponMessage';
 import useFetchOrders from '@views/Payment/hooks/useFetchOrders';
 import { useNavigate } from 'react-router-dom';
 import ROUTER_PATH from '@router/constants/routerPath';
-import useExpectedPriceContent from '@views/Payment/hooks/useExpectedPrice';
+import useExpectedPrice from '@views/Payment/hooks/useExpectedPrice';
 import { useCart } from '@views/Cart/hooks/useCart';
 
 function ExpectedPayment() {
@@ -25,7 +25,7 @@ function ExpectedPayment() {
   const { getCheckedItemIds } = useCart();
 
   const { deliveryFee, discountPrice, expectedPrice, totalPrice } =
-    useExpectedPriceContent(couponSelected);
+    useExpectedPrice(couponSelected);
 
   const navigate = useNavigate();
 

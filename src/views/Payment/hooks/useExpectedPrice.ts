@@ -24,7 +24,7 @@ const getDiscount = (coupon: CouponType | null, totalPrice: number) => {
 
 const getDeliveryFee = (totalPrice: number) => (totalPrice ? DELIVERY_FEE_BASIC : 0);
 
-const useExpectedPriceContent = (coupon: CouponType | null) => {
+const useExpectedPrice = (coupon: CouponType | null) => {
   const totalPrice = useTotalPrice();
 
   const discountPrice = getDiscount(coupon, totalPrice);
@@ -38,4 +38,4 @@ const useExpectedPriceContent = (coupon: CouponType | null) => {
   };
 };
 
-export default useExpectedPriceContent;
+export default useExpectedPrice;
