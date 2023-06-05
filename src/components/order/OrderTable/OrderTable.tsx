@@ -2,6 +2,8 @@ import { styled } from 'styled-components';
 import type { Order } from '../../../types/order';
 import { BiChevronsRight } from 'react-icons/bi';
 import OrderCartItem from '../OrderCartItem/OrderCartItem';
+import colors from '../../../colors';
+import { Link } from 'react-router-dom';
 
 interface OrderTableProps {
   orderInfo: Order;
@@ -13,8 +15,8 @@ const OrderTable = ({ orderInfo }: OrderTableProps) => {
   return (
     <Container>
       <TableHeader>
-        <span>주문번호: {id}</span>
-        <DetailButton>
+        <OrderNo>주문번호: {id}</OrderNo>
+        <DetailButton to={`./${id}`}>
           <span>상세보기</span>
           <BiChevronsRight />
         </DetailButton>
@@ -27,10 +29,10 @@ const OrderTable = ({ orderInfo }: OrderTableProps) => {
 };
 
 const Container = styled.ul`
-  border: 1px solid #aaa;
+  border: 1px solid ${colors.transparentGold};
 
   & > li {
-    border-bottom: 1px solid #aaa;
+    border-bottom: 1px solid ${colors.transparentGold};
   }
 `;
 
@@ -40,20 +42,24 @@ const TableHeader = styled.div`
   justify-content: space-between;
   height: 92px;
   padding: 0 30px;
-  background-color: #f6f6f6;
-  border-bottom: 1px solid #aaa;
-  font-size: 20px;
+  background-color: ${colors.pureBlack};
+  border-bottom: 1px solid ${colors.transparentGold};
+  font-size: 24px;
   line-height: 24px;
   letter-spacing: 0.5px;
-  color: #333;
+  font-weight: 600;
 `;
 
-const DetailButton = styled.button`
+const OrderNo = styled.span`
+  color: ${colors.gold};
+`;
+
+const DetailButton = styled(Link)`
   display: flex;
   font-size: 20px;
   line-height: 24px;
   letter-spacing: 0.5px;
-  color: #333;
+  color: ${colors.gold};
 
   svg {
     font-size: 24px;
