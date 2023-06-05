@@ -9,6 +9,7 @@ import {
   CartProductList,
   TotalPriceTable,
   Button,
+  ErrorBoundary,
 } from "../components";
 
 const Cart = () => {
@@ -27,10 +28,12 @@ const Cart = () => {
             <Button onClick={goPage(ROUTER_PATH.Main)}>상품 담으러 가기</Button>
           </EmptyContainer>
         ) : (
-          <Container>
-            <CartProductList />
-            <TotalPriceTable />
-          </Container>
+          <ErrorBoundary>
+            <Container>
+              <CartProductList />
+              <TotalPriceTable />
+            </Container>
+          </ErrorBoundary>
         )}
       </Page>
     </>

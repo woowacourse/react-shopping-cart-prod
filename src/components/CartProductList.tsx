@@ -8,8 +8,11 @@ import { useCheckBox } from "../hooks/useCheckBox";
 import { deleteCartItem } from "../api";
 import { localProductsState, selectedProductsState } from "../recoil/atom";
 import { makeLocalProducts } from "../utils/domain";
+import { useState } from "react";
 
 export const CartProductList = () => {
+  const [error, setError] = useState<null | Error>(null);
+
   const localProductsInCart = useRecoilValue<LocalProductType[]>(
     localProductsSelector
   );
@@ -28,21 +31,39 @@ export const CartProductList = () => {
 
   const handleDeleteButtonClicked = async () => {
     selectedProducts.forEach((product) => {
-      deleteCartItem(product.cartItemId);
+      try {
+        deleteCartItem(product.cartItemId);
+        removeCheckedArray();
+      } catch (error: any) {
+        setError(error);
+      }
     });
 
-    removeCheckedArray();
-    const newProducts = await makeLocalProducts();
-    setLocalProducts(newProducts);
+    try {
+      const newProducts = await makeLocalProducts();
+      setLocalProducts(newProducts);
+    } catch (error: any) {
+      setError(error);
+    }
   };
 
   const handleDelete = (cartItemId: number, index: number) => async () => {
-    await deleteCartItem(cartItemId);
+    try {
+      await deleteCartItem(cartItemId);
+      removeTargetIndex(index);
+    } catch (error: any) {
+      setError(error);
+    }
 
-    removeTargetIndex(index);
-    const newProducts = await makeLocalProducts();
-    setLocalProducts(newProducts);
+    try {
+      const newProducts = await makeLocalProducts();
+      setLocalProducts(newProducts);
+    } catch (error: any) {
+      setError(error);
+    }
   };
+
+  if (error) throw error;
 
   return (
     <Wrapper>
