@@ -38,6 +38,24 @@ describe('useRecoilCart 훅 테스트', () => {
           ctx.status(200),
           ctx.json(serverData)
         );
+      }),
+
+      rest.post(fetchUrl, async (req, res, ctx) => {
+        const { productId }: { productId: number } = await req.json();
+
+        const product = MOCK_PRODUCT_LIST.find((productItem) => productItem.id === productId);
+
+        if (!product) throw new Error('id에 맞는 product item을 찾을 수 없습니다.');
+
+        cartIdGenerator.increase();
+        const cartItem = createCartItem({
+          cartId: cartIdGenerator.value,
+          product,
+        });
+
+        serverData.push(cartItem);
+
+        return res(ctx.status(201), ctx.set('Location', `/cart-items/${cartIdGenerator.value}`));
       })
     );
   });
@@ -96,9 +114,17 @@ describe('useRecoilCart 훅 테스트', () => {
       wrapper: RecoilRoot,
     });
 
-    await waitFor(() => {
-      const { cart, addCartItem } = result.current;
-      addCartItem({ cartId: cartIdGenerator.value, product });
+    await waitFor(async () => {
+      const { cart, cartFetchData } = result.current;
+
+      
+      act(() => {
+        const { addCartItem } = result.current;
+        
+        addCartItem({ cartId: cartIdGenerator.value, product });
+      });
+      
+      await cartFetchData();
 
       expect(cart).toEqual(serverData);
     });
