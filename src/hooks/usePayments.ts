@@ -42,14 +42,16 @@ function usePayments() {
   useEffect(() => {
     const updatedUrlParams = getUrlParams(cartCheckedIdList, 'cartItemIds');
 
-    refreshFetch({
-      url: `${BASE_URL}?${updatedUrlParams}`,
-      options: {
-        headers: {
-          Authorization: `Basic ${btoa(USER)}`,
+    if (updatedUrlParams.length > 0) {
+      refreshFetch({
+        url: `${BASE_URL}?${updatedUrlParams}`,
+        options: {
+          headers: {
+            Authorization: `Basic ${btoa(USER)}`,
+          },
         },
-      },
-    });
+      });
+    }
   }, [cartList, cartCheckedIdList]);
 
   return { payments };
