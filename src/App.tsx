@@ -9,7 +9,7 @@ export const App = () => {
 
   useEffect(() => {
     fetchCartItems();
-  }, []);
+  }, [fetchCartItems]);
 
   return (
     <>

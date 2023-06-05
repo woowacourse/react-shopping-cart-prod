@@ -4,13 +4,18 @@ import { delay } from './utils';
 import mockData from '../assets/productMock.json';
 
 export const getHandlers = [
-  rest.get('/products', (req, res, ctx) => {
+  rest.get('/products', async (req, res, ctx) => {
     const errorCode = req.url.searchParams.get('error_code');
     if (errorCode) {
       return res(ctx.delay(delay), ctx.status(Number(errorCode)));
     }
 
-    return res(ctx.delay(delay), ctx.status(200), ctx.json(mockData));
+    return await res(
+      ctx.status(200),
+      ctx.set('Content-Type', 'application/json'),
+      ctx.delay(delay),
+      ctx.json(mockData)
+    );
   }),
 
   rest.get('/products/:id', (req, res, ctx) => {
@@ -19,7 +24,7 @@ export const getHandlers = [
       return res(ctx.delay(delay), ctx.status(Number(errorCode)));
     }
 
-    return res(ctx.delay(delay), ctx.status(200));
+    return res(ctx.delay(delay), ctx.set('Content-Type', 'application/json'), ctx.status(200));
   }),
 
   rest.get('/cart-items', (req, res, ctx) => {
@@ -31,13 +36,22 @@ export const getHandlers = [
     const localCart = localStorage.getItem('cartState');
     const cart = localCart ? JSON.parse(localCart) : [];
 
-    return res(ctx.delay(delay), ctx.status(200), ctx.json(cart));
+    return res(
+      ctx.delay(delay),
+      ctx.status(400),
+      ctx.set('Content-Type', 'application/json'),
+      ctx.json(cart)
+    );
   }),
 
   rest.get('/order-policy', (req, res, ctx) => {
     const errorCode = req.url.searchParams.get('error_code');
     if (errorCode) {
-      return res(ctx.delay(delay), ctx.status(Number(errorCode)));
+      return res(
+        ctx.delay(delay),
+        ctx.set('Content-Type', 'application/json'),
+        ctx.status(Number(errorCode))
+      );
     }
 
     return res(
@@ -60,6 +74,7 @@ export const getHandlers = [
     return res(
       ctx.delay(delay),
       ctx.status(200),
+      ctx.set('Content-Type', 'application/json'),
       ctx.json([
         {
           orderId: 1,
@@ -113,6 +128,7 @@ export const getHandlers = [
     return res(
       ctx.delay(delay),
       ctx.status(200),
+      ctx.set('Content-Type', 'application/json'),
       ctx.json({
         orderId: 2,
         orderDate: '2023-04-05 15:00',
@@ -152,6 +168,7 @@ export const getHandlers = [
     return res(
       ctx.delay(delay),
       ctx.status(200),
+      ctx.set('Content-Type', 'application/json'),
       ctx.json({
         usablePoint: 1_000,
       })

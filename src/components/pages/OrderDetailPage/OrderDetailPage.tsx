@@ -12,5 +12,11 @@ export const OrderDetailPage = () => {
   const { orderId, orderDate, orderDetails, ...els }: OrderDetail = useFetchOrderDetail(Number(id));
   const orderInfo: OrderInfo = { orderId, orderDate, orderDetails };
 
-  return <OrderBox orderInfo={orderInfo} />;
+  return (
+    <>
+      <OrderBox orderInfo={orderInfo} />
+      {/* <Receipt /> */}
+      <div></div>
+    </>
+  );
 };

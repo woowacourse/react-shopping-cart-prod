@@ -1,8 +1,10 @@
 import { Suspense, useEffect } from 'react';
 import { useRecoilCallback } from 'recoil';
+import { ErrorBoundary } from 'react-error-boundary';
 
-import { ProductListSkeleton } from '@components/ProductList/ProductListSkeleton/ProductListSkeleton';
-import { ProductList } from '@components/ProductList/ProductList';
+import { ProductListSkeleton } from '@components/pages/Home/ProductList/ProductListSkeleton/ProductListSkeleton';
+import { ProductList } from '@components/pages/Home//ProductList/ProductList';
+import { FallbackRender } from '@components/FallbackRender/FallbackRender.styled';
 
 import { productsSelector } from '@recoils/productsAtoms';
 
@@ -16,8 +18,10 @@ export const Home = () => {
   }, [refreshProducts]);
 
   return (
-    <Suspense fallback={<ProductListSkeleton />}>
-      <ProductList />
-    </Suspense>
+    <ErrorBoundary fallbackRender={FallbackRender}>
+      <Suspense fallback={<ProductListSkeleton />}>
+        <ProductList />
+      </Suspense>
+    </ErrorBoundary>
   );
 };

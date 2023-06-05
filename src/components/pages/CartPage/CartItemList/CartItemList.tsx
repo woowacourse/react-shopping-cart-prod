@@ -1,6 +1,8 @@
 import * as styled from './CartItemList.styled';
+import { ErrorBoundary } from 'react-error-boundary';
 
 import { Checkbox } from '@components/styled/Checkbox';
+import { FallbackRender } from '@components/FallbackRender/FallbackRender';
 import { Stepper } from '@components/common/Stepper/Stepper';
 
 import { useCartRepository, useCartItems } from '@recoils/cartAtoms';
@@ -32,7 +34,9 @@ export const CartItemList = () => {
               <styled.ProductName>{product.name}</styled.ProductName>
             </styled.LeftInfo>
             <styled.RightInfo>
-              <Stepper cartItemId={id} quantity={quantity} />
+              <ErrorBoundary fallbackRender={FallbackRender}>
+                <Stepper cartItemId={id} quantity={quantity} />
+              </ErrorBoundary>
               <styled.ProductPrice>{product.price.toLocaleString('ko-KR')}원</styled.ProductPrice>
               <styled.DeleteButton onClick={() => onClickDeleteIcon(id)}>
                 <DeleteIcon />

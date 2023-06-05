@@ -9,13 +9,19 @@ import { OrderSummarySkeleton } from '@components/OrderSummary/OrderSummarySkele
 import { FallbackRender } from '@components/FallbackRender/FallbackRender';
 
 import { useCartRepository } from '@recoils/cartAtoms';
+import { useRecoilCallback } from 'recoil';
+import { usablePointSelector } from '@recoils/usablePointAtoms';
 
 export const CartPage = () => {
   const { fetchCartItems } = useCartRepository();
+  const refreshUsablePoint = useRecoilCallback(({ refresh }) => () => {
+    refresh(usablePointSelector);
+  });
 
   useEffect(() => {
     fetchCartItems();
-  }, []);
+    refreshUsablePoint();
+  }, [fetchCartItems, refreshUsablePoint]);
 
   return (
     <styled.Main>

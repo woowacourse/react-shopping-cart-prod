@@ -9,9 +9,7 @@ const QUANTITY = Object.freeze({
   MIN: 1,
 });
 
-const SHIPPING_FEE = 3000;
-
-const SKELETON_LENGTH = 12;
+const SKELETON_LENGTH = 16;
 
 const FETCH_METHOD = Object.freeze({
   POST: 'POST',
@@ -42,13 +40,4 @@ const LOCAL_STORAGE_KEY = Object.freeze({
   CART_STATE: 'cartState',
 });
 
-export {
-  PATH,
-  QUANTITY,
-  SHIPPING_FEE as DELIVERY_CHARGE,
-  SKELETON_LENGTH,
-  FETCH_METHOD,
-  FETCH_URL,
-  RECOIL_KEY,
-  LOCAL_STORAGE_KEY,
-};
+export { PATH, QUANTITY, SKELETON_LENGTH, FETCH_METHOD, FETCH_URL, RECOIL_KEY, LOCAL_STORAGE_KEY };

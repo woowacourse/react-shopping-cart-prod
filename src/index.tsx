@@ -1,5 +1,8 @@
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
+import { ErrorBoundary } from 'react-error-boundary';
+
+import { FallbackRender } from '@components/FallbackRender/FallbackRender';
 
 import { RecoilRoot } from 'recoil';
 
@@ -28,9 +31,11 @@ const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <React.StrictMode>
     <RecoilRoot>
-      <Suspense>
-        <App />
-      </Suspense>
+      <ErrorBoundary fallbackRender={FallbackRender}>
+        <Suspense>
+          <App />
+        </Suspense>
+      </ErrorBoundary>
     </RecoilRoot>
   </React.StrictMode>
 );
