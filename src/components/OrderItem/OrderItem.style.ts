@@ -23,9 +23,32 @@ export const OrderItemHeaderName = styled.div`
   letter-spacing: 0.5px;
 
   color: #333333;
+`;
+
+export const OrderItemHeaderTime = styled.div`
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 24px;
+
+  letter-spacing: 0.5px;
+
+  color: #333333;
+`;
+
+export const OrderItemHeaderButton = styled.div`
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+
+  letter-spacing: 0.5px;
+
+  color: #333333;
 
   cursor: pointer;
 `;
+
 
 export const OrderItemBox = styled.div`
   display: flex;

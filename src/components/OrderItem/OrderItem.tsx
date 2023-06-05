@@ -1,7 +1,9 @@
 import {
   OrderItemBox,
   OrderItemHeader,
+  OrderItemHeaderButton,
   OrderItemHeaderName,
+  OrderItemHeaderTime,
   OrderItemImage,
   OrderItemInfo,
   OrderItemName,
@@ -23,13 +25,18 @@ function OrderItem({ orderItem, goDetail }: OrderItemProps) {
   return (
     <OrderItemWrapper>
       <OrderItemHeader>
-        <OrderItemHeaderName>
-          주문번호 : {orderItem.orderId}
-        </OrderItemHeaderName>
-        {goDetail && (
-          <OrderItemHeaderName onClick={() => navigate(`${orderItem.orderId}`)}>
-            상세보기 {">"}
+        <div>
+          <OrderItemHeaderName>
+            주문번호 : {orderItem.orderId}
           </OrderItemHeaderName>
+          <OrderItemHeaderTime>
+            주문 일시 : {orderItem.createAt}
+          </OrderItemHeaderTime>
+        </div>
+        {goDetail && (
+          <OrderItemHeaderButton onClick={() => navigate(`${orderItem.orderId}`)}>
+            상세보기 {">"}
+          </OrderItemHeaderButton>
         )}
       </OrderItemHeader>
       {orderItems.map((orderItem, i) => (
@@ -38,7 +45,7 @@ function OrderItem({ orderItem, goDetail }: OrderItemProps) {
           <OrderItemInfo>
             <OrderItemName>{orderItem.productName}</OrderItemName>
             <OrderItemPrice>
-              {orderItem.productPrice}원 / 수량 : {orderItem.productQuantity}개
+              {orderItem.productPrice.toLocaleString()}원 / 수량 : {orderItem.productQuantity}개
             </OrderItemPrice>
           </OrderItemInfo>
         </OrderItemBox>

@@ -18,7 +18,7 @@ function PaidBox({ paymentPrice }: PaidBoxProps) {
       <PaidInfo>
         <PaidProperty>
           <PaidText>총 결제금액</PaidText>
-          <PaidText>{paymentPrice}원</PaidText>
+          <PaidText>{paymentPrice.toLocaleString()}원</PaidText>
         </PaidProperty>
       </PaidInfo>
     </PaidBoxLayout>

@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   OrderListDivider,
   OrderListTitle,
@@ -18,6 +18,7 @@ const PaidBoxWrapper = styled.div`
 `;
 
 function OrderDetail() {
+  const navigate = useNavigate();
   const params = useParams();
 
   const [orderedItem, setOrderedItem] = useState<OrderedGroup>({
@@ -47,6 +48,7 @@ function OrderDetail() {
       <PaidBoxWrapper>
         <PaidBox paymentPrice={orderedItem.paymentPrice} />
       </PaidBoxWrapper>
+      <button onClick={() => navigate('/order')}>주문 목록으로 돌아가기</button>
     </OrderListWrapper>
   );
 }

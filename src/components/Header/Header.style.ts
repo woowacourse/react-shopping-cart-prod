@@ -4,6 +4,7 @@ export const HeaderWrapper = styled.div`
   width: 100vw;
   color: ${({ theme }) => theme.color.light};
   border-bottom: 1px solid ${({ theme }) => theme.color.secondary};
+
 `;
 
 export const HeaderContent = styled.div`
@@ -28,6 +29,8 @@ export const LoginButton = styled.button`
 export const LogoWrapper = styled.div`
   display: flex;
   align-items: center;
+  
+  cursor: pointer;
 `;
 
 export const LogoImage = styled.img`

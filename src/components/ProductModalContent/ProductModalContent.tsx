@@ -15,9 +15,11 @@ import {
   ProductName,
   ProductPrice,
 } from "./ProductModalContent.style.ts";
+import { useNavigate } from "react-router-dom";
 
 function ProductModalContent({ product }: { product: ProductItem }) {
   const { name, price, imageUrl } = product;
+  const navigate = useNavigate();
   const setModalOpen = useSetRecoilState(modalOpenState);
 
   const quantity = useRecoilValue(quantityByProductIdSelector(product.id));
@@ -50,7 +52,10 @@ function ProductModalContent({ product }: { product: ProductItem }) {
             }}
           >
             {quantity > 0 && (
-              <div>
+              <div style={{ cursor: 'pointer' }} onClick={() => {
+                closeModal();
+                navigate('/cart');
+              }}>
                 <img src={cartIcon}></img>
               </div>
             )}
