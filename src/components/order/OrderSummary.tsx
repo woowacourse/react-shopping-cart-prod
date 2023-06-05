@@ -19,7 +19,7 @@ const OrderSummary = () => {
   const [usePoint, setUsePoint] = useState<number>(0);
 
   const baseUrl = useApiBaseUrlValue();
-  const { mutation, error } = useMutation(FETCH_METHOD.POST);
+  const { mutation } = useMutation(FETCH_METHOD.POST);
 
   const { data: point } = useQuery<Point>(baseUrl + '/point', {
     Authorization: `Basic ${btoa(process.env.REACT_APP_API_CREDENTIAL!)}`,

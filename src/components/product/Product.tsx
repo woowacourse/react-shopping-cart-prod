@@ -43,6 +43,7 @@ export const Product = ({ item }: Props) => {
         [cartId]: true,
       };
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [addCartResponseData]);
 
   const setCart = useSetCartState();
