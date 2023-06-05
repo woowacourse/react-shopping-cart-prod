@@ -4,6 +4,7 @@ import { fetchAPI } from '@api/fetchAPI';
 import { localStorageEffect } from './localStorageEffect';
 
 import type { CartItem } from '../types';
+import { baseApiUrlSelector } from './baseApiUrlAtoms';
 
 export const cartState = atom<CartItem[]>({
   key: 'cartState',
@@ -60,9 +61,10 @@ export const cartRepository = selector({
   key: 'cartRepository',
   get: ({ getCallback }) => {
     const fetchCartItems = getCallback(({ set, snapshot }) => async (cartItemId?: number) => {
+      const baseApiUrl = await snapshot.getPromise(baseApiUrlSelector);
       const localCartItems = await snapshot.getPromise(cartState);
 
-      const cartItems = await fetchAPI('/cart-items', {
+      const cartItems = await fetchAPI(`${baseApiUrl}/cart-items`, {
         headers: {
           Authorization: `Basic ${btoa(process.env.REACT_APP_API_CREDENTIAL!)}`,
         },
@@ -82,8 +84,9 @@ export const cartRepository = selector({
       set(cartState, cartItemsWithCheckedState);
     });
 
-    const addCartItem = getCallback(() => async (body: { productId: number }) => {
-      const { cartItemId } = await fetchAPI('/cart-items', {
+    const addCartItem = getCallback(({ snapshot }) => async (body: { productId: number }) => {
+      const baseApiUrl = await snapshot.getPromise(baseApiUrlSelector);
+      const { cartItemId } = await fetchAPI(`${baseApiUrl}/cart-items`, {
         method: 'POST',
         headers: {
           Authorization: `Basic ${btoa(process.env.REACT_APP_API_CREDENTIAL!)}`,
@@ -95,20 +98,24 @@ export const cartRepository = selector({
       await fetchCartItems(cartItemId);
     });
 
-    const updateQuantity = getCallback(() => async (cartItemId: number, quantity: number) => {
-      await fetchAPI(`/cart-items/${cartItemId}`, {
-        method: 'PATCH',
-        headers: {
-          Authorization: `Basic ${btoa(process.env.REACT_APP_API_CREDENTIAL!)}`,
-          'Content-Type': 'application/json',
-        },
-        body: {
-          quantity,
-        },
-      });
+    const updateQuantity = getCallback(
+      ({ snapshot }) =>
+        async (cartItemId: number, quantity: number) => {
+          const baseApiUrl = await snapshot.getPromise(baseApiUrlSelector);
+          await fetchAPI(`${baseApiUrl}/cart-items/${cartItemId}`, {
+            method: 'PATCH',
+            headers: {
+              Authorization: `Basic ${btoa(process.env.REACT_APP_API_CREDENTIAL!)}`,
+              'Content-Type': 'application/json',
+            },
+            body: {
+              quantity,
+            },
+          });
 
-      await fetchCartItems();
-    });
+          await fetchCartItems();
+        }
+    );
 
     const toggleCheckbox = getCallback(({ snapshot, set }) => async (cartItemId: number) => {
       const cartItems = await snapshot.getPromise(cartState);
@@ -130,8 +137,9 @@ export const cartRepository = selector({
       set(cartState, updatedCartItems);
     });
 
-    const deleteCartItem = getCallback(() => async (cartId: number) => {
-      await fetchAPI(`/cart-items/${cartId}`, {
+    const deleteCartItem = getCallback(({ snapshot }) => async (cartId: number) => {
+      const baseApiUrl = await snapshot.getPromise(baseApiUrlSelector);
+      await fetchAPI(`${baseApiUrl}/cart-items/${cartId}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Basic ${btoa(process.env.REACT_APP_API_CREDENTIAL!)}`,

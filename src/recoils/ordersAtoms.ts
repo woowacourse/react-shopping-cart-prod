@@ -2,11 +2,13 @@ import { selector, selectorFamily, useRecoilValue } from 'recoil';
 import { fetchAPI } from '@api/fetchAPI';
 
 import type { OrderDetail, OrderInfo } from '../types';
+import { baseApiUrlSelector } from './baseApiUrlAtoms';
 
 export const orderListSelector = selector<OrderInfo[]>({
   key: 'ordersSelector',
-  get: async () => {
-    const orderList = await fetchAPI('/orders', {
+  get: async ({ get }) => {
+    const baseApiUrl = get(baseApiUrlSelector);
+    const orderList = await fetchAPI(`${baseApiUrl}/orders`, {
       headers: {
         Authorization: `Basic ${btoa(process.env.REACT_APP_API_CREDENTIAL!)}`,
       },
@@ -18,38 +20,45 @@ export const orderListSelector = selector<OrderInfo[]>({
 
 export const orderDetailSelector = selectorFamily<OrderDetail, number>({
   key: 'orderDetailSelector',
-  get: (orderId) => async () => {
-    const orders = await fetchAPI(`/orders/${orderId}`, {
-      headers: {
-        Authorization: `Basic ${btoa(process.env.REACT_APP_API_CREDENTIAL!)}`,
-      },
-    });
+  get:
+    (orderId) =>
+    async ({ get }) => {
+      const baseApiUrl = get(baseApiUrlSelector);
+      const orders = await fetchAPI(`${baseApiUrl}/orders/${orderId}`, {
+        headers: {
+          Authorization: `Basic ${btoa(process.env.REACT_APP_API_CREDENTIAL!)}`,
+        },
+      });
 
-    return orders;
-  },
+      return orders;
+    },
 });
 
 export const orderSelector = selectorFamily({
   key: 'orderSelector',
-  get: (body: any) => async () => {
-    const { orderId } = await fetchAPI('/orders', {
-      method: 'POST',
-      headers: {
-        Authorization: `Basic ${btoa(process.env.REACT_APP_API_CREDENTIAL!)}`,
-        'Content-Type': 'application/json',
-      },
-      body,
-    });
+  get:
+    (body: any) =>
+    async ({ get }) => {
+      const baseApiUrl = get(baseApiUrlSelector);
+      const { orderId } = await fetchAPI(`${baseApiUrl}/orders`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Basic ${btoa(process.env.REACT_APP_API_CREDENTIAL!)}`,
+          'Content-Type': 'application/json',
+        },
+        body,
+      });
 
-    return orderId;
-  },
+      return orderId;
+    },
 });
 
 export const ordersRepository = selector({
   key: 'ordersRepository',
   get: ({ getCallback }) => {
-    const fetchOrder = getCallback(() => async (body: any) => {
-      const response = await fetchAPI('/orders', {
+    const fetchOrder = getCallback(({ snapshot }) => async (body: any) => {
+      const baseApiUrl = await snapshot.getPromise(baseApiUrlSelector);
+      const response = await fetchAPI(`${baseApiUrl}/orders`, {
         method: 'POST',
         headers: {
           Authorization: `Basic ${btoa(process.env.REACT_APP_API_CREDENTIAL!)}`,
