@@ -11,24 +11,38 @@ const OrderItem = ({ orderItem }: OrderItemProps) => {
   const { imageUrl, name, price } = product;
 
   return (
-    <StyledOrderItem>
-      <Image src={imageUrl} size="small" />
-      <OrderItemFlexBox>
+    <>
+      <DesktopOrderItem>
+        <Image src={imageUrl} size="small" />
+        <OrderItemFlexBox>
+          <h3>{name}</h3>
+          <div>
+            <p>{price.toLocaleString('ko-KR')}원</p>
+            <p>{quantity}개</p>
+          </div>
+        </OrderItemFlexBox>
+      </DesktopOrderItem>
+      <MobileOrderItem>
         <h3>{name}</h3>
+        <Image src={imageUrl} size="small" />
         <div>
           <p>{price.toLocaleString('ko-KR')}원</p>
           <p>{quantity}개</p>
         </div>
-      </OrderItemFlexBox>
-    </StyledOrderItem>
+      </MobileOrderItem>
+    </>
   );
 };
 
-const StyledOrderItem = styled.li`
+const DesktopOrderItem = styled.li`
   display: flex;
   gap: 32px;
   width: 100%;
   padding: 40px 28px;
+
+  @media (max-width: ${({ theme }) => theme.breakPoints.large}) {
+    display: none;
+  }
 `;
 
 const OrderItemFlexBox = styled.div`
@@ -52,9 +66,26 @@ const OrderItemFlexBox = styled.div`
       color: #888888;
     }
 
-    @media (max-width: ${({ theme }) => theme.breakPoints.medium}) {
+    @media (max-width: ${({ theme }) => theme.breakPoints.large}) {
       flex-direction: column;
     }
+  }
+`;
+
+const MobileOrderItem = styled.li`
+  display: none;
+
+  & > div {
+    display: flex;
+    gap: 60px;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakPoints.large}) {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    padding: 20px 20px;
   }
 `;
 

@@ -39,9 +39,17 @@ const OrderBoxItem = ({
         <TitleContainer type={type}>
           <h2>주문번호 : {id}</h2>
           {pathname === '/orderDetail' ? null : (
-            <button type="button" onClick={handleDetailButtonClick}>
-              {'상세정보 >'}
-            </button>
+            <>
+              <DetailButton type="button" onClick={handleDetailButtonClick}>
+                {'상세정보 >'}
+              </DetailButton>
+              <MobileDetailButton
+                type="button"
+                onClick={handleDetailButtonClick}
+              >
+                {'>'}
+              </MobileDetailButton>
+            </>
           )}
         </TitleContainer>
       ) : (
@@ -76,20 +84,32 @@ const TitleContainer = styled.div<Pick<OrderBoxItemProps, 'type'>>`
     line-height: 80px;
   }
 
-  & > button {
-    font-size: 20px;
-    font-weight: 400;
-    letter-spacing: 0.5px;
-  }
-
   @media (max-width: ${({ theme }) => theme.breakPoints.large}) {
     & > h2 {
-      font-size: 24px;
+      font-size: 20px;
     }
 
     & > button {
       font-size: 16px;
     }
+  }
+`;
+
+const DetailButton = styled.button`
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+
+  @media (max-width: ${({ theme }) => theme.breakPoints.large}) {
+    display: none;
+  }
+`;
+
+const MobileDetailButton = styled(DetailButton)`
+  display: none;
+
+  @media (max-width: ${({ theme }) => theme.breakPoints.large}) {
+    display: block;
   }
 `;
 
