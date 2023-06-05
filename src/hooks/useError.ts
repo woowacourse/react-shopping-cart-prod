@@ -11,6 +11,10 @@ function useError() {
 
   const memoized = useMemo(
     () => ({
+      resetBoundary: () => {
+        context?.reset();
+        setState({ error: null, hasError: false });
+      },
       showBoundary: (error: Error) =>
         setState({
           error,
