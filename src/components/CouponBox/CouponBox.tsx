@@ -10,12 +10,19 @@ import {
   CouponTitle,
   CouponWrapper,
 } from "./CouponBox.style.ts";
+import { totalPriceSelector } from "../../app/recoil/cartAtoms.ts";
 
 function CouponBox({ coupon }: { coupon: Coupon }) {
   const isCouponSelected = useRecoilValue(isCouponSelectedSelector(coupon.id));
   const { updateSelectedCoupon } = useRecoilValue(orderRepository);
+  const totalPrice = useRecoilValue(totalPriceSelector);
+
   const handleClickCoupon = (coupon: Coupon) => {
-    updateSelectedCoupon(coupon);
+    if (totalPrice >= coupon.minAmount) {
+      updateSelectedCoupon(coupon);
+    } else {
+      alert("쿠폰을 사용하기 위한 결제 금액이 부족합니다.");
+    }
   };
 
   return (

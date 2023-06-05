@@ -1,6 +1,10 @@
 import { atom, selector, selectorFamily } from "recoil";
 import { Coupon, NewOrder, Point } from "../../types/types";
-import { cartRepository, checkedCartSelector, totalPriceSelector } from "./cartAtoms";
+import {
+  cartRepository,
+  checkedCartSelector,
+  totalPriceSelector,
+} from "./cartAtoms";
 import { modalRepository } from "./modalAtoms";
 import { url } from "../api/url.ts";
 import { serverState } from "./serverAtom.ts";
@@ -48,7 +52,7 @@ export const discountPriceByCouponSelector = selector<number>({
     const discount =
       selectedCoupons.length > 0
         ? (totalPrice * selectedCoupons[0]?.discountPercent) / 100 +
-        selectedCoupons[0]?.discountAmount
+          selectedCoupons[0]?.discountAmount
         : 0;
     return discount;
   },
@@ -58,11 +62,11 @@ export const isCouponSelectedSelector = selectorFamily<boolean, number>({
   key: "selectedCouponSelectedSelector",
   get:
     (couponId: number) =>
-      ({ get }) => {
-        const selectedCouponIds = get(selectedCouponIdSelector);
+    ({ get }) => {
+      const selectedCouponIds = get(selectedCouponIdSelector);
 
-        return selectedCouponIds.includes(couponId);
-      },
+      return selectedCouponIds.includes(couponId);
+    },
 });
 
 export const selectedPointState = atom({
@@ -132,11 +136,6 @@ export const orderRepository = selector({
         },
       });
 
-      console.log(response);
-
-      const data = await response.json();
-
-      alert(JSON.stringify(data));
       if (response.ok) {
         alert("결제가 완료됐습니다.");
         loadCartList();
