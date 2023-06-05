@@ -47,3 +47,14 @@ export interface OrderInfo {
   items: { product: ProductType; quantity: number }[];
   orderedAt: string;
 }
+
+export interface OrderDetailInfo {
+  orderId: number;
+  coupon: { name: string; discountRate: number };
+  items: { product: ProductType; quantity: number }[];
+  totalPrice: number;
+  discountedTotalPrice: number;
+  couponDiscountPrice: number;
+  deliveryPrice: number;
+  orderedAt: string;
+}
