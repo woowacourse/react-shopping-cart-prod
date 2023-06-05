@@ -2,6 +2,12 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   width: 1200px;
+
+  > div:last-of-type {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+  }
 `;
 
 export const OrderDetailHeader = styled.div`

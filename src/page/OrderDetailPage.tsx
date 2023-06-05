@@ -7,6 +7,7 @@ import { loginState } from '../atom/login';
 import { OrderDetailInfo } from '../types';
 import OrderItemDetailList from '../components/OrderList/OrderItemDetailList';
 import { useParams } from 'react-router-dom';
+import OrderBill from '../components/OrderList/OrderBill';
 
 export default function OrderDetailPage() {
   const serverName = useRecoilValue(serverNameState);
@@ -26,7 +27,10 @@ export default function OrderDetailPage() {
   return (
     <S.Wrapper>
       <S.OrderDetailHeader>주문 내역 상세</S.OrderDetailHeader>
-      <OrderItemDetailList {...orderItem} />
+      <div>
+        <OrderItemDetailList {...orderItem} />
+        <OrderBill {...orderItem} />
+      </div>
     </S.Wrapper>
   );
 }
