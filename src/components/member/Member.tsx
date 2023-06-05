@@ -1,20 +1,9 @@
-import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
-import { serverState } from '../../store/ServerState';
-import { MemberTypes } from '../../types';
-import { MEMBER_BASE_URL } from '../../constants/url';
-import { useFetchData } from '../../hooks/useFetchData';
+import { memberState } from '../../store/MemberState';
 
 const Member = () => {
-  const [member, setMember] = useState<MemberTypes | undefined>();
-  const serverUrl = useRecoilValue(serverState);
-  const { api } = useFetchData<MemberTypes | undefined>(setMember);
-
-  useEffect(() => {
-    api.get(`${serverUrl}${MEMBER_BASE_URL}`);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [serverUrl]);
+  const member = useRecoilValue(memberState);
 
   return (
     <>
