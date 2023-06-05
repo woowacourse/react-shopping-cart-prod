@@ -5,11 +5,11 @@ const Palette = createGlobalStyle`
     --primary-blue-color:#789395;
     --primary-green-color:#94B49F;
     --primary-mint-color:#B4CFB0;
-    --primary-beige-color:#E5E3C9;
+    --primary-beige-color: #E5E3C9;
     
     --dark-color:#333333;
     --light-color: #ffffff;
-    --gray-color:##d0d5dd;
+    --gray-color: #d0d5dd;
 
     --transparency-color:rgba(0,0,0,0);
 
