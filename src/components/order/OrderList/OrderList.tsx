@@ -72,6 +72,12 @@ const ListHeader = styled.div`
     line-height: 24px;
     letter-spacing: 0.5px;
   }
+
+  @media only screen and (max-width: 600px) {
+    & > * {
+      font-size: 15px;
+    }
+  }
 `;
 
 const ListWrapper = styled.div`

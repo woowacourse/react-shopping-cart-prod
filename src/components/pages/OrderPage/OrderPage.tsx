@@ -12,28 +12,32 @@ const OrderPage = () => {
 
   return (
     <Container>
-      <TitleWrapper>
-        <Title>주문 목록</Title>
-      </TitleWrapper>
-      <Spacer height={28} />
-      <OrderListContainer>
-        {orders.length > 0 ? (
-          orders.map((order) => (
-            <OrderList
-              key={order.id}
-              order={order}
-              needsDetailButton
-              isSummary
-            />
-          ))
-        ) : (
-          <ImageContainer>
-            <Image src={empty} alt="텅 빈 주문 목록 이미지" />
-            <span>주문 내역이 없어요.</span>
-            <HomeButton onClick={() => navigate('/')}>주문하러 가기</HomeButton>
-          </ImageContainer>
-        )}
-      </OrderListContainer>
+      <Inner>
+        <TitleWrapper>
+          <Title>주문 목록</Title>
+        </TitleWrapper>
+        <Spacer height={28} />
+        <OrderListContainer>
+          {orders.length > 0 ? (
+            orders.map((order) => (
+              <OrderList
+                key={order.id}
+                order={order}
+                needsDetailButton
+                isSummary
+              />
+            ))
+          ) : (
+            <ImageContainer>
+              <Image src={empty} alt="텅 빈 주문 목록 이미지" />
+              <span>주문 내역이 없어요.</span>
+              <HomeButton onClick={() => navigate('/')}>
+                주문하러 가기
+              </HomeButton>
+            </ImageContainer>
+          )}
+        </OrderListContainer>
+      </Inner>
     </Container>
   );
 };
@@ -44,6 +48,27 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 60%;
+
+  @media only screen and (max-width: 1200px) {
+    width: 100%;
+    align-items: center;
+  }
+`;
+
+const Inner = styled.div`
+  width: 100%;
+
+  @media only screen and (max-width: 1200px) {
+    width: 700px;
+  }
+
+  @media only screen and (max-width: 768px) {
+    width: 400px;
+  }
+
+  @media only screen and (max-width: 600px) {
+    width: 300px;
+  }
 `;
 
 const TitleWrapper = styled.div`

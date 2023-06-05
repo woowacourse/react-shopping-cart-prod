@@ -24,25 +24,27 @@ const OrderDetailPage = () => {
 
   return (
     <Container>
-      <TitleWrapper>
-        <Title>주문 내역 상세</Title>
-      </TitleWrapper>
-      <Spacer height={28} />
-      <OrderList order={order} />
-      <Spacer height={30} />
-      <OrderTotal>
-        <OrderTotalHeader>결제금액 정보</OrderTotalHeader>
-        <Detail>
-          <DetailInner>
-            <dt>총 결제금액</dt>
-            <dd>{formatPrice(price)}</dd>
-          </DetailInner>
-          <DetailInner>
-            <dt>적립된 포인트</dt>
-            <dd>+ {formatPrice(savedPointByOrder)}</dd>
-          </DetailInner>
-        </Detail>
-      </OrderTotal>
+      <Inner>
+        <TitleWrapper>
+          <Title>주문 내역 상세</Title>
+        </TitleWrapper>
+        <Spacer height={28} />
+        <OrderList order={order} />
+        <Spacer height={30} />
+        <OrderTotal>
+          <OrderTotalHeader>결제금액 정보</OrderTotalHeader>
+          <Detail>
+            <DetailInner>
+              <dt>총 결제금액</dt>
+              <dd>{formatPrice(price)}</dd>
+            </DetailInner>
+            <DetailInner>
+              <dt>적립된 포인트</dt>
+              <dd>+ {formatPrice(savedPointByOrder)}</dd>
+            </DetailInner>
+          </Detail>
+        </OrderTotal>
+      </Inner>
     </Container>
   );
 };
@@ -51,6 +53,27 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 60%;
+
+  @media only screen and (max-width: 1200px) {
+    width: 100%;
+    align-items: center;
+  }
+`;
+
+const Inner = styled.div`
+  width: 100%;
+
+  @media only screen and (max-width: 1200px) {
+    width: 700px;
+  }
+
+  @media only screen and (max-width: 768px) {
+    width: 400px;
+  }
+
+  @media only screen and (max-width: 600px) {
+    width: 300px;
+  }
 `;
 
 const TitleWrapper = styled.div`
@@ -72,6 +95,14 @@ const OrderTotal = styled.dl`
   margin-left: auto;
   border-radius: 8px;
   border: 1px solid ${(props) => props.theme.color.gray300};
+
+  @media only screen and (max-width: 1200px) {
+    margin: 0 auto;
+  }
+
+  @media only screen and (max-width: 600px) {
+    width: 300px;
+  }
 `;
 
 const OrderTotalHeader = styled.p`
