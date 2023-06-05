@@ -1,13 +1,13 @@
 import { FlexWrapper } from '@pages/CartPage/CartPage.style';
 import * as S from './ExpectedPayment.style';
 
-import { useCart, useTotalPrice } from '@views/Cart/recoil/cartState';
+import { useTotalPrice } from '@views/Cart/recoil/cartState';
 import { DELIVERY_FEE_BASIC } from '@views/Payment/constants/orderConstants';
 
 import { useState } from 'react';
 import { CouponModal } from '../CouponModal';
 import { useCouponSelected } from '@views/Payment/recoil/couponListState';
-import { CouponType } from 'types/CouponType';
+
 import { RiCoupon2Line } from 'react-icons/ri';
 import { Button } from '@common/Button';
 import { CouponMessage } from '../CouponMessage';
@@ -15,6 +15,7 @@ import useFetchOrders from '@views/Payment/hooks/useFetchOrders';
 import { useNavigate } from 'react-router-dom';
 import ROUTER_PATH from '@router/constants/routerPath';
 import useExpectedPriceContent from '@views/Payment/hooks/useExpectedPrice';
+import { useCart } from '@views/Cart/hooks/useCart';
 
 function ExpectedPayment() {
   const [isCouponOpen, setIsCouponOpen] = useState(false);

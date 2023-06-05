@@ -1,8 +1,9 @@
 import * as S from './CartItemList.style';
 import { CartItemBox } from '@views/Cart/components/CartItemBox';
 import { CheckBox } from '@common/CheckBox';
-import { useCart } from '@views/Cart/recoil/cartState';
+
 import empty from '@assets/empty.png';
+import { useCart } from '@views/Cart/hooks/useCart';
 
 function CartItemList() {
   const { cart, isAllChecked, checkedCartCount, toggleAllCartItem, deleteCheckedItems } = useCart();

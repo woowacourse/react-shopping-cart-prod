@@ -3,9 +3,9 @@ import { CheckBox } from '@common/CheckBox';
 import * as S from './CartItemBox.style';
 import { Stepper } from '@common/Stepper';
 
-import { useCart } from '@views/Cart/recoil/cartState';
 import { ProductItemType } from 'types/ProductType';
 import { FaTrashAlt } from 'react-icons/fa';
+import { useCart } from '@views/Cart/hooks/useCart';
 
 interface CartItemProps {
   cartItemId: number;

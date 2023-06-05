@@ -2,10 +2,12 @@ import { useNavigate } from 'react-router-dom';
 
 import * as S from './CartButtonWithIcon.style';
 
-import { useCart, useRefreshCart } from '@views/Cart/recoil/cartState';
+import { useRefreshCart } from '@views/Cart/recoil/cartState';
 import { useRefreshProduct } from '@views/Product/recoil/productListState';
 
 import { FiShoppingCart } from 'react-icons/fi';
+import { useCart } from '@views/Cart/hooks/useCart';
+
 function CartButtonWithIcon() {
   const navigate = useNavigate();
   const { cart } = useCart();
