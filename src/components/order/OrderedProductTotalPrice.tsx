@@ -3,11 +3,13 @@ import { styled } from 'styled-components';
 interface OrderedProductTotalPriceProps {
   totalPrice: number;
   usedPoint: number;
+  shippingFee: number;
 }
 
 export const OrderedProductTotalPrice = ({
   totalPrice,
   usedPoint,
+  shippingFee,
 }: OrderedProductTotalPriceProps) => {
   return (
     <>
@@ -15,7 +17,11 @@ export const OrderedProductTotalPrice = ({
       <Style.TotalPriceInformations>
         <Style.Information>
           <span>총 결제금액</span>
-          <span>{(totalPrice - usedPoint).toLocaleString('ko-KR')}원</span>
+          <span>{(totalPrice - usedPoint + shippingFee).toLocaleString('ko-KR')}원</span>
+        </Style.Information>
+        <Style.Information>
+          <span>배송비</span>
+          <span>{shippingFee.toLocaleString('ko-KR')}원</span>
         </Style.Information>
         <Style.Information>
           <span>사용한 포인트</span>

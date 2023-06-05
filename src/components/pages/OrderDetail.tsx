@@ -29,6 +29,7 @@ const OrderDetail = () => {
           <OrderedProductTotalPrice
             totalPrice={data.totalProductsPrice}
             usedPoint={data.usedPoint}
+            shippingFee={data.shippingFee}
           />
         </Style.Price>
       </Style.OrderDetailWrapper>
