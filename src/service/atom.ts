@@ -27,6 +27,20 @@ export const couponListModalState = atom<ModalType>({
   },
 });
 
+export const confirmOrderModalState = atom<ModalType>({
+  key: 'confirmOrderModal',
+  default: {
+    isOpen: false,
+  },
+});
+
+export const deleteOrderModalState = atom<ModalType>({
+  key: 'deleteOrderModal',
+  default: {
+    isOpen: false,
+  },
+});
+
 export const serverState = atom<ServerURLType>({
   key: 'serverUrl',
   default: servers.달리,

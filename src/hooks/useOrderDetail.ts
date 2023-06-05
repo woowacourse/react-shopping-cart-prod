@@ -52,7 +52,7 @@ const useOrderDetail = (orderId?: string) => {
       }),
     {
       onSuccess: () => {
-        alert('삭제되었습니다.');
+        alert('취소되었습니다.');
         queryClient.refetchQueries(['orders']);
         navigate('/order');
       },

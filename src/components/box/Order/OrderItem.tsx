@@ -4,8 +4,15 @@ import { Text } from '../../common/Text/Text';
 import { Link } from 'react-router-dom';
 import { skeletonAnimation } from '../ProductItem/ProductItem';
 import Button from '../../common/Button/Button';
+import useOrderDetail from '../../../hooks/useOrderDetail';
+import { useModal } from '../../../hooks/useModal';
+import { confirmOrderModalState, deleteOrderModalState } from '../../../service/atom';
 
 const OrderItem = ({ order }: { order: OrderType }) => {
+  const { confirmOrderAPI, deleteOrderAPI } = useOrderDetail(String(order.id));
+  const { openModal: openConfirmOrderModal } = useModal(confirmOrderModalState);
+  const { openModal: openDeleteOrderModal } = useModal(deleteOrderModalState);
+
   return (
     <OrderItemWrapper>
       <OrderItemHead>
@@ -15,8 +22,19 @@ const OrderItem = ({ order }: { order: OrderType }) => {
         <div style={{ display: 'flex', alignItems: 'center', gap: 26 }}>
           {!order.confirmState && (
             <ButtonWrapper>
-              <Button text="주문확정" size="small" primary borderRadius={2} />
-              <Button text="주문취소" size="small" borderRadius={2} />
+              <Button
+                text="주문확정"
+                size="small"
+                primary
+                borderRadius={2}
+                onClick={() => openConfirmOrderModal({ callback: confirmOrderAPI.mutate })}
+              />
+              <Button
+                text="주문취소"
+                size="small"
+                borderRadius={2}
+                onClick={() => openDeleteOrderModal({ callback: deleteOrderAPI.mutate })}
+              />
             </ButtonWrapper>
           )}
           <Link to={`/order/${order.id}`}>

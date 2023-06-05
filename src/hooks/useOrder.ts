@@ -18,7 +18,6 @@ const useOrder = () => {
     data: orderData,
     isFetching,
     isError,
-    refetch,
   } = useQuery<OrderType[]>('orders', async () => {
     const res = await fetch(`${serverURL}/orders`, {
       method: 'GET',
@@ -51,11 +50,9 @@ const useOrder = () => {
         resetAppliedCoupon();
 
         const orderId = Number(res.headers.get('Location')?.split('/')[2]);
-        // queryClient.refetchQueries(['cart'], ['my-coupons']);
         queryClient.refetchQueries(['cart']);
         queryClient.refetchQueries(['my-coupons']);
         queryClient.refetchQueries(['orders']);
-        console.log(queryClient.getQueryCache());
 
         alert('주문이 완료되었습니다.');
 

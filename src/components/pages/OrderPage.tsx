@@ -2,6 +2,10 @@ import styled from '@emotion/styled';
 import PageTemplate from '../templates/PageTemplate';
 import { Text } from '../common/Text/Text';
 import OrderList from '../list/OrderList/OrderList';
+import Modal from '../common/Modal/Modal';
+import { confirmOrderModalState, deleteOrderModalState } from '../../service/atom';
+import ConfirmOrderModal from '../common/Modal/ConfirmOrderModal';
+import DeleteOrderModal from '../common/Modal/DeleteOrderModal';
 
 const OrderPage = () => {
   return (
@@ -19,6 +23,12 @@ const OrderPage = () => {
           <OrderList />
         </CartPageContent>
       </CartPageWrapper>
+      <Modal modalState={confirmOrderModalState}>
+        <ConfirmOrderModal />
+      </Modal>
+      <Modal modalState={deleteOrderModalState}>
+        <DeleteOrderModal />
+      </Modal>
     </PageTemplate>
   );
 };
