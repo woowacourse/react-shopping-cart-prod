@@ -1,19 +1,20 @@
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
-import ProductItem from './ProductItem';
 import { Product } from '../../types';
 import { PRODUCT_BASE_URL } from '../../constants/url';
 import { productListState } from '../../store/ProductListState';
-import { useEffect } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import Skeleton from './Skeleton';
 import { serverState } from '../../store/ServerState';
 import useGet from '../../hooks/useGet';
 
-// TODO: 관심사 분리하기
+const ProductItem = React.lazy(() => import('./ProductItem'));
+
+// TODO: 관심사 분리하기 props로 주기
 const ProductList = () => {
   const [productList, setProductList] = useRecoilState<Product[]>(productListState);
   const serverUrl = useRecoilValue(serverState);
-  const { data, isLoading } = useGet<Product[]>(`${serverUrl}${PRODUCT_BASE_URL}`);
+  const { data } = useGet<Product[]>(`${serverUrl}${PRODUCT_BASE_URL}`);
 
   useEffect(() => {
     if (data) setProductList(data);
@@ -30,7 +31,11 @@ const ProductList = () => {
     />
   ));
 
-  return <S.Wrapper>{isLoading ? skeleton : products}</S.Wrapper>;
+  return (
+    <S.Wrapper>
+      <Suspense fallback={skeleton}>{products}</Suspense>
+    </S.Wrapper>
+  );
 };
 
 const S = {
