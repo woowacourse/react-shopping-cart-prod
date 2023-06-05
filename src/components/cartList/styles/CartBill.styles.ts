@@ -70,6 +70,11 @@ export const BillRow = styled.div`
     margin-top: 24px;
     margin-bottom: 44px;
   }
+
+  > select {
+    text-align: center;
+    font-size: 20px;
+  }
 `;
 
 export const CouponBillRow = styled(BillRow)`
