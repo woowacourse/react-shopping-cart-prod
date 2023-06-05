@@ -2,10 +2,7 @@ import type { Order, ScheduledOrder } from '../types/product';
 import type { HostNameType } from '../types/server';
 
 import { servers } from '../constants/server';
-
-const email = process.env.REACT_APP_EMAIL;
-const password = process.env.REACT_APP_PASSWORD;
-const base64 = btoa(email + ':' + password);
+import base64 from './auth';
 
 export const api = async (hostName: HostNameType) => {
   const URL = `${servers[hostName]}/orders`;

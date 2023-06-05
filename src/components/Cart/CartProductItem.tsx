@@ -1,10 +1,11 @@
+import type { CartProduct } from '../../types/product';
+
 import styled from 'styled-components';
 
 import CheckBox from '../Common/CheckBox';
 import Image from '../Common/Image';
 import AmountCounter from '../Common/AmountCounter';
 
-import type { CartProduct } from '../../types/product';
 import TrashCanIcon from '../../assets/TrashCanIcon';
 import useCart from '../../hooks/useCart';
 import useCheckedProducts from '../../hooks/useCheckedProducts';
@@ -15,7 +16,7 @@ interface CartProductItemProps {
 
 const CartProductItem = ({ cartProduct }: CartProductItemProps) => {
   const { quantity, product } = cartProduct;
-  const { name, price, imageUrl, stock } = product;
+  const { name, price, imageUrl } = product;
   const { removeProduct, addCount, subtractCount } = useCart(product);
   const { handleCheckBoxChange, isCheckedProduct } = useCheckedProducts();
 

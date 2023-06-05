@@ -1,6 +1,7 @@
-import { servers } from '../constants/server';
 import type { Product } from '../types/product';
 import type { HostNameType } from '../types/server';
+
+import { servers } from '../constants/server';
 
 export const getProducts = async (hostName: HostNameType) => {
   const hostURL = servers[hostName];

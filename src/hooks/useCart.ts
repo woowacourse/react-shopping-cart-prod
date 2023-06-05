@@ -1,13 +1,12 @@
+import type { Product } from '../types/product';
 import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { cartAtom } from '../recoil/cartProductData';
-import { findTargetProduct } from '../domain/cartProductHandler';
 import { api } from '../apis/cartProducts';
+import { findTargetProduct } from '../domain/cartProductHandler';
 import useProductQuantity from './useProductQuantity';
+import { cartAtom } from '../recoil/cartProductData';
 import { hostNameAtom } from '../recoil/hostData';
-import type { Product } from '../types/product';
-import { updateData } from '../utils/localStorage';
 import { checkedCartItemIdsAtom } from '../recoil/checkedProductData';
 
 const useCart = (product: Product) => {

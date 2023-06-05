@@ -1,14 +1,14 @@
-import styled from 'styled-components';
-
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
+
+import styled from 'styled-components';
 
 import CartIcon from '../../assets/CartIcon';
 import { totalCartProductSelect } from '../../recoil/cartProductData';
 import { servers } from '../../constants/server';
 import { hostNameAtom } from '../../recoil/hostData';
 import { HostNameType } from '../../types/server';
-import React from 'react';
 
 const Header = () => {
   const totalCartProduct = useRecoilValue(totalCartProductSelect);

@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 
 import styled from 'styled-components';
+
 import OrderList from '../components/Order/OrderList';
 import ContentListSkeleton from '../components/Common/ContentListSkeleton';
 

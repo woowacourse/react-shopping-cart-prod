@@ -6,8 +6,8 @@ import styled from 'styled-components';
 
 import ContentListSkeleton from '../components/Common/ContentListSkeleton';
 import OrderProductList from '../components/Order/OrderProductList';
-import { orderwithIdState } from '../recoil/orderProductData';
 import Message from '../components/Common/Message';
+import { orderwithIdState } from '../recoil/orderProductData';
 
 const OrderProductDetailPage = () => {
   const { orderId } = useParams();

@@ -1,7 +1,7 @@
+import { useRecoilValue } from 'recoil';
 import styled, { css } from 'styled-components';
 
 import Skeleton from './Skeleton';
-import { useRecoilValue } from 'recoil';
 import { totalCartProductSelect } from '../../recoil/cartProductData';
 
 interface Props {
