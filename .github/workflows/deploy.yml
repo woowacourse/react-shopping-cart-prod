@@ -1,8 +1,8 @@
-name: NodeJS with Webpack
+name: React Shopping Cart Prod Step2
 
 on:
   push:
-    branches: ['step1']
+    branches: ['step2']
 
 jobs:
   deploy:
@@ -14,13 +14,16 @@ jobs:
       cancel-in-progress: true
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Use repo source
+        uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v3
+      - name: Use node.js
+        uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      - uses: actions/cache@v3
+      - name: Cache node_modules
+        uses: actions/cache@v3
         id: cache
         with:
           path: '**/node_modules'
@@ -28,12 +31,18 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - run: npm i
+      - name: Install deps
+        run: npm install
         if: steps.cache.outputs.cache-hit != 'true'
 
-      - run: npm run build
+      - name: Build
+        run: |
+          npm run build
+          cp ./build/index.html ./build/404.html
+          npm run build-storybook
 
-      - uses: peaceiris/actions-gh-pages@v3
+      - name: Deploy gh-pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build
