@@ -92,7 +92,7 @@ export const OrderSummary = ({ fetchCartItems }: any) => {
       </>
       <>
         <styled.OrderSummaryM>
-          <styled.OrderButtonM>
+          <styled.OrderButtonM onClick={onClickOrderButton}>
             <styled.SelectedProductLength>{checkedCartItems.length}</styled.SelectedProductLength>
             <styled.ButtonRole>주문하기</styled.ButtonRole>
             <styled.TotalPriceM>

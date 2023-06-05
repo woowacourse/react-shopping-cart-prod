@@ -14,8 +14,8 @@ export const ProductList = () => {
       <styled.TotalProductLength>총 {products.length} 개의 상품</styled.TotalProductLength>
       <styled.ProductList>
         {products.map((product) => (
-          <ErrorBoundary fallbackRender={FallbackRender}>
-            <Product key={product.id} item={product} />
+          <ErrorBoundary key={product.id} fallbackRender={FallbackRender}>
+            <Product item={product} />
           </ErrorBoundary>
         ))}
       </styled.ProductList>
