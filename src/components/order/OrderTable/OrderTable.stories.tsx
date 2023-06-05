@@ -17,26 +17,20 @@ const orderInfo: Order = {
   orderDate: '2023-10-20T23:01:59',
   orders: [
     {
-      id: 3942,
+      id: 2543,
       quantity: 2,
-      product: {
-        id: 2543,
-        name: '우코우 피자',
-        price: 15000,
-        imageUrl:
-          'https://cdn.pixabay.com/photo/2017/12/09/08/18/pizza-3007395_1280.jpg',
-      },
+      name: '우코우 피자',
+      price: 15000,
+      imageUrl:
+        'https://cdn.pixabay.com/photo/2017/12/09/08/18/pizza-3007395_1280.jpg',
     },
     {
       id: 1029,
       quantity: 5,
-      product: {
-        id: 2543,
-        name: '도우밥 만두',
-        price: 3000,
-        imageUrl:
-          'https://cdn.pixabay.com/photo/2016/02/17/10/41/dumplings-1204814_1280.jpg',
-      },
+      name: '도우밥 만두',
+      price: 3000,
+      imageUrl:
+        'https://cdn.pixabay.com/photo/2016/02/17/10/41/dumplings-1204814_1280.jpg',
     },
   ],
 };
