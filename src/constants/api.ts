@@ -12,4 +12,5 @@ export const BASE_URLS = {
   baron: 'http://somsom.techcourse.store',
   blackCat: 'http://blackcat.techcourse.store',
   kkero: 'http://kkero.store',
+  mock: 'http://localhost:3000',
 } as const satisfies Record<ServerKeys, string>;

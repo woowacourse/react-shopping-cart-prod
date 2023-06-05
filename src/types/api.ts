@@ -1,1 +1,1 @@
-export type ServerKeys = 'baron' | 'blackCat' | 'kkero';
+export type ServerKeys = 'baron' | 'blackCat' | 'kkero' | 'mock';

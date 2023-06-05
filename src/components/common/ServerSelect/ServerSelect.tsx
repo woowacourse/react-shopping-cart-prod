@@ -36,6 +36,7 @@ const ServerSelect = () => {
         <option value="baron">바론</option>
         <option value="blackCat">블랙캣</option>
         <option value="kkero">케로</option>
+        <option value="mock">MSW</option>
       </Select>
     </Label>
   );
