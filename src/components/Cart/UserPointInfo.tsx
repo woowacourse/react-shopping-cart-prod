@@ -35,6 +35,12 @@ const UserPointInfo = ({ onUserUsedPointUpdate }: UserPointInfoProps) => {
   const handleUsedPointOnBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const userInputPoint = Number(e.target.value);
     onUserUsedPointUpdate(userInputPoint);
+
+    if (userInputPoint < 3000) {
+      alert('포인트는 3000원 이상 사용할 수 있습니다.');
+      e.target.value = '';
+      return;
+    }
   };
 
   return (
