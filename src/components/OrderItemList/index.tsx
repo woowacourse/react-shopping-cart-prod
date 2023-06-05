@@ -6,16 +6,17 @@ import styles from './index.module.scss';
 interface OrderItemListProps {
   orderItemList: OrderProduct[];
   orderNumber: number;
+  orderTime: string;
 }
 
-function OrderItemList({ orderItemList, orderNumber }: OrderItemListProps) {
+function OrderItemList({ orderItemList, orderNumber, orderTime }: OrderItemListProps) {
   const path = `/order-detail/${orderNumber}`;
 
   return (
     <div className={styles.container}>
       <div className={styles['list-title']}>
         <div>
-          <span>주문번호: {orderNumber}</span> | <span>구매 일시: {Date.now()}</span>
+          <span>주문번호: {orderNumber}</span> | <span>구매 일시: {orderTime}</span>
         </div>
         <Link to={path}>
           <button type="button" className={styles['show-detail-button']}>

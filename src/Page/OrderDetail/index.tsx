@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom';
 import OrderItemList from '../../components/OrderItemList';
 import PaymentsView from '../../components/PaymentsView';
 import useGetQuery from '../../hooks/useGetQuery';
+import formatDateToKorean from '../../utils/formatDateToKorean';
 import styles from './index.module.scss';
 import type { OrderDetailType } from '../../types';
 
@@ -16,7 +17,11 @@ function OrderDetail() {
         {orderDetail && (
           <>
             <PaymentsView paymentsData={orderDetail.paymentAmount} />
-            <OrderItemList orderItemList={orderDetail.productList} orderNumber={orderDetail.id} />
+            <OrderItemList
+              orderItemList={orderDetail.productList}
+              orderNumber={orderDetail.id}
+              orderTime={formatDateToKorean(orderDetail.orderTime)}
+            />
           </>
         )}
       </div>

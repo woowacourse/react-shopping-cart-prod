@@ -209,8 +209,9 @@ const handlers = [
 
     if (filteredOrder && paymentAmount) {
       const responseWithId: OrderDetailType = {
-        productList: filteredOrder.productList,
         id: Number(orderId),
+        orderTime: filteredOrder.orderTime,
+        productList: filteredOrder.productList,
         paymentAmount,
       };
       return res(ctx.status(200), ctx.json(responseWithId));

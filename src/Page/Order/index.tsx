@@ -3,6 +3,7 @@ import { ReactComponent as AlertBlank } from '../../assets/baemin-alert-blank.sv
 import OrderItemList from '../../components/OrderItemList';
 import useGetQuery from '../../hooks/useGetQuery';
 import { OrderType } from '../../types';
+import formatDateToKorean from '../../utils/formatDateToKorean';
 import styles from './index.module.scss';
 
 function Order() {
@@ -19,7 +20,11 @@ function Order() {
           </section>
         ) : (
           orderList?.map((order: OrderType) => (
-            <OrderItemList orderItemList={order.productList} orderNumber={order.id} />
+            <OrderItemList
+              orderItemList={order.productList}
+              orderNumber={order.id}
+              orderTime={formatDateToKorean(order.orderTime)}
+            />
           ))
         )}
       </div>

@@ -52,6 +52,7 @@ interface OrderType {
 
 interface OrderDetailType {
   id: number;
+  orderTime: string;
   productList: OrderProduct[];
   paymentAmount: PaymentsData;
 }
