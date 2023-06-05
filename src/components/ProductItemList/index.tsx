@@ -2,11 +2,11 @@
 
 import { useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
-import { $CurrentServerUrl } from 'src/recoil/atom';
-import { Product } from 'src/types';
+import fetchData from 'src/api';
 import ProductItem from 'src/components/ProductItem';
 import useFetch from 'src/hooks/useFetch';
-import fetchData from 'src/api';
+import { $CurrentServerUrl } from 'src/recoil/atom';
+import { Product } from 'src/types';
 import styles from './index.module.scss';
 
 function ProductItemList() {

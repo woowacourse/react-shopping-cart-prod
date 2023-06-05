@@ -1,8 +1,8 @@
-import { Order } from 'src/types';
 import { useRecoilValue } from 'recoil';
-import { $CurrentServerUrl } from 'src/recoil/atom';
-import { USER } from 'src/constants';
 import fetchData from 'src/api';
+import { USER } from 'src/constants';
+import { $CurrentServerUrl } from 'src/recoil/atom';
+import { Order } from 'src/types';
 import useFetch from './useFetch';
 
 function useOrderList() {

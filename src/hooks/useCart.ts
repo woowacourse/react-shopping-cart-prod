@@ -1,9 +1,9 @@
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { MESSAGE, USER } from '../constants';
-import { $CartList, $CheckedCartIdList, $CurrentServerUrl } from '../recoil/atom';
+import { MESSAGE, USER } from 'src/constants';
+import { $CartList, $CheckedCartIdList, $CurrentServerUrl } from 'src/recoil/atom';
 import useMutation from './useMutation';
 import useToast from './useToast';
-import type { CartItem, Product } from '../types';
+import type { CartItem, Product } from 'src/types';
 
 const useCart = () => {
   const Toast = useToast();

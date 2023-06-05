@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { FETCH_METHOD, MESSAGE } from '../constants';
-import { MutationFetchMethod } from '../types';
+import { FETCH_METHOD, MESSAGE } from 'src/constants';
+import { MutationFetchMethod } from 'src/types';
 
 interface UseMutationArg<BodyData, ResponseData> {
   onSuccess?: (data?: {

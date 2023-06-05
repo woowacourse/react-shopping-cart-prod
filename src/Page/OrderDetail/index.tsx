@@ -1,13 +1,13 @@
+import { Suspense } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ContentLayout from 'src/components/Common/ContentLayout';
-import OrderItem from 'src/components/OrderItem';
-import PaymentsView from 'src/components/PaymentsView';
-import useOrderDetail from 'src/hooks/useOrderDetail';
-import { ROUTE_PATH } from 'src/constants';
 import LoadingSpinner from 'src/components/Common/LoadingSpinner';
-import { Suspense } from 'react';
 import ErrorBoundary from 'src/components/ErrorBoundary';
 import FetchFail from 'src/components/FetchFail';
+import OrderItem from 'src/components/OrderItem';
+import PaymentsView from 'src/components/PaymentsView';
+import { ROUTE_PATH } from 'src/constants';
+import useOrderDetail from 'src/hooks/useOrderDetail';
 import styles from './index.module.scss';
 
 function OrderDetail() {

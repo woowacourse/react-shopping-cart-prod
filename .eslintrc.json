@@ -7,6 +7,8 @@
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
+    "plugin:import/typescript",
+    "plugin:import/recommended",
     "airbnb",
     "airbnb-typescript",
     "airbnb/hooks",
@@ -14,6 +16,17 @@
   ],
   "overrides": [],
   "parser": "@typescript-eslint/parser",
+
+  "settings": {
+    "import/resolver": {
+      "node": {},
+      "typescript": {
+        "directory": "./src"
+      }
+    },
+    "import/parsers": { "@typescript-eslint/parser": [".ts", ".tsx"] }
+  },
+
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -22,7 +35,7 @@
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
-  "plugins": ["react", "@typescript-eslint"],
+  "plugins": ["react", "@typescript-eslint", "import"],
   "rules": {
     "react/jsx-props-no-spreading": "off",
     "@typescript-eslint/no-use-before-define": "off",
@@ -37,9 +50,13 @@
       {
         "groups": ["builtin", "external", "internal", "parent", "sibling", "object", "type", "index"],
         "alphabetize": {
-          "order": "asc"
-        }
+          "order": "asc",
+          "caseInsensitive": true
+        },
+        "newlines-between": "never"
       }
-    ]
+    ],
+    "import/no-unresolved": "off",
+    "import/export": "off"
   }
 }

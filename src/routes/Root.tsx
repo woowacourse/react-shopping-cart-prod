@@ -1,9 +1,9 @@
-import { Outlet } from 'react-router-dom';
 import { Suspense } from 'react';
+import { Outlet } from 'react-router-dom';
+import ToastList from 'src/components/Common/Toast/ToastList';
 import ErrorBoundary from 'src/components/ErrorBoundary';
 import FetchFail from 'src/components/FetchFail';
-import ToastList from '../components/Common/Toast/ToastList';
-import Header from '../components/Header';
+import Header from 'src/components/Header';
 
 function Root() {
   return (

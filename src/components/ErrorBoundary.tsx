@@ -1,8 +1,6 @@
 /* eslint-disable react/destructuring-assignment */
 
-import React from 'react';
-import { PropsWithChildren } from 'react';
-import { ErrorInfo } from 'react';
+import React, { PropsWithChildren, ErrorInfo } from 'react';
 import { ErrorBoundaryContext } from 'src/context/ErrorBoundaryContext';
 
 interface ErrorBoundaryState {

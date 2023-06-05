@@ -1,10 +1,10 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import Order from 'src/Page/Order';
+import { ROUTE_PATH } from 'src/constants';
 import Cart from 'src/Page/Cart';
 import Home from 'src/Page/Home';
 import NotFound from 'src/Page/NotFound';
+import Order from 'src/Page/Order';
 import OrderDetail from 'src/Page/OrderDetail';
-import { ROUTE_PATH } from 'src/constants';
 import Root from './Root';
 
 function Router() {

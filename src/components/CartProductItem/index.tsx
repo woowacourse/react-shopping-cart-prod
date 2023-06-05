@@ -1,11 +1,11 @@
-import CountButton from 'src/components/Common/CountButton';
-import type { CartItem } from 'src/types';
 import { RiDeleteBinLine } from 'react-icons/ri';
+import CheckBox from 'src/components/Common/CheckBox';
+import CountButton from 'src/components/Common/CountButton';
+import Modal from 'src/components/Common/Modal';
+import ModalNotification from 'src/components/Common/ModalNotification';
 import useModal from 'src/hooks/useModal';
-import Modal from '../Common/Modal';
-import CheckBox from '../Common/CheckBox';
-import ModalNotification from '../Common/ModalNotification';
 import styles from './index.module.scss';
+import type { CartItem } from 'src/types';
 
 interface CartProductItemProps {
   cartItem: CartItem;

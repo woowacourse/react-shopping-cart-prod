@@ -1,14 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useRecoilState, useRecoilValue } from 'recoil';
-import useCart from 'src/hooks/useCart';
-import { $CheckedCartIdList, $CurrentServerUrl } from 'src/recoil/atom';
 import CartProductItem from 'src/components/CartProductItem';
-import type { CartItem } from 'src/types';
+import CheckBox from 'src/components/Common/CheckBox';
+import Modal from 'src/components/Common/Modal';
+import ModalNotification from 'src/components/Common/ModalNotification';
+import useCart from 'src/hooks/useCart';
 import useModal from 'src/hooks/useModal';
-import ModalNotification from '../Common/ModalNotification';
-import Modal from '../Common/Modal';
-import CheckBox from '../Common/CheckBox';
+import { $CheckedCartIdList, $CurrentServerUrl } from 'src/recoil/atom';
 import styles from './index.module.scss';
+import type { CartItem } from 'src/types';
 
 function CartProductItemList() {
   const currentServerUrl = useRecoilValue($CurrentServerUrl);

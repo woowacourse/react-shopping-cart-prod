@@ -1,9 +1,9 @@
-import OrderList from 'src/components/OrderList';
-import ContentLayout from 'src/components/Common/ContentLayout';
 import { Suspense } from 'react';
+import ContentLayout from 'src/components/Common/ContentLayout';
 import LoadingSpinner from 'src/components/Common/LoadingSpinner';
 import ErrorBoundary from 'src/components/ErrorBoundary';
 import FetchFail from 'src/components/FetchFail';
+import OrderList from 'src/components/OrderList';
 import styles from './index.module.scss';
 
 function Order() {

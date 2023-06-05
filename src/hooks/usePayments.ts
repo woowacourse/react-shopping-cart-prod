@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-restricted-syntax */
 
-import { Payments } from 'src/types';
-import { useRecoilValue } from 'recoil';
-import { $CartList, $CheckedCartIdList, $CurrentServerUrl } from 'src/recoil/atom';
-import { USER } from 'src/constants';
 import { useEffect } from 'react';
+import { useRecoilValue } from 'recoil';
 import fetchData from 'src/api';
+import { USER } from 'src/constants';
+import { $CartList, $CheckedCartIdList, $CurrentServerUrl } from 'src/recoil/atom';
+import { Payments } from 'src/types';
 import useFetch from './useFetch';
 
 const getUrlParams = (data: number[], key: string) => {

@@ -3,11 +3,11 @@ import { RiBillLine } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { ReactComponent as Logo } from 'src/assets/logo.svg';
+import DropDown from 'src/components/Common/DropDown';
 import userServerUrlList from 'src/data/serverData';
 import useToast from 'src/hooks/useToast';
 import { $CartList, $CurrentServerUrl } from 'src/recoil/atom';
 import { setLocalStorage, getLocalStorage } from 'src/utils/localStorage';
-import DropDown from '../Common/DropDown';
 import styles from './index.module.scss';
 
 function Header() {

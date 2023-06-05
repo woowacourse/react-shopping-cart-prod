@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/return-await */
 import { atom, atomFamily } from 'recoil';
-import { USER } from '../constants';
-import userServerUrlList from '../data/serverData';
-import { getLocalStorage } from '../utils/localStorage';
-import type { CartItem, ToastState } from '../types';
+import { USER } from 'src/constants';
+import userServerUrlList from 'src/data/serverData';
+import { getLocalStorage } from 'src/utils/localStorage';
+import type { CartItem, ToastState } from 'src/types';
 
 const getCart = async (url: string) => {
   const response = await fetch(`${url}/cart-items`, {

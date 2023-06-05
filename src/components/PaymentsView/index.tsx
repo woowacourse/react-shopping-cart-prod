@@ -1,14 +1,13 @@
 /* eslint-disable react/no-array-index-key */
-
 import { memo } from 'react';
+import { useRecoilValue } from 'recoil';
+import Modal from 'src/components/Common/Modal';
+import OrderForm from 'src/components/OrderForm';
+import useModal from 'src/hooks/useModal';
+import { $CartList, $CheckedCartIdList, $CurrentServerUrl } from 'src/recoil/atom';
 import { Payments } from 'src/types';
 import convertKORWon from 'src/utils';
-import { $CartList, $CheckedCartIdList, $CurrentServerUrl } from 'src/recoil/atom';
-import { useRecoilValue } from 'recoil';
-import useModal from 'src/hooks/useModal';
-import Modal from '../Common/Modal';
 import styles from './index.module.scss';
-import OrderForm from '../OrderForm';
 
 interface PaymentsViewProps {
   paymentAmount: Payments;

@@ -1,6 +1,6 @@
-import { $ModalState } from 'src/recoil/atom';
-import { useRecoilState } from 'recoil';
 import { useMemo, useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { $ModalState } from 'src/recoil/atom';
 
 function useModal() {
   const [isModalOpen, setIsModalOpen] = useRecoilState($ModalState);

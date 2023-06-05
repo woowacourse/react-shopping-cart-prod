@@ -1,4 +1,4 @@
-import { Product } from '../types';
+import { Product } from 'src/types';
 import useCart from './useCart';
 
 interface UseUpdateCartItemProps {
