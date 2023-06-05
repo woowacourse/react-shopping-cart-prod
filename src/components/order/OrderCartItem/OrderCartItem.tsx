@@ -1,15 +1,15 @@
 import { styled } from 'styled-components';
 import Image from '../../common/Image/Image';
 import { formatPrice } from '../../../utils/formatPrice';
-import type { CartItem } from '../../../types/product';
+import colors from '../../../colors';
+import type { OrderItem } from '../../../types/order';
 
 interface OrderProductItemProps {
-  item: CartItem;
+  item: OrderItem;
 }
 
 const OrderCartItem = ({ item }: OrderProductItemProps) => {
-  const { quantity, product } = item;
-  const { name, price, imageUrl } = product;
+  const { quantity, name, price, imageUrl } = item;
   const totalPrice = price * quantity;
 
   return (
@@ -31,6 +31,7 @@ const Container = styled.li`
   height: 220px;
   column-gap: 33px;
   padding: 0 26px;
+  background-color: ${colors.pureBlack};
 `;
 
 const Inner = styled.div`
@@ -44,14 +45,14 @@ const Title = styled.span`
   font-size: 20px;
   line-height: 24px;
   letter-spacing: 0.5px;
-  color: #333;
+  color: ${colors.lightGold};
 `;
 
 const Detail = styled.span`
   font-size: 16px;
   line-height: 20px;
   letter-spacing: 0.5px;
-  color: #888;
+  color: ${colors.pureWhite};
 `;
 
 export default OrderCartItem;
