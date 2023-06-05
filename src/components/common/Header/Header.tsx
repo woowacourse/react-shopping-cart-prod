@@ -33,6 +33,10 @@ const Header = () => {
     navigate('/cart');
   };
 
+  const handleOrderListButtonClick = () => {
+    navigate('/order');
+  };
+
   return (
     <HeaderContainer>
       <Logo onClick={handleLogoClick}>
@@ -56,6 +60,9 @@ const Header = () => {
             <TotalCartQuantity />
           </Suspense>
         </CartButton>
+        <OrderListButton onClick={handleOrderListButtonClick}>
+          주문 목록
+        </OrderListButton>
       </RightContainer>
     </HeaderContainer>
   );
@@ -105,10 +112,15 @@ const RightContainer = styled.div`
   gap: 25px;
 `;
 
-const CartButton = styled.div`
+const CartButton = styled.button`
   display: flex;
   column-gap: 6px;
   font-size: 24px;
+
+  border: none;
+  background: none;
+
+  color: white;
 
   cursor: pointer;
 
@@ -131,6 +143,16 @@ const CartTotalQuantity = styled.span`
   background: #04c09e;
 
   font-size: 16px;
+`;
+
+const OrderListButton = styled.button`
+  border: none;
+  background: none;
+
+  font-size: 24px;
+  color: white;
+
+  cursor: pointer;
 `;
 
 export default Header;
