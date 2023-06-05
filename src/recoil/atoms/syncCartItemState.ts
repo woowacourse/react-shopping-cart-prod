@@ -31,10 +31,11 @@ export const syncCartItemStateKey = (
   return foundEntry;
 };
 
-type SyncCartItem = {
+export type SyncCartItem = {
   id: CartItemEntity['id'];
   productId: ProductEntity['id'];
   quantity: CartItem['quantity'];
+  checked?: boolean;
 };
 
 type SyncCartItemState = {
@@ -42,6 +43,7 @@ type SyncCartItemState = {
   semaphore: Promise<unknown> | null;
   state: Pick<SyncCartItem, 'productId'> | SyncCartItem;
   enqueuedUpdates: Array<Partial<SyncCartItem> | null>;
+  checked?: boolean | undefined;
 };
 
 const syncCartItemState = atomFamily<SyncCartItemState, SyncCartItemStateKeyEntry>({
@@ -118,7 +120,10 @@ const syncCartItemState = atomFamily<SyncCartItemState, SyncCartItemStateKeyEntr
 
         const updateCartItemQuantity = (id: CartItemEntity['id'], quantity: number) => {
           const semaphore = client
-            .patch(path('/cart-items/:cartItemId', id), { quantity })
+            .patch(path('/cart-items/:cartItemId', id), {
+              quantity,
+              checked: syncCartItem.checked ?? true,
+            })
             .acceptOrThrow(200);
 
           semaphore.finally(() =>
