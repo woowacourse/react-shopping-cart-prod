@@ -108,3 +108,19 @@ export const ApplyButton = styled.button`
   color: #fff;
   background-color: ${({ theme }) => theme.color.primary};
 `;
+
+export const EmptyWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  font-size: 12rem;
+  font-weight: 500;
+  color: #000;
+`;
+
+export const EmptyDescription = styled.div`
+  margin-top: 40px;
+  font-size: 16px;
+`;

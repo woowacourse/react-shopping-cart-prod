@@ -47,6 +47,11 @@ function CouponModalContent({ coupons }: CouponModalContentProps) {
         <ModalCloseButton onClick={closeModal}>X</ModalCloseButton>
       </ModalHeader>
       <S.ContentWrapper>
+        {coupons.length === 0 && (
+          <S.EmptyWrapper>
+            텅<S.EmptyDescription>사용가능한 쿠폰이 없습니다.</S.EmptyDescription>
+          </S.EmptyWrapper>
+        )}
         <S.CouponWrapper>
           {sortCoupons(coupons, totalPrice).map(
             ({ available, discountAmount, discountPercent, couponName, minAmount, id }) => {
