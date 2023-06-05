@@ -1,17 +1,19 @@
+/* eslint-disable import/order */
+
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { ReactComponent as AlertBlank } from 'src/assets/baemin-alert-blank.svg';
 import CartProductItemList from 'src/components/CartProductItemList';
-import PaymentsView from 'src/components/PaymentsView';
-import { $CartList, $CheckedCartIdList, $CurrentServerUrl } from 'src/recoil/atom';
 import ContentLayout from 'src/components/Common/ContentLayout';
-import usePayments from 'src/hooks/usePayments';
-import useModal from 'src/hooks/useModal';
-import Modal from 'src/components/Common/Modal';
-import usePurchase from 'src/hooks/usePurchase';
+import PaymentsView from 'src/components/PaymentsView';
 import { MESSAGE, ROUTE_PATH } from 'src/constants';
+import Modal from 'src/components/Common/Modal';
+import EmptyComponent from 'src/components/Common/EmptyComponent';
 import ModalNotification from 'src/components/Common/ModalNotification';
+import useModal from 'src/hooks/useModal';
+import usePayments from 'src/hooks/usePayments';
 import { getLocalStorage } from 'src/utils/localStorage';
+import usePurchase from 'src/hooks/usePurchase';
+import { $CartList, $CheckedCartIdList, $CurrentServerUrl } from 'src/recoil/atom';
 import styles from './index.module.scss';
 
 function Cart() {
@@ -33,10 +35,6 @@ function Cart() {
     finalOpenModal();
   };
 
-  const moveHome = () => {
-    navigate('/');
-  };
-
   const ResultComponent =
     cartList.length > 0 ? (
       <section className={styles['main-view']}>
@@ -44,13 +42,7 @@ function Cart() {
         {payments && <PaymentsView puschaseOption paymentAmount={payments} purchaseCallback={purchaseCallback} />}
       </section>
     ) : (
-      <section className={styles['main-view-blank']}>
-        <AlertBlank />
-        <p>장바구니가 비어있어요!</p>
-        <button type="button" onClick={moveHome}>
-          담으러 가기
-        </button>
-      </section>
+      <EmptyComponent title="장바구니가 비었어요!" />
     );
 
   return (
