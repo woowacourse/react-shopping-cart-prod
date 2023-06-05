@@ -6,7 +6,7 @@ import cartIcon from 'assets/cart-icon.svg';
 import orderList from 'assets/order-list-icon.svg';
 
 import ROUTE_PATH from 'constants/routePath';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValueLoadable } from 'recoil';
 import { cartProductsState } from 'state/cartProducts';
 import SelectBox from 'components/@common/SelectBox/SelectBox';
 import { ServerOwner } from 'types/serverOwner';
@@ -18,7 +18,9 @@ import Box from 'components/@common/Box';
 const serverOwnerOptions = Object.keys(BASE_URL).map((name) => ({ name: name, value: name }));
 
 const Header = () => {
-  const cartProductCount = useRecoilValue(cartProductsState).size;
+  const loadableCartProducts = useRecoilValueLoadable(cartProductsState);
+  const cartProductCount = loadableCartProducts.state === 'loading' ? 0 : loadableCartProducts.contents.size;
+
   const serverOwner = store.getStorage<ServerOwner>(SERVER_OWNER) ?? '헙크';
 
   const handleServerOwner = (e: React.ChangeEvent<HTMLSelectElement>) => {
