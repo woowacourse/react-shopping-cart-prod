@@ -5,18 +5,36 @@
 <p align="middle">React & Redux 장바구니 협업 미션</p>
 </p>
 
-## 🚀 Getting Started
+## 😀데모 페이지에서 바로 즐기기 :)
 
-백엔드와의 협업을 통해 실제 동작하는 애플리케이션을 만듭니다.
+[🎯데모 페이지](https://react-dobob-shopping-cart.netlify.app/)  
+[🎯스토리북](https://647ca9d2fde3abc441368a22-pwcyjzwguy.chromatic.com/)
 
-<br>
+---
 
-## 👏 Contributing
+## 어플리케이션 실행 방법!
 
-만약 미션 수행 중에 개선사항이 보인다면, 언제든 자유롭게 PR을 보내주세요.
+### 1. 패키지 다운받기
 
-<br>
+```bash
+npm i
+```
 
-## 🐞 Bug Report
+위 명령어로 필요한 패키지를 다운로드해 주세요!
 
-버그를 발견한다면, [Issues](https://github.com/woowacourse/react-shopping-cart-prod/issues)에 등록해주세요.
+### 2. 프로젝트 실행
+
+```bash
+npm run start
+```
+
+위 명령어를 터미널에 입력해주세요!
+
+### 3. 쇼핑😀
+
+```
+원하는 상품을 마음껏 담고 구매하세요!
+무료로 쇼핑하는데, 구매시 10% 포인트 적립까지!
+
+🤑사장님이 미쳤어요🤑
+```
