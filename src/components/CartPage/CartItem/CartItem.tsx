@@ -20,12 +20,12 @@ type CartItemProps = CartItemType;
 
 const CartItem: React.FC<CartItemProps> = (props) => {
   const {
-    id,
+    id: cartId,
     quantity,
     product: { id: productId, imageUrl, name, price },
   } = props;
 
-  const selectedCoupon = useRecoilValue(selectedCouponState(productId));
+  const selectedCoupon = useRecoilValue(selectedCouponState(cartId));
   const quantityRef = useRef<HTMLInputElement>(null);
   const { selectedItems, selectItem } = useCartSelector();
   const { updateCartItemMutation, deleteCartItemMutation } = useMutateCart();
@@ -44,24 +44,31 @@ const CartItem: React.FC<CartItemProps> = (props) => {
 
   const itemPrice = (discountInfo?.discountedPrice ?? price).toLocaleString();
 
-  const selectCoupon = (id: SpecificCoupon['id']) => {
-    const targetCoupon = productCoupons?.find((coupon) => coupon.id === id);
+  const selectCoupon = (couponId: SpecificCoupon['id']) => {
+    const targetCoupon = productCoupons?.find(
+      (coupon) => coupon.id === couponId
+    );
 
-    targetCoupon &&
-      setSelectedCouponState((prev) =>
-        new Map(prev).set(productId, targetCoupon)
-      );
+    setSelectedCouponState((prevSelectedCoupons) => {
+      const updatedSelectedCoupons = new Map(prevSelectedCoupons);
+
+      targetCoupon
+        ? updatedSelectedCoupons.set(cartId, targetCoupon)
+        : updatedSelectedCoupons.delete(cartId);
+
+      return updatedSelectedCoupons;
+    });
   };
 
   const updateQuantity = debounce(() =>
     updateCartItemMutation({
-      cartId: id,
+      cartId,
       quantity: Number(quantityRef.current?.value),
     })
   );
 
   const deleteCartItem = () => {
-    window.confirm(DELETE_CART_ITEM) && deleteCartItemMutation(id);
+    window.confirm(DELETE_CART_ITEM) && deleteCartItemMutation(cartId);
   };
 
   return (
@@ -69,8 +76,8 @@ const CartItem: React.FC<CartItemProps> = (props) => {
       <Flex grow height="100%" align="center">
         <S.Checkbox
           type="checkbox"
-          checked={selectedItems.has(id)}
-          onChange={() => selectItem(id)}
+          checked={selectedItems.has(cartId)}
+          onChange={() => selectItem(cartId)}
         />
         <S.ProductContainer height="100%" align="center" grow>
           <S.Thumbnail alt={name} src={imageUrl} />

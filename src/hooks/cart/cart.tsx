@@ -13,17 +13,18 @@ import {
 
 export const useCartSelector = () => {
   const cart = useRefreshableRecoilValue(cartState);
+
   const [selectedItems, setSelectedItems] = useRefreshableRecoilState(
     selectedItemsSelector
   );
 
-  const selectItem = (id: CartItem['id']) => {
+  const selectItem = (cartId: CartItem['id']) => {
     setSelectedItems((prevSelectedItems) => {
       const updatedSelectedItems = new Set(prevSelectedItems);
 
-      prevSelectedItems.has(id)
-        ? updatedSelectedItems.delete(id)
-        : updatedSelectedItems.add(id);
+      prevSelectedItems.has(cartId)
+        ? updatedSelectedItems.delete(cartId)
+        : updatedSelectedItems.add(cartId);
 
       return updatedSelectedItems;
     });

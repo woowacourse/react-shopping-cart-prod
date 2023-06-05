@@ -8,14 +8,20 @@ import { ordersSelector } from '../../atoms/order';
 import { PAGE_ROUTES } from '../../constants/routes';
 import { waitForMutation } from '../../utils/waitFor';
 import { getParsedLocation } from '../../utils/getParsedLocation';
-import { selectedCouponsState } from '../../atoms/coupon';
+import {
+  selectedItemCouponIdList,
+  selectedCouponsState,
+} from '../../atoms/coupon';
 
 export const useOrderMutate = () => {
   const navigate = useNavigate();
   const refreshCart = useRecoilRefresher_UNSTABLE(cartState);
   const refreshOrder = useRecoilRefresher_UNSTABLE(ordersSelector);
-  const selectedCoupons = useRefreshableRecoilValue(selectedCouponsState);
+  const refreshCoupons = useRecoilRefresher_UNSTABLE(selectedCouponsState);
+
   const selectedItems = useRefreshableRecoilValue(selectedItemsState);
+  const couponIds = useRefreshableRecoilValue(selectedItemCouponIdList);
+  const cartItemIds = [...selectedItems];
 
   const postOrderMutate = waitForMutation(postOrder, {
     onSuccess(_, { headers }) {
@@ -23,14 +29,12 @@ export const useOrderMutate = () => {
 
       refreshCart();
       refreshOrder();
+      refreshCoupons();
       navigate(`${PAGE_ROUTES.ORDER_DETAIL}?id=${orderId}`);
     },
   });
 
   const order = () => {
-    const cartItemIds = [...selectedItems];
-    const couponIds = [...selectedCoupons.keys()];
-
     if (cartItemIds.length)
       postOrderMutate({
         cartItemIds,

@@ -79,9 +79,12 @@ export const totalPriceSelector = selector({
     const selectedCoupons = get(selectedCouponsState);
 
     return cart.reduce(
-      (totalPrice, { id, quantity, product: { id: productId, price } }) => {
+      (
+        totalPrice,
+        { id: cartId, quantity, product: { id: productId, price } }
+      ) => {
         let discountedPrice = price;
-        const selectedCoupon = selectedCoupons.get(productId);
+        const selectedCoupon = selectedCoupons.get(cartId);
 
         if (selectedCoupon) {
           const { discountType, value } = selectedCoupon;
@@ -92,7 +95,7 @@ export const totalPriceSelector = selector({
           }).discountedPrice;
         }
 
-        return selectedItems.has(id)
+        return selectedItems.has(cartId)
           ? totalPrice + quantity * discountedPrice
           : totalPrice;
       },

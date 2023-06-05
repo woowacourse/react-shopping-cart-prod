@@ -1,8 +1,9 @@
-import { SpecificCoupon } from './../types/coupon';
+import { selectedItemsState } from './cart';
+import { Coupon, SpecificCoupon } from './../types/coupon';
 import { fetchCoupons } from './../apis/coupon';
 import { atom, selector, selectorFamily } from 'recoil';
 import { ProductCouponMap } from '../types/coupon';
-import { Product } from '../types/products';
+import { CartItem } from '../types/cart';
 
 export const couponsSelector = selector({
   key: 'couponsSelector',
@@ -37,18 +38,28 @@ export const allCouponsSelector = selector({
   get: ({ get }) => get(couponsSelector).allCoupons,
 });
 
-export const selectedCouponsState = atom<Map<Product['id'], SpecificCoupon>>({
+export const selectedCouponsState = atom<Map<CartItem['id'], SpecificCoupon>>({
   key: 'selectedCouponsState',
   default: new Map(),
 });
 
 export const selectedCouponState = selectorFamily<
   SpecificCoupon | null,
-  Product['id']
+  CartItem['id']
 >({
   key: 'selectedCouponState',
   get:
     (id) =>
     ({ get }) =>
       get(selectedCouponsState).get(id) ?? null,
+});
+
+export const selectedItemCouponIdList = selector({
+  key: 'selectedItemCouponIdList',
+  get: ({ get }) =>
+    [...get(selectedCouponsState)].reduce<Coupon['id'][]>(
+      (arr, [cartId, { id }]) =>
+        get(selectedItemsState).has(cartId) ? [...arr, id] : arr,
+      []
+    ),
 });
