@@ -37,16 +37,14 @@ export const allCouponsSelector = selector({
   get: ({ get }) => get(couponsSelector).allCoupons,
 });
 
-export const selectedCouponsState = atom<
-  Map<CartItem['id'] | 'all', SpecificCoupon>
->({
+export const selectedCouponsState = atom<Map<CartItem['id'], SpecificCoupon>>({
   key: 'selectedCouponsState',
   default: new Map(),
 });
 
 export const selectedCouponState = selectorFamily<
   SpecificCoupon | null,
-  CartItem['id'] | 'all'
+  CartItem['id']
 >({
   key: 'selectedCouponState',
   get:

@@ -1,19 +1,9 @@
 import { useRef } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import {
-  productCouponsSelector,
-  selectedCouponsState,
-  selectedCouponState,
-} from '../../../atoms/coupon';
 import { DELETE_CART_ITEM } from '../../../constants/cart';
-import {
-  ALL_COUPON_MAP_ID,
-  NOT_SELECTED_VALUE,
-} from '../../../constants/coupon';
+import { NOT_SELECTED_VALUE } from '../../../constants/coupon';
 import { useCartSelector, useMutateCart } from '../../../hooks/cart/cart';
-import { useRefreshableRecoilValue } from '../../../hooks/common/useRefreshableAtom';
+import { useSpecificCoupon } from '../../../hooks/coupon/coupon';
 import { CartItem as CartItemType } from '../../../types/cart';
-import { SpecificCoupon } from '../../../types/coupon';
 import { debounce } from '../../../utils/debounce';
 import { getDiscountInfo } from '../../../utils/discount';
 import Flex from '../../common/Flex';
@@ -26,18 +16,14 @@ const CartItem: React.FC<CartItemProps> = (props) => {
   const {
     id: cartId,
     quantity,
-    product: { id: productId, imageUrl, name, price },
+    product: { imageUrl, name, price },
   } = props;
 
-  const selectedCoupon = useRecoilValue(selectedCouponState(cartId));
   const quantityRef = useRef<HTMLInputElement>(null);
   const { selectedItems, selectItem } = useCartSelector();
   const { updateCartItemMutation, deleteCartItemMutation } = useMutateCart();
-  const setSelectedCouponsState = useSetRecoilState(selectedCouponsState);
-
-  const productCoupons = useRefreshableRecoilValue(
-    productCouponsSelector(productId)
-  );
+  const { selectedCoupon, productCoupons, selectSpecificCoupon } =
+    useSpecificCoupon(props);
 
   const discountInfo = selectedCoupon
     ? getDiscountInfo(price, {
@@ -47,24 +33,6 @@ const CartItem: React.FC<CartItemProps> = (props) => {
     : null;
 
   const itemPrice = (discountInfo?.discountedPrice ?? price).toLocaleString();
-
-  const selectCoupon = (couponId: SpecificCoupon['id']) => {
-    const targetCoupon = productCoupons?.find(
-      (coupon) => coupon.id === couponId
-    );
-
-    setSelectedCouponsState((prevSelectedCoupons) => {
-      const updatedSelectedCoupons = new Map(prevSelectedCoupons);
-
-      targetCoupon
-        ? updatedSelectedCoupons.set(cartId, targetCoupon)
-        : updatedSelectedCoupons.delete(cartId);
-
-      updatedSelectedCoupons.delete(ALL_COUPON_MAP_ID);
-
-      return updatedSelectedCoupons;
-    });
-  };
 
   const updateQuantity = debounce(() =>
     updateCartItemMutation({
@@ -93,7 +61,9 @@ const CartItem: React.FC<CartItemProps> = (props) => {
             <select
               defaultValue={NOT_SELECTED_VALUE}
               value={selectedCoupon?.id ?? NOT_SELECTED_VALUE}
-              onChange={({ target: { value } }) => selectCoupon(Number(value))}>
+              onChange={({ target: { value } }) =>
+                selectSpecificCoupon(Number(value))
+              }>
               <option value={NOT_SELECTED_VALUE}>선택 없음</option>
               {productCoupons?.map(({ id, name }) => (
                 <option key={id} value={id}>
