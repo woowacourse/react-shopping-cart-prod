@@ -19,7 +19,7 @@ const getTotalMemberDiscountAmount = (orderedItemList: CartItemData[]) => {
 
 const getTotalItemPrice = (orderedItemList: CartItemData[]) => {
   return orderedItemList.reduce((prev, curr) => {
-    return prev + +curr.quantity * curr.product.price;
+    return prev + curr.quantity * curr.product.price;
   }, 0);
 };
 
