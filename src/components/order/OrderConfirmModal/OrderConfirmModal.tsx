@@ -37,6 +37,7 @@ const OrderConfirmModal = (props: OrderConfirmModalProps) => {
       });
       updateCart();
       updatePoint();
+      closeModal();
     } catch (e) {
       if (e instanceof Error) {
         showToast('error', e.message);
