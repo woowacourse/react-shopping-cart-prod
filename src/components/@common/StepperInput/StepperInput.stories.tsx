@@ -16,6 +16,5 @@ export const Primary: Story = {
     max: 99,
     step: 1,
     initialValue: 0,
-    getValue: () => {},
   },
 };

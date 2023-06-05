@@ -20,4 +20,11 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default = {} satisfies Story;
+export const Default = {
+  args: {
+    point: {
+      pointHistories: [],
+      totalPoint: 1000,
+    },
+  },
+} satisfies Story;
