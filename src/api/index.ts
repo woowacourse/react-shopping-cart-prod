@@ -14,11 +14,10 @@ async function fetchData<T>({ url, options }: FetchDataProps): Promise<T> {
   if (!response.ok) {
     const error = await response.json();
 
-    throw Error(error.message);
+    throw Error(error.errorMessage);
   }
 
   const data = await response.json();
-
   return data;
 }
 
