@@ -7,9 +7,9 @@ interface Props {
 const PaymentsInfo = ({ orderTotalPrice }: Props) => {
   return (
     <Style.Wrapper>
-      <S.TitleWrapper>
-        <S.Title>결제금액 정보</S.Title>
-      </S.TitleWrapper>
+      <Style.TitleWrapper>
+        <Style.Title>결제금액 정보</Style.Title>
+      </Style.TitleWrapper>
       <Style.TotalPaymentAmountWrapper>
         <Style.Title>총 결제 금액</Style.Title>
         <Style.TotalPaymentAmount>{orderTotalPrice}</Style.TotalPaymentAmount>
