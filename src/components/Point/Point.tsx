@@ -36,7 +36,7 @@ function Point() {
       <ThinBorder />
       <div>
         {point.pointHistories.map((history) => (
-          <PointHistoryWrapper>
+          <PointHistoryWrapper key={history.orderId}>
             <GoToOrderDetail onClick={() => handleOrder(history.orderId)}>
               주문확인 바로가기
             </GoToOrderDetail>
