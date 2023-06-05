@@ -217,7 +217,7 @@ const postCartItemApi = async (productId: number) =>
 
 const postOrderApi = async (
   cartItems: Omit<LocalProductType, "id">[],
-  couponId: number
+  couponId: number | null
 ) =>
   fetch(
     `${
@@ -243,6 +243,7 @@ const postOrderApi = async (
 
 const postCouponApi = async (couponId: number) => {
   const now = new Date();
+  now.setMonth(now.getMonth() + 1);
 
   return fetch(
     `${
