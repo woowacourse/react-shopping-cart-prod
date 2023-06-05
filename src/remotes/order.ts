@@ -1,7 +1,6 @@
-import { base64 } from '../constants/auth';
 import type { OrderPayload } from '../types/order';
 
-export const fetchOrder = async (url: string) => {
+export const fetchOrder = async (url: string, base64: string) => {
   const response = await fetch(url, {
     headers: {
       Authorization: `Basic ${base64}`,
@@ -17,7 +16,7 @@ export const fetchOrder = async (url: string) => {
   return order;
 };
 
-export const fetchOrders = async (url: string) => {
+export const fetchOrders = async (url: string, base64: string) => {
   const response = await fetch(url, {
     headers: {
       Authorization: `Basic ${base64}`,
@@ -33,7 +32,11 @@ export const fetchOrders = async (url: string) => {
   return orders;
 };
 
-export const postOrder = async (url: string, orderPayload: OrderPayload) => {
+export const postOrder = async (
+  url: string,
+  orderPayload: OrderPayload,
+  base64: string,
+) => {
   const response = await fetch(url, {
     method: 'POST',
     headers: {

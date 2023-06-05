@@ -1,8 +1,7 @@
-import { base64 } from '../constants/auth';
 import type { CartItem } from '../types/cart';
 import type { Product } from '../types/product';
 
-export const fetchCartItems = async (url: string) => {
+export const fetchCartItems = async (url: string, base64: string) => {
   const response = await fetch(url, {
     headers: {
       Authorization: `Basic ${base64}`,
@@ -18,7 +17,11 @@ export const fetchCartItems = async (url: string) => {
   return cartItems;
 };
 
-export const addCartItem = async (url: string, productId: Product['id']) => {
+export const addCartItem = async (
+  url: string,
+  productId: Product['id'],
+  base64: string,
+) => {
   const response = await fetch(url, {
     method: 'POST',
     headers: {
@@ -36,6 +39,7 @@ export const addCartItem = async (url: string, productId: Product['id']) => {
 export const updateQuantity = async (
   url: string,
   quantity: CartItem['quantity'],
+  base64: string,
 ) => {
   const response = await fetch(url, {
     method: 'PATCH',
@@ -51,7 +55,7 @@ export const updateQuantity = async (
   }
 };
 
-export const removeCartItem = async (url: string) => {
+export const removeCartItem = async (url: string, base64: string) => {
   const response = await fetch(url, {
     method: 'DELETE',
     headers: {

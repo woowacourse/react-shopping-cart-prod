@@ -1,6 +1,4 @@
-import { base64 } from '../constants/auth';
-
-export const fetchPoint = async (url: string) => {
+export const fetchPoint = async (url: string, base64: string) => {
   const response = await fetch(url, {
     headers: {
       Authorization: `Basic ${base64}`,
@@ -16,7 +14,7 @@ export const fetchPoint = async (url: string) => {
   return points;
 };
 
-export const fetchSavedPointByOrder = async (url: string) => {
+export const fetchSavedPointByOrder = async (url: string, base64: string) => {
   const response = await fetch(url, {
     headers: {
       Authorization: `Basic ${base64}`,
