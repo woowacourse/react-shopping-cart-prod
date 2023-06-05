@@ -39,7 +39,7 @@ export default function OrderItem({ orderItemInfo, isDetail = false }: Props) {
         {products.map(({ id, name, price, imageUrl, quantity }) => (
           <Style.ProductContainer key={id}>
             <Style.ProductImageWrapper>
-              <Style.ProductImage src={imageUrl} alt={name} />
+              <Style.ProductImage src={imageUrl} alt={name} className="skeleton" />
             </Style.ProductImageWrapper>
             <div>
               <Style.ProductName>{name}</Style.ProductName>

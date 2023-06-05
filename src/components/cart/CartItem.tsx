@@ -45,7 +45,7 @@ export default function CartItem({ cartItemInfo, checkedItemIds, setCheckedItemI
       <Style.ProductAndStepperContainer>
         <Style.ImageAndNameContainer>
           <Style.ProductImageWrapper>
-            <Style.ProductImage src={imageUrl} alt={name} />
+            <Style.ProductImage src={imageUrl} alt={name} className="skeleton" />
           </Style.ProductImageWrapper>
           <Style.ProductName htmlFor={`${name}-checkbox`}>{name}</Style.ProductName>
         </Style.ImageAndNameContainer>

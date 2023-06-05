@@ -87,6 +87,24 @@ const GlobalStyle = createGlobalStyle`
     opacity:0;
   }
 
+  &.skeleton {
+    background: linear-gradient(-90deg, #aaa, #f0f0f0, #aaa, #f0f0f0);
+    background-size: 400%;
+    animation: skeleton-animation 5s infinite ease-out;
+  }
+
+  @keyframes skeleton-animation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
   @font-face {
     font-family: 'Baemin';
     src: url(${Baemin});

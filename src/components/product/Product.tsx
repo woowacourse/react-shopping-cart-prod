@@ -26,7 +26,7 @@ export default function Product({ productInfo }: Props) {
   return (
     <Style.Container>
       <Style.ProductImageWrapper>
-        <Style.ProductImage src={imageUrl} alt={name} loading="lazy" />
+        <Style.ProductImage src={imageUrl} alt={name} loading="lazy" className="skeleton" />
       </Style.ProductImageWrapper>
       <Style.ProductInfo>
         <Style.ProductNameAndStepperContainer>
