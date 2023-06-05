@@ -40,7 +40,6 @@ export const useLoginForm = () => {
       if (!response.ok) {
         throw new Error(response.status.toString());
       }
-
       setIsLogined(true);
       await updateLocalProducts();
       navigate(ROUTER_PATH.Main);

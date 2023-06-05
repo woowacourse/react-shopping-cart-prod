@@ -32,7 +32,7 @@ export const CartProductList = () => {
     });
 
     removeCheckedArray();
-    updateLocalProducts();
+    await updateLocalProducts();
   };
 
   const handleTrashCanClicked =
@@ -40,7 +40,7 @@ export const CartProductList = () => {
       await deleteCartItemApi(cartItemId);
 
       removeTargetIndex(index);
-      updateLocalProducts();
+      await updateLocalProducts();
     };
 
   return (

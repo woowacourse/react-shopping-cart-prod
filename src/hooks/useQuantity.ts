@@ -1,4 +1,4 @@
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { localProductsState } from "../recoil/atom";
 import React, { useEffect, useState } from "react";
 import { MAX_LENGTH_QUANTITY, MAX_QUANTITY, MIN_QUANTITY } from "../constants";
@@ -9,7 +9,7 @@ import { useLocalProducts } from "./useLocalProducts";
 export const useQuantity = (productId: number) => {
   const { updateLocalProducts } = useLocalProducts();
   const [errorStatus, setErrorStatus] = useState<string>("");
-  const [localProducts, setLocalProducts] = useRecoilState(localProductsState);
+  const localProducts = useRecoilValue(localProductsState);
   const [quantity, setQuantity] = useState<string | undefined>("0");
   const currentLocalProduct = localProducts.find(
     (product: LocalProductType) => product.id === productId
@@ -40,17 +40,15 @@ export const useQuantity = (productId: number) => {
           throw new Error(response.status.toString());
         }
       }
+      setQuantity(newQuantity.toString());
+      await updateLocalProducts();
     } catch (error: any) {
       setErrorStatus(error.message);
     }
-
-    setQuantity(newQuantity.toString());
-    updateLocalProducts();
   };
 
   const handleQuantityChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length > MAX_LENGTH_QUANTITY) return;
-
     setQuantity(e.target.value);
   };
 

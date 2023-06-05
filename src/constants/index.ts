@@ -9,6 +9,7 @@ export const KEY_LOCALSTORAGE_LOGIN_TOKEN = "login";
 export const DEFAULT_VALUE_LOGIN_TOKEN = false;
 
 export const DELIVERY_FEE = 3000;
+export const NONE_SELECTED_INDEX = -1;
 
 export const SERVERS: Record<string, string> = {
   리오: "https://woowa-reo.store",

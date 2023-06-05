@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { ArrowDownIcon } from "../assets";
+import { NONE_SELECTED_INDEX } from "../constants";
 import { MyCouponType } from "../types/domain";
 
 interface CouponSelectBoxType {
@@ -8,17 +9,22 @@ interface CouponSelectBoxType {
   coupons: MyCouponType[];
   onSelectHandler: (index: number) => void;
 }
+
+const TITLE_GET = "발급 가능한 쿠폰";
+const TITLE_APPLY = "쿠폰 적용하기";
+
 export const CouponSelectBox = ({
   type,
   coupons,
   onSelectHandler,
 }: CouponSelectBoxType) => {
+  const defaultTitle = type === "get" ? TITLE_GET : TITLE_APPLY;
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [coupon, setCoupon] = useState<string | null>(null);
+  const [couponTitle, setCouponTitle] = useState<string>(defaultTitle);
 
-  const handleCouponClicked = (coupon: string, index: number) => () => {
+  const handleCouponClicked = (couponTitle: string, index: number) => () => {
     onSelectHandler(index);
-    setCoupon(coupon);
+    setCouponTitle(couponTitle);
     setIsOpen(false);
   };
 
@@ -26,21 +32,15 @@ export const CouponSelectBox = ({
     setIsOpen(!isOpen);
 
     if (type === "get") {
-      onSelectHandler(-1);
-      setCoupon(null);
+      onSelectHandler(NONE_SELECTED_INDEX);
+      setCouponTitle(TITLE_GET);
     }
   };
 
   return (
     <Wrapper>
       <TitleContainer $isOpen={isOpen} onClick={handleTitleClicked}>
-        <p>
-          {coupon
-            ? coupon
-            : type === "get"
-            ? "발급 가능한 쿠폰"
-            : "쿠폰적용하기"}
-        </p>
+        <p>{couponTitle}</p>
         <img src={ArrowDownIcon} alt="화살표" />
       </TitleContainer>
       {isOpen && (
@@ -80,7 +80,7 @@ export const CouponSelectBox = ({
           })}
           {type === "apply" && (
             <NotAppliedCouponBox
-              onClick={handleCouponClicked("쿠폰적용하기", -1)}
+              onClick={handleCouponClicked(TITLE_APPLY, NONE_SELECTED_INDEX)}
             >
               쿠폰적용안함
             </NotAppliedCouponBox>
