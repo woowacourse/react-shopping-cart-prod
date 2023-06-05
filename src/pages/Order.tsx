@@ -1,12 +1,13 @@
 import { ErrorBoundary } from 'react-error-boundary';
 import { styled } from 'styled-components';
 import OrderPageContent from '../components/order/OrderPageContent';
+import ErrorDisplay from '../components/ErrorDisplay';
 
 export default function Order() {
   return (
     <Style.Main>
       <Style.Title>주문목록</Style.Title>
-      <ErrorBoundary fallback={<div>주문목록에서 something wrong</div>}>
+      <ErrorBoundary FallbackComponent={ErrorDisplay}>
         <OrderPageContent />
       </ErrorBoundary>
     </Style.Main>

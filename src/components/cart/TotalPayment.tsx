@@ -8,6 +8,7 @@ import Modal from '../common/Modal';
 import Price from '../common/Price';
 import Button from '../common/Button';
 import CouponModalContent from '../coupon/CouponModalContent';
+import ErrorDisplay from '../ErrorDisplay';
 
 interface Props {
   checkedCartItemIds: number[];
@@ -99,7 +100,7 @@ export default function TotalPayment({
       </Style.PriceAndOrderButtonContainer>
       {createPortal(
         <Modal ref={couponModalRef} closeModal={closeCouponModal}>
-          <ErrorBoundary fallback={<div>쿠폰에서 something wrong</div>}>
+          <ErrorBoundary FallbackComponent={ErrorDisplay}>
             <CouponModalContent
               totalProductsPrice={totalProductsPrice}
               handleCouponSelect={handleCouponSelect}

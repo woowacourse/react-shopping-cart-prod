@@ -2,6 +2,7 @@ import { Suspense, lazy } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { styled } from 'styled-components';
 import { Loading } from '../components/common/Spinner/Loading';
+import ErrorDisplay from '../components/ErrorDisplay';
 
 const ProductPageContent = lazy(() => import('../components/product/ProductPageContent'));
 
@@ -9,7 +10,7 @@ export default function Home() {
   return (
     <Style.Main>
       <Style.Content>
-        <ErrorBoundary fallback={<div>상품목록에서 something wrong</div>}>
+        <ErrorBoundary FallbackComponent={ErrorDisplay}>
           <Suspense fallback={<Loading />}>
             <ProductPageContent />
           </Suspense>

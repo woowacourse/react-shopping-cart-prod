@@ -8,6 +8,7 @@ import { useCart } from '../../hooks/useCart';
 import CartItem from './CartItem';
 import TotalPayment from './TotalPayment';
 import Button from '../common/Button';
+import ErrorDisplay from '../ErrorDisplay';
 
 export default function CartList() {
   const { cartList, deleteFromCart } = useCart();
@@ -71,13 +72,15 @@ export default function CartList() {
             </Button>
           </Style.TotalCheckboxAndDeleteButtonContainer>
         </Style.CartItemsContainer>
-        <ErrorBoundary fallback={<div>결제예상금액에서 something wrong</div>}>
-          <TotalPayment
-            checkedCartItemIds={checkedItemIds}
-            deliveryFee={totalProductsPrice > 0 ? DELIVERY_FEE : 0}
-            totalProductsPrice={totalProductsPrice}
-          />
-        </ErrorBoundary>
+        <Style.TotalPaymentWrapper>
+          <ErrorBoundary FallbackComponent={ErrorDisplay}>
+            <TotalPayment
+              checkedCartItemIds={checkedItemIds}
+              deliveryFee={totalProductsPrice > 0 ? DELIVERY_FEE : 0}
+              totalProductsPrice={totalProductsPrice}
+            />
+          </ErrorBoundary>
+        </Style.TotalPaymentWrapper>
       </Style.CartItemsAndPaymentContainer>
     </Style.Container>
   );
@@ -145,6 +148,10 @@ const Style = {
 
     padding: 20px;
     border-bottom: 1px ridge;
+  `,
+
+  TotalPaymentWrapper: styled.div`
+    width: 300px;
   `,
 
   TotalCheckboxAndDeleteButtonContainer: styled.div`
