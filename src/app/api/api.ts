@@ -4,6 +4,8 @@ import {
   OriginalCartItem,
   User,
   ResponseCartItem,
+  Coupon,
+  Point,
 } from "../../types/types.ts";
 import { url } from "./url.ts";
 import { getSessionStorage } from "../utils/storage.ts";
@@ -100,6 +102,37 @@ export const fetchMembers = async (server: string) => {
     } else {
       throw new Error();
       return [];
+    }
+  } catch (error) {
+    console.error(error);
+    throw new Error();
+  }
+};
+
+export const fetchCoupons = async (server: string) => {
+  try {
+    const response = await fetch(`${url[server]}/coupons`);
+    if (response.ok) {
+      const data: Coupon[] = await response.json();
+      return data;
+    } else {
+      throw new Error();
+      return [];
+    }
+  } catch (error) {
+    console.error(error);
+    throw new Error();
+  }
+};
+
+export const fetchPoint = async (server: string) => {
+  try {
+    const response = await fetch(`${url[server]}/point`);
+    if (response.ok) {
+      const data: Point = await response.json();
+      return data;
+    } else {
+      throw new Error();
     }
   } catch (error) {
     console.error(error);

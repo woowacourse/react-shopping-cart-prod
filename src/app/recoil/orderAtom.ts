@@ -10,6 +10,7 @@ import { url } from "../api/url.ts";
 import { serverState } from "./serverAtom.ts";
 import { getSessionStorage } from "../utils/storage.ts";
 import { SESSION_STORAGE_KEY_BASE64 } from "../keys.ts";
+import { fetchCoupons, fetchPoint } from "../api/api.ts";
 
 const base64 = getSessionStorage(SESSION_STORAGE_KEY_BASE64, "");
 
@@ -84,26 +85,16 @@ export const orderRepository = selector({
   get: ({ getCallback }) => {
     const loadCoupons = getCallback(({ set, snapshot }) => async () => {
       const server = await snapshot.getPromise(serverState);
-      const response = await fetch(`${url[server]}/coupons`, {
-        headers: {
-          Authorization: `Basic ${base64}`,
-        },
-      }); // 인증 추가와 함께 api.ts로 이전 예정
-      const data = await response.json();
+      const coupons = await fetchCoupons(server);
 
-      set(couponState, data);
+      set(couponState, coupons);
     });
 
     const loadPoint = getCallback(({ set, snapshot }) => async () => {
       const server = await snapshot.getPromise(serverState);
-      const response = await fetch(`${url[server]}/point`, {
-        headers: {
-          Authorization: `Basic ${base64}`,
-        },
-      }); // 인증 추가와 함께 api.ts로 이전 예정
-      const data = await response.json();
+      const point = await fetchPoint(server);
 
-      set(pointState, data);
+      set(pointState, point);
     });
 
     const commitPurchaseItems = getCallback(({ snapshot }) => async () => {
