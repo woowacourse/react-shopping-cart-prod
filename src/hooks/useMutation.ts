@@ -66,4 +66,5 @@ const useMutation = <BodyData, ResponseData>({
 
   return { mutateQuery, isLoading };
 };
+
 export default useMutation;

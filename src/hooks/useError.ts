@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-throw-literal */
+
 import { useContext, useMemo, useState } from 'react';
 import { ErrorBoundaryContext } from 'src/context/ErrorBoundaryContext';
 
