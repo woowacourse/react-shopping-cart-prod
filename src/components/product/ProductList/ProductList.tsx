@@ -1,15 +1,25 @@
-import { useRecoilValue } from 'recoil';
+import { useRecoilValueLoadable } from 'recoil';
 import { styled } from 'styled-components';
 import { productsQuery } from '../../../recoil/selectors';
 import ProductItem from '../ProductItem/ProductItem';
+import ErrorComponent from '../../common/Error/ErrorComponent';
+import Spinner from '../../common/Spinner/Spinner';
 
 const ProductList = () => {
-  const products = useRecoilValue(productsQuery);
+  const products = useRecoilValueLoadable(productsQuery);
+
+  if (products.state === 'loading') {
+    return <Spinner />;
+  }
+
+  if (products.state === 'hasError') {
+    return <ErrorComponent>{products.contents.message}</ErrorComponent>;
+  }
 
   return (
     <section>
       <ProductListContainer>
-        {products.map((product) => (
+        {products.contents.map((product) => (
           <li key={product.id}>
             <ProductItem {...product} />
           </li>
