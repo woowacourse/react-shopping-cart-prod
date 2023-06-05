@@ -8,25 +8,10 @@ import ProductPage from './components/pages/ProductPage/ProductPage';
 import CartPage from './components/pages/CartPage/CartPage';
 import ToastList from './components/common/Toast/ToastList';
 import ErrorPage from './components/pages/ErrorPage/ErrorPage';
-
-// const main = async () => {
-//   if (window.location.pathname === '/react-shopping-cart-prod') {
-//     window.location.pathname = '/react-shopping-cart-prod/';
-//     return;
-//   }
-
-//   await worker.start({
-//     serviceWorker: {
-//       url: '/react-shopping-cart-prod/mockServiceWorker.js',
-//     },
-//   });
-// };
-
-// if (process.env.NODE_ENV === 'development') {
-//   worker.start();
-// } else {
-//   main();
-// }
+import OrderCompletePage from './components/pages/OrderCompletePage/OrderCompletePage';
+import OrderPage from './components/pages/OrderPage/OrderPage';
+import OrderDetailPage from './components/pages/OrderDetailPage/OrderDetailPage';
+import ErrorComponent from './components/common/Error/ErrorComponent';
 
 const router = createHashRouter([
   {
@@ -41,6 +26,27 @@ const router = createHashRouter([
       {
         path: 'cart',
         element: <CartPage />,
+      },
+      {
+        path: 'orders/:orderId',
+        element: <OrderCompletePage />,
+      },
+      {
+        path: 'order-history',
+        element: <OrderPage />,
+      },
+      {
+        path: 'order-history/:orderId',
+        element: <OrderDetailPage />,
+      },
+      {
+        path: '*',
+        element: (
+          <ErrorComponent>
+            요청하신 페이지를 찾지 못했습니다. 주소가 올바른지 다시 한 번 확인해
+            주시겠어요?
+          </ErrorComponent>
+        ),
       },
     ],
   },
