@@ -1,4 +1,3 @@
-import { selectedItemsState } from './cart';
 import { Coupon, SpecificCoupon } from './../types/coupon';
 import { fetchCoupons } from './../apis/coupon';
 import { atom, selector, selectorFamily } from 'recoil';
@@ -38,14 +37,16 @@ export const allCouponsSelector = selector({
   get: ({ get }) => get(couponsSelector).allCoupons,
 });
 
-export const selectedCouponsState = atom<Map<CartItem['id'], SpecificCoupon>>({
+export const selectedCouponsState = atom<
+  Map<CartItem['id'] | 'all', SpecificCoupon>
+>({
   key: 'selectedCouponsState',
   default: new Map(),
 });
 
 export const selectedCouponState = selectorFamily<
   SpecificCoupon | null,
-  CartItem['id']
+  CartItem['id'] | 'all'
 >({
   key: 'selectedCouponState',
   get:

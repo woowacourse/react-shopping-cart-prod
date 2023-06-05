@@ -6,6 +6,10 @@ import {
   selectedCouponState,
 } from '../../../atoms/coupon';
 import { DELETE_CART_ITEM } from '../../../constants/cart';
+import {
+  ALL_COUPON_MAP_ID,
+  NOT_SELECTED_VALUE,
+} from '../../../constants/coupon';
 import { useCartSelector, useMutateCart } from '../../../hooks/cart/cart';
 import { useRefreshableRecoilValue } from '../../../hooks/common/useRefreshableAtom';
 import { CartItem as CartItemType } from '../../../types/cart';
@@ -56,7 +60,7 @@ const CartItem: React.FC<CartItemProps> = (props) => {
         ? updatedSelectedCoupons.set(cartId, targetCoupon)
         : updatedSelectedCoupons.delete(cartId);
 
-      updatedSelectedCoupons.delete(-1);
+      updatedSelectedCoupons.delete(ALL_COUPON_MAP_ID);
 
       return updatedSelectedCoupons;
     });
@@ -87,10 +91,10 @@ const CartItem: React.FC<CartItemProps> = (props) => {
           <S.Info dir="column" justify="space-between" align="end">
             <S.DeleteButton onClick={deleteCartItem}>X</S.DeleteButton>
             <select
-              defaultValue={-1}
-              value={selectedCoupon?.id ?? -1}
+              defaultValue={NOT_SELECTED_VALUE}
+              value={selectedCoupon?.id ?? NOT_SELECTED_VALUE}
               onChange={({ target: { value } }) => selectCoupon(Number(value))}>
-              <option value={-1}>선택 없음</option>
+              <option value={NOT_SELECTED_VALUE}>선택 없음</option>
               {productCoupons?.map(({ id, name }) => (
                 <option key={id} value={id}>
                   {name}

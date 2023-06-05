@@ -3,6 +3,7 @@ import { selector, atom, selectorFamily } from 'recoil';
 import { CartItem } from '../types/cart';
 import { fetchCart } from '../apis/cart';
 import { selectedCouponsState } from './coupon';
+import { ALL_COUPON_MAP_ID } from '../constants/coupon';
 
 export const cartState = atom({
   key: 'cart',
@@ -84,7 +85,7 @@ export const totalPriceSelector = selector({
         { id: cartId, quantity, product: { id: productId, price } }
       ) => {
         let discountedPrice = price;
-        const allCoupon = selectedCoupons.get(-1);
+        const allCoupon = selectedCoupons.get(ALL_COUPON_MAP_ID);
         const selectedCoupon = selectedCoupons.get(cartId);
 
         if (allCoupon) {

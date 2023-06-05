@@ -11,7 +11,7 @@ export interface AllCoupon extends Coupon {
 }
 
 export interface SpecificCoupon extends Coupon {
-  targetType: 'ALL' | 'SPECIFIC';
+  targetType: 'SPECIFIC';
   targetProductId: number;
 }
 
