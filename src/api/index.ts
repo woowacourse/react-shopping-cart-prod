@@ -221,6 +221,5 @@ export const getOrderDetail = async <T>(
 
   const data: T = await response.json();
 
-  console.log(data);
   return data;
 };
