@@ -1,7 +1,6 @@
 import { styled } from 'styled-components';
 import colors from '../../../colors';
 import { GiCrownCoin } from 'react-icons/gi';
-import { formatPriceWithoutWon } from '../../../utils/formatPrice';
 
 interface PointsProps {
   children: number;
@@ -16,7 +15,7 @@ const Points = ({ children, size = '24px' }: PointsProps) => {
   return (
     <Container size={size}>
       <GiCrownCoin />
-      <Amount>{formatPriceWithoutWon(children)}</Amount>
+      <Amount>{children.toLocaleString()}</Amount>
     </Container>
   );
 };

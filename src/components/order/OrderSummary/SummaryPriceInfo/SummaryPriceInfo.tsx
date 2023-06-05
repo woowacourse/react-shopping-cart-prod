@@ -1,8 +1,5 @@
 import { styled } from 'styled-components';
-import {
-  formatPrice,
-  formatPriceWithoutWon,
-} from '../../../../utils/formatPrice';
+import { formatPrice } from '../../../../utils/formatPrice';
 import colors from '../../../../colors';
 import Points from '../../../common/Points/Points';
 
