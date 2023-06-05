@@ -55,8 +55,17 @@ export const submitOrderApi = async ({
   couponId,
   userInfo,
 }: SubmitOrderApiParams) => {
-  await fetchPost(getOrderPath(serverName), createOrderRequestBody({ cartItemIds, couponId }), {
-    email: userInfo.email,
-    password: userInfo.password,
-  });
+  const response = await fetchPost(
+    getOrderPath(serverName),
+    createOrderRequestBody({ cartItemIds, couponId }),
+    {
+      email: userInfo.email,
+      password: userInfo.password,
+    }
+  );
+
+  const location = response.headers.get('Location');
+  const orderId = location?.split('/').pop();
+
+  return orderId;
 };

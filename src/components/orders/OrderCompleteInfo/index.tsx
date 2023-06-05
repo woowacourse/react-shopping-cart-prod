@@ -10,6 +10,7 @@ interface OrderCompleteInfoProps {
   totalItemsPrice: number;
   deliveryFee: number;
   discountPrice: number;
+  orderId: number;
 }
 
 function OrderCompleteInfo({
@@ -18,6 +19,7 @@ function OrderCompleteInfo({
   totalItemsPrice,
   deliveryFee,
   discountPrice,
+  orderId,
 }: OrderCompleteInfoProps) {
   const totalPaymentAmount = totalItemsPrice + deliveryFee - discountPrice;
 
@@ -32,8 +34,8 @@ function OrderCompleteInfo({
         <S.ButtonLink to={ROUTER_PATH.HOME}>
           <Button text="홈으로" />
         </S.ButtonLink>
-        <S.ButtonLink to={ROUTER_PATH.ORDERS}>
-          <Button text="주문내역" />
+        <S.ButtonLink to={`${ROUTER_PATH.ORDERS}/${orderId}`}>
+          <Button text="주문 상세 보기" />
         </S.ButtonLink>
       </S.ButtonWrapperLink>
       <S.Title>상품배송 정보</S.Title>

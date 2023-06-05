@@ -8,7 +8,7 @@ function OrderComplete() {
   const user = useRecoilValue(userState);
   const location = useLocation();
 
-  const { deliveryFee, discountPrice, totalItemsPrice, orderItemsCount } = location.state;
+  const { deliveryFee, discountPrice, totalItemsPrice, orderItemsCount, orderId } = location.state;
   return (
     <Layout>
       <OrderCompleteInfo
@@ -17,6 +17,7 @@ function OrderComplete() {
         totalItemsPrice={totalItemsPrice}
         orderItemsCount={orderItemsCount}
         userName={user.nickname}
+        orderId={Number(orderId)}
       />
     </Layout>
   );

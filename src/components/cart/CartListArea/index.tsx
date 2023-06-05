@@ -2,12 +2,12 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { ORDER_PATH } from '@router/router';
-import cartState from '@recoil/cart/cartState';
 import withCartTotalPrice from '@recoil/cart/selector/withCartTotalPrice';
 import withAvailableCoupon from '@recoil/coupon/selector/withAvailableCoupon';
 import serverState from '@recoil/server/serverState';
 import userState from '@recoil/user/userState';
 import { useCheckCart } from '@hooks/recoil/cart/useCheckCart';
+import { useRecoilCart } from '@hooks/useRecoilCart';
 import { cartItemSelectedById } from '@utils/cart/cart';
 import { getDiscountPrice } from '@utils/coupon/coupon';
 import { submitOrderApi } from '@utils/order/fetchOrder';
@@ -30,7 +30,7 @@ function CartListArea({ onModalOpen, selectedCoupon, resetSelectedCoupon }: Cart
   const serverName = useRecoilValue(serverState);
   const navigate = useNavigate();
 
-  const cart = useRecoilValue(cartState);
+  const { cart, cartFetchData } = useRecoilCart();
   const totalItemsPrice = useRecoilValue(withCartTotalPrice);
   const availableCoupon = useRecoilValue(withAvailableCoupon);
 
@@ -39,12 +39,14 @@ function CartListArea({ onModalOpen, selectedCoupon, resetSelectedCoupon }: Cart
   const onOrderClick = async () => {
     const selectedCartIds = cartItemSelectedById(cart);
 
-    await submitOrderApi({
+    const orderId = await submitOrderApi({
       cartItemIds: selectedCartIds,
       serverName,
       couponId: selectedCoupon?.id,
       userInfo,
     });
+
+    cartFetchData();
 
     navigate(ORDER_PATH.COMPLETE, {
       state: {
@@ -52,6 +54,7 @@ function CartListArea({ onModalOpen, selectedCoupon, resetSelectedCoupon }: Cart
         discountPrice,
         totalItemsPrice,
         orderItemsCount: checkedCount,
+        orderId,
       },
     });
   };
