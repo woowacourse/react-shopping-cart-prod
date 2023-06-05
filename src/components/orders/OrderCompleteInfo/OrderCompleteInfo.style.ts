@@ -6,18 +6,34 @@ export const MessageWrapper = styled.div`
   display: flex;
   justify-content: center;
 
-  padding: 8rem 0;
+  padding: 4rem 0;
 
-  font-size: 3rem;
+  font-size: 2rem;
   line-height: 3.7rem;
   letter-spacing: 0.5px;
 
   color: ${theme.colors.primaryColor};
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.sm}) {
+    font-size: 2.4rem;
+    padding: 6rem 0;
+  }
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    font-size: 2.8rem;
+    padding: 7rem 0;
+  }
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    font-size: 3.2rem;
+    padding: 8rem 0;
+  }
 `;
 
 export const BoldMessage = styled.span`
   font-weight: 700;
 `;
+
 export const NormalMessage = styled.span`
   font-weight: 400;
 `;
@@ -26,24 +42,58 @@ export const ButtonWrapperLink = styled.div`
   display: flex;
   justify-content: center;
 
-  margin-bottom: 12rem;
-  gap: 10rem;
+  padding: 0 5rem;
+
+  margin-bottom: 6rem;
+  gap: 5rem;
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.sm}) {
+    margin-bottom: 8rem;
+    gap: 6rem;
+  }
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    margin-bottom: 10rem;
+    gap: 8rem;
+  }
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    margin-bottom: 12rem;
+    gap: 10rem;
+  }
 `;
 
 export const ButtonLink = styled(Link)`
   width: 100%;
+
+  max-width: 30rem;
 `;
 
 export const Title = styled.h3`
-  padding-bottom: 3.6rem;
+  padding-bottom: 1.8rem;
   border-bottom: 1px solid ${theme.colors.primaryColor};
 
   font-weight: 700;
-  font-size: 4rem;
+  font-size: 2.4rem;
 
   letter-spacing: 0.5px;
 
   color: ${theme.colors.primaryColor};
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.sm}) {
+    padding-bottom: 2.4rem;
+    font-size: 2.8rem;
+  }
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding-bottom: 2.8rem;
+    font-size: 3.2rem;
+  }
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    padding-bottom: 3.2rem;
+    font-size: 3.6rem;
+  }
 `;
 
 export const EstimatedDate = styled(MessageWrapper)`
@@ -53,7 +103,11 @@ export const EstimatedDate = styled(MessageWrapper)`
 
 export const OrderInformation = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(1, 1fr);
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 `;
 
 export const InformationWrapper = styled.div`
@@ -69,21 +123,35 @@ export const InformationMain = styled.div`
   display: flex;
   flex-direction: column;
 
-  padding-left: 4rem;
-  border-left: 1px solid ${theme.colors.primaryColor};
-
   gap: 2rem;
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding-left: 4rem;
+    border-left: 1px solid ${theme.colors.primaryColor};
+  }
 `;
 
 export const Information = styled.div`
   display: flex;
 
   font-weight: 400;
-  font-size: 2.4rem;
+  font-size: 1.8rem;
   line-height: 3.7rem;
   letter-spacing: 0.5px;
 
   color: ${theme.colors.primaryColor};
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.sm}) {
+    font-size: 2rem;
+  }
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    font-size: 2.2rem;
+  }
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    font-size: 2.4rem;
+  }
 `;
 
 export const InformationLeft = styled(Information)`
@@ -102,6 +170,17 @@ export const InformationRight = styled(Information)`
 
 export const TotalPrice = styled(InformationRight)`
   font-weight: 700;
-  font-size: 3rem;
-  line-height: 3.7rem;
+  font-size: 2rem;
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.sm}) {
+    font-size: 2.4rem;
+  }
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    font-size: 2.4rem;
+  }
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    font-size: 2.8rem;
+  }
 `;
