@@ -1,3 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
+import { useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import fetchData from 'src/api';
 import { USER } from 'src/constants';
@@ -8,7 +11,7 @@ import useFetch from './useFetch';
 function useOrderList() {
   const currentServer = useRecoilValue($CurrentServerUrl);
 
-  const { result: orderList } = useFetch({
+  const { result: orderList, refreshFetch } = useFetch({
     fetch: fetchData<Order[]>,
     arg: {
       url: `${currentServer}/orders/`,
@@ -21,6 +24,17 @@ function useOrderList() {
     key: `orders`,
     suspense: true,
   });
+
+  useEffect(() => {
+    refreshFetch({
+      url: `${currentServer}/orders/`,
+      options: {
+        headers: {
+          Authorization: `Basic ${btoa(USER)}`,
+        },
+      },
+    });
+  }, [currentServer]);
 
   return { orderList };
 }

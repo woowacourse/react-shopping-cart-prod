@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import fetchData from 'src/api';
 import { USER } from 'src/constants';
@@ -12,7 +14,7 @@ interface UseOrderDetailProps {
 function useOrderDetail({ orderId }: UseOrderDetailProps) {
   const currentServer = useRecoilValue($CurrentServerUrl);
 
-  const { result: orderDetailData } = useFetch({
+  const { result: orderDetailData, refreshFetch } = useFetch({
     fetch: fetchData<OrderDetail>,
     arg: {
       url: `${currentServer}/orders/${orderId}`,
@@ -25,6 +27,17 @@ function useOrderDetail({ orderId }: UseOrderDetailProps) {
     key: `orders/${orderId}`,
     suspense: true,
   });
+
+  useEffect(() => {
+    refreshFetch({
+      url: `${currentServer}/orders/${orderId}`,
+      options: {
+        headers: {
+          Authorization: `Basic ${btoa(USER)}`,
+        },
+      },
+    });
+  }, [currentServer]);
 
   return { orderDetailData };
 }
