@@ -7,6 +7,7 @@ import PaymentAmount from '../PaymentAmount/PaymentAmount';
 import getCartLength from '../../../globalState/selectors/getCartLength';
 import CouponInfo from '../../../types/coupon';
 import CouponSelectRadio from '../../coupon/CouponSelectRadio/CouponSelectRadio';
+import CartCouponErrorBoundary from '../../../errorHandler/CartCouponErrorBoundary';
 
 const CartContents = () => {
   const navigate = useNavigate();
@@ -22,9 +23,11 @@ const CartContents = () => {
     <Contents>
       <CartList />
       <PaymentDiv>
-        <Suspense fallback={<CouponFallbackDiv>쿠폰 목록을 불러오고 있어요.</CouponFallbackDiv>}>
-          <CouponSelectRadio selected={selectedCoupon} setSelected={setSelectedCoupon} />
-        </Suspense>
+        <CartCouponErrorBoundary>
+          <Suspense fallback={<CouponFallbackDiv>쿠폰 목록을 불러오고 있어요.</CouponFallbackDiv>}>
+            <CouponSelectRadio selected={selectedCoupon} setSelected={setSelectedCoupon} />
+          </Suspense>
+        </CartCouponErrorBoundary>
         <PaymentAmount coupon={selectedCoupon} />
       </PaymentDiv>
     </Contents>
