@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import styled from 'styled-components';
 
-import { orderAtom } from '../../recoil/orderProductData';
+import { orderAtom } from '../../recoil/orderData';
 import OrderProductList from './OrderProductList';
 
 const OrderList = () => {

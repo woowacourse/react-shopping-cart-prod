@@ -8,11 +8,11 @@ import Button from '../components/Common/Button';
 import ContentListSkeleton from '../components/Common/ContentListSkeleton';
 import CartProductList from '../components/Cart/CartProductList';
 
-import { totalCartProductSelect } from '../recoil/cartProductData';
-import { checkedListSelector } from '../recoil/checkedProductData';
+import { totalCartProductSelect } from '../recoil/cartItemData';
+import { checkedListSelector } from '../recoil/checkedCartItemData';
 import useCheckedProducts from '../hooks/useCheckedProducts';
 
-const CartProductsListPage = () => {
+const CartItemsListPage = () => {
   const totalCartProductCount = useRecoilValue(totalCartProductSelect);
   const checkedCartProductCount = useRecoilValue(checkedListSelector);
   const { removeCheckedProducts, handleAllCheckedProducts } =
@@ -120,4 +120,4 @@ const PaymentWrapper = styled.div`
   }
 `;
 
-export default CartProductsListPage;
+export default CartItemsListPage;

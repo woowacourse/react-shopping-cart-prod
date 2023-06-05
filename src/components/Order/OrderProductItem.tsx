@@ -1,11 +1,11 @@
-import type { CartProduct } from '../../types/product';
+import type { CartItem } from '../../types/product';
 
 import styled from 'styled-components';
 
 import Image from '../Common/Image';
 
 interface OrderItemProps {
-  orderProduct: CartProduct;
+  orderProduct: CartItem;
 }
 
 const OrderProductItem = ({ orderProduct }: OrderItemProps) => {

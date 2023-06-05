@@ -1,15 +1,15 @@
-import type { CartProduct } from '../types/product';
+import type { CartItem } from '../types/product';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { api } from '../apis/cartProducts';
-import { cartAtom } from '../recoil/cartProductData';
+import { api } from '../apis/cartItems';
+import { cartAtom } from '../recoil/cartItemData';
 import { hostNameAtom } from '../recoil/hostData';
 import { HostNameType } from '../types/server';
 
 const updateCartProductQuantity = async (
   hostName: HostNameType,
-  targetProduct: CartProduct,
+  targetProduct: CartItem,
   delta: number
 ) =>
   await api(hostName).then((apiInstance) => {
@@ -44,7 +44,6 @@ const useProductQuantity = (productId: number) => {
         ...cart[targetCartProductIndex],
         quantity: targetProduct.quantity + delta,
       });
-      console.log(newCart);
 
       setCart([...newCart]);
     }

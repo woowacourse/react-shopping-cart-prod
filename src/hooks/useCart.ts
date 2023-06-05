@@ -2,12 +2,12 @@ import type { Product } from '../types/product';
 import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { api } from '../apis/cartProducts';
+import { api } from '../apis/cartItems';
 import { findTargetProduct } from '../domain/cartProductHandler';
 import useProductQuantity from './useProductQuantity';
-import { cartAtom } from '../recoil/cartProductData';
+import { cartAtom } from '../recoil/cartItemData';
 import { hostNameAtom } from '../recoil/hostData';
-import { checkedCartItemIdsAtom } from '../recoil/checkedProductData';
+import { checkedCartItemIdsAtom } from '../recoil/checkedCartItemData';
 
 const useCart = (product: Product) => {
   const { productId } = product;

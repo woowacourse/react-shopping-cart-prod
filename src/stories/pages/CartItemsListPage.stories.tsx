@@ -1,14 +1,14 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import CartProductsListPage from '../../pages/CartProductsListPage';
+import CartItemsListPage from '../../pages/CartItemsListPage';
 import { userEvent, waitFor, within } from '@storybook/testing-library';
 
 const meta = {
   title: 'Pages/CartProductsListPage',
-  component: CartProductsListPage,
+  component: CartItemsListPage,
   tags: ['autodocs'],
   argTypes: {},
-} satisfies Meta<typeof CartProductsListPage>;
+} satisfies Meta<typeof CartItemsListPage>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

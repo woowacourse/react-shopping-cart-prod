@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import ProductsListPage from './pages/ProductsListPage';
-import CartProductsListPage from './pages/CartProductsListPage';
+import CartItemsListPage from './pages/CartItemsListPage';
 import NotFoundPage from './pages/NotFoundPage';
 import Layout from './Layout';
 import OrderProductsListPage from './pages/OrderProductsListPage';
@@ -22,7 +22,7 @@ function App() {
                 </Suspense>
               }
             />
-            <Route path='/cart' element={<CartProductsListPage />} />
+            <Route path='/cart' element={<CartItemsListPage />} />
             <Route path='/order' element={<OrderProductsListPage />} />
             <Route
               path='/order/:orderId'

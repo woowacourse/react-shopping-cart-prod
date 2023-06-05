@@ -5,7 +5,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 import CartIcon from '../../assets/CartIcon';
-import { totalCartProductSelect } from '../../recoil/cartProductData';
+import { totalCartProductSelect } from '../../recoil/cartItemData';
 import { servers } from '../../constants/server';
 import { hostNameAtom } from '../../recoil/hostData';
 import { HostNameType } from '../../types/server';

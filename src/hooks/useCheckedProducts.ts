@@ -1,12 +1,12 @@
-import type { CartProduct } from '../types/product';
+import type { CartItem } from '../types/product';
 
 import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { api } from '../apis/cartProducts';
+import { api } from '../apis/cartItems';
 import { hostNameAtom } from '../recoil/hostData';
-import { cartAtom } from '../recoil/cartProductData';
-import { checkedCartItemIdsAtom } from '../recoil/checkedProductData';
+import { cartAtom } from '../recoil/cartItemData';
+import { checkedCartItemIdsAtom } from '../recoil/checkedCartItemData';
 
 const useCheckedProducts = () => {
   const hostName = useRecoilValue(hostNameAtom);
@@ -35,7 +35,7 @@ const useCheckedProducts = () => {
     });
   };
 
-  const handleCheckBoxChange = (cartProduct: CartProduct) => {
+  const handleCheckBoxChange = (cartProduct: CartItem) => {
     if (isCheckedProduct(cartProduct)) {
       setCheckedCartItemIds(
         checkedCartItemIds.filter(
@@ -55,8 +55,8 @@ const useCheckedProducts = () => {
     setCheckedCartItemIds(cart.map((item) => item.cartItemId));
   };
 
-  const isCheckedProduct = (cartProduct: CartProduct) => {
-    return checkedCartItemIds.includes(cartProduct.cartItemId);
+  const isCheckedProduct = (cartItem: CartItem) => {
+    return checkedCartItemIds.includes(cartItem.cartItemId);
   };
 
   useEffect(() => {

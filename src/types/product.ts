@@ -6,14 +6,14 @@ export interface Product {
   stock: number;
 }
 
-export interface CartProduct {
+export interface CartItem {
   cartItemId: number;
   quantity: number;
   product: Product;
 }
 
 export interface ScheduledOrder {
-  cartItems: CartProduct[];
+  cartItems: CartItem[];
   totalProductPrice: number;
   totalDeliveryFee: number;
   usePoint: number;
@@ -23,6 +23,6 @@ export interface ScheduledOrder {
 export interface Order {
   orderId: number;
   orderDateTime: string;
-  orderItems: CartProduct[];
+  orderItems: CartItem[];
   totalPrice: number;
 }

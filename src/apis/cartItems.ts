@@ -1,4 +1,4 @@
-import type { CartProduct } from '../types/product';
+import type { CartItem } from '../types/product';
 import type { HostNameType } from '../types/server';
 
 import { servers } from '../constants/server';
@@ -7,7 +7,7 @@ import base64 from './auth';
 export const api = async (hostName: HostNameType) => {
   const URL = `${servers[hostName]}/cart-items`;
 
-  const getCartProducts = async () => {
+  const getCartItems = async () => {
     const response = await fetch(URL, {
       method: 'GET',
       headers: {
@@ -15,7 +15,7 @@ export const api = async (hostName: HostNameType) => {
       },
     });
 
-    const data: CartProduct[] = await response.json();
+    const data: CartItem[] = await response.json();
 
     return data;
   };
@@ -74,7 +74,7 @@ export const api = async (hostName: HostNameType) => {
   };
 
   return {
-    getCartProducts,
+    getCartItems,
     createCartProduct,
     editCartProductQuantity,
     deleteCartProduct,

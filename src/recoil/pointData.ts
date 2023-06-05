@@ -1,4 +1,4 @@
-import { Point } from '../types/point';
+import type { Point } from '../types/point';
 
 import { atom, selector } from 'recoil';
 import { api } from '../apis/point';

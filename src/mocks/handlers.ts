@@ -1,10 +1,10 @@
+import type { CartItem, Order, ScheduledOrder } from '../types/product';
 import { rest } from 'msw';
 import products from './data/products.json';
 // import point from './data/point.json';
 // import cart from './data/cart.json';
 import { findTargetProduct } from '../domain/cartProductHandler';
 
-import type { CartProduct, Order, ScheduledOrder } from '../types/product';
 import { getData, updateData } from '../utils/localStorage';
 
 export const handlers = [
@@ -50,7 +50,7 @@ export const handlers = [
   rest.post<{ productId: number }>('/cart-items', (req, res, ctx) => {
     const { productId } = req.body;
 
-    const storedCart: CartProduct[] = getData('cart');
+    const storedCart: CartItem[] = getData('cart');
 
     if (findTargetProduct(storedCart, productId)) {
       return res(
@@ -93,7 +93,7 @@ export const handlers = [
 
       const cartProductId = Number(cartItemId as string);
 
-      const storedCart: CartProduct[] = getData('cart');
+      const storedCart: CartItem[] = getData('cart');
 
       if (
         !storedCart.find(
@@ -123,7 +123,7 @@ export const handlers = [
 
     if (
       !storedCart.cartItems.find(
-        (cartProduct: CartProduct) => cartProduct.cartItemId === cartProductId
+        (cartProduct: CartItem) => cartProduct.cartItemId === cartProductId
       )
     ) {
       return res(

@@ -3,9 +3,9 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { api } from '../apis/order';
 import { hostNameAtom } from '../recoil/hostData';
-import { orderAtom } from '../recoil/orderProductData';
-import { checkedCartItemIdsAtom } from '../recoil/checkedProductData';
-import { cartAtom } from '../recoil/cartProductData';
+import { orderAtom } from '../recoil/orderData';
+import { checkedCartItemIdsAtom } from '../recoil/checkedCartItemData';
+import { cartAtom } from '../recoil/cartItemData';
 import { userPointAtom } from '../recoil/pointData';
 
 const useOrder = () => {

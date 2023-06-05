@@ -9,7 +9,7 @@ import Button from '../Common/Button';
 import {
   checkedCartItemsSelector,
   totalPriceSelector,
-} from '../../recoil/checkedProductData';
+} from '../../recoil/checkedCartItemData';
 import { userPointAtom } from '../../recoil/pointData';
 import useOrder from '../../hooks/useOrder';
 

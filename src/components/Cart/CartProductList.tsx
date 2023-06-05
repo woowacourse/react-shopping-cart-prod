@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 
 import CartProductItem from './CartProductItem';
-import { cartAtom } from '../../recoil/cartProductData';
+import { cartAtom } from '../../recoil/cartItemData';
 
 const CartProductList = () => {
   const cart = useRecoilValue(cartAtom);

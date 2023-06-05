@@ -1,6 +1,8 @@
-import { selector } from 'recoil';
-import { getProducts } from '../apis/products';
 import type { Product } from '../types/product';
+
+import { selector } from 'recoil';
+
+import { getProducts } from '../apis/products';
 import { hostNameAtom } from './hostData';
 
 export const getProductsSelector = selector<Product[]>({

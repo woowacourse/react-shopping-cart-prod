@@ -1,7 +1,7 @@
+import type { CartItem } from '../types/product';
 import { atom, selector } from 'recoil';
 
-import { cartAtom } from './cartProductData';
-import { CartProduct } from '../types/product';
+import { cartAtom } from './cartItemData';
 
 export const checkedCartItemIdsAtom = atom<number[]>({
   key: 'checkedItemState',
@@ -30,7 +30,7 @@ export const totalPriceSelector = selector<number>({
   },
 });
 
-export const checkedCartItemsSelector = selector<CartProduct[]>({
+export const checkedCartItemsSelector = selector<CartItem[]>({
   key: 'checkedCartProductState',
   get: ({ get }) => {
     const checkedCartItemIds = get(checkedCartItemIdsAtom);

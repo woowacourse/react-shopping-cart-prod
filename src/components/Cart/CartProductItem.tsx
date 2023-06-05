@@ -1,4 +1,4 @@
-import type { CartProduct } from '../../types/product';
+import type { CartItem } from '../../types/product';
 
 import styled from 'styled-components';
 
@@ -11,7 +11,7 @@ import useCart from '../../hooks/useCart';
 import useCheckedProducts from '../../hooks/useCheckedProducts';
 
 interface CartProductItemProps {
-  cartProduct: CartProduct;
+  cartProduct: CartItem;
 }
 
 const CartProductItem = ({ cartProduct }: CartProductItemProps) => {
