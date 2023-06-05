@@ -4,4 +4,4 @@ export const servers = {
   홍고: 'http://54.180.108.125:8080',
 } as const;
 
-export const base64 = 'YUBhLmNvbToxMjM0';
+export const base64 = 'YkBiLmNvbToxMjM0';
