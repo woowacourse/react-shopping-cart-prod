@@ -28,7 +28,7 @@ const Message = ({ type, link = '' }: MessageProps) => {
 
 const MessageSection = styled.section`
   position: absolute;
-  top: 50%;
+  top: 60%;
   left: 50%;
   display: flex;
   flex-direction: column;
