@@ -1,11 +1,8 @@
 import { Meta } from '@storybook/react';
-import { useEffect } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import ProductItemComponent from '../../components/main/ProductItem';
-import { PRODUCT_LIST_URL } from '../../constants/url';
-import { useFetchData } from '../../hooks/useFetchData';
 import productList from '../../mock/productList.json';
-import { productListState, serverState } from '../../recoil';
+import { productListState } from '../../recoil';
 import { Product } from '../../types';
 
 const meta = {
@@ -58,15 +55,9 @@ const meta = {
 export default meta;
 
 export const ProductItem = (args: Product) => {
-  const { api } = useFetchData();
   const setProductList = useSetRecoilState(productListState);
-  const server = useRecoilValue(serverState);
-  useEffect(() => {
-    api.get(`${server}${PRODUCT_LIST_URL}`).then((data) => {
-      setProductList(data);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [server]);
+
+  setProductList(productList);
 
   return <ProductItemComponent {...args} />;
 };
