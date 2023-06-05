@@ -17,7 +17,7 @@ const CartItem = ({ cart }: { cart: CartItemType }) => {
 
   const [quantity, setQuantity] = useState(cart.quantity);
 
-  const totalPrice = check ? cart.product.price : 0;
+  const totalQuantity = check ? quantity : 0;
 
   const deleteCartItem = () => {
     deleteCartItemAPI(cart.id);
@@ -55,11 +55,11 @@ const CartItem = ({ cart }: { cart: CartItemType }) => {
       </CartItemInner>
       <CartItemFoot>
         <Text size="smallest" weight="light">
-          {`상품금액 ${getPriceFormat(totalPrice)}원 X ${quantity}개`}
+          {`상품금액 ${getPriceFormat(cart.product.price)}원 X ${totalQuantity}개`}
         </Text>
         &nbsp;=&nbsp;
         <Text size="smallest" weight="normal">
-          {`총 ${getPriceFormat(totalPrice * quantity)}원`}
+          {`총 ${getPriceFormat(cart.product.price * totalQuantity)}원`}
         </Text>
       </CartItemFoot>
     </CartItemWrapper>
