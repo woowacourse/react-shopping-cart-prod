@@ -6,16 +6,19 @@ import {
   CART_ITEMS_PATH_NAME,
   CART_LIST_KEY,
   COUPONS_PATH_NAME,
+  ORDERS_PATH_NAME,
   PRODUCTS_PATH_NAME,
   USERS_COUPON_PATH_NAME,
 } from '../constant';
 import LocalStorage from '../utils/LocalStorage';
-import type { CartProduct, Coupon } from '../types/product';
+import type { CartProduct, Coupon, Order } from '../types/product';
 
 const mockProducts = mockProductsData.products;
 const mockCoupons = mockCouponData;
-const usersCoupon: Coupon[] = [];
-const cartList: CartProduct[] = LocalStorage.getItem(CART_LIST_KEY) || [];
+
+let usersCoupon: Coupon[] = [];
+let cartList: CartProduct[] = LocalStorage.getItem(CART_LIST_KEY) || [];
+const orders: Order[] = [];
 
 const updateLocalStorage = () => {
   LocalStorage.setItem(CART_LIST_KEY, cartList);
@@ -31,6 +34,12 @@ interface PatchUpdateCartRequestBody {
 
 interface PostCouponsMe {
   couponId: number;
+}
+
+interface PostOrders {
+  cartItems: CartProduct[];
+  couponIds: number[];
+  deliveryFee: number;
 }
 
 export const productHandler = [
@@ -85,7 +94,7 @@ export const cartHandler = [
   }),
 ];
 
-export const couponHander = [
+export const couponHandler = [
   rest.get(COUPONS_PATH_NAME, (req, res, ctx) => {
     const couponList = mockCoupons;
 
@@ -115,3 +124,105 @@ export const couponHander = [
     return res(ctx.delay(500), ctx.status(200));
   }),
 ];
+export const orderHandler = [
+  rest.get(ORDERS_PATH_NAME, (req, res, ctx) =>
+    res(ctx.status(200), ctx.body(JSON.stringify({ orders: orders }))),
+  ),
+
+  rest.get(`${ORDERS_PATH_NAME}/:orderId`, (req, res, ctx) => {
+    const { orderId: targetOrderId } = req.params;
+    const orderInfo = orders.find(
+      (order) => order.id === Number(targetOrderId),
+    );
+
+    if (!orderInfo) return res(ctx.status(404));
+    return res(ctx.status(200), ctx.body(JSON.stringify(orderInfo)));
+  }),
+
+  rest.post<PostOrders>(ORDERS_PATH_NAME, async (req, res, ctx) => {
+    const orderInfo: PostOrders = await req.json();
+
+    const orderId = requestPostOrders(orderInfo);
+
+    if (orderId === -1)
+      return res(ctx.delay(1200), ctx.status(400, 'Order Failed'));
+    return res(
+      ctx.delay(1200),
+      ctx.status(201),
+      ctx.body(JSON.stringify({ orderId })),
+    );
+  }),
+];
+
+const requestPostOrders = ({
+  cartItems: userCart,
+  couponIds,
+  deliveryFee,
+}: PostOrders) => {
+  const serverCartList = cartList;
+  const serverUserCoupons = usersCoupon;
+  const serverUserCouponIds = serverUserCoupons.map(({ id }) => id);
+
+  if (!userCart.length) return -1;
+
+  // 쿠폰 검증
+  const isValidCouponIds = couponIds.every((id) =>
+    serverUserCouponIds.includes(id),
+  );
+  if (!isValidCouponIds) return -1;
+  console.log('쿠폰 검증 통과');
+
+  // 장바구니 검증
+  const orderingProducts: CartProduct[] = [];
+  userCart.forEach((userCartProduct) => {
+    const serverCartProduct = serverCartList.find(
+      ({ id }) => id === userCartProduct.id,
+    );
+
+    if (!serverCartProduct) return;
+
+    orderingProducts.push(serverCartProduct);
+  });
+  console.log(orderingProducts);
+
+  if (orderingProducts.length !== userCart.length) return -1;
+  console.log('장바구니 검증 통과');
+
+  const originalPrice = orderingProducts.reduce(
+    (prev, { quantity, product: { price } }) => prev + quantity * price,
+    0,
+  );
+
+  const coupon = serverUserCoupons.find(({ id }) => id === couponIds[0]);
+  const discountedPrice = (() => {
+    if (!coupon) return 0;
+    if (coupon.type === 'percent') return originalPrice * (coupon.amount / 100);
+    return coupon.amount;
+  })();
+
+  const actualPrice = Math.max(originalPrice - discountedPrice, 0);
+
+  // 주문 목록 생성
+  const orderInfo: Order = {
+    actualPrice,
+    deliveryFee,
+    originalPrice,
+    cartItems: orderingProducts.sort(
+      (one, another) => Number(one.id) - Number(another.id),
+    ),
+    id: orders.length,
+  };
+
+  // 장바구니 및 쿠폰 지우기
+  const userCartIds = userCart.map((cart) => cart.id);
+  cartList = serverCartList.filter((serverCart) => {
+    return !userCartIds.includes(serverCart.id);
+  });
+  if (coupon) {
+    usersCoupon = usersCoupon.filter((couponId) => {
+      return !couponIds.includes(couponId.id);
+    });
+  }
+
+  return orderInfo.id;
+};

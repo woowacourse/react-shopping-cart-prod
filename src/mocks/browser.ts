@@ -1,8 +1,14 @@
 import { setupWorker } from 'msw';
-import { productHandler, cartHandler, couponHander } from './handlers';
+import {
+  productHandler,
+  cartHandler,
+  couponHandler,
+  orderHandler,
+} from './handlers';
 
 export const worker = setupWorker(
   ...productHandler,
   ...cartHandler,
-  ...couponHander,
+  ...couponHandler,
+  ...orderHandler,
 );
