@@ -147,6 +147,12 @@ export const handlers = [
     return res(ctx.delay(100), ctx.status(200), ctx.json(point));
   }),
 
+  rest.get("/orders", async (req, res, ctx) => {
+    const originalOrderList = getSessionStorage<ResponseOrdered>(SESSION_STORAGE_KEY_ORDERS, { orderResponses: [] });
+
+    return res(ctx.delay(100), ctx.status(200), ctx.json(originalOrderList));
+  }),
+
   rest.post("/orders", async (req, res, ctx) => {
     const body: NewOrder = await req.json();
     const { orderItems, orderDiscounts } = body;

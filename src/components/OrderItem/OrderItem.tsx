@@ -8,11 +8,11 @@ import {
   OrderItemPrice,
   OrderItemWrapper,
 } from "./OrderItem.style.ts";
-import type { Order } from "../../types/types.ts";
+import type { OrderedGroup } from "../../types/types.ts";
 import { useNavigate } from "react-router-dom";
 
 interface OrderItemProps {
-  orderItem: Order;
+  orderItem: OrderedGroup;
   goDetail?: boolean;
 }
 
@@ -34,7 +34,7 @@ function OrderItem({ orderItem, goDetail }: OrderItemProps) {
       </OrderItemHeader>
       {orderItems.map((orderItem, i) => (
         <OrderItemBox key={i}>
-          <OrderItemImage src={orderItem.image} />
+          <OrderItemImage src={orderItem.imageUrl} />
           <OrderItemInfo>
             <OrderItemName>{orderItem.productName}</OrderItemName>
             <OrderItemPrice>

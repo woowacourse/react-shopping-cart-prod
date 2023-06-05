@@ -23,6 +23,8 @@ export const OrderItemHeaderName = styled.div`
   letter-spacing: 0.5px;
 
   color: #333333;
+
+  cursor: pointer;
 `;
 
 export const OrderItemBox = styled.div`
