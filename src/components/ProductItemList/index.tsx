@@ -1,3 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
+import { useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import { $CurrentServerUrl } from 'src/recoil/atom';
 import { Product } from 'src/types';
@@ -8,12 +11,18 @@ import styles from './index.module.scss';
 
 function ProductItemList() {
   const currentServerUrl = useRecoilValue($CurrentServerUrl);
-  const { result: productsData } = useFetch({
+  const { result: productsData, refreshFetch } = useFetch({
     fetch: fetchData<Product[]>,
     arg: { url: `${currentServerUrl}/products` },
     key: 'products',
     suspense: true,
   });
+
+  useEffect(() => {
+    refreshFetch({
+      url: `${currentServerUrl}/products`,
+    });
+  }, [currentServerUrl]);
 
   return (
     <section className={styles.container}>
