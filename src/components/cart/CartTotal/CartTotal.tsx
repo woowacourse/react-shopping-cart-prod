@@ -2,11 +2,13 @@ import { styled } from 'styled-components';
 import Spacer from '../../common/Spacer/Spacer';
 import PointsInput from '../PointsInput/PointsInput';
 import usePurchaseChecker from './usePurchaseChecker';
+import usePurchaser from './usePurchaser';
 import colors from '../../../colors';
 
 const CartTotal = () => {
   const { cartPrice, finalPrice, isPurchasePossible, buttonMessage } =
     usePurchaseChecker();
+  const { purchase } = usePurchaser();
 
   return (
     <Container>
@@ -31,7 +33,9 @@ const CartTotal = () => {
         </PriceWrapper>
       </Detail>
       <Spacer height={43} />
-      <OrderButton disabled={!isPurchasePossible}>{buttonMessage}</OrderButton>
+      <OrderButton disabled={!isPurchasePossible} onClick={purchase}>
+        {buttonMessage}
+      </OrderButton>
     </Container>
   );
 };
@@ -44,6 +48,7 @@ const Container = styled.div`
   width: 448px;
   height: 410px;
   border: 1px solid ${colors.transparentGold};
+  background-color: ${colors.pureBlack};
 `;
 
 const TitleWrapper = styled.div`
