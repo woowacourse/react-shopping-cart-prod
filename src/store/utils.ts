@@ -1,3 +1,4 @@
+import { getMember } from '../domain/member';
 import { CartItemData, CartPriceData } from '../types';
 
 const getTotalItemDiscountAmount = (orderedItemList: CartItemData[]) => {
@@ -10,11 +11,15 @@ const getTotalItemDiscountAmount = (orderedItemList: CartItemData[]) => {
 };
 
 const getTotalMemberDiscountAmount = (orderedItemList: CartItemData[]) => {
-  return (
-    getTotalItemPrice(orderedItemList) -
-    getDiscountedTotalItemPrice(orderedItemList) -
-    getTotalItemDiscountAmount(orderedItemList)
-  );
+  const member = getMember();
+  const discountRate = member.discountRate;
+
+  return orderedItemList.reduce((prev, curr) => {
+    if (!(curr.product.discountRate > 0)) {
+      return prev + curr.product.price * (discountRate / 100);
+    }
+    return prev;
+  }, 0);
 };
 
 const getTotalItemPrice = (orderedItemList: CartItemData[]) => {
@@ -24,9 +29,11 @@ const getTotalItemPrice = (orderedItemList: CartItemData[]) => {
 };
 
 const getDiscountedTotalItemPrice = (orderedItemList: CartItemData[]) => {
-  return orderedItemList.reduce((prev, curr) => {
-    return prev + +curr.quantity * curr.product.discountedPrice;
-  }, 0);
+  return (
+    getTotalItemPrice(orderedItemList) -
+    getTotalItemDiscountAmount(orderedItemList) -
+    getTotalMemberDiscountAmount(orderedItemList)
+  );
 };
 
 const getShippingFee = (orderedItemList: CartItemData[]) => {

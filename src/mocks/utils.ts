@@ -1,3 +1,4 @@
+import { getMember } from '../domain/member';
 import { CartItemData, CartPriceData, OrderedItemData } from '../types';
 
 export const getTotalItemDiscountAmount = (orderedItemList: OrderedItemData[]) => {
@@ -10,11 +11,15 @@ export const getTotalItemDiscountAmount = (orderedItemList: OrderedItemData[]) =
 };
 
 export const getTotalMemberDiscountAmount = (orderedItemList: OrderedItemData[]) => {
-  return (
-    getTotalItemPrice(orderedItemList) -
-    getDiscountedTotalItemPrice(orderedItemList) -
-    getTotalItemDiscountAmount(orderedItemList)
-  );
+  const member = getMember();
+  const discountRate = member.discountRate;
+
+  return orderedItemList.reduce((prev, curr) => {
+    if (!(curr.discountRate > 0)) {
+      return prev + curr.price * (discountRate / 100);
+    }
+    return prev;
+  }, 0);
 };
 
 export const getTotalItemPrice = (orderedItemList: OrderedItemData[]) => {
@@ -24,9 +29,11 @@ export const getTotalItemPrice = (orderedItemList: OrderedItemData[]) => {
 };
 
 export const getDiscountedTotalItemPrice = (orderedItemList: OrderedItemData[]) => {
-  return orderedItemList.reduce((prev, curr) => {
-    return prev + curr.quantity * curr.discountedPrice;
-  }, 0);
+  return (
+    getTotalItemPrice(orderedItemList) -
+    getTotalItemDiscountAmount(orderedItemList) -
+    getTotalMemberDiscountAmount(orderedItemList)
+  );
 };
 
 export const getShippingFee = (orderedItemList: OrderedItemData[]) => {
