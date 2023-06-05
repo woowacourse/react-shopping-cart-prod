@@ -7,19 +7,22 @@ import { Link } from 'react-router-dom';
 
 interface OrderTableProps {
   orderInfo: Order;
+  showDetailButton: boolean;
 }
 
-const OrderTable = ({ orderInfo }: OrderTableProps) => {
+const OrderTable = ({ orderInfo, showDetailButton }: OrderTableProps) => {
   const { id, orders } = orderInfo;
 
   return (
     <Container>
       <TableHeader>
         <OrderNo>주문번호: {id}</OrderNo>
-        <DetailButton to={`./${id}`}>
-          <span>상세보기</span>
-          <BiChevronsRight />
-        </DetailButton>
+        {showDetailButton && (
+          <DetailButton to={`./${id}`}>
+            <span>상세보기</span>
+            <BiChevronsRight />
+          </DetailButton>
+        )}
       </TableHeader>
       {orders.map((cartItem) => {
         return <OrderCartItem key={cartItem.id} item={cartItem} />;

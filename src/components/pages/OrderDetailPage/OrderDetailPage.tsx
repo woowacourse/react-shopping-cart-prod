@@ -29,7 +29,7 @@ const OrderDetailPage = () => {
   return (
     <Container>
       <FullWidthTitle>주문 내역 상세</FullWidthTitle>
-      <OrderTable orderInfo={orderInfo.contents} />
+      <OrderTable orderInfo={orderInfo.contents} showDetailButton={false} />
       <OrderTotal>
         <OrderTotalHeader>결제금액 정보</OrderTotalHeader>
         <OrderTotalPrice>

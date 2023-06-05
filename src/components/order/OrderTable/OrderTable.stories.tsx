@@ -38,5 +38,13 @@ const orderInfo: Order = {
 export const Default: Story = {
   args: {
     orderInfo,
+    showDetailButton: true,
+  },
+};
+
+export const NoDetailButton: Story = {
+  args: {
+    orderInfo,
+    showDetailButton: false,
   },
 };
