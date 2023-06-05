@@ -34,9 +34,9 @@ export const API_ERROR_MESSAGE = {
 export const SERVER_NAMES: ServerNameType[] = ['RAON', 'JOURNY', 'ZUNY'];
 
 export const BASE_URL_MAP: Record<ServerNameType, string> = {
-  RAON: 'https://jourzura.kro.kr',
+  RAON: 'http://jourzura.kro.kr:8080',
   JOURNY: 'http://journey-shop.kro.kr:8080',
-  ZUNY: 'https://jourzura2.kro.kr',
+  ZUNY: 'http://jourzura2.kro.kr:8080',
 };
 
 export const USER_ID = 'a@a.com';
