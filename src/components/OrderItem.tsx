@@ -74,8 +74,6 @@ const NameBox = styled.p`
 `;
 const PriceBox = styled.p`
   font-size: 16px;
-
-  color: var(--gray-color);
 `;
 
 export default memo(OrderItem);
