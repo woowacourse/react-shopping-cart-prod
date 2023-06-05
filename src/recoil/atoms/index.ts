@@ -1,6 +1,7 @@
 import { atom } from 'recoil';
 import { ToastProps } from '../../components/common/Toast/Toast';
 import type { CartItem, PointsInfo } from '../../types/product';
+import { Order } from '../../types/order';
 
 export const cartState = atom<CartItem[]>({
   key: 'cartState',
@@ -16,7 +17,7 @@ export const pointsState = atom<PointsInfo>({
   key: 'pointsState',
   default: {
     selectedPoints: 0,
-    maxPoints: 5000,
+    maxPoints: 0,
   },
 });
 
