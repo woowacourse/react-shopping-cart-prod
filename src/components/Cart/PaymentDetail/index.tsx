@@ -44,6 +44,7 @@ const PaymentDetail = () => {
     if (!data) return 0;
 
     return data.cartItemsPrice.reduce((acc, cur) => {
+      if (!checkedItems.includes(cur.cartItemId)) return acc;
       const quantity =
         cartList.find((item) => item.id === cur.cartItemId)?.quantity ?? 0;
       return acc + cur.originalPrice * quantity;
