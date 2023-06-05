@@ -1,19 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { memo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
 
 import CartIcon from '../../assets/cart-icon.svg';
 import CouponIcon from '../../assets/coupon-icon.svg';
 import Logo from '../../assets/logo.png';
 import OrderIcon from '../../assets/order-icon.svg';
-import { cartCountState } from '../../store/cart';
+import { useCartCount } from '../../hooks/useFetchUrl';
 import OriginSelector from '../OriginSelector/OriginSelector';
 import styles from './style.module.css';
 
 const Header = () => {
+  const cartCount = useCartCount();
   const navigate = useNavigate();
-  const cartCount = useRecoilValue(cartCountState);
 
   const navigateToMainPage = useCallback(() => {
     navigate('/');

@@ -6,7 +6,7 @@ import { originState } from '../store/origin';
 import productListState from '../store/product';
 import { ProductItemType } from '../types';
 import { tokenized } from './../constants/index';
-import { cartListState, cartTotalAmountState } from './../store/cart';
+import { cartCountState, cartListState, cartTotalAmountState } from './../store/cart';
 import { couponListState } from './../store/coupon';
 import { OrderItemType } from './../store/order';
 import { CartItemType, CouponItemType } from './../types/index';
@@ -108,4 +108,11 @@ export const useGetCartList = () => {
 export const useOrderList = () => {
   const setOrderList = useSetRecoilState(orderListState);
   return useGetAuthFetchData<OrderItemType[]>('orders', setOrderList);
+};
+
+export const useCartCount = () => {
+  useGetCartList();
+  const cartCount = useRecoilValue(cartCountState);
+
+  return cartCount;
 };
