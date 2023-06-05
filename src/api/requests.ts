@@ -40,8 +40,8 @@ export const getDeliveryPolicy = async (server: string) => {
 
 export const getCouponApplied =
   (couponIds: number[]) => async (server: string) => {
-    const params = couponIds.join(',');
-    const data = await api.get(`${server}/cart-items/coupons?id=${params}`);
+    const params = couponIds.length === 0 ? '' : '/' + couponIds.join(',');
+    const data = await api.get(`${server}/cart-items/coupon${params}`);
     return data;
   };
 
