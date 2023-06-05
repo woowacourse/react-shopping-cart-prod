@@ -14,6 +14,12 @@ export const Wrapper = styled.div`
   }
 `;
 
+export const Image = styled.img`
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+`;
+
 export const ItemNameText = styled.p`
   font-size: 20px;
   margin-bottom: 12px;

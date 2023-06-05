@@ -5,6 +5,10 @@ import * as S from './styles/OrderItemList.styles';
 export default function OrderItemList(props: OrderInfo) {
   const { orderId, items, orderedAt } = props;
 
+  const setAltSrc = (e: React.SyntheticEvent<HTMLImageElement>) => {
+    e.currentTarget.src = './emptyProduct.svg';
+  };
+
   return (
     <S.Wrapper>
       <S.OrderIdTitle>
@@ -13,7 +17,7 @@ export default function OrderItemList(props: OrderInfo) {
       </S.OrderIdTitle>
       <S.OrderDetail>
         <div>
-          <img src={`${items[0].product.imageUrl}`} alt="상품 이미지" />
+          <S.Image src={`${items[0].product.imageUrl}`} onError={setAltSrc} alt="상품 이미지" />
         </div>
         <div>
           <S.ItemNameText>{items[0].product.name}</S.ItemNameText>

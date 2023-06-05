@@ -4,10 +4,14 @@ import * as S from './styles/OrderItemDetail.styles';
 export default function OrderItemDetail(props: { product: ProductType; quantity: number }) {
   const { product, quantity } = props;
 
+  const setAltSrc = (e: React.SyntheticEvent<HTMLImageElement>) => {
+    e.currentTarget.src = '../emptyProduct.svg';
+  };
+
   return (
     <S.Wrapper>
       <div>
-        <img src={`${product.imageUrl}`} alt="상품 이미지" />
+        <S.Image src={`${product.imageUrl}`} onError={setAltSrc} alt="상품 이미지" />
       </div>
       <div>
         <S.ItemNameText>{product.name}</S.ItemNameText>
