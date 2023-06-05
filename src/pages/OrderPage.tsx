@@ -3,6 +3,7 @@ import Header from '../components/common/Header/Header';
 import ErrorBoundary from '../errorHandler/ErrorBoundary';
 import { Suspense } from 'react';
 import LoadingView from '../components/common/LoadingView/LoadingView';
+import OrderList from '../components/order/OrderList/OrderList';
 
 const OrderPage = () => {
   return (
@@ -12,7 +13,9 @@ const OrderPage = () => {
         <Title>주문 목록</Title>
         <ErrorBoundary>
           <Suspense fallback={<LoadingView />}>
-            <Contents></Contents>
+            <Contents>
+              <OrderList />
+            </Contents>
           </Suspense>
         </ErrorBoundary>
       </Layout>
@@ -43,15 +46,11 @@ const Title = styled.h2`
 
 const Contents = styled.div`
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: baseline;
+  gap: 50px;
 
   margin-top: 34px;
-
-  @media screen and (max-width: 1320px) {
-    flex-direction: column;
-    justify-content: baseline;
-    gap: 100px;
-  }
 `;
 
 export default OrderPage;
