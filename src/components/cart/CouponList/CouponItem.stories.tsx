@@ -17,7 +17,7 @@ export const Default: Story = {
     discountValue: MOCK_COUPON_LIST[0].value,
     condition: 50000,
     type: 'percent',
-    isSelect: false,
+    selected: false,
   },
 };
 
@@ -27,7 +27,7 @@ export const Selected: Story = {
     discountValue: 30000,
     type: 'price',
     condition: 50000,
-    isSelect: true,
+    selected: true,
   },
 };
 
@@ -37,7 +37,7 @@ export const Percent: Story = {
     type: 'percent',
     discountValue: MOCK_COUPON_LIST[0].value,
     condition: 3000,
-    isSelect: true,
+    selected: true,
   },
 };
 
@@ -47,7 +47,7 @@ export const Delivery: Story = {
     type: 'delivery',
     discountValue: 60000,
     condition: 0,
-    isSelect: false,
+    selected: false,
   },
 };
 
@@ -57,6 +57,6 @@ export const Special: Story = {
     type: 'price',
     discountValue: 5000000,
     condition: 10,
-    isSelect: false,
+    selected: false,
   },
 };

@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { styled } from 'styled-components';
 import CouponList from '@components/cart/CouponList';
 import Layout from '@components/layout/Layout';
-import { MOCK_COUPON_LIST } from '@mocks/handlers';
 import Button from '../Button';
 import Modal from '.';
 
@@ -29,7 +28,6 @@ function ModalStory() {
               onCouponSelect={() => {
                 return;
               }}
-              coupons={MOCK_COUPON_LIST}
             />
           </Modal>
         )}
