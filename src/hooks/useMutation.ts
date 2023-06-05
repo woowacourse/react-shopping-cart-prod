@@ -32,7 +32,6 @@ const useMutation = <BodyData, ResponseData>({
     const { url, method, bodyData, headers } = fetchInformation;
 
     const body = bodyData ? JSON.stringify(bodyData) : null;
-
     try {
       if (!navigator.onLine) {
         throw new Error(MESSAGE.NETWORK_ERROR);

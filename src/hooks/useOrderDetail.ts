@@ -21,6 +21,7 @@ function useOrderDetail({ orderId }: UseOrderDetailProps) {
       options: {
         headers: {
           Authorization: `Basic ${btoa(USER)}`,
+          'Content-Type': 'application/json',
         },
       },
     },
@@ -34,6 +35,7 @@ function useOrderDetail({ orderId }: UseOrderDetailProps) {
       options: {
         headers: {
           Authorization: `Basic ${btoa(USER)}`,
+          'Content-Type': 'application/json',
         },
       },
     });

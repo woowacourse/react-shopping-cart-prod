@@ -33,6 +33,7 @@ function usePayments() {
       options: {
         headers: {
           Authorization: `Basic ${btoa(USER)}`,
+          'Content-Type': 'application/json',
         },
       },
     },
@@ -42,12 +43,13 @@ function usePayments() {
   useEffect(() => {
     const updatedUrlParams = getUrlParams(cartCheckedIdList, 'cartItemIds');
 
-    if (updatedUrlParams.length > 0) {
+    if (cartCheckedIdList.length > 0) {
       refreshFetch({
         url: `${BASE_URL}?${updatedUrlParams}`,
         options: {
           headers: {
             Authorization: `Basic ${btoa(USER)}`,
+            'Content-Type': 'application/json',
           },
         },
       });

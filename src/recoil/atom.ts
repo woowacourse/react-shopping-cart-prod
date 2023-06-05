@@ -9,6 +9,7 @@ const getCart = async (url: string) => {
   const response = await fetch(`${url}/cart-items`, {
     headers: {
       Authorization: `Basic ${btoa(USER)}`,
+      'Content-Type': 'application/json',
     },
   });
 

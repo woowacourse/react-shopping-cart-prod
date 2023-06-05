@@ -18,6 +18,7 @@ function useOrderList() {
       options: {
         headers: {
           Authorization: `Basic ${btoa(USER)}`,
+          'Content-Type': 'application/json',
         },
       },
     },
@@ -31,6 +32,7 @@ function useOrderList() {
       options: {
         headers: {
           Authorization: `Basic ${btoa(USER)}`,
+          'Content-Type': 'application/json',
         },
       },
     });
