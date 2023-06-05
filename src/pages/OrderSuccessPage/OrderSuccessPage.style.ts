@@ -5,7 +5,7 @@ import { Text } from '../../components/common/Text/Text.styles';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  transform: translateY(40%);
+  transform: translateY(50%);
   width: 320px;
   gap: 14px;
 `;

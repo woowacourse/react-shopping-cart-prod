@@ -29,10 +29,6 @@ export const OrderSuccessPage = ({}: Props) => {
         <S.OrderSuccessText>내일 아침에 만나요!</S.OrderSuccessText>
       </S.OrderSuccessTextContainer>
       <Divider />
-      <S.OrderPriceTextContainer>
-        <Text>결제 금액</Text>
-        <Text size="xLarge">{priceFormatter(100000)}</Text>
-      </S.OrderPriceTextContainer>
       <S.ButtonContainer>
         <Button variant="primary" onClick={() => navigate(PATH.ROOT)}>
           홈으로 이동하기
