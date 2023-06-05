@@ -16,19 +16,19 @@ export default function OrderBill(props: OrderDetailInfo) {
       <S.BillBox>
         <S.BillRow>
           <p>총 상품가격</p>
-          <p>{totalPrice} 원</p>
+          <p>{totalPrice.toLocaleString()} 원</p>
         </S.BillRow>
         <S.BillRow>
           <p>총 배송비</p>
-          <p>{deliveryPrice} 원</p>
+          <p>{deliveryPrice.toLocaleString()} 원</p>
         </S.BillRow>
         <S.CouponBillRow>
           <p>쿠폰 할인 금액</p>
-          <p>{couponDiscountPrice} 원</p>
+          <p>{couponDiscountPrice.toLocaleString()} 원</p>
         </S.CouponBillRow>
         <S.BillRow>
           <p>총 주문금액</p>
-          <p>{discountedTotalPrice} 원</p>
+          <p>{discountedTotalPrice.toLocaleString()} 원</p>
         </S.BillRow>
       </S.BillBox>
     </S.Wrapper>

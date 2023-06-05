@@ -12,7 +12,7 @@ export default function OrderItemDetail(props: { product: ProductType; quantity:
       <div>
         <S.ItemNameText>{product.name}</S.ItemNameText>
         <S.ItemCountText>수량 : {quantity}개</S.ItemCountText>
-        <S.ItemPriceText>{product.price} 원</S.ItemPriceText>
+        <S.ItemPriceText>{product.price.toLocaleString()} 원</S.ItemPriceText>
       </div>
     </S.Wrapper>
   );
