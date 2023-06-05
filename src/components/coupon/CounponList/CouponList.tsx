@@ -27,7 +27,8 @@ const CouponList = () => {
     });
 
     if (Math.floor(response.status / 100) === 5) {
-      throw new Error('서버 문제로 쿠폰 발급에 실패하였습니다.');
+      alert('서버 문제로 쿠폰 발급에 실패하였습니다.');
+      return;
     }
 
     if (Math.floor(response.status / 100) === 4) {
