@@ -39,7 +39,8 @@ const useMutation = <BodyData, ResponseData>({
 
       const response = await fetch(url, { method, body, headers });
       if (!response.ok) {
-        throw new Error(MESSAGE.RESPONSE_NOT_OKAY);
+        const error = await response.json();
+        throw new Error(error.errorMessage);
       }
 
       if (method === FETCH_METHOD.DELETE || FETCH_METHOD.PATCH) {

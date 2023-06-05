@@ -26,6 +26,7 @@ export const MESSAGE = Object.freeze({
   MUTATE_CART_FAILED: '수량을 바꾸는 과정에서 에러가 발생하였습니다.',
   PRODUCT_GET_FAILED: '제품 목록을 불러오는 과정에서 문제가 생겼습니다.',
   PAYMENTS_SUCCESSFUL: '주문이 완료되었습니다.',
+  PAYMENTS_FAILED: '주문 과정에서 에러가 발생했습니다.',
   RESPONSE_NOT_OKAY: '응답이 온전하지 않습니다.',
   NETWORK_ERROR: '네트워크 오프라인이 감지되었습니다. 인터넷 연결을 확인해주세요',
 });

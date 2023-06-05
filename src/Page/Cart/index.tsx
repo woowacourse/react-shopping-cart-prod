@@ -5,7 +5,7 @@ import { useRecoilValue } from 'recoil';
 import CartProductItemList from 'src/components/CartProductItemList';
 import ContentLayout from 'src/components/Common/ContentLayout';
 import PaymentsView from 'src/components/PaymentsView';
-import { MESSAGE, ROUTE_PATH } from 'src/constants';
+import { ROUTE_PATH } from 'src/constants';
 import Modal from 'src/components/Common/Modal';
 import EmptyComponent from 'src/components/Common/EmptyComponent';
 import ModalNotification from 'src/components/Common/ModalNotification';
@@ -28,10 +28,14 @@ function Cart() {
   const { isModalOpen: isFinalModalOpen, openModal: finalOpenModal, closeModal: finalCloseModal } = useModal();
 
   const { payments } = usePayments();
-  const { purchaseCartItem, orderId } = usePurchase();
+  const { purchaseCartItem, orderId, settledMessage, error } = usePurchase();
+
+  const purchaseItem = async () => {
+    await purchaseCartItem(checekdIdList);
+  };
 
   const purchaseCallback = async () => {
-    await purchaseCartItem(checekdIdList);
+    purchaseItem();
     finalOpenModal();
   };
 
@@ -51,9 +55,13 @@ function Cart() {
       {isFinalModalOpen && (
         <Modal closeEvent={finalCloseModal} direction="center">
           <ModalNotification
-            message={{ title: MESSAGE.PAYMENTS_SUCCESSFUL, cancel: '홈으로 돌아가기', assign: '주문내역 확인하기' }}
+            message={{
+              title: settledMessage,
+              cancel: '홈으로 돌아가기',
+              assign: error ? '다시 시도하기' : '주문내역 확인하기',
+            }}
             cancelCallback={() => navigate(ROUTE_PATH.DEFAULT)}
-            assignCallback={() => navigate(`${ROUTE_PATH.ORDER_DETAIL(orderId)}`)}
+            assignCallback={() => (error ? purchaseItem() : navigate(`${ROUTE_PATH.ORDER_DETAIL(orderId)}`))}
           />
         </Modal>
       )}
