@@ -20,12 +20,19 @@ const PriceWrapper = ({ totalPrice }: Props) => {
   const { orderToItems } = useOrder();
 
   const handleOrderButtonClick = () => {
-    orderToItems();
-    setCheckedItems([]);
-
-    navigate('/');
-    window.location.reload();
+    if (totalPrice === 0) {
+      alert('선택 후 주문을 해주세요.');
+      return;
+    }
+    const confirmOrder = window.confirm('주문을 진행하시겠습니까?');
+    if (confirmOrder) {
+      orderToItems();
+      setCheckedItems([]);
+      navigate('/');
+      window.location.reload();
+    }
   };
+
   const Price = (id: string, description: string, price: string) => (
     <section id={id}>
       <li>{description}</li>
@@ -37,13 +44,24 @@ const PriceWrapper = ({ totalPrice }: Props) => {
     <S.PriceWrapper>
       <S.PriceLabel>결제예상금액</S.PriceLabel>
       <S.PriceInfo>
-        {Price('total-product-price', '총 상품가격', `${totalPrice.toLocaleString()}원`)}
-        {Price('delivery-fee', '총 배송비', `${DELIVERY_FEE.toLocaleString()}원`)}
-        <Point />
-        {Price(
-          'total-price',
-          '총 주문금액',
-          `${(totalPrice + DELIVERY_FEE - Number(inputPointValue)).toLocaleString()}원`,
+        {totalPrice !== 0 ? (
+          <>
+            {Price('total-product-price', '총 상품가격', `${totalPrice.toLocaleString()}원`)}
+            {Price('delivery-fee', '총 배송비', `${DELIVERY_FEE.toLocaleString()}원`)}
+            <Point totalPrice={totalPrice} />
+            {Price(
+              'total-price',
+              '총 주문금액',
+              `${(totalPrice + DELIVERY_FEE - Number(inputPointValue)).toLocaleString()}원`,
+            )}
+          </>
+        ) : (
+          <>
+            {Price('total-product-price', '총 상품가격', `0원`)}
+            {Price('delivery-fee', '총 배송비', `0원`)}
+            <Point totalPrice={totalPrice} />
+            {Price('total-price', '총 주문금액', `0원`)}
+          </>
         )}
       </S.PriceInfo>
       <S.OrderButton onClick={handleOrderButtonClick}>주문하기</S.OrderButton>
