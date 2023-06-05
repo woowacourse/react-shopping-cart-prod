@@ -35,12 +35,12 @@ export interface MemberType {
 }
 
 export interface OrderType {
-  orderId: number;
+  id: number;
   products: Omit<LocalProductType, "cartItemId">[];
 }
 
 export interface OrderDetailType extends OrderType {
-  totalPrice?: number;
+  totalProductPrice?: number;
 }
 
 export interface ToastType {

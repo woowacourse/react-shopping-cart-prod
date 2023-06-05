@@ -8,9 +8,9 @@ import { OrderDetailType } from "../types/domain";
 const OrderDetail = () => {
   const { orderId } = useParams();
   const [orderDetail, setOrderDetail] = useState<OrderDetailType>({
-    orderId: 0,
+    id: 0,
     products: [],
-    totalPrice: 0,
+    totalProductPrice: 0,
   });
 
   useLayoutEffect(() => {

@@ -33,16 +33,16 @@ export const useLoginForm = () => {
 
   const handleFormSubmitted = async (e: React.FormEvent) => {
     e.preventDefault();
-    const base64 = btoa(username + ":" + password);
     try {
+      const base64 = btoa(username + ":" + password);
       setLocalStorage(KEY_LOCALSTORAGE_LOGIN_TOKEN, base64);
       const response = await postLoginApi();
-      await updateLocalProducts();
       if (!response.ok) {
         throw new Error(response.status.toString());
       }
-      setIsLogined(true);
 
+      setIsLogined(true);
+      await updateLocalProducts();
       navigate(ROUTER_PATH.Main);
     } catch (error: any) {
       localStorage.clear();

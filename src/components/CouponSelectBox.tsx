@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { ArrowDownIcon } from "../assets";
-import { CouponType, MyCouponType } from "../types/domain";
+import { MyCouponType } from "../types/domain";
 
 interface CouponSelectBoxType {
   type: "get" | "apply";
@@ -35,7 +35,11 @@ export const CouponSelectBox = ({
     <Wrapper>
       <TitleContainer $isOpen={isOpen} onClick={handleTitleClicked}>
         <p>
-          {coupon ? coupon : type === "get" ? "발급가능한쿠폰" : "쿠폰적용하기"}
+          {coupon
+            ? coupon
+            : type === "get"
+            ? "발급 가능한 쿠폰"
+            : "쿠폰적용하기"}
         </p>
         <img src={ArrowDownIcon} alt="화살표" />
       </TitleContainer>
@@ -51,8 +55,7 @@ export const CouponSelectBox = ({
               >
                 <NameBox>{coupon.name}</NameBox>
                 <MinPriceBox>
-                  {coupon.minOrderPrice.toLocaleString()}원 이상 주문시 (최대
-                  {coupon.maxDiscountPrice.toLocaleString()}원)
+                  {coupon.minOrderPrice.toLocaleString()}원 이상 주문시
                 </MinPriceBox>
                 {coupon.isAvailable ? (
                   <DiscountPriceBox>

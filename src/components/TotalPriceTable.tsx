@@ -47,7 +47,7 @@ export const TotalPriceTable = ({
           원
         </p>
       </RowContainer>
-      {discountPrice ? (
+      {handlePaymentClicked ? (
         <Button onClick={handlePaymentClicked}>결제하기</Button>
       ) : (
         <Button disabled={totalPrice === 0} onClick={goPage(ROUTER_PATH.Order)}>

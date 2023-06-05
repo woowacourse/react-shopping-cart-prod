@@ -4,18 +4,18 @@ import { ROUTER_PATH } from "../router";
 import { OrderDetailType } from "../types/domain";
 
 export const OrderHistory = ({
-  orderId,
+  id,
   products,
-  totalPrice,
+  totalProductPrice,
 }: OrderDetailType) => {
   const { goPage } = useRouter();
 
   return (
-    <Wrapper key={orderId}>
+    <Wrapper key={id}>
       <OrderTitleContainer>
-        <span>주문 번호 : {orderId}</span>
-        {!totalPrice && (
-          <p onClick={goPage(ROUTER_PATH.OrderDetail + `/${orderId}`)}>
+        <span>주문 번호 : {id}</span>
+        {!totalProductPrice && (
+          <p onClick={goPage(ROUTER_PATH.OrderDetail + `/${id}`)}>
             상세보기 {">"}
           </p>
         )}
@@ -31,14 +31,14 @@ export const OrderHistory = ({
           </InfoContainer>
         </OrderContainer>
       ))}
-      {totalPrice && (
+      {totalProductPrice && (
         <>
           <PaymentTitleBox>
             <p>결제금액 정보</p>
           </PaymentTitleBox>
           <PaymentInfoBox>
             <p>총 결제금액</p>
-            <p>324000원</p>
+            <p>{totalProductPrice}</p>
           </PaymentInfoBox>
         </>
       )}

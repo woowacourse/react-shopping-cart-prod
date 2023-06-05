@@ -1,8 +1,8 @@
 import { useLayoutEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { getCouponsApi, getMyCouponsApi, postCouponApi } from "../api";
-import { Button, CouponSelectBox, GuideBox, Header, Page } from "../components";
+import { getCouponsApi, postCouponApi } from "../api";
+import { Button, CouponSelectBox, Header, Page } from "../components";
 import { useRouter } from "../hooks/useRouter";
 import { useToast } from "../hooks/useToast";
 import { memberState } from "../recoil/atom";
@@ -94,6 +94,7 @@ const OptionsContainer = styled.div`
   padding: 30px;
   gap: 10px;
   height: 100vh;
+  max-width: 380px;
 `;
 
 const OptionBox = styled.div`

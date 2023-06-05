@@ -1,6 +1,6 @@
 import { useLayoutEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { styled } from "styled-components";
 import { getMyCouponsApi, postOrderApi } from "../api";
 import {
@@ -10,20 +10,20 @@ import {
   Page,
   TotalPriceTable,
 } from "../components";
+import { useLocalProducts } from "../hooks/useLocalProducts";
 import { useToast } from "../hooks/useToast";
 import { selectedProductsState } from "../recoil/atom";
 import { ROUTER_PATH } from "../router";
 import { MyCouponType, LocalProductType } from "../types/domain";
 
 const Order = () => {
-  const { showToast } = useToast();
   const navigate = useNavigate();
+  const { showToast } = useToast();
+  const { updateLocalProducts } = useLocalProducts();
   const [coupons, setCoupons] = useState<MyCouponType[]>([]);
   const [discountPrice, setDiscountPrice] = useState<number | null>(null);
   const [selectedCouponIndex, setSelectedCouponIndex] = useState<number>(-1);
-  const [selectedProducts, setSelectedProducts] = useRecoilState(
-    selectedProductsState
-  );
+  const selectedProducts = useRecoilValue(selectedProductsState);
 
   useLayoutEffect(() => {
     const fetchMyCoupons = async () => {
@@ -34,7 +34,6 @@ const Order = () => {
         const response = await getMyCouponsApi(requestedCartItemIds);
         if (!response.ok) throw new Error(response.status.toString());
         const data = await response.json();
-        console.log(data.coupons);
         setCoupons(data.coupons);
       } catch (error: any) {
         console.log(error);
@@ -62,9 +61,12 @@ const Order = () => {
           return newProduct;
         }
       );
-      await postOrderApi(payloads, coupons[selectedCouponIndex].id);
+      const couponId =
+        selectedCouponIndex === -1 ? null : coupons[selectedCouponIndex].id;
+      await postOrderApi(payloads, couponId);
       navigate(ROUTER_PATH.Main);
       showToast("success", "결제가 완료되었습니다 👍🏻");
+      updateLocalProducts();
     } catch (error: any) {
       console.log(error);
     }

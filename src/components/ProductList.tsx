@@ -12,9 +12,9 @@ import { ErrorBox } from "../components";
 import { useLocalProducts } from "../hooks/useLocalProducts";
 
 export const ProductList = () => {
-  const isLogined = useRecoilValue(loginState);
   const { showToast } = useToast();
   const { updateLocalProducts } = useLocalProducts();
+  const isLogined = useRecoilValue(loginState);
   const localProducts = useRecoilValue(localProductsState);
   const [errorStatus, setErrorStatus] = useState<
     keyof typeof ERROR_MESSAGE | null

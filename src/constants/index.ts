@@ -3,7 +3,7 @@ export const MIN_QUANTITY = 0;
 export const MAX_LENGTH_QUANTITY = 2;
 
 export const KEY_LOCALSTORAGE_SERVER_OWNER = "owner";
-export const DEFAULT_VALUE_SERVER_OWNER = "애쉬";
+export const DEFAULT_VALUE_SERVER_OWNER = "루카";
 
 export const KEY_LOCALSTORAGE_LOGIN_TOKEN = "login";
 export const DEFAULT_VALUE_LOGIN_TOKEN = false;

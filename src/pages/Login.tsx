@@ -47,10 +47,12 @@ const Login = () => {
           placeholder="비밀번호를 입력해 주세요."
           onKeyDown={handlePasswordKey}
         />
-        <Button type="submit">로그인 하기</Button>
-        <Button type="button" onClick={goPage(ROUTER_PATH.Main)}>
-          다시 상품 목록 보러가기
-        </Button>
+        <ButtonContainer>
+          <Button type="submit">로그인 하기</Button>
+          <Button type="button" onClick={goPage(ROUTER_PATH.Main)}>
+            다시 상품 목록 보러가기
+          </Button>
+        </ButtonContainer>
       </FormContainer>
     </Page>
   );
@@ -60,14 +62,13 @@ const CustomInput = styled.input`
   width: 90%;
   height: 40px;
 
-  font-size: 15px;
-  color: black;
-
   padding: 0 10px;
-
   background: #ecebf1;
   border-radius: 7px;
   border: none;
+
+  font-size: 15px;
+  color: black;
 
   &:focus {
     outline-color: #525252;
@@ -84,9 +85,7 @@ const FormContainer = styled.form`
   flex-direction: column;
   align-self: center;
   align-items: center;
-
   margin-top: 40px;
-
   width: 300px;
   height: auto;
 
@@ -109,6 +108,15 @@ const FormContainer = styled.form`
     font-weight: 700;
     margin-bottom: 20px;
   }
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 20px;
+  margin-top: 20px;
 `;
 
 export default Login;

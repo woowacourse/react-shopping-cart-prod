@@ -6,7 +6,7 @@ export const OrderHistoryList = ({ orders }: { orders: OrderType[] }) => {
   return (
     <Wrapper>
       {orders.map((order) => (
-        <OrderHistory key={order.orderId} {...order} />
+        <OrderHistory key={order.id} {...order} />
       ))}
     </Wrapper>
   );
