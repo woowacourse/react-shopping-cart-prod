@@ -3,6 +3,7 @@ import { fetchPoint, fetchSavedPointByOrder } from '../../remotes/point';
 import { serverOriginState } from '../atoms/common';
 import { POINT_BASE_URL } from '../../constants/api';
 import { ORDERS_BASE_URL } from '../../constants/api';
+import { base64 } from './auth';
 import type { Order } from '../../types/order';
 
 export const pointQuery = selector<number>({
@@ -10,6 +11,7 @@ export const pointQuery = selector<number>({
   get: async ({ get }) => {
     const point = await fetchPoint(
       `${get(serverOriginState)}${POINT_BASE_URL}`,
+      get(base64),
     );
 
     return point;
@@ -25,6 +27,7 @@ export const savedPointByOrderQuery = selectorFamily<number, Order['id']>({
         `${get(
           serverOriginState,
         )}${ORDERS_BASE_URL}/${orderId}${POINT_BASE_URL}`,
+        get(base64),
       );
 
       return savedPointByOrder;

@@ -3,6 +3,7 @@ import { fetchCartItems } from '../../remotes/cart';
 import { serverOriginState } from '../atoms/common';
 import { CART_BASE_URL } from '../../constants/api';
 import { cartState } from '../atoms/cart';
+import { base64 } from './auth';
 import type { CartItem } from '../../types/cart';
 
 export const cartItemsQuery = selector<CartItem[]>({
@@ -10,6 +11,7 @@ export const cartItemsQuery = selector<CartItem[]>({
   get: async ({ get }) => {
     const cartItems = await fetchCartItems(
       `${get(serverOriginState)}${CART_BASE_URL}`,
+      get(base64),
     );
 
     return cartItems;
