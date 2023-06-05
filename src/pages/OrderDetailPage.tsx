@@ -1,4 +1,3 @@
-import React from 'react';
 import ContentLayout from 'components/@common/ContentLayout';
 import OrderedItem from 'components/payment/OrderedItem';
 import { useGet } from 'hooks/useGet';

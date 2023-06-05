@@ -1,4 +1,3 @@
-import React from 'react';
 import { getDeliveryPolicy } from 'api/cart';
 import { useGet } from 'hooks/useGet';
 import { useRecoilValue } from 'recoil';

@@ -1,4 +1,3 @@
-import React from 'react';
 import * as S from './PaymentSection.styles';
 import { OrderDetail } from 'types/api/orders';
 

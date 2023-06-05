@@ -1,4 +1,3 @@
-import React from 'react';
 import * as S from './OrderedItem.styles';
 import ProductItemInOrder from '../ProductItemInOrder';
 import { Order, OrderDetail } from 'types/api/orders';
