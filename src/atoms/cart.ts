@@ -80,7 +80,7 @@ export const totalPriceSelector = selector({
 
     return cart.reduce(
       (
-        totalPrice,
+        { originPrice, totalPrice },
         { id: cartId, quantity, product: { id: productId, price } }
       ) => {
         let discountedPrice = price;
@@ -95,11 +95,21 @@ export const totalPriceSelector = selector({
           }).discountedPrice;
         }
 
-        return selectedItems.has(cartId)
+        const updatedOriginPrice = selectedItems.has(cartId)
+          ? originPrice + quantity * price
+          : originPrice;
+
+        const updatedTotalPrice = selectedItems.has(cartId)
           ? totalPrice + quantity * discountedPrice
           : totalPrice;
+
+        return {
+          originPrice: updatedOriginPrice,
+          totalPrice: updatedTotalPrice,
+          discountPrice: updatedOriginPrice - updatedTotalPrice,
+        };
       },
-      0
+      { originPrice: 0, totalPrice: 0, discountPrice: 0 }
     );
   },
 });
