@@ -13,7 +13,7 @@ interface OrderBoxItemProps {
   type: 'orderList' | 'payment';
 }
 
-const OrderBoxItem = ({
+export const OrderBoxItem = ({
   id,
   type,
   children,
@@ -112,5 +112,3 @@ const MobileDetailButton = styled(DetailButton)`
     display: block;
   }
 `;
-
-export default OrderBoxItem;

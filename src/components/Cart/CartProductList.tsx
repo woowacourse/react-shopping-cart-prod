@@ -1,7 +1,7 @@
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
-import CartProductItem from './CartProductItem';
+import * as List from './CartProductItem';
 
 import { cartProductState } from '../../states/cartProducts';
 import Message from '../Common/Message';
@@ -23,7 +23,7 @@ const CartProductList = () => {
   return (
     <ul>
       {cartProducts.map(cartProduct => (
-        <CartProductItem key={cartProduct.id} cartProduct={cartProduct} />
+        <List.CartProductItem key={cartProduct.id} cartProduct={cartProduct} />
       ))}
     </ul>
   );

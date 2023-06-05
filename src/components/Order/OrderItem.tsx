@@ -6,7 +6,7 @@ interface OrderItemProps {
   orderItem: CartProduct;
 }
 
-const OrderItem = ({ orderItem }: OrderItemProps) => {
+export const OrderItem = ({ orderItem }: OrderItemProps) => {
   const { product, quantity } = orderItem;
   const { imageUrl, name, price } = product;
 
@@ -88,5 +88,3 @@ const MobileOrderItem = styled.li`
     padding: 20px 20px;
   }
 `;
-
-export default OrderItem;

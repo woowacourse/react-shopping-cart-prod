@@ -4,7 +4,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 
 import { styled } from 'styled-components';
 import Message from '../components/Common/Message';
-import OrderBoxItem from '../components/Order/OrderBoxItem';
+import * as List from '../components/Order/OrderBoxItem';
 import OrderList from '../components/Order/OrderList';
 
 import { useOrders } from '../hooks/useOrders';
@@ -20,13 +20,13 @@ const OrderBoxListPage = () => {
         <StyledOrderBoxListPage>
           {orders.map(order => {
             return (
-              <OrderBoxItem
+              <List.OrderBoxItem
                 key={order.orderId}
                 id={order.orderId}
                 type="orderList"
               >
                 <OrderList key={order.orderId} orderItems={order.orderItems} />
-              </OrderBoxItem>
+              </List.OrderBoxItem>
             );
           })}
         </StyledOrderBoxListPage>

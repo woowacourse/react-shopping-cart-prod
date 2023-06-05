@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import OrderItem from './OrderItem';
+import * as List from './OrderItem';
 
 import { CartProduct } from '../../types/product';
 
@@ -11,7 +11,7 @@ const OrderList = ({ orderItems }: OrderListProps) => {
   return (
     <StyledOrderList>
       {orderItems.map(orderItem => (
-        <OrderItem key={orderItem.id} orderItem={orderItem} />
+        <List.OrderItem key={orderItem.id} orderItem={orderItem} />
       ))}
     </StyledOrderList>
   );

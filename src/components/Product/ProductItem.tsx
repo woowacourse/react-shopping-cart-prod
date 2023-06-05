@@ -11,7 +11,7 @@ interface ProductItemProps {
   product: Product;
 }
 
-const ProductItem = ({ product }: ProductItemProps) => {
+export const ProductItem = ({ product }: ProductItemProps) => {
   const { imageUrl, name, price } = product;
   const { targetProduct, addProduct } = useCartProducts(product);
 
@@ -39,7 +39,7 @@ const ProductItem = ({ product }: ProductItemProps) => {
   );
 };
 
-const ProductContainer = styled.div`
+const ProductContainer = styled.li`
   width: 282px;
 `;
 
@@ -65,5 +65,3 @@ const ProductCartBtn = styled.button`
   top: 0;
   right: 14px;
 `;
-
-export default ProductItem;

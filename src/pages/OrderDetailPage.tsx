@@ -3,7 +3,7 @@ import { useRecoilValue } from 'recoil';
 import { ErrorBoundary } from 'react-error-boundary';
 
 import { styled } from 'styled-components';
-import OrderBoxItem from '../components/Order/OrderBoxItem';
+import * as List from '../components/Order/OrderBoxItem';
 import OrderList from '../components/Order/OrderList';
 import Message from '../components/Common/Message';
 
@@ -23,10 +23,10 @@ const OrderDetailPage = () => {
     <ErrorBoundary key={serverName} fallback={<Message type="error" />}>
       <Suspense fallback={<Message type="loading" />}>
         <StyledOrderDetailPage>
-          <OrderBoxItem id={order.orderId} type="orderList">
+          <List.OrderBoxItem id={order.orderId} type="orderList">
             <OrderList orderItems={order.orderItems} />
-          </OrderBoxItem>
-          <OrderBoxItem type="payment">
+          </List.OrderBoxItem>
+          <List.OrderBoxItem type="payment">
             <OrderBoxContents>
               <PaymentInfo>
                 <dt>상품 가격</dt>
@@ -45,7 +45,7 @@ const OrderDetailPage = () => {
                 <dd>{totalPrice}</dd>
               </PaymentInfo>
             </OrderBoxContents>
-          </OrderBoxItem>
+          </List.OrderBoxItem>
         </StyledOrderDetailPage>
       </Suspense>
     </ErrorBoundary>

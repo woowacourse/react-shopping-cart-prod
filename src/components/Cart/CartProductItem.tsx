@@ -14,7 +14,7 @@ interface CartProductItemProps {
   cartProduct: CartProduct;
 }
 
-const CartProductItem = ({ cartProduct }: CartProductItemProps) => {
+export const CartProductItem = ({ cartProduct }: CartProductItemProps) => {
   const { id, quantity, product } = cartProduct;
   const { name, price, imageUrl } = product;
 
