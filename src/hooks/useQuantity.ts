@@ -21,7 +21,7 @@ export const useQuantity = (productId: number) => {
       return;
 
     if (!cartItem) {
-      alert(`장바구니 상품 수량 변경 실패!`);
+      alert(`"수량변경"이 실패하였습니다. 잠시후 다시 시도해주세요.`);
       return;
     }
 
