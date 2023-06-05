@@ -30,6 +30,10 @@ const CheckoutInformationTextContainer = styled.div`
   justify-content: space-between;
 `;
 
+const DiscountAmountText = styled(Text).attrs({ size: 'small' })`
+  color: ${({ theme }) => theme.color.gray4};
+`;
+
 const CheckoutValueText = styled(Text)`
   letter-spacing: -0.2pz;
 `;
@@ -47,6 +51,7 @@ export {
   CheckoutInformationContainer,
   CheckoutInformationTextContainer,
   CheckoutTotalPriceContainer,
+  DiscountAmountText,
   CheckoutValueText,
   CheckoutTotalPriceValueText,
 };

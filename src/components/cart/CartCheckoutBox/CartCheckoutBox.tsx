@@ -34,9 +34,17 @@ const CartCheckoutBox = () => {
   const cartListCheckedItemCostInformationValue = cartListCheckedItemCostInformation.contents;
 
   const isCartEmpty = checkedCartIdList.size === 0;
-  const discountedTotalItemPrice =
-    cartListCheckedItemCostInformationValue.discountedTotalItemPrice > 0
-      ? cartListCheckedItemCostInformationValue.discountedTotalItemPrice
+  const totalItemPrice =
+    cartListCheckedItemCostInformationValue.totalItemPrice > 0
+      ? cartListCheckedItemCostInformationValue.totalItemPrice
+      : 0;
+  const totalItemDiscountAmount =
+    cartListCheckedItemCostInformationValue.totalItemDiscountAmount > 0
+      ? cartListCheckedItemCostInformationValue.totalItemDiscountAmount
+      : 0;
+  const totalMemberDiscountAmount =
+    cartListCheckedItemCostInformationValue.totalMemberDiscountAmount > 0
+      ? cartListCheckedItemCostInformationValue.totalMemberDiscountAmount
       : 0;
   const shippingFee =
     cartListCheckedItemCostInformationValue.shippingFee > 0
@@ -47,14 +55,24 @@ const CartCheckoutBox = () => {
       ? cartListCheckedItemCostInformationValue.totalPrice
       : 0;
 
-  console.log(cartListCheckedItemCostInformation);
-
   return (
     <S.CartCheckoutBoxWrapper>
       <S.CheckoutInformationContainer>
         <S.CheckoutInformationTextContainer>
           <Text>총 상품 가격</Text>
-          <S.CheckoutValueText>{priceFormatter(discountedTotalItemPrice)}</S.CheckoutValueText>
+          <S.CheckoutValueText>{priceFormatter(totalItemPrice)}</S.CheckoutValueText>
+        </S.CheckoutInformationTextContainer>
+        <S.CheckoutInformationTextContainer>
+          <S.DiscountAmountText>ㄴ 상품 할인 금액</S.DiscountAmountText>
+          <S.DiscountAmountText>
+            {priceFormatter(totalItemDiscountAmount, true)}
+          </S.DiscountAmountText>
+        </S.CheckoutInformationTextContainer>
+        <S.CheckoutInformationTextContainer>
+          <S.DiscountAmountText>ㄴ 등급 할인 금액</S.DiscountAmountText>
+          <S.DiscountAmountText>
+            {priceFormatter(totalMemberDiscountAmount, true)}
+          </S.DiscountAmountText>
         </S.CheckoutInformationTextContainer>
         <S.CheckoutInformationTextContainer>
           <Text>총 배송비</Text>
