@@ -116,7 +116,7 @@ const S = {
 
     @media (max-width: 420px) {
       width: 100%;
-      margin: 10px 0 0;
+      margin: 16px 0 0;
     }
   `,
 
@@ -145,6 +145,11 @@ const S = {
   TotalDetail: styled.div`
     display: flex;
     margin-top: 32px;
+
+    @media (max-width: 420px) {
+      margin: 32px auto 0;
+      text-align: center;
+    }
   `,
 
   OrderStatus: styled.p`
@@ -174,12 +179,15 @@ const cancelButtonStyle = css`
   color: var(--text-color);
   border: 1px solid var(--gray-color-100);
 
-  @media (max-width: 480px) {
-    width: 55px;
+  @media (max-width: 768px) {
+    max-width: 55px;
+    min-width: 45px;
   }
 
   @media (max-width: 420px) {
     margin: 42px auto 0;
+    max-width: initial;
+    min-width: initial;
   }
 `;
 

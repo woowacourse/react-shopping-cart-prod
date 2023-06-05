@@ -59,6 +59,10 @@ const S = {
     color: var(--text-color);
     border: 1px solid var(--gray-color-300);
     border-radius: 4px;
+
+    @media (max-width: 1270px) {
+      margin: 0 0 280px;
+    }
   `,
 
   List: styled.ul`
@@ -108,7 +112,7 @@ const S = {
   `,
 
   Return: styled.ul`
-    margin-top: 32px;
+    margin: 32px 0 100px;
     font-size: 18px;
     color: var(--text-color);
     border: 1px solid var(--gray-color-300);

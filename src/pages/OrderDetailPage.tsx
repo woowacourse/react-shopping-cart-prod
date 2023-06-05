@@ -54,6 +54,16 @@ const OrderDetailPage = () => {
 const S = {
   Wrapper: styled.div`
     display: flex;
+
+    @media (max-width: 1270px) {
+      flex-direction: column;
+    }
+
+    @media (max-width: 548px) {
+      & img {
+        margin-right: 28px;
+      }
+    }
   `,
 };
 

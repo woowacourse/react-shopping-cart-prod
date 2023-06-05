@@ -88,11 +88,11 @@ const S = {
 
       & button:first-child {
         margin-right: 16px;
+      }
 
-        & + p > span:first-child,
-        & + p > span:nth-child(2) {
-          display: none;
-        }
+      & p > span:first-child,
+      & p > span:nth-child(2) {
+        display: none;
       }
     }
   `,

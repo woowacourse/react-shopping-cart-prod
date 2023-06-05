@@ -63,7 +63,7 @@ const S = {
     margin-bottom: 50px;
     padding: 0 24px;
 
-    @media (max-width: 420px) {
+    @media (max-width: 480px) {
       padding: 0;
     }
   `,
