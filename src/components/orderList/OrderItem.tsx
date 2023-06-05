@@ -62,7 +62,7 @@ const OrderItem = ({
           )}
         </S.Detail>
       </section>
-      {location === ROUTE_PATH.ORDER_LIST_PAGE && orderStatus === ORDER_STATUS.PAID && (
+      {location === ROUTE_PATH.ORDER_LIST_PAGE && changedStatus === ORDER_STATUS.PAID && (
         <Button onClick={handleCancelButtonClick} css={cancelButtonStyle}>
           {ORDER_STATUS.CANCEL}
         </Button>
@@ -173,6 +173,10 @@ const cancelButtonStyle = css`
   font-size: 15px;
   color: var(--text-color);
   border: 1px solid var(--gray-color-100);
+
+  @media (max-width: 480px) {
+    width: 55px;
+  }
 
   @media (max-width: 420px) {
     margin: 42px auto 0;
