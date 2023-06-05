@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useState } from 'react';
+import { memo, useCallback, useEffect } from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
@@ -6,7 +6,6 @@ import { useRecoilValue } from 'recoil';
 import CartIcon from '../../assets/cart-icon.svg';
 import CouponIcon from '../../assets/coupon-icon.svg';
 import Logo from '../../assets/logo.png';
-import menuIcon from '../../assets/menu-icon.svg';
 import orderListIcon from '../../assets/order-list-icon.svg';
 import {
   CART_PAGE_LOCATE,
