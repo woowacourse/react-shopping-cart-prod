@@ -23,7 +23,7 @@ const Header = () => {
           <ServerSelect />
           <S.RankAndIdContainer>
             <S.MemberId size="xSmall">{memberInformation.id} 님</S.MemberId>
-            <S.MemberRank rank={'일반'}>{memberInformation.rank}</S.MemberRank>
+            <S.MemberRank rank={memberInformation.rank}>{memberInformation.rank}</S.MemberRank>
           </S.RankAndIdContainer>
           <S.OrderPageButton
             type="button"
