@@ -13,10 +13,12 @@ import { isCrewNameType } from '../../types/ServerType';
 import { useCredential } from '@recoil/server/credentialState';
 import OrderListButton from '@views/Payment/components/OrderListButton/OrderListButton';
 import { styled } from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 function Header() {
   const { setServerUrlBy } = useServerUrl();
   const { setCredentialBy } = useCredential();
+  const navigate = useNavigate();
 
   const resetCart = useResetCart();
 
@@ -34,8 +36,8 @@ function Header() {
     const { value: userId } = event.currentTarget;
 
     resetCart();
-
     setCredentialBy(Number(userId));
+    navigate('/');
   };
 
   return (
