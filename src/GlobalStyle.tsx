@@ -31,18 +31,18 @@ const GlobalStyle = createGlobalStyle`
   div,
   span,
   p {
-    color: white;
+    color: ${colors.pureWhite};
   }
 
   a {
     text-decoration: none;
     outline: none;
-    color: #fff;
+    color: ${colors.pureWhite};
   }
 
   a:hover, a:active, a:visited {
     text-decoration: none;
-    color: #fff;
+    color: ${colors.pureWhite};
   }
 
   button {
