@@ -30,7 +30,7 @@ export const useOrderProducts = () => {
         };
 
     try {
-      await postData(dataSet, FETCH_URLS.orders);
+      await postData(FETCH_URLS.orders, dataSet);
       deleteCheckedProductState();
       setToastState(TOAST_STATE.successOrderProducts);
       navigate(PAGE_URLS.orders);

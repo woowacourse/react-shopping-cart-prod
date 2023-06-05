@@ -28,7 +28,7 @@ const useCartProducts = (product: Product) => {
 
   const addProduct = async () => {
     try {
-      const location = await postData({ productId: id }, FETCH_URLS.cartItems);
+      const location = await postData(FETCH_URLS.cartItems, { productId: id });
 
       const cartItemId = Number(location?.split('/').pop());
 

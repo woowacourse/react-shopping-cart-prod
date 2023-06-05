@@ -32,10 +32,9 @@ const useProductQuantity = (id: number, quantity: number) => {
     try {
       const updatedQuantity = quantity + 1;
 
-      await patchData(
-        { quantity: updatedQuantity },
-        `${FETCH_URLS.cartItems}/${id}`
-      );
+      await patchData(`${FETCH_URLS.cartItems}/${id}`, {
+        quantity: updatedQuantity,
+      });
       setCartProducts(prev => updateTargetQuantity(prev, id, updatedQuantity));
     } catch (error) {
       setToastState(TOAST_STATE.failedUpdateQuantity);
@@ -51,10 +50,9 @@ const useProductQuantity = (id: number, quantity: number) => {
         return;
       }
 
-      await patchData(
-        { quantity: updatedQuantity },
-        `${FETCH_URLS.cartItems}/${id}`
-      );
+      await patchData(`${FETCH_URLS.cartItems}/${id}`, {
+        quantity: updatedQuantity,
+      });
       setCartProducts(prev => updateTargetQuantity(prev, id, updatedQuantity));
     } catch (error) {
       setToastState(TOAST_STATE.failedUpdateQuantity);

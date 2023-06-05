@@ -18,55 +18,41 @@ const fetchApis = (serverName: ServerKey) => {
     Authorization: `Basic ${base64}`,
   };
 
-  const getData = async <T>(endpoint: string): Promise<T> => {
+  const fetchRequest = async <T>(
+    endpoint: string,
+    method: string,
+    body?: T
+  ) => {
     const url = getUrl(endpoint);
     if (!url) throw new Error('잘못된 요청입니다');
 
-    const response = await fetch(url, { headers });
-    await handleResponseError(response);
-
-    return await response.json();
-  };
-
-  const postData = async <T>(postingData: T, endpoint: string) => {
-    const url = getUrl(endpoint);
-    if (!url) throw new Error('잘못된 요청입니다');
-
-    const response = await fetch(url, {
-      method: 'POST',
+    const options = {
+      method,
       headers,
-      body: JSON.stringify(postingData),
-    });
+      body: body ? JSON.stringify(body) : undefined,
+    };
 
+    const response = await fetch(url, options);
     await handleResponseError(response);
 
-    return response.headers.get('location');
+    if (method === 'PATCH' || method === 'DELETE') return;
+
+    return method === 'GET'
+      ? await response.json()
+      : response.headers.get('location');
   };
 
-  const patchData = async <T>(patchingData: T, endpoint: string) => {
-    const url = getUrl(endpoint);
-    if (!url) throw new Error('잘못된 요청입니다');
+  const getData = <T>(endpoint: string): Promise<T> =>
+    fetchRequest<T>(endpoint, 'GET');
 
-    const response = await fetch(url, {
-      method: 'PATCH',
-      headers,
-      body: JSON.stringify(patchingData),
-    });
+  const postData = <T>(endpoint: string, body: T): Promise<string> =>
+    fetchRequest<T>(endpoint, 'POST', body);
 
-    await handleResponseError(response);
-  };
+  const patchData = <T>(endpoint: string, body: T) =>
+    fetchRequest<T>(endpoint, 'PATCH', body);
 
-  const deleteData = async (endpoint: string) => {
-    const url = getUrl(endpoint);
-    if (!url) throw new Error('잘못된 요청입니다');
-
-    const response = await fetch(url, {
-      method: 'DELETE',
-      headers,
-    });
-
-    await handleResponseError(response);
-  };
+  const deleteData = <T>(endpoint: string) =>
+    fetchRequest<T>(endpoint, 'DELETE');
 
   return { getData, postData, patchData, deleteData };
 };
