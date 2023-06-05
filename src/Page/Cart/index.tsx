@@ -61,7 +61,7 @@ function Cart() {
               assign: error ? '다시 시도하기' : '주문내역 확인하기',
             }}
             cancelCallback={() => navigate(ROUTE_PATH.DEFAULT)}
-            assignCallback={() => (error ? purchaseItem() : navigate(`${ROUTE_PATH.ORDER_DETAIL(orderId)}`))}
+            assignCallback={() => (error ? purchaseItem() : navigate(`${ROUTE_PATH.ORDER}/${orderId}`))}
           />
         </Modal>
       )}

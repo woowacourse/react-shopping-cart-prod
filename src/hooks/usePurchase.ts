@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { MESSAGE, USER } from 'src/constants';
+import { API_URL, MESSAGE, USER } from 'src/constants';
 import { $CartList, $CheckedCartIdList, $CurrentServerUrl } from 'src/recoil/atom';
 import useMutation from './useMutation';
 
@@ -38,7 +38,7 @@ function usePurchase() {
 
   const purchaseCartItem = async (cartItemIds: number[]) => {
     await paymentItemQuery({
-      url: `${curServer}`,
+      url: `${curServer}${API_URL.ORDER}`,
       method: 'POST',
       headers: {
         Authorization: `Basic ${btoa(USER)}`,

@@ -35,7 +35,16 @@ export const ROUTE_PATH = Object.freeze({
   DEFAULT: '/',
   CART: '/cart',
   ORDER: '/order',
-  ORDER_DETAIL: (id?: string | null) => `/order/${id ?? ':id'}`,
+  ORDER_DETAIL: `/order/:id}`,
+});
+
+export const API_URL = Object.freeze({
+  TOTAL_CART_PRICE: '/total-cart-price',
+  PRODUCTS: '/products',
+  CART: '/cart-items',
+  ORDER: '/orders',
+  ORDER_DETAIL: (id: string) => `/orders/${id}`,
+  CART_ITEM: (id: string) => `/cart-items/${id}`,
 });
 
 export const PARCEL_PRICE = 3000;

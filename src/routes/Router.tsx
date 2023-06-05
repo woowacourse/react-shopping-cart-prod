@@ -17,7 +17,7 @@ function Router() {
         { index: true, element: <Home /> },
         { path: ROUTE_PATH.CART, element: <Cart /> },
         { path: ROUTE_PATH.ORDER, element: <Order /> },
-        { path: ROUTE_PATH.ORDER_DETAIL(), element: <OrderDetail /> },
+        { path: ROUTE_PATH.ORDER_DETAIL, element: <OrderDetail /> },
       ],
     },
   ]);

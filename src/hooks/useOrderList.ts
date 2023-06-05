@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import fetchData from 'src/api';
-import { USER } from 'src/constants';
+import { API_URL, USER } from 'src/constants';
 import { $CurrentServerUrl } from 'src/recoil/atom';
 import { Order } from 'src/types';
 import useFetch from './useFetch';
@@ -14,7 +14,7 @@ function useOrderList() {
   const { result: orderList, refreshFetch } = useFetch({
     fetch: fetchData<Order[]>,
     arg: {
-      url: `${currentServer}/orders/`,
+      url: `${currentServer}${API_URL.ORDER}`,
       options: {
         headers: {
           Authorization: `Basic ${btoa(USER)}`,
@@ -28,7 +28,7 @@ function useOrderList() {
 
   useEffect(() => {
     refreshFetch({
-      url: `${currentServer}/orders/`,
+      url: `${currentServer}${API_URL.ORDER}`,
       options: {
         headers: {
           Authorization: `Basic ${btoa(USER)}`,

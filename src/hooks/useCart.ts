@@ -1,5 +1,5 @@
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { MESSAGE, USER } from 'src/constants';
+import { API_URL, MESSAGE, USER } from 'src/constants';
 import { $CartList, $CheckedCartIdList, $CurrentServerUrl } from 'src/recoil/atom';
 import useMutation from './useMutation';
 import useToast from './useToast';
@@ -62,7 +62,7 @@ const useCart = () => {
 
   const mutateQuantity = async (cartId: number, quantity: number) => {
     await mutateQuantityQuery({
-      url: `${currentServerUrl}/cart-items/${cartId}`,
+      url: `${currentServerUrl}${API_URL.CART_ITEM(`${cartId}`)}`,
       method: 'PATCH',
       bodyData: { quantity },
       headers: {
@@ -74,7 +74,7 @@ const useCart = () => {
 
   const deleteCartItem = async (cartId: number) => {
     await deleteCartQuery({
-      url: `${currentServerUrl}/cart-items/${cartId}`,
+      url: `${currentServerUrl}${API_URL.CART_ITEM(`${cartId}`)}`,
       method: 'DELETE',
       headers: {
         Authorization: `Basic ${btoa(USER)}`,
@@ -85,7 +85,7 @@ const useCart = () => {
 
   const addCartItem = async (product: Product) => {
     await addCartQuery({
-      url: `${currentServerUrl}/cart-items`,
+      url: `${currentServerUrl}${API_URL.CART}`,
       method: 'POST',
       bodyData: { productId: product.id },
       headers: {

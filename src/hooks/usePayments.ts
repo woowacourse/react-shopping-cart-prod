@@ -4,7 +4,7 @@
 import { useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import fetchData from 'src/api';
-import { USER } from 'src/constants';
+import { API_URL, USER } from 'src/constants';
 import { $CartList, $CheckedCartIdList, $CurrentServerUrl } from 'src/recoil/atom';
 import { Payments } from 'src/types';
 import useFetch from './useFetch';
@@ -24,7 +24,7 @@ function usePayments() {
   const cartCheckedIdList = useRecoilValue($CheckedCartIdList(currentServer));
 
   const urlParams = getUrlParams(cartCheckedIdList, 'cartItemIds');
-  const BASE_URL = `${currentServer}/total-cart-price`;
+  const BASE_URL = `${currentServer}${API_URL.TOTAL_CART_PRICE}`;
 
   const { result: payments, refreshFetch } = useFetch({
     fetch: fetchData<Payments>,

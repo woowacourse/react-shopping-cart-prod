@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/return-await */
 import { atom, atomFamily } from 'recoil';
-import { USER } from 'src/constants';
+import { API_URL, USER } from 'src/constants';
 import userServerUrlList from 'src/data/serverData';
 import { getLocalStorage } from 'src/utils/localStorage';
 import type { CartItem, ToastState } from 'src/types';
 
 const getCart = async (url: string) => {
-  const response = await fetch(`${url}/cart-items`, {
+  const response = await fetch(`${url}${API_URL.CART}`, {
     headers: {
       Authorization: `Basic ${btoa(USER)}`,
       'Content-Type': 'application/json',
