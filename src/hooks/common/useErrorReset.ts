@@ -17,7 +17,7 @@ const useErrorReset = () => {
       }
 
       if (error.statusCode >= HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR) {
-        navigate(PATH.ROOT);
+        navigate(PATH.RELOAD);
       } else {
         navigate(PATH.ROOT);
       }
