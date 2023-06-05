@@ -40,3 +40,4 @@
     - [x] Router
       - [x] createBrowserRouter로 route 관리하기
       - [x] 경로 상수화
+    - [x] 장바구니 체크 default 값 true로 변경

@@ -13,12 +13,11 @@ import useCheckCart from '../../../hooks/useCheckCart';
 const CartItem = ({ cart }: { cart: CartItemType }) => {
   const { check, changeCheckCartList } = useCheckCart(cart.id);
   const { changeCartQuantityAPI, deleteCartItemAPI } = useCartFetch();
+  const { openModal } = useConfirmModal();
 
   const [quantity, setQuantity] = useState(cart.quantity);
 
   const totalPrice = check ? cart.product.price : 0;
-
-  const { openModal } = useConfirmModal();
 
   const deleteCartItem = () => {
     deleteCartItemAPI(cart.id);

@@ -4,15 +4,20 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCartFetch } from '../../../hooks/useCartFetch';
 import { URL } from '../../../abstract/constants';
+import { useRecoilState } from 'recoil';
+import { checkCartListState } from '../../../service/atom';
 
 const UserCartInfo = () => {
   const { cartData } = useCartFetch();
-
+  const [checkCartList, setCheckCartList] = useRecoilState(checkCartListState);
   const [cartTotalQuantity, setCartTotalQuantity] = useState(0);
 
   useEffect(() => {
     if (cartData) {
       setCartTotalQuantity(cartData.length);
+    }
+    if (cartData && checkCartList.length === 0) {
+      setCheckCartList(cartData.map((cart) => cart.id));
     }
   }, [cartData]);
 
