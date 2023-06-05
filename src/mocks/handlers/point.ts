@@ -1,9 +1,16 @@
 import { rest } from 'msw';
-import { ORDERS_BASE_URL, POINT_BASE_URL } from '../../constants/api';
+import {
+  ORDERS_BASE_URL,
+  POINT_BASE_URL,
+  POINT_LOCAL_STORAGE_KEY,
+} from '../../constants/api';
 import { fetchOrder } from '../../remotes/order';
 import { getBase64 } from '../../constants/auth';
+import { getLocalStorage } from '../../utils/localStorage';
 
-const POINT = {
+const localStoragePoint = getLocalStorage(POINT_LOCAL_STORAGE_KEY);
+// eslint-disable-next-line prefer-const
+export const POINT = localStoragePoint ?? {
   points: 20_000,
 };
 

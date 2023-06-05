@@ -2,6 +2,7 @@ import { ServerKeys } from '../types/api';
 
 export const CART_LOCAL_STORAGE_KEY = 'cart';
 export const ORDERS_LOCAL_STORAGE_KEY = 'orders';
+export const POINT_LOCAL_STORAGE_KEY = 'point';
 
 export const PRODUCTS_BASE_URL = '/products';
 export const CART_BASE_URL = '/cart-items';
