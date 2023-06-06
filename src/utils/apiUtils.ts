@@ -62,11 +62,15 @@ export const patchData = async (
 };
 
 export const deleteData = async (url: string, headers: HeadersInit) => {
-  await fetch(url, {
+  const response = await fetch(url, {
     method: 'DELETE',
     headers: {
       ...headers,
       'Content-Type': 'application/json',
     },
   });
+
+  if (!response.ok) {
+    throw new Error(response.status.toString());
+  }
 };
