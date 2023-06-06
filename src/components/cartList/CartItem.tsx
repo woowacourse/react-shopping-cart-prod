@@ -25,7 +25,7 @@ export default function CartItem(props: Props) {
 
   const removeCartItem = async () => {
     try {
-      await api.deleteCartItem(serverName, id, loginCredential);
+      await api.deleteCartItem(serverName, loginCredential, id);
       deleteChecked();
     } catch {
       showToast('error', API_ERROR_MESSAGE.deleteCartItem);

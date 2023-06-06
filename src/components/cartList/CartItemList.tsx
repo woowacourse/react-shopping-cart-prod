@@ -43,7 +43,7 @@ export default function CartItemList() {
       .map((cartItem) => cartItem.id);
 
     try {
-      await api.deleteCartItems(serverName, cartItemIdList, loginCredential);
+      await api.deleteCartItems(serverName, loginCredential, cartItemIdList);
     } catch {
       showToast('error', API_ERROR_MESSAGE.deleteCartItem);
     }

@@ -20,24 +20,37 @@ const useQuantityInput = (cartItemId: number) => {
   };
 
   const deleteCartItem = async () => {
-    try {
-      await api.deleteCartItem(serverName, cartItemId, loginCredential);
-      showToast('info', API_SUCCESS_MESSAGE.deleteCartItem);
-    } catch {
-      showToast('error', API_ERROR_MESSAGE.deleteCartItem);
-      return;
-    }
+    await api
+      .deleteCartItem(serverName, loginCredential, cartItemId)
+      .then(() => {
+        showToast('info', API_SUCCESS_MESSAGE.deleteCartItem);
+      })
+      .catch((e: Error) => {
+        if (e.name !== 'Error') {
+          showToast('error', API_ERROR_MESSAGE.deleteCartItem);
+          return;
+        }
+
+        showToast('error', e.message);
+      });
 
     getCart();
   };
 
   const patchCartItemQuantity = async (quantity: number) => {
-    try {
-      await api.patchCartItemQuantity(serverName, cartItemId, quantity, loginCredential);
-      showToast('info', API_SUCCESS_MESSAGE.patchCartItemQuantity);
-    } catch {
-      showToast('error', API_ERROR_MESSAGE.postCartItem);
-    }
+    await api
+      .patchCartItemQuantity(serverName, loginCredential, cartItemId, quantity)
+      .then(() => {
+        showToast('info', API_SUCCESS_MESSAGE.patchCartItemQuantity);
+      })
+      .catch((e: Error) => {
+        if (e.name !== 'Error') {
+          showToast('error', API_ERROR_MESSAGE.patchCartItemQuantity);
+          return;
+        }
+
+        showToast('error', e.message);
+      });
 
     getCart();
   };

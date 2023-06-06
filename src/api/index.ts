@@ -61,9 +61,9 @@ export const postCartItem = async (
 
 export const patchCartItemQuantity = async (
   serverName: ServerNameType,
+  loginCredential: string,
   cartItemId: number,
-  quantity: number,
-  loginCredential: string
+  quantity: number
 ) => {
   const url = `${BASE_URL_MAP[serverName]}/cart-items/${cartItemId}`;
   const body = { quantity };
@@ -86,8 +86,8 @@ export const patchCartItemQuantity = async (
 
 export const deleteCartItem = async (
   serverName: ServerNameType,
-  cartItemId: number,
-  loginCredential: string
+  loginCredential: string,
+  cartItemId: number
 ) => {
   const url = `${BASE_URL_MAP[serverName]}/cart-items/${cartItemId}`;
 
@@ -105,8 +105,8 @@ export const deleteCartItem = async (
 
 export const deleteCartItems = async (
   serverName: ServerNameType,
-  cartItemIdList: number[],
-  loginCredential: string
+  loginCredential: string,
+  cartItemIdList: number[]
 ) => {
   const ids = cartItemIdList.map(String).join(',');
   const url = `${BASE_URL_MAP[serverName]}/cart-items?ids=${ids}`;
