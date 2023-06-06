@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import TextList from '../../common/TextList/TextList';
-import getPriceFormat from '../../../utils/getPriceFormat';
 import { CouponType } from '../../../types/types';
 import { Text } from '../../common/Text/Text';
 
@@ -13,11 +12,11 @@ interface PriceBoxProps {
 
 const PriceBox = ({
   originalPrice,
-  finalPrice: discountPrice,
+  finalPrice,
   shippingFee,
   coupon = undefined,
 }: PriceBoxProps) => {
-  const totalPrice = getPriceFormat(shippingFee + discountPrice);
+  const totalPrice = (shippingFee + finalPrice).toLocaleString();
 
   return (
     <PriceBoxWrapper>
@@ -27,19 +26,19 @@ const PriceBox = ({
             결제금액 정보
           </Text>
         </TotalHeadWrapper>
-        <TextList label="총 상품금액" text={`${getPriceFormat(originalPrice)}원`} />
+        <TextList label="총 상품금액" text={`${originalPrice.toLocaleString()}원`} />
         {coupon && (
           <>
             <TextList
               label="쿠폰할인"
-              text={`- ${getPriceFormat(originalPrice - discountPrice)}원`}
+              text={`- ${(originalPrice - finalPrice).toLocaleString()}원`}
             />
             <Text size="smallest" weight="light" color="#5f5f5f">
               {coupon.name}
             </Text>
           </>
         )}
-        <TextList label="배송비" text={`+ ${getPriceFormat(shippingFee)}원`} />
+        <TextList label="배송비" text={`+ ${shippingFee.toLocaleString()}원`} />
         <TotalPriceWrapper>
           <TextList label="총 결제금액" text={`${totalPrice}원`} primary />
         </TotalPriceWrapper>

@@ -5,7 +5,6 @@ import type { CartItemType } from '../../../types/types';
 import CheckBox from '../../common/CheckBox/CheckBox';
 import { Text } from '../../common/Text/Text';
 import { useState } from 'react';
-import getPriceFormat from '../../../utils/getPriceFormat';
 import { useConfirmModal } from '../../../hooks/useConfirmModal';
 import { useCartFetch } from '../../../hooks/useCartFetch';
 import useCheckCart from '../../../hooks/useCheckCart';
@@ -48,18 +47,18 @@ const CartItem = ({ cart }: { cart: CartItemType }) => {
           <InputStepper size="big" quantity={quantity} setQuantity={changeQuantity} minNumber={1} />
           <CardInfoFoot>
             <Text size="smallest" weight="normal">
-              {getPriceFormat(cart.product.price)} 원
+              {cart.product.price.toLocaleString()} 원
             </Text>
           </CardInfoFoot>
         </CartInfoWrapper>
       </CartItemInner>
       <CartItemFoot>
         <Text size="smallest" weight="light">
-          {`상품금액 ${getPriceFormat(cart.product.price)}원 X ${totalQuantity}개`}
+          {`상품금액 ${cart.product.price.toLocaleString()}원 X ${totalQuantity}개`}
         </Text>
         &nbsp;=&nbsp;
         <Text size="smallest" weight="normal">
-          {`총 ${getPriceFormat(cart.product.price * totalQuantity)}원`}
+          {`총 ${(cart.product.price * totalQuantity).toLocaleString()}원`}
         </Text>
       </CartItemFoot>
     </CartItemWrapper>
