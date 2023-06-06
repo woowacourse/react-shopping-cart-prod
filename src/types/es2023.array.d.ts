@@ -1,3 +1,7 @@
+/**
+ * https://github.com/microsoft/TypeScript/blob/main/src/lib/es2023.array.d.ts
+ */
+
 declare global {
   interface Array<T> {
     /**
