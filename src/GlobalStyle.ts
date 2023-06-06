@@ -23,6 +23,9 @@ const GlobalStyle = createGlobalStyle`
     --grey-300: #aaaaaa;
     --grey-400: #333333;
     --grey-500: #000000;
+    --black-color: #000;
+    --gray-color: #AAAAAA;
+ 
 
     -webkit-tap-highlight-color:transparent;
     -webkit-text-size-adjust:100%;

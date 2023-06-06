@@ -13,4 +13,19 @@ export interface CartItemInfo {
   product: ProductInfo;
 }
 
+export interface OrderProducts {
+  productId: number;
+  name: string;
+  quantity: number;
+  price: number;
+  imageUrl: string;
+  totalPrice: number;
+}
+
+export interface OrderItemDetails extends OrderItem {
+  orderTotalPrice: number;
+  usedPoint: number;
+  createdAt: string;
+}
+
 export type Host = (typeof HOSTS)[number];
