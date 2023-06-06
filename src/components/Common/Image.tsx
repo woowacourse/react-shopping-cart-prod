@@ -8,9 +8,9 @@ interface ImageProps extends ImgHTMLAttributes<HTMLImageElement> {
   size: ImageType;
 }
 
-const Image = ({ size, ...props }: ImageProps) => {
-  const defaultImage = `${process.env.PUBLIC_URL}/images/error.png`;
+const defaultImage = `${process.env.PUBLIC_URL}/images/error.png`;
 
+const Image = ({ size, ...props }: ImageProps) => {
   const handleError: React.ReactEventHandler<HTMLImageElement> = (e) => {
     e.currentTarget.src = defaultImage;
   };
