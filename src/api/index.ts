@@ -2,7 +2,7 @@ import { DEFAULT_VALUE_SERVER_OWNER, KEY_LOCALSTORAGE_SERVER_OWNER, SERVERS } fr
 import { LocalProductType } from '../types/domain';
 import { getLocalStorage } from '../utils';
 import { parseExpiredDate, parseOrderListData } from '../utils/domain';
-import { generateStatusErrorMessage } from './generateStatusErrorMessage';
+import { generateStatusErrorMessage } from '../utils/generateStatusErrorMessage';
 
 // Base64로 인코딩
 const base64 = btoa(process.env.REACT_APP_USERNAME + ':' + process.env.REACT_APP_PASSWORD);
@@ -18,10 +18,7 @@ const request = async (path: string, init?: RequestInit) => {
     },
   });
 
-  if (!response.ok) {
-    const errorMessage = generateStatusErrorMessage(response.status.toString());
-    throw new Error(errorMessage);
-  }
+  if (!response.ok) throw new Error(response.status.toString());
   return response;
 };
 

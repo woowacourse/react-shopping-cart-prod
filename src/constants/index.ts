@@ -13,7 +13,7 @@ export const SERVERS: Record<string, string> = {
   루카: 'https://woowa-luca.store',
 } as const;
 
-export const STATUS_ERROR_MESSAGE = {
+export const ERROR_MESSAGE = {
   '400': '해당 정보가 없습니다.',
   '401': '인증에 실패했습니다',
   '403': '권한이 없습니다!',
