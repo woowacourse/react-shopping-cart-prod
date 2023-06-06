@@ -21,14 +21,18 @@ export const API_SUCCESS_MESSAGE = {
 };
 
 export const API_ERROR_MESSAGE = {
+  server: '일시적인 서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.',
   getProducts: '상품 목록을 가져오지 못했어요. 새로고침을 해주세요.',
   getCart: '장바구니 목록을 가져오지 못했어요. 새로고침을 해주세요.',
   postCartItem: '상품을 추가하지 못했어요. 잠시 후 다시 시도해주세요.',
   patchCartItemQuantity: '선택한 상품의 수량을 변경하지 못했어요. 잠시 후 다시 시도해주세요.',
   deleteCartItem: '상품 삭제를 못했어요. 잠시 후 다시 시도해주세요.',
-  signUp: '회원가입을 실패했어요. 잠시 후 다시 시도해주세요.',
-  login: '로그인에 실패했어요. 잠시 후 다시 시도해주세요.',
-  coupon: '쿠폰을 받아오는데 실패했어요. 잠시 후 다시 시도해주세요.',
+  postSignUp: '회원가입을 실패했어요. 잠시 후 다시 시도해주세요.',
+  postLogin: '로그인에 실패했어요. 잠시 후 다시 시도해주세요.',
+  getCoupon: '쿠폰을 받아오는데 실패했어요. 잠시 후 다시 시도해주세요.',
+  postPurchaseCartItem: '상품을 구입하는데 실패했어요. 잠시 후 다시 시도해주세요.',
+  getOrder: '주문 목록을 불러오는데 실패했어요. 잠시 후 다시 시도해주세요.',
+  getDetailOrder: '주문상세내역을 불러오는데 실패했어요. 잠시 후 다시 시도해주세요.',
 };
 
 export const SERVER_NAMES: ServerNameType[] = ['RAON', 'JOURNY', 'ZUNY'];

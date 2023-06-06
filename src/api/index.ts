@@ -1,10 +1,16 @@
 import type { PurchasingCartItemType, ServerNameType } from '../types';
 
-import { BASE_URL_MAP } from '../constants';
+import { API_ERROR_MESSAGE, BASE_URL_MAP } from '../constants';
 
 export const getProducts = async <T>(serverName: ServerNameType) => {
   const response = await fetch(`${BASE_URL_MAP[serverName]}/products`);
   if (!response.ok) throw new Error(`products GET error`);
+
+  if (!response.ok) {
+    throw response.body
+      ? new Error(`${(await response.json()).errorMessage}`)
+      : new Error(`${API_ERROR_MESSAGE.getProducts}`);
+  }
 
   const data: T = await response.json();
 
@@ -18,7 +24,11 @@ export const getCart = async <T>(serverName: ServerNameType, loginCredential: st
     },
   });
 
-  if (!response.ok) throw new Error(`cart-items GET error`);
+  if (!response.ok) {
+    throw response.body
+      ? new Error(`${(await response.json()).errorMessage}`)
+      : new Error(`${API_ERROR_MESSAGE.getCart}`);
+  }
 
   const data: T = await response.json();
 
@@ -42,7 +52,11 @@ export const postCartItem = async (
     body: JSON.stringify(body),
   });
 
-  if (!response.ok) throw new Error(`${url} POST Error`);
+  if (!response.ok) {
+    throw response.body
+      ? new Error(`${(await response.json()).errorMessage}`)
+      : new Error(`${API_ERROR_MESSAGE.postCartItem}`);
+  }
 };
 
 export const patchCartItemQuantity = async (
@@ -63,7 +77,11 @@ export const patchCartItemQuantity = async (
     body: JSON.stringify(body),
   });
 
-  if (!response.ok) throw new Error(`${url} PATCH Error`);
+  if (!response.ok) {
+    throw response.body
+      ? new Error(`${(await response.json()).errorMessage}`)
+      : new Error(`${API_ERROR_MESSAGE.patchCartItemQuantity}`);
+  }
 };
 
 export const deleteCartItem = async (
@@ -78,7 +96,11 @@ export const deleteCartItem = async (
     headers: { Authorization: `Basic ${loginCredential}` },
   });
 
-  if (!response.ok) throw new Error(`${url} FETCH Error`);
+  if (!response.ok) {
+    throw response.body
+      ? new Error(`${(await response.json()).errorMessage}`)
+      : new Error(`${API_ERROR_MESSAGE.deleteCartItem}`);
+  }
 };
 
 export const deleteCartItems = async (
@@ -94,7 +116,11 @@ export const deleteCartItems = async (
     headers: { Authorization: `Basic ${loginCredential}` },
   });
 
-  if (!response.ok) throw new Error(`${url} FETCH Error`);
+  if (!response.ok) {
+    throw response.body
+      ? new Error(`${(await response.json()).errorMessage}`)
+      : new Error(`${API_ERROR_MESSAGE.deleteCartItem}`);
+  }
 };
 
 export const postSignUpInfo = async (
@@ -112,11 +138,11 @@ export const postSignUpInfo = async (
     body: JSON.stringify(body),
   });
 
-  if (!response.ok && response.body) {
-    const errorMessage = (await response.json()) as { errorMessage: string };
-    throw new Error(`${errorMessage.errorMessage}`);
+  if (!response.ok) {
+    throw response.body
+      ? new Error(`${(await response.json()).errorMessage}`)
+      : new Error(`${API_ERROR_MESSAGE.postSignUp}`);
   }
-  if (!response.ok) throw new Error(`${url} FETCH Error`);
 };
 
 export const postLoginInfo = async (
@@ -134,11 +160,11 @@ export const postLoginInfo = async (
     body: JSON.stringify(body),
   });
 
-  if (!response.ok && response.body) {
-    const errorMessage = (await response.json()) as { errorMessage: string };
-    throw new Error(`${errorMessage.errorMessage}`);
+  if (!response.ok) {
+    throw response.body
+      ? new Error(`${(await response.json()).errorMessage}`)
+      : new Error(`${API_ERROR_MESSAGE.postLogin}`);
   }
-  if (!response.ok) throw new Error(`${url} FETCH Error`);
 
   const loginToken = await response.json();
 
@@ -154,11 +180,11 @@ export const getCoupon = async <T>(serverName: ServerNameType, loginCredential: 
     },
   });
 
-  if (!response.ok && response.body) {
-    const errorMessage = (await response.json()) as { errorMessage: string };
-    throw new Error(`${errorMessage.errorMessage}`);
+  if (!response.ok) {
+    throw response.body
+      ? new Error(`${(await response.json()).errorMessage}`)
+      : new Error(`${API_ERROR_MESSAGE.getCoupon}`);
   }
-  if (!response.ok) throw new Error(`${url} FETCH Error`);
 
   const data: T = await response.json();
 
@@ -183,13 +209,11 @@ export const postPurchaseCartItem = async <T>(
     body: JSON.stringify(body),
   });
 
-  if (!response.ok && response.body) {
-    const errorMessage = (await response.json()) as { errorMessage: string };
-    throw new Error(`${errorMessage.errorMessage}`);
+  if (!response.ok) {
+    throw response.body
+      ? new Error(`${(await response.json()).errorMessage}`)
+      : new Error(`${API_ERROR_MESSAGE.postPurchaseCartItem}`);
   }
-  if (!response.ok) throw new Error(`${url} FETCH Error`);
-
-  const locationHeader = response.headers.get('Location');
 };
 
 export const getOrder = async <T>(serverName: ServerNameType, loginCredential: string) => {
@@ -199,7 +223,11 @@ export const getOrder = async <T>(serverName: ServerNameType, loginCredential: s
     },
   });
 
-  if (!response.ok) throw new Error(`cart-items GET error`);
+  if (!response.ok) {
+    throw response.body
+      ? new Error(`${(await response.json()).errorMessage}`)
+      : new Error(`${API_ERROR_MESSAGE.getOrder}`);
+  }
 
   const data: T = await response.json();
 
@@ -217,7 +245,11 @@ export const getOrderDetail = async <T>(
     },
   });
 
-  if (!response.ok) throw new Error(`cart-items GET error`);
+  if (!response.ok) {
+    throw response.body
+      ? new Error(`${(await response.json()).errorMessage}`)
+      : new Error(`${API_ERROR_MESSAGE.getDetailOrder}`);
+  }
 
   const data: T = await response.json();
 
