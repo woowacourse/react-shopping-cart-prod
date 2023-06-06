@@ -2,13 +2,11 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import * as S from './styles/CartItemList.styles';
 import CartItem from './CartItem';
 import CheckBox from '../common/CheckBox';
-import * as api from '../../api';
-import useToast from '../hooks/useToast';
 import { cartState, checkedListState } from '../../atom/cart';
-import { API_ERROR_MESSAGE } from '../../constants';
 import { serverNameState } from '../../atom/serverName';
 import { loginState } from '../../atom/login';
 import { useGetCartList } from '../hooks/useGetCartList';
+import { useDeleteCartItems } from '../hooks/useDeleteCartItems';
 
 export default function CartItemList() {
   const serverName = useRecoilValue(serverNameState);
@@ -16,7 +14,7 @@ export default function CartItemList() {
   const [checkedList, setCheckedList] = useRecoilState(checkedListState);
   const loginCredential = useRecoilValue(loginState);
   const { getCartsThroughApi } = useGetCartList();
-  const { showToast } = useToast();
+  const { deleteCartItemsThroughApi } = useDeleteCartItems();
 
   const checkedCount = checkedList.filter((checked) => checked).length;
   const allChecked = checkedCount === cart.length;
@@ -42,11 +40,7 @@ export default function CartItemList() {
       .filter((_, index) => checkedList[index])
       .map((cartItem) => cartItem.id);
 
-    try {
-      await api.deleteCartItems(serverName, loginCredential, cartItemIdList);
-    } catch {
-      showToast('error', API_ERROR_MESSAGE.deleteCartItem);
-    }
+    await deleteCartItemsThroughApi(serverName, loginCredential, cartItemIdList);
 
     getCartsThroughApi(serverName, loginCredential, true);
   };
