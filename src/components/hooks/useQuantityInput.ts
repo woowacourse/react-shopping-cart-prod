@@ -1,28 +1,22 @@
 import { useState } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 
 import * as api from '../../api';
 import useToast from './useToast';
-import { cartState } from '../../atom/cart';
 import { API_ERROR_MESSAGE, API_SUCCESS_MESSAGE } from '../../constants';
 import { serverNameState } from '../../atom/serverName';
-import { CartType } from '../../types';
 import { loginState } from '../../atom/login';
+import { useGetCartList } from './useGetCartList';
 
 const useQuantityInput = (cartItemId: number) => {
   const [input, setInput] = useState('');
-  const setCart = useSetRecoilState(cartState);
+  const { getCartsThroughApi } = useGetCartList();
   const serverName = useRecoilValue(serverNameState);
   const loginCredential = useRecoilValue(loginState);
   const { showToast } = useToast();
 
   const getCart = async () => {
-    try {
-      const cart = await api.getCart<CartType>(serverName, loginCredential);
-      setCart(cart);
-    } catch {
-      showToast('error', API_ERROR_MESSAGE.getCart);
-    }
+    getCartsThroughApi(serverName, loginCredential);
   };
 
   const deleteCartItem = async () => {

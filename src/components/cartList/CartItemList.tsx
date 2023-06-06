@@ -7,14 +7,15 @@ import useToast from '../hooks/useToast';
 import { cartState, checkedListState } from '../../atom/cart';
 import { API_ERROR_MESSAGE } from '../../constants';
 import { serverNameState } from '../../atom/serverName';
-import { CartType } from '../../types';
 import { loginState } from '../../atom/login';
+import { useGetCartList } from '../hooks/useGetCartList';
 
 export default function CartItemList() {
   const serverName = useRecoilValue(serverNameState);
-  const [cart, setCart] = useRecoilState(cartState);
+  const cart = useRecoilValue(cartState);
   const [checkedList, setCheckedList] = useRecoilState(checkedListState);
   const loginCredential = useRecoilValue(loginState);
+  const { getCartsThroughApi } = useGetCartList();
   const { showToast } = useToast();
 
   const checkedCount = checkedList.filter((checked) => checked).length;
@@ -47,13 +48,7 @@ export default function CartItemList() {
       showToast('error', API_ERROR_MESSAGE.deleteCartItem);
     }
 
-    try {
-      const cart = await api.getCart<CartType>(serverName, loginCredential);
-      setCart(cart);
-      setCheckedList(Array(cart.length).fill(false));
-    } catch {
-      showToast('error', API_ERROR_MESSAGE.getCart);
-    }
+    getCartsThroughApi(serverName, loginCredential, true);
   };
 
   return (

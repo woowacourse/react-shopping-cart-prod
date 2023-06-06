@@ -5,14 +5,15 @@ import { cartBillTotalPriceState, cartState, checkedListState } from '../../atom
 import { serverNameState } from '../../atom/serverName';
 import { loginState } from '../../atom/login';
 import { couponState } from '../../atom/coupon';
-import { CartType } from '../../types';
 import useToast from '../hooks/useToast';
 import { API_SUCCESS_MESSAGE } from '../../constants';
 import { useState } from 'react';
+import { useGetCartList } from '../hooks/useGetCartList';
 
 export default function CartBill() {
-  const [cart, setCart] = useRecoilState(cartState);
-  const [checkedList, setCheckList] = useRecoilState(checkedListState);
+  const cart = useRecoilValue(cartState);
+  const checkedList = useRecoilValue(checkedListState);
+  const { getCartsThroughApi } = useGetCartList();
   const cartBillTotalPrice = useRecoilValue(cartBillTotalPriceState);
   const deliveryFee = checkedList.filter((checked) => checked).length === 0 ? 0 : 3000;
   const serverName = useRecoilValue(serverNameState);
@@ -44,11 +45,9 @@ export default function CartBill() {
     const couponId = couponKind !== 'null' ? Number(couponKind) : null;
 
     await api.postPurchaseCartItem(serverName, loginCredential, purchasingCartItems, couponId);
-
-    const cartList = await api.getCart<CartType>(serverName, loginCredential);
-    setCart(cartList);
-    setCheckList(new Array(cartList.length).fill(true));
     setCoupons(coupons.filter((coupon) => coupon.id !== couponId));
+
+    getCartsThroughApi(serverName, loginCredential, true);
 
     showToast('info', API_SUCCESS_MESSAGE.purchase);
   };

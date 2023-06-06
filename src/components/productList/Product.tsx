@@ -1,6 +1,6 @@
-import { CartType, ProductType } from '../../types';
+import { ProductType } from '../../types';
 import { useState } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import * as S from './styles/Product.styles';
 import QuantityInput from '../common/QuantityInput';
 import * as api from '../../api';
@@ -9,11 +9,13 @@ import { cartState } from '../../atom/cart';
 import { API_ERROR_MESSAGE, API_SUCCESS_MESSAGE, MAX_QUANTITY } from '../../constants';
 import { serverNameState } from '../../atom/serverName';
 import { loginState } from '../../atom/login';
+import { useGetCartList } from '../hooks/useGetCartList';
 
 interface Props extends ProductType {}
 
 export default function Product({ id, name, price, imageUrl }: Props) {
-  const [cart, setCart] = useRecoilState(cartState);
+  const cart = useRecoilValue(cartState);
+  const { getCartsThroughApi } = useGetCartList();
   const [addLoading, setAddLoading] = useState(false);
   const serverName = useRecoilValue(serverNameState);
   const loginCredential = useRecoilValue(loginState);
@@ -26,17 +28,13 @@ export default function Product({ id, name, price, imageUrl }: Props) {
     try {
       await api.postCartItem(serverName, id, loginCredential);
       showToast('info', API_SUCCESS_MESSAGE.postCartItem);
-    } catch {
+    } catch (e) {
       showToast('error', API_ERROR_MESSAGE.postCartItem);
       setAddLoading(false);
       return;
     }
 
-    try {
-      await api.getCart<CartType>(serverName, loginCredential).then(setCart);
-    } catch {
-      showToast('error', API_ERROR_MESSAGE.getCart);
-    }
+    getCartsThroughApi(serverName, loginCredential);
 
     setAddLoading(false);
   };

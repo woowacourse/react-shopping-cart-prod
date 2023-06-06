@@ -1,33 +1,21 @@
 import { useEffect } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import * as S from './styles/CartPage.styles';
 import CartItemList from '../components/cartList/CartItemList';
 import CartBill from '../components/cartList/CartBill';
-import { cartCountState, cartState, checkedListState } from '../atom/cart';
-import * as api from '../api';
-import useToast from '../components/hooks/useToast';
-import { API_ERROR_MESSAGE } from '../constants';
+import { cartCountState } from '../atom/cart';
 import { serverNameState } from '../atom/serverName';
-import { CartType } from '../types';
 import { loginState } from '../atom/login';
+import { useGetCartList } from '../components/hooks/useGetCartList';
 
 export default function CartPage() {
   const serverName = useRecoilValue(serverNameState);
-  const cartCount = useRecoilValue(cartCountState);
-  const setCart = useSetRecoilState(cartState);
-  const setCheckedList = useSetRecoilState(checkedListState);
   const loginCredential = useRecoilValue(loginState);
-  const { showToast } = useToast();
+  const cartCount = useRecoilValue(cartCountState);
+  const { getCartsThroughApi } = useGetCartList();
 
   useEffect(() => {
-    try {
-      api.getCart<CartType>(serverName, loginCredential).then((cart) => {
-        setCart(cart);
-        setCheckedList(Array(cart.length).fill(true));
-      });
-    } catch {
-      showToast('error', API_ERROR_MESSAGE.getCart);
-    }
+    getCartsThroughApi(serverName, loginCredential, true);
   }, [serverName]);
 
   return (

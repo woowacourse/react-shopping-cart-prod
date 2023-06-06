@@ -17,7 +17,7 @@ export const getProducts = async <T>(serverName: ServerNameType) => {
   return data;
 };
 
-export const getCart = async <T>(serverName: ServerNameType, loginCredential: string) => {
+export const getCarts = async <T>(serverName: ServerNameType, loginCredential: string) => {
   const response = await fetch(`${BASE_URL_MAP[serverName]}/cart-items`, {
     headers: {
       Authorization: `Basic ${loginCredential}`,

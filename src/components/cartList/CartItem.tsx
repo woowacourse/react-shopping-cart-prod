@@ -1,14 +1,14 @@
-import { CartItemType, CartType } from '../../types';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { CartItemType } from '../../types';
+import { useRecoilValue } from 'recoil';
 import * as S from './styles/CartItem.styles';
 import CheckBox from '../common/CheckBox';
 import QuantityInput from '../common/QuantityInput';
 import * as api from '../../api';
-import { cartState } from '../../atom/cart';
 import { API_ERROR_MESSAGE, MAX_QUANTITY } from '../../constants';
 import useToast from '../hooks/useToast';
 import { serverNameState } from '../../atom/serverName';
 import { loginState } from '../../atom/login';
+import { useGetCartList } from '../hooks/useGetCartList';
 
 interface Props extends CartItemType {
   checked: boolean;
@@ -18,7 +18,7 @@ interface Props extends CartItemType {
 
 export default function CartItem(props: Props) {
   const { id, product, quantity, checked, toggleChecked, deleteChecked } = props;
-  const setCart = useSetRecoilState(cartState);
+  const { getCartsThroughApi } = useGetCartList();
   const serverName = useRecoilValue(serverNameState);
   const loginCredential = useRecoilValue(loginState);
   const { showToast } = useToast();
@@ -32,12 +32,7 @@ export default function CartItem(props: Props) {
       return;
     }
 
-    try {
-      const cart = await api.getCart<CartType>(serverName, loginCredential);
-      setCart(cart);
-    } catch {
-      showToast('error', API_ERROR_MESSAGE.getCart);
-    }
+    getCartsThroughApi(serverName, loginCredential);
   };
 
   const setAltSrc = (e: React.SyntheticEvent<HTMLImageElement>) => {
