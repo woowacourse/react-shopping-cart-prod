@@ -15,7 +15,7 @@ type ProductItemProps = ProductItemData;
 const ProductItem = ({ ...information }: ProductItemProps) => {
   const cartId = useRecoilValue(cartItemIdState(information.id));
   const cartQuantity = useRecoilValue(cartItemQuantityState(cartId!));
-  const { isAdded, addItem, updateItemQuantity } = useCart();
+  const { isToastAdded, addItem, updateItemQuantity } = useCart();
 
   const handleAddButtonClick = useCallback(() => {
     addItem(information);
@@ -61,7 +61,7 @@ const ProductItem = ({ ...information }: ProductItemProps) => {
           />
         </S.ItemPriceContainer>
       </S.ProductItemContainer>
-      {isAdded && <Toast>장바구니에 상품을 추가했습니다.</Toast>}
+      {isToastAdded && <Toast>장바구니에 상품을 추가했습니다.</Toast>}
     </>
   );
 };

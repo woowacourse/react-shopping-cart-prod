@@ -28,7 +28,7 @@ const useCart = () => {
   const currentServer = useRecoilValue(currentServerState);
   const cartAPI = useMemo(() => getCartAPI(currentServer), [currentServer]);
   const setErrorModalMessage = useSetRecoilState(errorModalMessageState);
-  const { isAdded, setIsAdded } = useToast();
+  const { isToastAdded, setIsToastAdded } = useToast();
   const navigate = useNavigate();
 
   const refreshCart = useRecoilCallback(
@@ -74,7 +74,7 @@ const useCart = () => {
     ),
     {
       onSuccess: (cartItem) => {
-        setIsAdded(true);
+        setIsToastAdded(true);
         updateCart(cartItem);
       },
       onError: (error) => {
@@ -173,7 +173,7 @@ const useCart = () => {
   );
 
   return {
-    isAdded,
+    isToastAdded,
     addItem,
     updateItemQuantity,
     removeItem,
