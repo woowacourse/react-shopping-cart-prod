@@ -11,13 +11,15 @@ import {
 import { getOrder, getOrders, postOrder } from './order';
 import fetcher from '../utils/fetcher';
 
-export const getProducts = async (serverName: ServerNameType) =>
-  fetcher(serverName)<ProductType[]>('GET', 'products');
+export const getProducts = async (serverName: ServerNameType): Promise<ProductType[]> =>
+  fetcher(serverName)('GET', 'products');
 
-export const getCoupons = async (serverName: ServerNameType, token: string) =>
-  fetcher(serverName, token)<CouponType[]>('GET', 'users/me/coupons');
+export const getCoupons = async (
+  serverName: ServerNameType,
+  token: string
+): Promise<CouponType[]> => fetcher(serverName, token)('GET', 'users/me/coupons');
 
-const api = {
+export default {
   postJoin,
   postLogin,
   getProducts,
@@ -31,5 +33,3 @@ const api = {
   getOrder,
   postOrder,
 };
-
-export default api;

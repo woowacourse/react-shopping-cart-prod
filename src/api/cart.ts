@@ -2,8 +2,8 @@ import type { CartType, ServerNameType } from '../types';
 
 import fetcher from '../utils/fetcher';
 
-export const getCart = (serverName: ServerNameType, token: string) =>
-  fetcher(serverName, token)<CartType>('GET', 'cart-items');
+export const getCart = (serverName: ServerNameType, token: string): Promise<CartType> =>
+  fetcher(serverName, token)('GET', 'cart-items');
 
 export const postCartItem = (serverName: ServerNameType, token: string, productId: number) =>
   fetcher(serverName, token)('POST', 'cart-items', { productId });
