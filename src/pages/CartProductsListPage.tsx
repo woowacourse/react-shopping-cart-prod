@@ -19,7 +19,7 @@ const CartProductsListPage = () => {
   const checkedCartProductCount = useRecoilValue(checkedListSelector);
   const { removeCheckedProducts, handleAllCheckedProducts } =
     useCheckedProducts();
-  const { userUsedPoint, handleUserUsedPointUpdate } = usePoint();
+  const { userUsedPoint } = usePoint();
 
   return (
     <Main>
@@ -49,7 +49,7 @@ const CartProductsListPage = () => {
         </CartProductInfo>
       </CartProductContent>
       <PaymentBoxWrapper>
-        <UserPointInfo onUserUsedPointUpdate={handleUserUsedPointUpdate} />
+        <UserPointInfo />
         <EstimatedPaymentBox usePoint={userUsedPoint} />
       </PaymentBoxWrapper>
     </Main>

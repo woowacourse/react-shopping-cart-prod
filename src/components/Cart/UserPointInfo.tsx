@@ -3,12 +3,8 @@ import usePoint from '../../hooks/usePoint';
 import useEstimatedPayment from '../../hooks/useEstimatedPayment';
 import { XS } from '../../constants/screenSizes';
 
-interface UserPointInfoProps {
-  onUserUsedPointUpdate: (value: number) => void;
-}
-
-const UserPointInfo = ({ onUserUsedPointUpdate }: UserPointInfoProps) => {
-  const { userPoint, minUsagePoint } = usePoint();
+const UserPointInfo = () => {
+  const { userPoint, minUsagePoint, handleUserUsedPointUpdate } = usePoint();
   const { totalProductPrice } = useEstimatedPayment(userPoint);
   const isInputDisabled = userPoint < minUsagePoint;
 
@@ -35,7 +31,7 @@ const UserPointInfo = ({ onUserUsedPointUpdate }: UserPointInfoProps) => {
 
   const handleUsedPointOnBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const userInputPoint = e.target.valueAsNumber;
-    onUserUsedPointUpdate(userInputPoint);
+    handleUserUsedPointUpdate(userInputPoint);
 
     if (userInputPoint < 3000) {
       alert('포인트는 3000원 이상 사용할 수 있습니다.');
