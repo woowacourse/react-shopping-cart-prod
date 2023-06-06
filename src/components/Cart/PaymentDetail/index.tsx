@@ -6,7 +6,7 @@ import { useRecoilValue } from 'recoil';
 import { cartListAtom, checkedItemsAtom, couponIdAtom } from 'recoil/cartList';
 import { CouponAppliedPriceResponse } from 'types/api';
 import { formatPrice } from 'utils';
-import { ROUTES } from 'utils/constants';
+import { ROUTES } from 'constants/index';
 import * as S from './PaymentDetail.styles';
 
 const PaymentDetail = () => {

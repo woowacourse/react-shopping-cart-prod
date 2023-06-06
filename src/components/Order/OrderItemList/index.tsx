@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import * as S from './OrderItemList.styles';
 import OrderItem from '../OrderItem';
 import { Order } from 'types';
-import { ROUTES } from 'utils/constants';
+import { ROUTES } from 'constants/index';
 
 const OrderItemList = ({ order }: { order: Order }) => {
   const navigate = useNavigate();

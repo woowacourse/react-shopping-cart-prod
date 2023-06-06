@@ -2,7 +2,7 @@ import Svg from 'components/@common/Svg';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { countCartListSelector } from 'recoil/cartList';
-import { ROUTES } from 'utils/constants';
+import { ROUTES } from 'constants/index';
 import SelectServer from '../SelectSever';
 import * as S from './Header.styles';
 

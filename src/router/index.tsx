@@ -5,7 +5,7 @@ import NotFound from 'pages/NotFound';
 import OrderDetail from 'pages/OrderDetail';
 import OrderList from 'pages/OrderList';
 import Root from './Root';
-import { ROUTES } from 'utils/constants';
+import { ROUTES } from 'constants/index';
 
 const router = createBrowserRouter(
   [
