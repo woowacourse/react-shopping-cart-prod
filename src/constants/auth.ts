@@ -1,9 +1,15 @@
-import { UserCredentialData } from '../types/request.ts';
+export type UserCredentialData = {
+  id: number;
+  email: string;
+  password: string;
+};
 
 const userCredentialData: UserCredentialData = {
   id: 0,
-  email: 'a@a.com',
+  email: 'b@b.com',
   password: '1234',
 };
 
-export const auth = btoa(userCredentialData.email + ':' + userCredentialData.password);
+export const AUTH = btoa(
+  userCredentialData.email + ':' + userCredentialData.password
+);

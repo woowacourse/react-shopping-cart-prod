@@ -1,12 +1,3 @@
-export type CartUpdateBody = {
-  itemId: number;
-  quantity: number;
-};
+export type FetchMethod = 'GET' | 'POST' | 'PATCH' | 'DELETE';
 
-export type UserCredentialData = {
-  id: number;
-  email: string;
-  password: string;
-};
-
-export type ServerNames = 'ROY' | 'SPLIT' | 'IRAE';
+export type OrderItem = { id: number; quantity: number };

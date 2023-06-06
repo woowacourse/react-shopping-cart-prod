@@ -1,30 +1,41 @@
-import ResetStyle from './styles/ResetStyle.tsx';
-import GlobalStyle from './styles/GlobalStyle.tsx';
-import Header from './components/Header/Header.tsx';
-import Layout from './components/@common/Layout/Layout.tsx';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import ListPage from './pages/ListPage/ListPage.tsx';
-import { RecoilRoot } from 'recoil';
-import CartPage from './pages/CartPage/CartPage.tsx';
-import ErrorPage from './pages/ErrorPage/ErrorPage.tsx';
+import React from 'react';
+import { Outlet } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import { styled } from 'styled-components';
+import Header from './components/Header/Header';
+import OnLoading from './components/OnLoading/OnLoading';
+import { WIDTH } from './constants/mediaQuery';
+import { ErrorBoundary } from 'react-error-boundary';
+import { serverAtom } from './store/server';
+import ErrorComponent from './components/ErrorContainer/ErrorContainer';
 
 const App = () => {
+  const serverName = useRecoilValue(serverAtom);
+
   return (
-    <RecoilRoot>
-      <ResetStyle />
-      <GlobalStyle />
-      <BrowserRouter>
-        <Header />
+    <React.Suspense fallback={<OnLoading />}>
+      <Header />
+      <ErrorBoundary key={serverName} fallback={<ErrorComponent />}>
         <Layout>
-          <Routes>
-            <Route path='/' element={<ListPage />} />
-            <Route path='/cart' element={<CartPage />} />
-            <Route path='/error' element={<ErrorPage />} />
-          </Routes>
+          <Outlet />
         </Layout>
-      </BrowserRouter>
-    </RecoilRoot>
+      </ErrorBoundary>
+    </React.Suspense>
   );
 };
 
 export default App;
+
+const Layout = styled.div`
+  display: flex;
+  justify-content: center;
+
+  padding: 32px 0px;
+
+  width: 100%;
+  min-width: ${WIDTH.SM};
+
+  @media (max-width: ${WIDTH.LG}) {
+    padding: 24px 0px;
+  }
+`;

@@ -1,66 +1,49 @@
-import { useState, useEffect, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { auth } from '../constants/auth.ts';
 import { useRecoilValue } from 'recoil';
-import { serverAtom } from '../stores/serverStore.ts';
-import baseURL from '../../config.ts';
+import { baseURLSelector } from '../store/server';
+import { AUTH } from '../constants/auth';
+import { useCallback } from 'react';
+import { END_POINTS } from '../constants/endPoints';
+import { FetchMethod } from '../types/request';
+import { loginState } from '../store/loginState';
+import { useNavigate } from 'react-router-dom';
+import { PATH } from '../constants/path';
 
-type FetchStatus = 'idle' | 'loading' | 'fail' | 'success';
+type EndPointKeys = (typeof END_POINTS)[keyof typeof END_POINTS];
 
-export type FetchState<T> = {
-  status: FetchStatus;
-  data: T | null;
-  error: Error | null;
-};
-
-const useFetch = <T>(url: string, method = 'GET'): [FetchState<T>, (body?: any, param?: number | string) => Promise<void>] => {
-  const [fetchState, setFetchState] = useState<FetchState<T>>({
-    status: 'idle',
-    data: null,
-    error: null,
-  });
-
-  const serverName = useRecoilValue(serverAtom);
-
+const useFetch = (endPoint: EndPointKeys) => {
+  const baseURL = useRecoilValue(baseURLSelector);
+  const isSignedIn = useRecoilValue(loginState);
   const navigate = useNavigate();
 
-  const fetchData = useCallback(
-    async ({ body, param }: { body?: any; param?: string | number }) => {
-      const serverUrl = baseURL[serverName];
-      const urlWithParam = param ? `${serverUrl + url}/${param}` : `${serverUrl + url}`;
-
-      setFetchState((prevState) => ({ ...prevState, status: 'loading', error: null }));
-
-      try {
-        const response: Response = await fetch(urlWithParam, {
-          method,
-          body: body ? JSON.stringify(body) : null,
-          headers: { 'Content-Type': 'application/json', authorization: `Basic ${auth}` },
-        });
-
-        if (!response.ok) {
-          throw new Error(response.statusText);
-        }
-
-        const responseData = await response.text();
-        const data: T = responseData ? JSON.parse(responseData) : null;
-
-        setFetchState({ status: 'success', data, error: null });
-      } catch (error) {
-        setFetchState((prevState) => ({ ...prevState, status: 'fail', error: error as Error }));
-        // navigate('/error', { state: { error: error as Error } });
+  const handleFetch = useCallback(
+    async (method: FetchMethod, body: {}, id?: number) => {
+      if (!isSignedIn) {
+        navigate(PATH.SIGN_IN);
+        throw new Error('로그인을 먼저 해주세요.');
       }
+      const response = await fetch(
+        `${baseURL}${endPoint}${id ? `/${id}` : ''}`,
+        {
+          method,
+          body: JSON.stringify(body),
+          headers: {
+            'Content-Type': 'application/json',
+            authorization: `Basic ${AUTH}`,
+          },
+        }
+      );
+
+      if (!response.ok) throw new Error('');
+
+      const data = await response.text();
+      if (!data) return null;
+
+      return await JSON.parse(data);
     },
-    [url, method, navigate, serverName]
+    [baseURL, endPoint, isSignedIn]
   );
 
-  useEffect(() => {
-    if (method.toLowerCase() === 'get') {
-      fetchData({});
-    }
-  }, [fetchData, method]);
-
-  return [fetchState, fetchData];
+  return { handleFetch };
 };
 
 export default useFetch;
