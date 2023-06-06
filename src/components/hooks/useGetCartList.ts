@@ -1,4 +1,4 @@
-import { SetterOrUpdater, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import * as api from '../../api';
 import { CartType, ServerNameType } from '../../types';
 import { cartState, checkedListState } from '../../atom/cart';
