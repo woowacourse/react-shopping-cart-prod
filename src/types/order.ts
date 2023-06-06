@@ -11,7 +11,7 @@ interface OrderedItemData extends ProductItemData {
 interface OrderData extends OrderCostsData {
   id: number;
   orderedItems: OrderedItemData[];
-  orderedAt: Date;
+  orderedAt: string;
 }
 
 interface OrderCostsData {

@@ -43,7 +43,7 @@ const addOrder = (
   const newOrder = {
     id: Number(new Date()),
     orderedItems,
-    orderedAt: new Date(),
+    orderedAt: String(new Date()),
     ...serverOrderCosts,
   };
 

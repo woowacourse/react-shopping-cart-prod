@@ -25,7 +25,7 @@ const mockOrderList: OrderData[] = [
           'https://cdn-mart.baemin.com/sellergoods/list/dcee7c3b-230f-482b-a549-ee0ee678222e.jpg',
       },
     ],
-    orderedAt: new Date(),
+    orderedAt: '2023-06-04T11:24:48.647Z',
     totalItemDiscountAmount: 90000,
     totalMemberDiscountAmount: 501120,
     totalItemPrice: 1850400,
