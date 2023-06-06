@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import OrderProductItem from './OrderProductItem';
 import { SM } from '../../constants/screenSizes';
+import { ORDER_DETAILS_ROUTES } from '../../constants/routes';
 import type { OrderedProduct } from '../../types/product';
 
 interface OrderProductListProps {
@@ -23,7 +24,7 @@ const OrderProductList = ({
           <OrderDataTime>{orderDateTime}</OrderDataTime>
         </div>
         {showDetailsLink && (
-          <OrderDetailsLink to={`/orders/${orderId}`}>
+          <OrderDetailsLink to={ORDER_DETAILS_ROUTES(orderId)}>
             상세보기 {'>'}
           </OrderDetailsLink>
         )}

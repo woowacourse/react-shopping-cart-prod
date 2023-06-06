@@ -1,5 +1,10 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import {
+  CART_PRODUCTS_ROUTES,
+  HOME_ROUTES,
+  ORDERS_PRODUCTS_ROUTES,
+} from '../../constants/routes';
 
 type InformativeMessageType =
   | 'error'
@@ -67,9 +72,9 @@ const InformativeMessage = ({
       <MessageTitle>{message[type].title}</MessageTitle>
       <MessageDesc>{message[type].description}</MessageDesc>
       <LinkBtnWrapper>
-        {homeLink && <LinkBtn to='/'>홈으로 가기</LinkBtn>}
-        {orderLink && <LinkBtn to='/orders'>주문목록</LinkBtn>}
-        {cartLink && <LinkBtn to='/cart'>장바구니</LinkBtn>}
+        {homeLink && <LinkBtn to={HOME_ROUTES}>홈으로 가기</LinkBtn>}
+        {orderLink && <LinkBtn to={ORDERS_PRODUCTS_ROUTES}>주문목록</LinkBtn>}
+        {cartLink && <LinkBtn to={CART_PRODUCTS_ROUTES}>장바구니</LinkBtn>}
       </LinkBtnWrapper>
     </MessageSection>
   );

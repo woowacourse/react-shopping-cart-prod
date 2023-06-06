@@ -6,6 +6,11 @@ import { totalCartProductSelect } from '../../recoil/cartProductData';
 import { hostNameAtom } from '../../recoil/hostData';
 import { servers } from '../../constants/server';
 import { SM, XL, XS } from '../../constants/screenSizes';
+import {
+  CART_PRODUCTS_ROUTES,
+  HOME_ROUTES,
+  ORDERS_PRODUCTS_ROUTES,
+} from '../../constants/routes';
 import type { HostNameType } from '../../types/server';
 
 const Header = () => {
@@ -19,7 +24,7 @@ const Header = () => {
   return (
     <HeaderContainer>
       <HeaderContent>
-        <Link to='/'>
+        <Link to={HOME_ROUTES}>
           <LogoContainer>
             <CartIcon width={51} height={44} color='white' />
             <Logo>SHOP</Logo>
@@ -31,14 +36,14 @@ const Header = () => {
               <option key={`server-${index}`}>{server}</option>
             ))}
           </SelectBox>
-          <Link to='/cart'>
+          <Link to={CART_PRODUCTS_ROUTES}>
             <MoveCartPageBtn>
               <DesktopLabel>장바구니</DesktopLabel>
               <MobileLabel>🛒</MobileLabel>
               <ProductCountAlert>{totalCartProduct}</ProductCountAlert>
             </MoveCartPageBtn>
           </Link>
-          <Link to='/orders'>
+          <Link to={ORDERS_PRODUCTS_ROUTES}>
             <MoveOrderListPageBtn>
               <DesktopLabel>주문목록</DesktopLabel>
               <MobileLabel>📝</MobileLabel>

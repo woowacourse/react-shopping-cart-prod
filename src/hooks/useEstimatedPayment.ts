@@ -11,6 +11,7 @@ import {
   REWARD_POINT_RATE,
   STANDARD_DELIVERY_FEE,
 } from '../constants/price';
+import { ORDER_COMPLETE, ORDER_FAIL } from '../constants/routes';
 import type { OrderedData } from '../types/product';
 
 const useEstimatedPayment = (usePoint: number) => {
@@ -53,10 +54,10 @@ const useEstimatedPayment = (usePoint: number) => {
       .then(() => {
         setCartProducts([]);
         setCheckedCartProduct([]);
-        navigate('/orders/complete');
+        navigate(ORDER_COMPLETE);
       })
       .catch(() => {
-        navigate('/orders/fail');
+        navigate(ORDER_FAIL);
       });
   };
 
