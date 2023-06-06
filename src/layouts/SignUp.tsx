@@ -1,20 +1,14 @@
 import { useState } from 'react';
 import Modal from '../components/common/Modal';
-import { postSignUpInfo } from '../api';
 import { serverNameState } from '../atom/serverName';
-import useToast from '../components/hooks/useToast';
 import { useRecoilValue } from 'recoil';
 import * as S from './styles/SingUp.styles';
-import { API_ERROR_MESSAGE, API_SUCCESS_MESSAGE } from '../constants';
-
-const isError = (error: any): error is Error => {
-  return error instanceof Error && typeof error.message === 'string';
-};
+import { usePostSignUp } from '../components/hooks/usePostSignUp';
 
 export default function SignUp() {
   const serverName = useRecoilValue(serverNameState);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { showToast } = useToast();
+  const { postSignUpThroughApi } = usePostSignUp();
 
   const openSignUpModal = () => {
     setIsModalOpen(true);
@@ -23,22 +17,12 @@ export default function SignUp() {
   const handleSubmitSignUpInfo = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    try {
-      const formData = new FormData(e.currentTarget);
-      const id = formData.get('id');
-      const password = formData.get('password');
+    const formData = new FormData(e.currentTarget);
+    const id = formData.get('id');
+    const password = formData.get('password');
 
-      if (typeof id === 'string' && typeof password === 'string') {
-        await postSignUpInfo(serverName, { name: id, password });
-      }
-
-      setIsModalOpen(false);
-      showToast('info', API_SUCCESS_MESSAGE.signUp);
-    } catch (e) {
-      if (isError(e)) {
-        if (e.message.includes('FETCH')) showToast('error', API_ERROR_MESSAGE.signUp);
-        showToast('error', e.message);
-      }
+    if (typeof id === 'string' && typeof password === 'string') {
+      await postSignUpThroughApi(serverName, { name: id, password }, setIsModalOpen);
     }
   };
 
