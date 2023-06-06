@@ -3,13 +3,16 @@ import ContentLayout from 'components/@common/ContentLayout';
 import PaymentDetail from 'components/Cart/PaymentDetail';
 import CartItemList from 'components/Cart/CartItemList';
 import Coupon from 'components/Cart/Coupon';
+import { useFetchCart } from 'components/Cart/hooks/useFetchCart';
 
 const CartList = () => {
+  const { cartList } = useFetchCart();
+
   return (
     <ContentLayout>
       <Title>🛒 장바구니 🛒</Title>
       <Container>
-        <CartItemList />
+        <CartItemList cartList={cartList} />
         <PaymentDetailWrapper>
           <PaymentDetail />
           <Coupon />

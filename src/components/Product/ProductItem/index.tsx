@@ -2,16 +2,16 @@ import * as S from './ProductItem.styles';
 import Svg from 'components/@common/Svg';
 import Counter from 'components/@common/Counter';
 import { useCart } from 'components/Cart/hooks/useCart';
-import { Product } from 'types';
+import { Cart, Product } from 'types';
 import { calculateSalePercentage, formatPrice } from 'utils';
 
 interface ProductItemProps {
+  cartList: Cart[];
   product: Product;
 }
 
-const ProductItem = ({ product }: ProductItemProps) => {
-  const { cartList, decreaseItemQuantity, addItem, increaseItemQuantity } =
-    useCart();
+const ProductItem = ({ cartList, product }: ProductItemProps) => {
+  const { decreaseItemQuantity, addItem, increaseItemQuantity } = useCart();
 
   const cartItem = cartList.find(
     (cartItem) => cartItem.product.id === product.id

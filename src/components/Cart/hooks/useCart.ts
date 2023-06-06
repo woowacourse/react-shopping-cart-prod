@@ -5,12 +5,13 @@ import {
 } from 'api/requests';
 import { useToast } from 'components/@common/Toast/hooks/useToast';
 import { useMutate } from '../../../hooks/useMutate';
-import { useFetchCart } from './useFetchCart';
 import { Product } from 'types';
+import { useRecoilState } from 'recoil';
+import { cartListAtom } from 'recoil/cartList';
 
 export const useCart = () => {
   const { request } = useMutate();
-  const { cartList, setCartList } = useFetchCart();
+  const [cartList, setCartList] = useRecoilState(cartListAtom);
   const { toast } = useToast();
 
   const addItem = async (product: Product) => {

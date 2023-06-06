@@ -4,9 +4,10 @@ import Modal from 'components/@common/Modal';
 import { useCheckedItemIds } from '../hooks/useCheckedItems';
 import { useModal } from 'hooks/useModal';
 import { useCart } from '../hooks/useCart';
+import { Cart } from 'types';
 
-const CartItemList = () => {
-  const { cartList, deleteItem } = useCart();
+const CartItemList = ({ cartList }: { cartList: Cart[] }) => {
+  const { deleteItem } = useCart();
   const { checkedItemIds, unCheckAllItems, checkAllItems, unCheckItem } =
     useCheckedItemIds();
   const { isModalOpen, onOpenModal, onCloseModal } = useModal();
