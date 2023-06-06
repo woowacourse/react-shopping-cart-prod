@@ -1,22 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import * as S from './styles/OrderPage.styles';
-import * as api from '../api';
-import { OrderInfo } from '../types';
 import { useRecoilValue } from 'recoil';
 import { serverNameState } from '../atom/serverName';
 import { loginState } from '../atom/login';
 import OrderItemList from '../components/OrderList/OrderItemList';
+import { useGetOrderList } from '../components/hooks/useGetOrderList';
 
 export default function OrderPage() {
   const serverName = useRecoilValue(serverNameState);
   const loginCredential = useRecoilValue(loginState);
-  const [orders, setOrders] = useState<OrderInfo[]>([]);
+  const { orders, getOrdersThroughApi } = useGetOrderList();
 
   useEffect(() => {
-    api.getOrder<OrderInfo[]>(serverName, loginCredential).then((orders) => {
-      setOrders(orders);
-    });
+    getOrdersThroughApi(serverName, loginCredential);
   }, []);
+
+  if (!orders) return <></>;
 
   return (
     <>
