@@ -45,14 +45,10 @@ export default function CartBill() {
 
     await api.postPurchaseCartItem(serverName, loginCredential, purchasingCartItems, couponId);
 
-    const cartList = (await api.getCart(serverName, loginCredential)) as CartType;
+    const cartList = await api.getCart<CartType>(serverName, loginCredential);
     setCart(cartList);
     setCheckList(new Array(cartList.length).fill(true));
-    setCoupons((prevCoupons) =>
-      prevCoupons.filter((coupon) => {
-        return coupon.id !== couponId;
-      })
-    );
+    setCoupons(coupons.filter((coupon) => coupon.id !== couponId));
 
     showToast('info', API_SUCCESS_MESSAGE.purchase);
   };

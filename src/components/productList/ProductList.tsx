@@ -39,7 +39,9 @@ export default function ProductList() {
 
     api
       .getCoupon<CouponInfo[]>(serverName, loginCredential)
-      .then(setCoupons)
+      .then((coupons) => {
+        setCoupons(coupons.filter((coupon) => !coupon.isUsed));
+      })
       .catch(() => {
         products && showToast('error', API_ERROR_MESSAGE.coupon);
       });

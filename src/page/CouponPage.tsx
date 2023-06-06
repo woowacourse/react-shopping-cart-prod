@@ -12,9 +12,7 @@ export default function CouponPage() {
   const [coupons, setCoupons] = useState<CouponInfo[]>([]);
 
   useEffect(() => {
-    api.getCoupon<CouponInfo[]>(serverName, loginCredential).then((coupons) => {
-      setCoupons(coupons);
-    });
+    api.getCoupon<CouponInfo[]>(serverName, loginCredential).then(setCoupons);
   }, []);
 
   return (
