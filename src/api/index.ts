@@ -8,8 +8,8 @@ export const getProducts = async <T>(serverName: ServerNameType) => {
 
   if (!response.ok) {
     throw response.body
-      ? new Error(`${(await response.json()).errorMessage}`)
-      : new Error(`${API_ERROR_MESSAGE.getProducts}`);
+      ? new Error((await response.json()).errorMessage)
+      : new Error(API_ERROR_MESSAGE.getProducts);
   }
 
   const data: T = await response.json();
@@ -26,8 +26,8 @@ export const getCarts = async <T>(serverName: ServerNameType, loginCredential: s
 
   if (!response.ok) {
     throw response.body
-      ? new Error(`${(await response.json()).errorMessage}`)
-      : new Error(`${API_ERROR_MESSAGE.getCart}`);
+      ? new Error((await response.json()).errorMessage)
+      : new Error(API_ERROR_MESSAGE.getCart);
   }
 
   const data: T = await response.json();
@@ -54,8 +54,8 @@ export const postCartItem = async (
 
   if (!response.ok) {
     throw response.body
-      ? new Error(`${(await response.json()).errorMessage}`)
-      : new Error(`${API_ERROR_MESSAGE.postCartItem}`);
+      ? new Error((await response.json()).errorMessage)
+      : new Error(API_ERROR_MESSAGE.postCartItem);
   }
 };
 
@@ -79,8 +79,8 @@ export const patchCartItemQuantity = async (
 
   if (!response.ok) {
     throw response.body
-      ? new Error(`${(await response.json()).errorMessage}`)
-      : new Error(`${API_ERROR_MESSAGE.patchCartItemQuantity}`);
+      ? new Error((await response.json()).errorMessage)
+      : new Error(API_ERROR_MESSAGE.patchCartItemQuantity);
   }
 };
 
@@ -98,8 +98,8 @@ export const deleteCartItem = async (
 
   if (!response.ok) {
     throw response.body
-      ? new Error(`${(await response.json()).errorMessage}`)
-      : new Error(`${API_ERROR_MESSAGE.deleteCartItem}`);
+      ? new Error((await response.json()).errorMessage)
+      : new Error(API_ERROR_MESSAGE.deleteCartItem);
   }
 };
 
@@ -118,8 +118,8 @@ export const deleteCartItems = async (
 
   if (!response.ok) {
     throw response.body
-      ? new Error(`${(await response.json()).errorMessage}`)
-      : new Error(`${API_ERROR_MESSAGE.deleteCartItem}`);
+      ? new Error((await response.json()).errorMessage)
+      : new Error(API_ERROR_MESSAGE.deleteCartItem);
   }
 };
 
@@ -140,8 +140,8 @@ export const postSignUpInfo = async (
 
   if (!response.ok) {
     throw response.body
-      ? new Error(`${(await response.json()).errorMessage}`)
-      : new Error(`${API_ERROR_MESSAGE.postSignUp}`);
+      ? new Error((await response.json()).errorMessage)
+      : new Error(API_ERROR_MESSAGE.postSignUp);
   }
 };
 
@@ -162,8 +162,8 @@ export const postLoginInfo = async (
 
   if (!response.ok) {
     throw response.body
-      ? new Error(`${(await response.json()).errorMessage}`)
-      : new Error(`${API_ERROR_MESSAGE.postLogin}`);
+      ? new Error((await response.json()).errorMessage)
+      : new Error(API_ERROR_MESSAGE.postLogin);
   }
 
   const loginToken = await response.json();
@@ -182,8 +182,8 @@ export const getCoupon = async <T>(serverName: ServerNameType, loginCredential: 
 
   if (!response.ok) {
     throw response.body
-      ? new Error(`${(await response.json()).errorMessage}`)
-      : new Error(`${API_ERROR_MESSAGE.getCoupon}`);
+      ? new Error((await response.json()).errorMessage)
+      : new Error(API_ERROR_MESSAGE.getCoupon);
   }
 
   const data: T = await response.json();
@@ -211,8 +211,8 @@ export const postPurchaseCartItem = async <T>(
 
   if (!response.ok) {
     throw response.body
-      ? new Error(`${(await response.json()).errorMessage}`)
-      : new Error(`${API_ERROR_MESSAGE.postPurchaseCartItem}`);
+      ? new Error((await response.json()).errorMessage)
+      : new Error(API_ERROR_MESSAGE.postPurchaseCartItem);
   }
 };
 
@@ -225,8 +225,8 @@ export const getOrder = async <T>(serverName: ServerNameType, loginCredential: s
 
   if (!response.ok) {
     throw response.body
-      ? new Error(`${(await response.json()).errorMessage}`)
-      : new Error(`${API_ERROR_MESSAGE.getOrder}`);
+      ? new Error((await response.json()).errorMessage)
+      : new Error(API_ERROR_MESSAGE.getOrder);
   }
 
   const data: T = await response.json();
@@ -247,8 +247,8 @@ export const getOrderDetail = async <T>(
 
   if (!response.ok) {
     throw response.body
-      ? new Error(`${(await response.json()).errorMessage}`)
-      : new Error(`${API_ERROR_MESSAGE.getDetailOrder}`);
+      ? new Error((await response.json()).errorMessage)
+      : new Error(API_ERROR_MESSAGE.getDetailOrder);
   }
 
   const data: T = await response.json();

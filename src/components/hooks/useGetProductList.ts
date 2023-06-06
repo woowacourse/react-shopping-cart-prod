@@ -14,7 +14,7 @@ export const useGetProductList = () => {
       .then(setProducts)
       .catch((e: Error) => {
         if (e.name !== 'Error') {
-          showToast('error', `${API_ERROR_MESSAGE.server}`);
+          showToast('error', API_ERROR_MESSAGE.server);
           return;
         }
 
