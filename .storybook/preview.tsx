@@ -5,7 +5,7 @@ import GlobalStyle from "../src/style/GlobalStyle";
 import { RecoilRoot } from "recoil";
 import { initializeWorker, mswDecorator } from "msw-storybook-addon";
 import { rest } from "msw";
-import products from "../src/mocks/mockData.json";
+import products from "../src/mocks/data/mockProduct.json";
 import { SERVER_LIST } from "../src/api/constants";
 
 initializeWorker();

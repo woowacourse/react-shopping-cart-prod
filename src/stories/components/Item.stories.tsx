@@ -4,6 +4,7 @@ import Item from "components/Item";
 export default {
   title: "Item",
   component: Item,
+  decorators: [(StoryFn) => <div style={{ width: "500px" }}>{StoryFn()}</div>],
 } as Meta;
 
 const Template: StoryFn = () => {

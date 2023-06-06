@@ -22,7 +22,10 @@ const Counter = (props: CounterProps) => {
   };
 
   const handleOnBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    if (props.lowerBound !== undefined && Number(e.target.value) < props.lowerBound) {
+    if (
+      props.lowerBound !== undefined &&
+      Number(e.target.value) < props.lowerBound
+    ) {
       props.setValue(props.lowerBound.toString());
       return;
     }
@@ -44,7 +47,10 @@ const Counter = (props: CounterProps) => {
         <ArrowBox onClick={handleUpArrowBox}>▾</ArrowBox>
         <ArrowBox
           onClick={handleDownArrowBox}
-          disabled={props.lowerBound !== undefined && Number(props.value) <= props.lowerBound}
+          disabled={
+            props.lowerBound !== undefined &&
+            Number(props.value) <= props.lowerBound
+          }
         >
           ▾
         </ArrowBox>
@@ -61,7 +67,7 @@ const CountInput = styled.input`
   width: 41px;
   height: 28px;
 
-  border: 1px solid #dddddd;
+  border: 1px solid var(--primary-blue-color);
   text-align: center;
 
   &:focus {
@@ -96,7 +102,7 @@ const ArrowBox = styled.button`
   width: 23px;
   height: 14px;
 
-  border: 1px solid #dddddd;
+  border: 1px solid var(--primary-blue-color);
   background: transparent;
 
   font-size: 5px;

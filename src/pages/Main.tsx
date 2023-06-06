@@ -1,24 +1,21 @@
-import Header from "components/Header";
 import Page from "components/common/Page";
 import ItemList from "components/ItemList";
-import React from "react";
-import LoadingSpinner from "components/common/LodingSpinner";
-import Skeleton from "components/common/Skeleton";
+import AsyncBoundary from "components/common/AsyncBoundary";
+import ErrorInfo from "components/common/ErrorInfo";
+import ItemListSkeleton from "components/skeleton/ItemListSkeleton";
 
 const Main = () => {
   return (
-    <>
-      <React.Suspense
-        fallback={<Skeleton {...{ background: "#333333", width: "100%", height: "70px" }} />}
+    <Page>
+      <AsyncBoundary
+        SuspenseFallback={<ItemListSkeleton />}
+        ErrorFallback={(FallbackProps) => (
+          <ErrorInfo error={FallbackProps.error} />
+        )}
       >
-        <Header />
-      </React.Suspense>
-      <Page>
-        <React.Suspense fallback={<LoadingSpinner />}>
-          <ItemList />
-        </React.Suspense>
-      </Page>
-    </>
+        <ItemList />
+      </AsyncBoundary>
+    </Page>
   );
 };
 

@@ -1,26 +1,25 @@
-import Header from "components/Header";
 import Page from "components/common/Page";
 import CartItemList from "components/CartItemList";
 import PurchaseOrder from "components/PurchaseOrder";
-import React from "react";
-import Skeleton from "components/common/Skeleton";
-import LoadingSpinner from "components/common/LodingSpinner";
+import AsyncBoundary from "components/common/AsyncBoundary";
+import ErrorInfo from "components/common/ErrorInfo";
+import CartItemListSkeleton from "components/skeleton/CartItemListSkeleton";
 
 const Cart = () => {
   return (
-    <>
-      <React.Suspense
-        fallback={<Skeleton {...{ background: "#333333", width: "100%", height: "70px" }} />}
-      >
-        <Header />
-      </React.Suspense>
-      <Page>
-        <React.Suspense fallback={<LoadingSpinner />}>
+    <Page pageName="장바구니">
+      <div style={{ display: "flex" }}>
+        <AsyncBoundary
+          SuspenseFallback={<CartItemListSkeleton />}
+          ErrorFallback={(FallbackProps) => (
+            <ErrorInfo error={FallbackProps.error} />
+          )}
+        >
           <CartItemList />
           <PurchaseOrder />
-        </React.Suspense>
-      </Page>
-    </>
+        </AsyncBoundary>
+      </div>
+    </Page>
   );
 };
 

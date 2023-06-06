@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { ROUTER_PATH } from "router";
 import { cartListState } from "recoil/cart";
-import ServerSeclector from "./ServerSelector";
+import { memo } from "react";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -17,13 +17,20 @@ const Header = () => {
     navigate(ROUTER_PATH.Cart);
   };
 
+  const goToOrderList = () => {
+    navigate(ROUTER_PATH.OrderList);
+  };
+
   return (
     <Wrapper>
       <TitleContainer onClick={goToMain}>
-        <img src={process.env.PUBLIC_URL + "/assets/cart-icon.svg"} alt="홈카트" />
+        <img
+          src={process.env.PUBLIC_URL + "/assets/cart-icon.svg"}
+          alt="홈카트"
+        />
         <Title>SHOP</Title>
       </TitleContainer>
-      <ServerSeclector />
+      <OrderContainer onClick={goToOrderList}>주문목록</OrderContainer>
       <CartContainer onClick={goToCart}>
         장바구니
         {cartCount > 0 && <ItemQuantityBox>{cartCount}</ItemQuantityBox>}
@@ -33,9 +40,11 @@ const Header = () => {
 };
 
 const Wrapper = styled.section`
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 3fr auto auto;
+  grid-template-rows: 70px;
   align-items: center;
+  gap: 0 20px;
 
   position: fixed;
   z-index: 1;
@@ -45,51 +54,49 @@ const Wrapper = styled.section`
   height: 70px;
   padding: 0 5%;
 
-  background: #333333;
+  background: var(--primary-blue-color);
 `;
 
-const TitleContainer = styled.section`
+const TitleContainer = styled.div`
   display: flex;
   align-items: end;
-  align-items: center;
-  gap: 20px;
+  align-items: flex-end;
+  gap: 10px;
 
   cursor: pointer;
 
   & > img {
-    width: 46px;
-    height: 46px;
-    margin: 5% 0;
+    width: 40px;
+    height: 40px;
   }
 `;
 
 const Title = styled.p`
-  color: white;
+  color: var(--light-color);
   font-weight: 900;
   font-size: 2rem;
 
-  @media screen and (max-width: 800px) {
+  @media (max-width: 767px) {
     display: none;
   }
 `;
 
-const CartContainer = styled.section`
+const CartContainer = styled.div`
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: flex-start;
+  gap: 5px;
+  width: 110px;
 
-  font-size: 24px;
-  font-weight: 500;
-  color: white;
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--light-color);
 
   cursor: pointer;
 
-  @media screen and (max-width: 1200px) {
-    font-size: 20px;
-  }
-
-  @media screen and (max-width: 800px) {
+  @media (max-width: 767px) {
     font-size: 16px;
+    width: 90px;
   }
 `;
 
@@ -100,12 +107,24 @@ const ItemQuantityBox = styled.div`
   width: 26px;
   height: 26px;
 
-  background: #04c09e;
+  background: var(--primary-beige-color);
   border-radius: 50%;
 
   font-size: 16px;
   font-weight: 500;
-  color: #ffffff;
+  color: var(--primary-blue-color);
 `;
 
-export default Header;
+const OrderContainer = styled.div`
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--light-color);
+
+  cursor: pointer;
+
+  @media (max-width: 767px) {
+    font-size: 16px;
+  }
+`;
+
+export default memo(Header);

@@ -1,0 +1,26 @@
+[
+  {
+    "couponId": 1,
+    "name": "[오픈 기념 쿠폰] 10% 할인 쿠폰",
+    "discount": {
+      "type": "rate",
+      "amount": 10
+    }
+  },
+  {
+    "couponId": 2,
+    "name": "[오픈 기념 쿠폰] 1000원 할인 쿠폰",
+    "discount": {
+      "type": "price",
+      "amount": 1000
+    }
+  },
+  {
+    "couponId": 3,
+    "name": "[신규 유저 환영 쿠폰] 5959원 할인 쿠폰",
+    "discount": {
+      "type": "price",
+      "amount": 5959
+    }
+  }
+]

@@ -6,7 +6,9 @@ import { useCartCheckbox } from "hooks/useCartCheckbox";
 
 const CartItemList = () => {
   const cartList = useRecoilValue(cartListState);
-  const { isAllchecked, checkedCount, setAllCheckbox, removeCheckedItem } = useCartCheckbox();
+  const { isAllchecked, checkedCount, setAllCheckbox, removeCheckedItem } =
+    useCartCheckbox();
+  const cartListLastIndex = cartList.length - 1;
 
   const handleCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.currentTarget.checked && setAllCheckbox(true);
@@ -16,16 +18,25 @@ const CartItemList = () => {
   return (
     <Wrapper>
       <SelectorContainer>
-        <input type="checkbox" checked={isAllchecked} onChange={handleCheckbox} />
+        <input
+          type="checkbox"
+          checked={isAllchecked}
+          onChange={handleCheckbox}
+        />
         <CountBox>
           {checkedCount} / {cartList.length}
         </CountBox>
         <button onClick={removeCheckedItem}>선택삭제</button>
       </SelectorContainer>
       <ListBox>
-        {cartList.map((item) => (
-          <CartItem key={item.id} {...item} />
-        ))}
+        {cartList.map((item, index) => {
+          return (
+            <div key={item.id}>
+              <CartItem {...item} />
+              {index !== cartListLastIndex && <Contour />}
+            </div>
+          );
+        })}
       </ListBox>
     </Wrapper>
   );
@@ -38,10 +49,8 @@ const Wrapper = styled.section`
 
   width: 65%;
 
-  @media screen and (max-width: 800px) {
+  @media (max-width: 767px) {
     width: 100%;
-
-    margin-bottom: 25vh;
   }
 `;
 
@@ -51,7 +60,7 @@ const SelectorContainer = styled.section`
   align-items: center;
 
   padding-bottom: 10px;
-  border-bottom: 3px solid rgba(170, 170, 170, 1);
+  border-bottom: 2px solid var(--primary-blue-color);
 
   font-size: 13px;
 
@@ -64,7 +73,7 @@ const SelectorContainer = styled.section`
   }
 
   & > button {
-    border: 1px solid rgba(187, 187, 187, 1);
+    border: 1px solid var(--primary-blue-color);
 
     padding: 6px;
 
@@ -76,13 +85,18 @@ const CountBox = styled.p`
   font-size: 18px;
 `;
 
-const ListBox = styled.li`
+const ListBox = styled.ul`
   list-style: none;
   row-gap: 10px;
 
   ul:first-child {
     border-top: none;
   }
+`;
+
+const Contour = styled.hr`
+  width: 95%;
+  border: 1px solid var(--primary-beige-color);
 `;
 
 export default CartItemList;

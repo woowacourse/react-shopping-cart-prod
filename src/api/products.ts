@@ -10,5 +10,9 @@ export const getProducts = async (serverId: ServerId): Promise<Product[]> => {
     },
   });
 
-  return response.json();
+  const data = await response.json();
+
+  if (!response.ok) throw new Error(data.message);
+
+  return data;
 };

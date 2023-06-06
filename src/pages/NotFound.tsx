@@ -1,7 +1,6 @@
 import { styled } from "styled-components";
 import { useNavigate } from "react-router";
 import { ROUTER_PATH } from "router";
-import Header from "components/Header";
 import Page from "components/common/Page";
 
 const NotFound = () => {
@@ -13,7 +12,6 @@ const NotFound = () => {
 
   return (
     <>
-      <Header />
       <Page>
         <ErrorBox>
           <h2>Sorry</h2>
@@ -53,7 +51,7 @@ const HomeButton = styled.button`
   cursor: pointer;
 
   &:hover {
-    box-shadow: 0 10px 10px -3px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 10px 10px -3px var(--image-hover-color);
     transition: all 0.3s ease;
   }
 `;
