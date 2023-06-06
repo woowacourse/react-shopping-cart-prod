@@ -1,4 +1,4 @@
-import { ProductItemData } from './product';
+import type { ProductItemData } from './product';
 
 interface CartItemData {
   id: number;

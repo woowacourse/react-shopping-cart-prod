@@ -1,5 +1,6 @@
 import { ORDERS_LOCAL_STORAGE_KEY } from '../constants/localStorage';
 import type { OrderCostsData, OrderData, OrderedItemData } from '../types/order';
+import type { OrderCartItemsData } from '../types/order';
 import { getCosts } from '../utils/costs';
 import { getFromLocalStorage, saveToLocalStorage } from '../utils/localStorage';
 import { areObjectsEqual } from '../utils/validator';
@@ -14,7 +15,7 @@ const setOrderListData = (newOrderList: OrderData[]) => {
   saveToLocalStorage(ORDERS_LOCAL_STORAGE_KEY, newOrderList);
 };
 
-const getOrderedItems = (cartItemIds: number[]): OrderedItemData[] => {
+const getOrderedItems = (cartItemIds: OrderCartItemsData['cartItemIds']): OrderedItemData[] => {
   const currentCartData = getCartData();
 
   return cartItemIds.map((cartItemId) => {
@@ -28,7 +29,7 @@ const getOrderedItems = (cartItemIds: number[]): OrderedItemData[] => {
 };
 
 const addOrder = (
-  cartItemIds: number[],
+  cartItemIds: OrderCartItemsData['cartItemIds'],
   clientOrderCosts: OrderCostsData,
   orderList: OrderData[]
 ): OrderData[] | null => {
