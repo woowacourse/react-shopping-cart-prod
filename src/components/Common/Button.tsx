@@ -1,5 +1,11 @@
-import type { ButtonHTMLAttributes, ReactNode } from 'react';
+import { ButtonHTMLAttributes, ReactNode } from 'react';
+
 import styled from 'styled-components';
+
+import {
+  DISABLED_MESSAGES,
+  DisabledMessageKeys,
+} from '../../constants/message';
 
 type ButtonSizeType = 'small' | 'medium';
 
@@ -8,6 +14,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   isAutoSize?: boolean;
   hasPrimary?: boolean;
   hasBorder?: boolean;
+  disabledMessageKey?: DisabledMessageKeys;
   children: ReactNode;
 }
 
@@ -16,6 +23,8 @@ const Button = ({
   hasPrimary = true,
   isAutoSize = false,
   hasBorder = false,
+  disabled,
+  disabledMessageKey,
   children,
   ...args
 }: ButtonProps) => {
@@ -25,9 +34,14 @@ const Button = ({
       hasPrimary={hasPrimary}
       isAutoSize={isAutoSize}
       hasBorder={hasBorder}
+      disabled={disabled}
       {...args}
     >
-      {children}
+      {disabled && disabledMessageKey ? (
+        <p>{DISABLED_MESSAGES[disabledMessageKey]}</p>
+      ) : (
+        children
+      )}
     </StyledButton>
   );
 };
@@ -63,6 +77,7 @@ const StyledButton = styled(
   &:disabled {
     cursor: not-allowed;
     background: ${({ theme }) => theme.colors.gray200};
+    color: white;
   }
 `;
 

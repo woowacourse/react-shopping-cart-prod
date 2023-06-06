@@ -35,7 +35,7 @@ const AmountCounter = ({
           variant={variant}
           disabled={count <= minCount}
         >
-          <ArrowDownIcon />
+          {count <= minCount ? null : <ArrowDownIcon />}
         </CountBtn>
       </CountBtnContainer>
     </InputGroup>

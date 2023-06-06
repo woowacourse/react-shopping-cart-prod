@@ -26,4 +26,11 @@ export const MESSAGE = {
   },
 } as const;
 
+export const DISABLED_MESSAGES = {
+  cantOrder: '주문할 상품이 없어요',
+  noSelectProduct: '선택된 상품이 없어요',
+} as const;
+
+export type DisabledMessageKeys = keyof typeof DISABLED_MESSAGES;
+
 export type MessageKey = keyof typeof MESSAGE;

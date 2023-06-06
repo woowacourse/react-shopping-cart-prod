@@ -61,11 +61,13 @@ const ExpectedPaymentBox = () => {
           options={[DEFAULT_COUPON_NAME, ...couponNames]}
           onChange={handleSelectChange}
           disabled={isAllUnchecked}
+          disabledMessageKey="noSelectProduct"
         />
         <Button
           type="button"
           isAutoSize
           disabled={isAllUnchecked}
+          disabledMessageKey="cantOrder"
           onClick={handleOrderClick}
         >
           주문하기
