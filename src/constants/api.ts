@@ -11,16 +11,21 @@ const AUTHORIZED_FETCH_OPTION_HEADERS = {
   Authorization: `Basic ${BASE64}`,
 } as const;
 
-const SERVER = ['프론트', '아코', '주디', '저문'] as const;
-
-const API_BASE_URL_LIST = {
-  [SERVER[0]]: '',
-  [SERVER[1]]: process.env.REACT_APP_AK_API_BASE_URL,
-  [SERVER[2]]: process.env.REACT_APP_JD_API_BASE_URL,
-  [SERVER[3]]: process.env.REACT_APP_JM_API_BASE_URL,
+const SERVER = {
+  FRONT: '프론트',
+  AK: '아코',
+  JD: '주디',
+  JM: '저문',
 } as const;
 
-const DEFAULT_API_BASE_URL = API_BASE_URL_LIST[SERVER[0]];
+const API_BASE_URL_LIST = {
+  [SERVER.FRONT]: '',
+  [SERVER.AK]: process.env.REACT_APP_AK_API_BASE_URL,
+  [SERVER.JD]: process.env.REACT_APP_JD_API_BASE_URL,
+  [SERVER.JM]: process.env.REACT_APP_JM_API_BASE_URL,
+} as const;
+
+const DEFAULT_API_BASE_URL = API_BASE_URL_LIST[SERVER.FRONT];
 
 const API_ENDPOINT = {
   PRODUCTS: '/products',
