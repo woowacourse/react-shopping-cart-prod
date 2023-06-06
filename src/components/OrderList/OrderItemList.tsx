@@ -3,7 +3,7 @@ import { OrderInfo } from '../../types';
 import * as S from './styles/OrderItemList.styles';
 
 export default function OrderItemList(props: OrderInfo) {
-  const { orderId, items, orderedAt } = props;
+  const { orderId, items } = props;
 
   const setAltSrc = (e: React.SyntheticEvent<HTMLImageElement>) => {
     e.currentTarget.src = './emptyProduct.svg';
@@ -21,8 +21,10 @@ export default function OrderItemList(props: OrderInfo) {
         </div>
         <div>
           <S.ItemNameText>{items[0].product.name}</S.ItemNameText>
-          <S.ItemCountText>총 수량 : {items.length}개</S.ItemCountText>
-          <S.ItemPriceText>{items[0].product.price} 원</S.ItemPriceText>
+          <S.ItemCountText>포함 총 수량 : {items.length}개</S.ItemCountText>
+          <S.ItemPriceText>
+            {items.reduce((acc, item) => acc + item.product.price, 0).toLocaleString()} 원
+          </S.ItemPriceText>
         </div>
       </S.OrderDetail>
     </S.Wrapper>
