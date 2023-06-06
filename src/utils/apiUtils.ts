@@ -32,13 +32,13 @@ export const postData = async (
 
   const location = response.headers.get('location');
 
-  if (location !== null) {
-    const lastSlashIndex = location.lastIndexOf('/');
-    const id = location.slice(lastSlashIndex + 1);
-    return id;
+  if (location === null) {
+    throw new Error('Location이 없습니다');
   }
 
-  throw new Error('Location이 없습니다');
+  const lastSlashIndex = location.lastIndexOf('/');
+  const id = location.slice(lastSlashIndex + 1);
+  return id;
 };
 
 export const patchData = async (
