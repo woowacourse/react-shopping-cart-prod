@@ -1,22 +1,14 @@
 import { useState } from 'react';
 import Modal from '../components/common/Modal';
-import { postLoginInfo } from '../api';
 import { serverNameState } from '../atom/serverName';
-import useToast from '../components/hooks/useToast';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import * as S from './styles/Login.styles';
-import { API_ERROR_MESSAGE, API_SUCCESS_MESSAGE } from '../constants';
-import { loginState } from '../atom/login';
-
-const isError = (error: any): error is Error => {
-  return error instanceof Error && typeof error.message === 'string';
-};
+import { usePostLogin } from '../components/hooks/usePostLogin';
 
 export default function Login() {
-  const setLoginState = useSetRecoilState(loginState);
   const serverName = useRecoilValue(serverNameState);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { showToast } = useToast();
+  const { postLoginThroughApi } = usePostLogin();
 
   const openLoginModal = () => {
     setIsModalOpen(true);
@@ -25,23 +17,12 @@ export default function Login() {
   const handleSubmitLoginInfo = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    try {
-      const formData = new FormData(e.currentTarget);
-      const id = formData.get('id');
-      const password = formData.get('password');
+    const formData = new FormData(e.currentTarget);
+    const id = formData.get('id');
+    const password = formData.get('password');
 
-      if (!(typeof id === 'string' && typeof password === 'string')) return;
-
-      const loginToken = await postLoginInfo(serverName, { name: id, password });
-
-      setIsModalOpen(false);
-      showToast('info', API_SUCCESS_MESSAGE.login);
-      setLoginState(loginToken);
-    } catch (e) {
-      if (isError(e)) {
-        if (e.message.includes('FETCH')) showToast('error', API_ERROR_MESSAGE.login);
-        showToast('error', e.message);
-      }
+    if (typeof id === 'string' && typeof password === 'string') {
+      postLoginThroughApi(serverName, { name: id, password }, setIsModalOpen);
     }
   };
 
