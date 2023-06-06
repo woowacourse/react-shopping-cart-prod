@@ -39,7 +39,11 @@ const updateMemberInformation = (orderList: OrderData[]) => {
   );
 
   return newRank
-    ? { ...memberInformation, rank: newRank, discountRate: MEMBER_DISCOUNT_RATE[newRank] }
+    ? {
+        ...memberInformation,
+        rank: newRank,
+        discountRate: MEMBER_DISCOUNT_RATE[newRank],
+      }
     : { ...memberInformation };
 };
 
