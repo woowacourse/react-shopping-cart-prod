@@ -11,8 +11,8 @@ import { getFromLocalStorage, saveToLocalStorage } from '../utils/localStorage';
 const getMemberData = () => {
   const newMember: MemberInformation = {
     id: Number(new Date()),
-    rank: MEMBER_RANK[0],
-    discountRate: MEMBER_DISCOUNT_RATE[MEMBER_RANK[0]],
+    rank: MEMBER_RANK.NORMAL,
+    discountRate: MEMBER_DISCOUNT_RATE[MEMBER_RANK.NORMAL],
   };
 
   return getFromLocalStorage<MemberInformation>(MEMBER_INFORMATION_LOCAL_STORAGE_KEY) ?? newMember;
@@ -24,12 +24,13 @@ const setMemberData = (newMemberInformation: MemberInformation) => {
 
 const updateMemberInformation = (orderList: OrderData[]) => {
   const memberInformation = getMemberData();
-  const currentMemberRankIndex = MEMBER_RANK.indexOf(memberInformation.rank);
+  const currentMemberRankIndex = Object.keys(MEMBER_RANK).indexOf(memberInformation.rank);
   const accumulatedPurchases = orderList.reduce((acc, curr) => acc + curr.totalPrice, 0);
 
   const newRank = Object.entries(MEMBER_RANK_PURCHASE_CONDITION).reduce(
     (foundRank: MemberRank | null, [memberRank, purchaseCondition], index): MemberRank | null => {
       if (index > currentMemberRankIndex && accumulatedPurchases >= purchaseCondition) {
+        console.log(accumulatedPurchases, purchaseCondition, memberRank);
         return memberRank as MemberRank;
       }
 

@@ -1,21 +1,27 @@
 import type { MemberRank } from '../types/member';
 
-const MEMBER_RANK = ['일반', '실버', '골드', '플래티넘', '다이아몬드'] as const;
+const MEMBER_RANK = {
+  NORMAL: '일반',
+  SILVER: '실버',
+  GOLD: '골드',
+  PLATINUM: '플래티넘',
+  DIAMOND: '다이아몬드',
+} as const;
 
 const MEMBER_RANK_PURCHASE_CONDITION: Record<MemberRank, number> = {
-  일반: 0,
-  실버: 10000,
-  골드: 20000,
-  플래티넘: 30000,
-  다이아몬드: 50000,
+  [MEMBER_RANK.NORMAL]: 0,
+  [MEMBER_RANK.SILVER]: 100000,
+  [MEMBER_RANK.GOLD]: 200000,
+  [MEMBER_RANK.PLATINUM]: 300000,
+  [MEMBER_RANK.DIAMOND]: 500000,
 } as const;
 
 const MEMBER_DISCOUNT_RATE: Record<MemberRank, number> = {
-  일반: 0,
-  실버: 5,
-  골드: 10,
-  플래티넘: 15,
-  다이아몬드: 30,
+  [MEMBER_RANK.NORMAL]: 0,
+  [MEMBER_RANK.SILVER]: 5,
+  [MEMBER_RANK.GOLD]: 10,
+  [MEMBER_RANK.PLATINUM]: 15,
+  [MEMBER_RANK.DIAMOND]: 30,
 } as const;
 
 export { MEMBER_RANK, MEMBER_RANK_PURCHASE_CONDITION, MEMBER_DISCOUNT_RATE };

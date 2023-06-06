@@ -25,7 +25,7 @@ const getTotalMemberDiscountAmount = (
     const price = 'product' in curr ? curr.product.price : curr.price;
     const discountRate = 'product' in curr ? curr.product.discountRate : curr.discountRate;
 
-    if (memberInformation.rank === MEMBER_RANK[0] || discountRate > 0) {
+    if (memberInformation.rank === MEMBER_RANK.NORMAL || discountRate > 0) {
       return acc;
     }
 

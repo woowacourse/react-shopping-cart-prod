@@ -23,8 +23,8 @@ export const Default: Story = {
     (Story) => {
       const newMember: MemberInformation = {
         id: Number(new Date()),
-        rank: MEMBER_RANK[2],
-        discountRate: MEMBER_DISCOUNT_RATE[MEMBER_RANK[2]],
+        rank: MEMBER_RANK.GOLD,
+        discountRate: MEMBER_DISCOUNT_RATE[MEMBER_RANK.GOLD],
       };
 
       saveToLocalStorage(MEMBER_INFORMATION_LOCAL_STORAGE_KEY, newMember);

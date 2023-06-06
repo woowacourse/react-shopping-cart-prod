@@ -5,7 +5,7 @@ interface MemberAuthorization {
   password: string;
 }
 
-type MemberRank = (typeof MEMBER_RANK)[number];
+type MemberRank = (typeof MEMBER_RANK)[keyof typeof MEMBER_RANK];
 
 interface MemberInformation {
   id: number;
