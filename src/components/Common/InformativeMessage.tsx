@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-type MessageType =
+type InformativeMessageType =
   | 'error'
   | 'empty'
   | 'notFound'
@@ -9,8 +9,8 @@ type MessageType =
   | 'orderCompleted'
   | 'orderFailed';
 
-interface MessageProps {
-  type: MessageType;
+interface InformativeMessageProps {
+  type: InformativeMessageType;
   homeLink?: boolean;
   orderLink?: boolean;
   cartLink?: boolean;
@@ -50,12 +50,12 @@ const message = {
   },
 };
 
-const Message = ({
+const InformativeMessage = ({
   type,
   homeLink = false,
   orderLink = false,
   cartLink = false,
-}: MessageProps) => {
+}: InformativeMessageProps) => {
   return (
     <MessageSection>
       <img
@@ -114,4 +114,4 @@ const LinkBtn = styled(Link)`
   border-radius: 4px;
 `;
 
-export default Message;
+export default InformativeMessage;

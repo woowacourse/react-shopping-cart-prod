@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import styled from 'styled-components';
 import { ErrorBoundary } from 'react-error-boundary';
-import Message from '../components/Common/Message';
+import Message from '../components/Common/InformativeMessage';
 import ContentListSkeleton from '../components/Common/ContentListSkeleton';
 import ProductList from '../components/Product/ProductList';
 import { XL } from '../constants/screenSizes';

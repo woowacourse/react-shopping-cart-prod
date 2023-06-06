@@ -1,4 +1,4 @@
-import Message from '../components/Common/Message';
+import Message from '../components/Common/InformativeMessage';
 
 const NotFoundPage = () => {
   return (

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { fetchProductsSelector } from '../../recoil/productData';
 import ProductItem from './ProductItem';
-import Message from '../Common/Message';
+import Message from '../Common/InformativeMessage';
 import { MD, SM } from '../../constants/screenSizes';
 
 const ProductList = () => {
