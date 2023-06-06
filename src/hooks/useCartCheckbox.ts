@@ -8,6 +8,15 @@ import {
 } from '../store/cartCheckbox';
 
 const useCartCheckbox = () => {
+  const setInitialCheckedItems = useRecoilCallback(
+    ({ snapshot, set }) =>
+      async () => {
+        const cartIdList = await snapshot.getPromise(cartIdListState);
+        set(checkedCartIdListState, new Set(cartIdList));
+      },
+    []
+  );
+
   const toggleAllCheckbox = useRecoilCallback(
     ({ snapshot, set }) =>
       async () => {
@@ -38,6 +47,7 @@ const useCartCheckbox = () => {
   );
 
   return {
+    setInitialCheckedItems,
     toggleAllCheckbox,
     toggleItemCheckbox,
   };

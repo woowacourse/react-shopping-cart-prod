@@ -12,6 +12,7 @@ import {
 } from '../constants/api';
 import { PATH } from '../constants/path';
 import { cartItemQuantityState, cartListCheckoutCostsState, cartListState } from '../store/cart';
+import { checkedCartIdListState } from '../store/cartCheckbox';
 import { errorModalMessageState } from '../store/error';
 import { currentMemberInformationState } from '../store/member';
 import { orderListState } from '../store/order';
@@ -31,10 +32,11 @@ const useCart = () => {
   const navigate = useNavigate();
 
   const refreshCart = useRecoilCallback(
-    ({ set }) =>
+    ({ set, reset }) =>
       async () => {
         const newCartList = await cartAPI.getCartList();
         set(cartListState, newCartList);
+        reset(checkedCartIdListState);
       },
     [cartAPI]
   );
