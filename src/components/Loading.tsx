@@ -1,5 +1,5 @@
-import { styled } from "styled-components";
-import { LoadingSpinner } from "../assets";
+import { styled } from 'styled-components';
+import { LoadingSpinner } from '../assets';
 
 export const Loading = () => {
   return (

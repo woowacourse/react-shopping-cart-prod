@@ -5,9 +5,7 @@ export const getLocalStorage = <T>(key: string, defaultValue: T): T => {
   try {
     return JSON.parse(data);
   } catch (e) {
-    console.error(
-      `[ERROR] ${key}값의 LocalStorage data 파싱 과정에서 오류가 발생했습니다.`
-    );
+    console.error(`[ERROR] ${key}값의 LocalStorage data 파싱 과정에서 오류가 발생했습니다.`);
     return defaultValue;
   }
 };

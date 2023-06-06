@@ -1,10 +1,10 @@
-import { styled } from "styled-components";
-import { OrderDetail } from "../types/domain";
+import { styled } from 'styled-components';
+import { OrderDetail } from '../types/domain';
 
 export const OrderTotalPriceBox = ({
   totalProductPrice,
 }: {
-  totalProductPrice: OrderDetail["totalProductPrice"];
+  totalProductPrice: OrderDetail['totalProductPrice'];
 }) => {
   return (
     <Wrapper>

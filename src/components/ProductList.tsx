@@ -1,12 +1,12 @@
-import styled from "styled-components";
-import type { LocalProductType } from "../types/domain";
-import { CartGrayIcon } from "../assets";
-import { Counter } from "./Counter";
-import { MIN_QUANTITY } from "../constants";
-import { addCartItem } from "../api";
-import { makeLocalProducts } from "../utils/domain";
-import { useState } from "react";
-import { useLocalProduct } from "../hooks/useLocalProduct";
+import styled from 'styled-components';
+import type { LocalProductType } from '../types/domain';
+import { CartGrayIcon } from '../assets';
+import { Counter } from './Counter';
+import { MIN_QUANTITY } from '../constants';
+import { addCartItem } from '../api';
+import { makeLocalProducts } from '../utils/domain';
+import { useState } from 'react';
+import { useLocalProduct } from '../hooks/useLocalProduct';
 
 export const ProductList = () => {
   const { localProducts, setLocalProducts } = useLocalProduct();
@@ -30,11 +30,7 @@ export const ProductList = () => {
   return (
     <Wrapper>
       {localProducts.map((product: LocalProductType) => (
-        <Product
-          key={product.id}
-          {...product}
-          handleCartClicked={handleCartClicked}
-        />
+        <Product key={product.id} {...product} handleCartClicked={handleCartClicked} />
       ))}
     </Wrapper>
   );
@@ -44,14 +40,7 @@ interface ProductType extends LocalProductType {
   handleCartClicked: (productId: number) => Promise<void>;
 }
 
-const Product = ({
-  id,
-  name,
-  price,
-  imageUrl,
-  quantity,
-  handleCartClicked,
-}: ProductType) => {
+const Product = ({ id, name, price, imageUrl, quantity, handleCartClicked }: ProductType) => {
   const handleOnCartIcon = async () => {
     await handleCartClicked(id);
   };
@@ -63,7 +52,7 @@ const Product = ({
       <PriceBox>{price.toLocaleString()}원</PriceBox>
       <IconContainer>
         {quantity === MIN_QUANTITY ? (
-          <img src={CartGrayIcon} alt={"카트"} onClick={handleOnCartIcon} />
+          <img src={CartGrayIcon} alt={'카트'} onClick={handleOnCartIcon} />
         ) : (
           <Counter productId={id} deleteable />
         )}

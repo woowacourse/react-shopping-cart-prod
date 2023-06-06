@@ -1,6 +1,5 @@
-import React from "react";
-import { RecoilRoot } from "recoil";
-import { PageRouterProvider } from "./router";
+import { RecoilRoot } from 'recoil';
+import { PageRouterProvider } from './router';
 
 const App = () => {
   return (

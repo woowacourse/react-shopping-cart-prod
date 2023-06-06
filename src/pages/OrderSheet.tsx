@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import { styled } from 'styled-components';
 import {
   Header,
   Page,
@@ -6,14 +6,14 @@ import {
   TotalPriceWithCouponTable,
   CouponSelectBox,
   Button,
-} from "../components";
-import { useState } from "react";
-import { Coupon } from "../types/domain";
-import { useCoupon } from "../hooks/useCoupon";
-import { selectedProductsState } from "../recoil/atom";
-import { useRecoilValue } from "recoil";
-import { useRouter } from "../hooks/useRouter";
-import { ROUTER_PATH } from "../router";
+} from '../components';
+import { useState } from 'react';
+import { Coupon } from '../types/domain';
+import { useCoupon } from '../hooks/useCoupon';
+import { selectedProductsState } from '../recoil/atom';
+import { useRecoilValue } from 'recoil';
+import { useRouter } from '../hooks/useRouter';
+import { ROUTER_PATH } from '../router';
 
 export const OrderSheet = () => {
   const { coupons } = useCoupon();
@@ -22,12 +22,12 @@ export const OrderSheet = () => {
   const [isOrderComplete, setIsOrderComplete] = useState<boolean>(false);
   const [selectedCoupon, setSelectedCoupon] = useState<Coupon>({
     id: null,
-    name: "",
+    name: '',
     minOrderPrice: 0,
     maxDiscountPrice: 0,
     isAvailable: false,
     discountPrice: 0,
-    expiredAt: "",
+    expiredAt: '',
   });
 
   return (
@@ -51,10 +51,7 @@ export const OrderSheet = () => {
             <ContentWrapper>
               <OrderSheetList orderList={checkedCartList} />
               <CouponPriceWrapper>
-                <CouponSelectBox
-                  coupons={coupons}
-                  setSelectedCoupon={setSelectedCoupon}
-                />
+                <CouponSelectBox coupons={coupons} setSelectedCoupon={setSelectedCoupon} />
                 <TotalPriceWithCouponTable
                   couponId={selectedCoupon.id}
                   discountPrice={selectedCoupon.discountPrice}

@@ -1,3 +1,3 @@
-import { couponsHandler } from "./couponsHandlers";
+import { couponsHandler } from './couponsHandlers';
 
 export const handlers = [...couponsHandler];

@@ -1,17 +1,15 @@
-import { styled } from "styled-components";
-import { SERVERS } from "../constants";
-import { ROUTER_PATH } from "../router";
-import { useRouter } from "../hooks/useRouter";
-import { useRecoilState } from "recoil";
-import { serverOwnerState } from "../recoil/atom";
+import { styled } from 'styled-components';
+import { SERVERS } from '../constants';
+import { ROUTER_PATH } from '../router';
+import { useRouter } from '../hooks/useRouter';
+import { useRecoilState } from 'recoil';
+import { serverOwnerState } from '../recoil/atom';
 
 export const ServerSelectBox = () => {
   const { goPage } = useRouter();
   const [serverOwner, setServerOwner] = useRecoilState(serverOwnerState);
 
-  const handleServerSelected = async (
-    e: React.ChangeEvent<HTMLSelectElement>
-  ) => {
+  const handleServerSelected = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     setServerOwner(e.target.value);
     goPage(ROUTER_PATH.Main)();
   };

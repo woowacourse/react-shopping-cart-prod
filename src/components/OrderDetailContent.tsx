@@ -1,8 +1,8 @@
-import { styled } from "styled-components";
-import { OrderList } from "./OrderList";
-import { OrderTotalPriceBox } from "./OrderTotalPriceBox";
-import { useLocation } from "react-router-dom";
-import { useOrderDetail } from "../hooks/useOrderdetail";
+import { styled } from 'styled-components';
+import { OrderList } from './OrderList';
+import { OrderTotalPriceBox } from './OrderTotalPriceBox';
+import { useLocation } from 'react-router-dom';
+import { useOrderDetail } from '../hooks/useOrderdetail';
 
 export const OrderDetailContent = () => {
   const location = useLocation();
@@ -15,10 +15,7 @@ export const OrderDetailContent = () => {
     <>
       <TitleBox>주문 상세 내역</TitleBox>
       <ContentWrapper>
-        <OrderList
-          id={orderDetailList.id}
-          orderListItems={orderDetailList.products}
-        />
+        <OrderList id={orderDetailList.id} orderListItems={orderDetailList.products} />
         <OrderTotalPriceBox
           totalProductPrice={orderDetailList.totalProductPrice}
         ></OrderTotalPriceBox>

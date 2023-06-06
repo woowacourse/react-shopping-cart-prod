@@ -1,4 +1,4 @@
-import { Header, Page, OrderListContent, ErrorBoundary } from "../components";
+import { Header, Page, OrderListContent, ErrorBoundary } from '../components';
 
 const Order = () => {
   return (

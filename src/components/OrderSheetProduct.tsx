@@ -1,13 +1,11 @@
-import { styled } from "styled-components";
-import { LocalProductType } from "../types/domain";
+import { styled } from 'styled-components';
+import { LocalProductType } from '../types/domain';
 
 interface OrderSheetProductPropsType {
   orderItem: LocalProductType;
 }
 
-export const OrderSheetProduct = ({
-  orderItem,
-}: OrderSheetProductPropsType) => {
+export const OrderSheetProduct = ({ orderItem }: OrderSheetProductPropsType) => {
   return (
     <Wrapper>
       <img src={orderItem.imageUrl} alt="상품이미지" />

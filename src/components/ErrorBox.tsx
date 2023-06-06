@@ -1,17 +1,17 @@
-import { styled } from "styled-components";
-import { ERROR_MESSAGE } from "../constants/index";
-import { Button } from "./Button";
-import { ROUTER_PATH } from "../router";
+import { styled } from 'styled-components';
+import { STATUS_ERROR_MESSAGE } from '../constants/index';
+import { Button } from './Button';
+import { ROUTER_PATH } from '../router';
 
 interface ErrorType {
-  status: keyof typeof ERROR_MESSAGE;
+  status: keyof typeof STATUS_ERROR_MESSAGE;
 }
 
 const ErrorBox = ({ status }: ErrorType) => {
   return (
     <Wrapper>
       <h2>{status}</h2>
-      <p>{ERROR_MESSAGE[status]}</p>
+      <p>{STATUS_ERROR_MESSAGE[status]}</p>
       <Button>
         <a href={ROUTER_PATH.Main}>홈으로</a>
       </Button>

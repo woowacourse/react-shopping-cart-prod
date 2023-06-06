@@ -1,19 +1,19 @@
-import { createBrowserRouter } from "react-router-dom";
-import { RouterProvider } from "react-router-dom";
-import Cart from "../pages/Cart";
-import Main from "../pages/Main";
-import NotFound from "../pages/NotFound";
-import Order from "../pages/Order";
-import { OrderDetail } from "../components";
-import { OrderSheet } from "../pages/OrderSheet";
+import { createBrowserRouter } from 'react-router-dom';
+import { RouterProvider } from 'react-router-dom';
+import Cart from '../pages/Cart';
+import Main from '../pages/Main';
+import NotFound from '../pages/NotFound';
+import Order from '../pages/Order';
+import { OrderDetail } from '../components';
+import { OrderSheet } from '../pages/OrderSheet';
 
 export const ROUTER_PATH = {
-  Main: "/react-shopping-cart-prod",
-  Cart: "/react-shopping-cart-prod/Cart",
-  Order: "/react-shopping-cart-prod/Order",
-  OrderDetail: "/react-shopping-cart-prod/OrderDetail",
-  OrderSheet: "/react-shopping-cart-prod/OrderSheet",
-  NotFound: "/*",
+  Main: '/react-shopping-cart-prod',
+  Cart: '/react-shopping-cart-prod/Cart',
+  Order: '/react-shopping-cart-prod/Order',
+  OrderDetail: '/react-shopping-cart-prod/OrderDetail',
+  OrderSheet: '/react-shopping-cart-prod/OrderSheet',
+  NotFound: '/*',
 };
 
 export const PageRouterProvider = () => {

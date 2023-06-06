@@ -27,13 +27,13 @@ export interface Coupon {
 }
 
 export interface Order {
-  couponId: Coupon["id"];
-  products: Omit<LocalProductType, "id">[];
+  couponId: Coupon['id'];
+  products: Omit<LocalProductType, 'id'>[];
 }
 
 export interface OrderItemList {
   id: number;
-  products: Omit<LocalProductType, "cartItemId">[];
+  products: Omit<LocalProductType, 'cartItemId'>[];
 }
 
 export interface OrderDetail extends OrderItemList {

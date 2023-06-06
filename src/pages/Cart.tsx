@@ -1,8 +1,8 @@
-import { useRecoilValue } from "recoil";
-import { styled } from "styled-components";
-import { useRouter } from "../hooks/useRouter";
-import { localProductsSelector } from "../recoil/selector";
-import { ROUTER_PATH } from "../router";
+import { useRecoilValue } from 'recoil';
+import { styled } from 'styled-components';
+import { useRouter } from '../hooks/useRouter';
+import { localProductsSelector } from '../recoil/selector';
+import { ROUTER_PATH } from '../router';
 import {
   Header,
   Page,
@@ -10,7 +10,7 @@ import {
   TotalPriceTable,
   Button,
   ErrorBoundary,
-} from "../components";
+} from '../components';
 
 const Cart = () => {
   const { goPage } = useRouter();

@@ -1,13 +1,13 @@
-import { styled } from "styled-components";
-import { OrderItem } from "./OrderItem";
-import { useRouter } from "../hooks/useRouter";
-import { ROUTER_PATH } from "../router";
-import { OrderItemList } from "../types/domain";
+import { styled } from 'styled-components';
+import { OrderItem } from './OrderItem';
+import { useRouter } from '../hooks/useRouter';
+import { ROUTER_PATH } from '../router';
+import { OrderItemList } from '../types/domain';
 
 type OrderListProps = {
   detail?: boolean;
   id: number;
-  orderListItems: OrderItemList["products"];
+  orderListItems: OrderItemList['products'];
 };
 
 export const OrderList = ({ detail, id, orderListItems }: OrderListProps) => {

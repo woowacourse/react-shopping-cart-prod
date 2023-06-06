@@ -1,7 +1,7 @@
-import { useRecoilState, useRecoilValue } from "recoil";
-import { localProductsState, serverOwnerState } from "../recoil/atom";
-import { makeLocalProducts } from "../utils/domain";
-import { useEffect } from "react";
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { localProductsState, serverOwnerState } from '../recoil/atom';
+import { makeLocalProducts } from '../utils/domain';
+import { useEffect } from 'react';
 
 export const useLocalProduct = () => {
   const [localProducts, setLocalProducts] = useRecoilState(localProductsState);
@@ -14,7 +14,6 @@ export const useLocalProduct = () => {
 
   useEffect(() => {
     setNewLocalProducts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [serverOwner]);
 
   return { localProducts, setLocalProducts };

@@ -1,17 +1,15 @@
-import { styled } from "styled-components";
-import { LocalProductType } from "../types/domain";
+import { styled } from 'styled-components';
+import { LocalProductType } from '../types/domain';
 
-export const OrderItem = ({
-  orderItem,
-}: {
-  orderItem: Omit<LocalProductType, "cartItemId">;
-}) => {
+export const OrderItem = ({ orderItem }: { orderItem: Omit<LocalProductType, 'cartItemId'> }) => {
   return (
     <Wrapper>
-      <ItemImage src={orderItem.imageUrl}/>
+      <ItemImage src={orderItem.imageUrl} />
       <ItemDetail>
         <ItemName>{orderItem.name}</ItemName>
-        <ItemInfo>{`${Number(orderItem.price).toLocaleString()}원 / 수량 : ${orderItem.quantity}개`}</ItemInfo>
+        <ItemInfo>{`${Number(orderItem.price).toLocaleString()}원 / 수량 : ${
+          orderItem.quantity
+        }개`}</ItemInfo>
       </ItemDetail>
     </Wrapper>
   );

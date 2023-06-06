@@ -1,17 +1,17 @@
-import { useRecoilState } from "recoil";
-import { localProductsState } from "../recoil/atom";
-import React, { useEffect, useState } from "react";
-import { MAX_LENGTH_QUANTITY, MAX_QUANTITY, MIN_QUANTITY } from "../constants";
-import { changeQuantity, deleteCartItem } from "../api";
-import { LocalProductType } from "../types/domain";
-import { makeLocalProducts } from "../utils/domain";
+import { useRecoilState } from 'recoil';
+import { localProductsState } from '../recoil/atom';
+import React, { useEffect, useState } from 'react';
+import { MAX_LENGTH_QUANTITY, MAX_QUANTITY, MIN_QUANTITY } from '../constants';
+import { changeQuantity, deleteCartItem } from '../api';
+import { LocalProductType } from '../types/domain';
+import { makeLocalProducts } from '../utils/domain';
 
 export const useQuantity = (productId: number) => {
-  const [errorStatus, setErrorStatus] = useState<string>("");
+  const [errorStatus, setErrorStatus] = useState<string>('');
   const [localProducts, setLocalProducts] = useRecoilState(localProductsState);
-  const [quantity, setQuantity] = useState<string | undefined>("0");
+  const [quantity, setQuantity] = useState<string | undefined>('0');
   const currentLocalProduct = localProducts.find(
-    (product: LocalProductType) => product.id === productId
+    (product: LocalProductType) => product.id === productId,
   );
 
   useEffect(() => {
@@ -45,11 +45,7 @@ export const useQuantity = (productId: number) => {
   };
 
   const handleQuantityBlured = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (
-      e.target.value === "" ||
-      e.target.value === "-0" ||
-      Number(quantity) < MIN_QUANTITY
-    ) {
+    if (e.target.value === '' || e.target.value === '-0' || Number(quantity) < MIN_QUANTITY) {
       e.target.value = MIN_QUANTITY.toString();
     }
     setNewQuantity(Number(e.target.value));

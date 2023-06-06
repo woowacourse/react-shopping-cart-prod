@@ -1,22 +1,19 @@
-import type { PropsWithChildren } from "react";
-import React from "react";
-import { ERROR_MESSAGE } from "../constants/index";
-import ErrorBox from "./ErrorBox";
+import type { PropsWithChildren } from 'react';
+import React from 'react';
+import { STATUS_ERROR_MESSAGE } from '../constants/index';
+import ErrorBox from './ErrorBox';
 
 interface ErrorBoundaryState {
   hasError: boolean;
-  status: keyof typeof ERROR_MESSAGE;
+  status: keyof typeof STATUS_ERROR_MESSAGE;
 }
 
-export class ErrorBoundary extends React.Component<
-  PropsWithChildren,
-  ErrorBoundaryState
-> {
+export class ErrorBoundary extends React.Component<PropsWithChildren, ErrorBoundaryState> {
   constructor(props: PropsWithChildren) {
     super(props);
     this.state = {
       hasError: false,
-      status: "400",
+      status: '400',
     };
   }
 

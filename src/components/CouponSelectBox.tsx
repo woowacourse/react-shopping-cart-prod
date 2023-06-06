@@ -1,7 +1,7 @@
-import { useState } from "react";
-import styled from "styled-components";
-import { ArrowDownIcon } from "../assets";
-import { Coupon } from "../types/domain";
+import { useState } from 'react';
+import styled from 'styled-components';
+import { ArrowDownIcon } from '../assets';
+import { Coupon } from '../types/domain';
 
 interface CouponContainerProps {
   available: string;
@@ -39,13 +39,11 @@ export const CouponSelectBox = ({
                 >
                   <NameBox>{coupon.name}</NameBox>
                   <ExpiredDateBox>만료기한 : {coupon.expiredAt}</ExpiredDateBox>
-                  <MinPriceBox>
-                    {coupon.minOrderPrice.toLocaleString()}원 이상 주문 시
-                  </MinPriceBox>
+                  <MinPriceBox>{coupon.minOrderPrice.toLocaleString()}원 이상 주문 시</MinPriceBox>
                   <DiscountPriceBox>
                     {coupon.discountPrice
                       ? `${coupon.discountPrice.toLocaleString()}원`
-                      : "사용불가"}
+                      : '사용불가'}
                   </DiscountPriceBox>
                 </CouponContainer>
               );
@@ -89,7 +87,7 @@ const TitleContainer = styled.div<{ $isOpen: boolean }>`
   border-bottom: 3px solid #dddddd;
 
   & > img {
-    transform: ${(props) => props.$isOpen && "rotate(-180deg)"};
+    transform: ${(props) => props.$isOpen && 'rotate(-180deg)'};
     transition: all 0.3s linear;
   }
 `;
@@ -110,13 +108,11 @@ const CouponContainer = styled.button<CouponContainerProps>`
   }
 
   &:active {
-    transform: ${(props) =>
-      props.available === "true" ? "scale(0.95)" : "scale(1)"};
+    transform: ${(props) => (props.available === 'true' ? 'scale(0.95)' : 'scale(1)')};
   }
 
-  background: ${(props) =>
-    props.available === "true" ? "#ffffff" : "#dddddd"};
-  color: ${(props) => (props.available === "true" ? "#000000" : "#333333")};
+  background: ${(props) => (props.available === 'true' ? '#ffffff' : '#dddddd')};
+  color: ${(props) => (props.available === 'true' ? '#000000' : '#333333')};
 
   cursor: pointer;
 `;

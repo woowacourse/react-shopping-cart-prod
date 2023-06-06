@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { fetchOrderList } from "../api";
-import { OrderDetail } from "../types/domain";
+import { useEffect, useState } from 'react';
+import { fetchOrderList } from '../api';
+import { OrderDetail } from '../types/domain';
 
 export const useOrderDetail = (orderId: number) => {
   const [orderDetailList, setOrderDetailList] = useState<OrderDetail>({
@@ -26,7 +26,6 @@ export const useOrderDetail = (orderId: number) => {
 
   useEffect(() => {
     getOrderDetailList();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return { orderDetailList };

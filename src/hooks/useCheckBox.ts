@@ -1,23 +1,17 @@
-import { useEffect, useState } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { selectedProductsState } from "../recoil/atom";
-import { localProductsSelector } from "../recoil/selector";
-import { LocalProductType } from "../types/domain";
+import { useEffect, useState } from 'react';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { selectedProductsState } from '../recoil/atom';
+import { localProductsSelector } from '../recoil/selector';
+import { LocalProductType } from '../types/domain';
 
 export const useCheckBox = () => {
-  const cartProducts = useRecoilValue<LocalProductType[]>(
-    localProductsSelector
-  );
+  const cartProducts = useRecoilValue<LocalProductType[]>(localProductsSelector);
   const setSelectedProducts = useSetRecoilState(selectedProductsState);
-  const [checkedArray, setCheckedArray] = useState(
-    [...Array(cartProducts.length)].map(() => true)
-  );
+  const [checkedArray, setCheckedArray] = useState([...Array(cartProducts.length)].map(() => true));
 
   useEffect(() => {
     setSelectedProducts(
-      cartProducts.filter(
-        (cartProduct, index) => checkedArray[index] && cartProduct
-      )
+      cartProducts.filter((cartProduct, index) => checkedArray[index] && cartProduct),
     );
   }, [cartProducts, checkedArray, setSelectedProducts]);
 
@@ -27,9 +21,7 @@ export const useCheckBox = () => {
 
   const handleCheckBox = (changedIndex: number) => () => {
     setCheckedArray((prev) =>
-      prev.map((checked, index) =>
-        changedIndex === index ? !checked : checked
-      )
+      prev.map((checked, index) => (changedIndex === index ? !checked : checked)),
     );
   };
 

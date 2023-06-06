@@ -1,10 +1,10 @@
-import styled from "styled-components";
-import { CartIcon } from "../assets";
-import { useRecoilValue } from "recoil";
-import { localProductsSelector } from "../recoil/selector";
-import { ROUTER_PATH } from "../router";
-import { useRouter } from "../hooks/useRouter";
-import { ServerSelectBox } from "./ServerSelectBox";
+import styled from 'styled-components';
+import { CartIcon } from '../assets';
+import { useRecoilValue } from 'recoil';
+import { localProductsSelector } from '../recoil/selector';
+import { ROUTER_PATH } from '../router';
+import { useRouter } from '../hooks/useRouter';
+import { ServerSelectBox } from './ServerSelectBox';
 
 export const Header = () => {
   const { goPage } = useRouter();
@@ -20,9 +20,7 @@ export const Header = () => {
         <ServerSelectBox />
         <CartContainer>
           <p onClick={goPage(ROUTER_PATH.Cart)}>장바구니</p>
-          {cartProducts.length > 0 && (
-            <ItemQuantityBox>{cartProducts.length}</ItemQuantityBox>
-          )}
+          {cartProducts.length > 0 && <ItemQuantityBox>{cartProducts.length}</ItemQuantityBox>}
         </CartContainer>
         <p onClick={goPage(ROUTER_PATH.Order)}>주문 목록</p>
       </InfoContainer>

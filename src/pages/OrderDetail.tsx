@@ -1,4 +1,4 @@
-import { ErrorBoundary, Header, OrderDetailContent, Page } from "../components";
+import { ErrorBoundary, Header, OrderDetailContent, Page } from '../components';
 
 export const OrderDetail = () => {
   return (

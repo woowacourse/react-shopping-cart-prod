@@ -1,24 +1,20 @@
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import type { LocalProductType, ProductType } from "../types/domain";
-import styled from "styled-components";
-import { TrashCanIcon } from "../assets";
-import { Counter } from "./Counter";
-import { localProductsSelector } from "../recoil/selector";
-import { useCheckBox } from "../hooks/useCheckBox";
-import { deleteCartItem } from "../api";
-import { localProductsState, selectedProductsState } from "../recoil/atom";
-import { makeLocalProducts } from "../utils/domain";
-import { useState } from "react";
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import type { LocalProductType, ProductType } from '../types/domain';
+import styled from 'styled-components';
+import { TrashCanIcon } from '../assets';
+import { Counter } from './Counter';
+import { localProductsSelector } from '../recoil/selector';
+import { useCheckBox } from '../hooks/useCheckBox';
+import { deleteCartItem } from '../api';
+import { localProductsState, selectedProductsState } from '../recoil/atom';
+import { makeLocalProducts } from '../utils/domain';
+import { useState } from 'react';
 
 export const CartProductList = () => {
   const [error, setError] = useState<null | Error>(null);
 
-  const localProductsInCart = useRecoilValue<LocalProductType[]>(
-    localProductsSelector
-  );
-  const selectedProducts = useRecoilValue<LocalProductType[]>(
-    selectedProductsState
-  );
+  const localProductsInCart = useRecoilValue<LocalProductType[]>(localProductsSelector);
+  const selectedProducts = useRecoilValue<LocalProductType[]>(selectedProductsState);
   const {
     checkedArray,
     allChecked,
@@ -118,12 +114,7 @@ const CartProduct = ({
         <img src={TrashCanIcon} alt="휴지통" onClick={onDeleteHandler} />
       </TrashCanIconBox>
       <CheckBoxLabel htmlFor="checkProduct">
-        <CheckBox
-          id="checkProduct"
-          type="checkbox"
-          checked={checked}
-          onChange={onChangeHandler}
-        />
+        <CheckBox id="checkProduct" type="checkbox" checked={checked} onChange={onChangeHandler} />
       </CheckBoxLabel>
       <img src={imageUrl} alt="상품이미지" />
       <Container>

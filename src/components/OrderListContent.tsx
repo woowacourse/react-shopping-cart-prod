@@ -1,9 +1,9 @@
-import { styled } from "styled-components";
-import { useOrderList } from "../hooks/useOrderList";
-import { Button } from "./Button";
-import { ROUTER_PATH } from "../router";
-import { useRouter } from "../hooks/useRouter";
-import { OrderList } from "./OrderList";
+import { styled } from 'styled-components';
+import { useOrderList } from '../hooks/useOrderList';
+import { Button } from './Button';
+import { ROUTER_PATH } from '../router';
+import { useRouter } from '../hooks/useRouter';
+import { OrderList } from './OrderList';
 
 export const OrderListContent = () => {
   const { orderList } = useOrderList();
@@ -16,9 +16,7 @@ export const OrderListContent = () => {
         <EmptyContainer>
           <span>🛒</span>
           <p>주문 목록이 텅 비었어요</p>
-          <Button onClick={goPage(ROUTER_PATH.Main)}>
-            주문할 상품 담으러 가기
-          </Button>
+          <Button onClick={goPage(ROUTER_PATH.Main)}>주문할 상품 담으러 가기</Button>
         </EmptyContainer>
       ) : (
         <OrderListWrapper>
