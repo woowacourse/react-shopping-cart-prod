@@ -1,14 +1,10 @@
 import { rest } from 'msw';
 
-import { CART_LIST_LOCAL_STORAGE_KEY } from '../constants';
 import initialData from '../data/mockData.json';
-import { CartItemType } from '../types';
 
 interface PostCartItemId {
   itemId: string;
 }
-
-const storeKey = CART_LIST_LOCAL_STORAGE_KEY;
 
 export const handlers = [
   rest.get('/products', (req, res, ctx) => {
@@ -16,15 +12,33 @@ export const handlers = [
   }),
 
   rest.get('/cart-items', (req, res, ctx) => {
-    const savedValue = localStorage.getItem(storeKey);
-
-    if (savedValue !== null) {
-      return res(ctx.status(200), ctx.delay(1000), ctx.json(JSON.parse(savedValue)));
-    }
     return res(
-      ctx.status(500),
+      ctx.status(200),
       ctx.delay(1000),
-      ctx.json([{ error: '카트 목록이 존재하지 않습니다.' }])
+      ctx.json([
+        {
+          id: 1,
+          quantity: 1,
+          product: {
+            id: 1,
+            name: '치킨',
+            imageUrl:
+              'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2370&q=80',
+            price: 15000,
+          },
+        },
+        {
+          id: 2,
+          quantity: 2,
+          product: {
+            id: 3,
+            name: '피자',
+            imageUrl:
+              'https://images.unsplash.com/photo-1595854341625-f33ee10dbf94?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80',
+            price: 20000,
+          },
+        },
+      ])
     );
   }),
 
@@ -130,7 +144,7 @@ export const handlers = [
     );
   }),
 
-  rest.get('coupons/active?total=10000', (req, res, ctx) => {
+  rest.get('/coupons/active?total=55000', (req, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.delay(1000),
@@ -173,9 +187,9 @@ export const handlers = [
             quantity: 2,
           },
         ],
-        total_amount: 55000,
-        delivery_amount: 2000,
-        discounted_amount: 3000,
+        totalProductAmount: 55000,
+        deliveryAmount: 2000,
+        discountedProductAmount: 3000,
         address: '서울특별시 송파구 송파송파송파송파송파송파송파송파송파송파송파송파',
       })
     );
@@ -197,30 +211,7 @@ export const handlers = [
   }),
 
   rest.patch<PostCartItemId>('/cart-items/:cartItemId', async (req, res, ctx) => {
-    const { cartItemId } = await req.params;
-
-    const reqBody = await req.json();
-    const savedValue = localStorage.getItem(storeKey);
-    if (savedValue) {
-      const initData = JSON.parse(savedValue) as CartItemType[];
-      const quantity = reqBody.quantity;
-
-      const newData = initData.map((item: CartItemType) => {
-        if (item.id === Number(cartItemId)) {
-          item.quantity = quantity;
-          return item;
-        }
-        return item;
-      });
-
-      localStorage.setItem(CART_LIST_LOCAL_STORAGE_KEY, JSON.stringify(newData));
-      return res(ctx.status(200), ctx.delay(500));
-    }
-    return res(
-      ctx.status(404),
-      ctx.delay(500),
-      ctx.json({ message: '장바구니에 존재하지 않는 상품입니다.' })
-    );
+    return res(ctx.status(200), ctx.delay(500));
   }),
 
   rest.delete('/cart-item/:id', async (req, res, ctx) => {

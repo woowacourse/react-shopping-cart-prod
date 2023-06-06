@@ -21,7 +21,7 @@ const CouponListSection = () => {
     },
     [publishCouponMutation]
   );
-  console.log(coupons);
+
   if (isLoading) return <LoadingSpinner />;
   return (
     <>

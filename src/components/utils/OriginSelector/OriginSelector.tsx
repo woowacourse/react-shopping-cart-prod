@@ -13,6 +13,9 @@ const OriginSelector = () => {
 
   return (
     <select onChange={onChangeOrigin} className={styles.SelectBox}>
+      <option value="msw" selected={origin === ORIGIN['msw']}>
+        msw
+      </option>
       <option value="두둠" selected={origin === ORIGIN['두둠']}>
         두둠
       </option>

@@ -42,7 +42,6 @@ const useOrders = () => {
         },
       });
       const result = await response.json();
-      console.log(result);
       setOrderInformation(result);
       return result;
     },
