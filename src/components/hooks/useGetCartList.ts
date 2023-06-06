@@ -26,6 +26,8 @@ export const useGetCartList = () => {
           showToast('error', API_ERROR_MESSAGE.getCart);
           return;
         }
+
+        return showToast('error', e.message);
       });
   };
 
