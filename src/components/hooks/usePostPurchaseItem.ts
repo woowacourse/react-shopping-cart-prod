@@ -45,7 +45,7 @@ export const usePostPurchaseItem = () => {
       })
       .catch((e: Error) => {
         if (e.name !== 'Error') {
-          showToast('error', API_ERROR_MESSAGE.postPurchaseCartItem);
+          showToast('error', API_ERROR_MESSAGE.server);
           return;
         }
 

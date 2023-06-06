@@ -27,7 +27,7 @@ const useQuantityInput = (cartItemId: number) => {
       })
       .catch((e: Error) => {
         if (e.name !== 'Error') {
-          showToast('error', API_ERROR_MESSAGE.deleteCartItem);
+          showToast('error', API_ERROR_MESSAGE.server);
           return;
         }
 
@@ -45,7 +45,7 @@ const useQuantityInput = (cartItemId: number) => {
       })
       .catch((e: Error) => {
         if (e.name !== 'Error') {
-          showToast('error', API_ERROR_MESSAGE.patchCartItemQuantity);
+          showToast('error', API_ERROR_MESSAGE.server);
           return;
         }
 

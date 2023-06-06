@@ -22,8 +22,7 @@ export const usePostCartItem = () => {
         if (setAddLoading) setAddLoading(false);
 
         if (e.name !== 'Error') {
-          showToast('error', API_ERROR_MESSAGE.postCartItem);
-          return;
+          showToast('error', API_ERROR_MESSAGE.server);
         }
 
         showToast('error', e.message);

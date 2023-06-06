@@ -14,7 +14,7 @@ export const useGetOrderList = () => {
       .then(setOrders)
       .catch((e: Error) => {
         if (e.name !== 'Error') {
-          showToast('error', API_ERROR_MESSAGE.getOrder);
+          showToast('error', API_ERROR_MESSAGE.server);
           return;
         }
 

@@ -23,7 +23,7 @@ export const useGetCartList = () => {
       })
       .catch((e: Error) => {
         if (e.name !== 'Error') {
-          showToast('error', API_ERROR_MESSAGE.getCart);
+          showToast('error', API_ERROR_MESSAGE.server);
           return;
         }
 
