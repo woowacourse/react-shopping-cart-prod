@@ -4,7 +4,7 @@ import { BASE_URL_MAP } from '../constants';
 
 const fetcher =
   (serverName: ServerNameType, token?: string) =>
-  async <T>(method: string, path: string, body?: object): Promise<T> => {
+  async (method: string, path: string, body?: object) => {
     const url = `${BASE_URL_MAP[serverName]}/${path}`;
 
     const headers: HeadersInit = {
@@ -21,7 +21,11 @@ const fetcher =
     const response = await fetch(url, init);
 
     if (!response.ok) throw new Error(`${method} ${url} response not ok`);
-    return response.json();
+    try {
+      return await response.json();
+    } catch {
+      return;
+    }
   };
 
 export default fetcher;
