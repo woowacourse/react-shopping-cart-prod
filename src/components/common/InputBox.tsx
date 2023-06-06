@@ -25,7 +25,7 @@ const InputBox = ({ children, separator, width, align }: Props) => {
 
 export default InputBox;
 
-const InputsBoxWrapper = styled.div<{ width?: string; align?: string }>`
+const InputsBoxWrapper = styled.div<Pick<Props, 'align' | 'width'>>`
   display: flex;
   flex-direction: row;
   justify-content: ${({ align }) => (align === 'center' ? 'center' : 'flex-start')};
