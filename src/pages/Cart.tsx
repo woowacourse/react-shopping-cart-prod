@@ -1,11 +1,15 @@
+import { ErrorBoundary } from 'react-error-boundary';
 import { styled } from 'styled-components';
-import CartList from '../components/cart/CartList';
+import CartPageContent from '../components/cart/CartPageContent';
+import ErrorDisplay from '../components/ErrorDisplay';
 
 export default function Cart() {
   return (
     <Style.Main>
       <Style.Title>장바구니</Style.Title>
-      <CartList />
+      <ErrorBoundary FallbackComponent={ErrorDisplay}>
+        <CartPageContent />
+      </ErrorBoundary>
     </Style.Main>
   );
 }

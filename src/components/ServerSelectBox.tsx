@@ -26,13 +26,23 @@ export default function ServerSelectBox() {
 
 const Style = {
   Wrapper: styled.div`
-    padding: 12px;
+    padding: 5px;
   `,
+
   ServerSelectBox: styled.select`
     background-color: black;
     border: none;
     outline: 0;
-    padding-right: 12px;
+    padding-right: 5px;
+
     color: white;
+    cursor: pointer;
+
+    /* 모바일 */
+    @media screen and (max-width: 767px) {
+      padding-right: 3px;
+
+      font-size: 12px;
+    }
   `,
 };

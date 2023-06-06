@@ -13,20 +13,20 @@ interface Props {
 }
 
 export default function Product({ productInfo }: Props) {
-  const { name, price, imageUrl } = productInfo;
-  const { addToCart, getCartItem, updateProductQuantity } = useCart(productInfo);
+  const { id, name, price, imageUrl } = productInfo;
+  const { addToCart, getCartItem, updateProductQuantity } = useCart();
   const { isOpenToast, openToast, closeToast } = useToast();
-  const cartItem = getCartItem();
+  const cartItem = getCartItem(id);
 
   const handleCartClick = () => {
-    addToCart();
+    addToCart(id);
     openToast();
   };
 
   return (
     <Style.Container>
       <Style.ProductImageWrapper>
-        <Style.ProductImage src={imageUrl} alt={name} loading="lazy" />
+        <Style.ProductImage src={imageUrl} alt={name} loading="lazy" className="skeleton" />
       </Style.ProductImageWrapper>
       <Style.ProductInfo>
         <Style.ProductNameAndStepperContainer>
@@ -35,7 +35,7 @@ export default function Product({ productInfo }: Props) {
             <Stepper
               quantity={cartItem.quantity}
               maxQuantity={PRODUCT.MAX_COUNT}
-              updateQuantity={updateProductQuantity}
+              updateQuantity={(quantity: number) => updateProductQuantity(id, quantity)}
             />
           ) : (
             <Style.CartIconWrapper onClick={handleCartClick} aria-label="장바구니 추가">

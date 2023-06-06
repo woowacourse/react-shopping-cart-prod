@@ -15,6 +15,9 @@ export default function Header() {
         </Style.Title>
         <Style.RightContainer>
           <ServerSelectBox />
+          <Style.OrdersButton title="주문목록 페이지로 이동" onClick={() => navigate('/orders')}>
+            주문목록
+          </Style.OrdersButton>
           <Style.CartButton title="장바구니 페이지로 이동" onClick={() => navigate('/cart')}>
             <CartCountBadge />
           </Style.CartButton>
@@ -77,6 +80,11 @@ const Style = {
     justify-content: space-between;
 
     gap: 10px;
+
+    /* 모바일 */
+    @media screen and (max-width: 767px) {
+      gap: 5px;
+    }
   `,
 
   Title: styled.button`
@@ -90,6 +98,21 @@ const Style = {
       content: 'SHOP';
       padding-left: 12px;
     }
+
+    /* 모바일 */
+    @media screen and (max-width: 767px) {
+      font-size: 20px;
+      font-weight: 900;
+    }
+  `,
+
+  OrdersButton: styled.button`
+    align-items: center;
+
+    /* 모바일 */
+    @media screen and (max-width: 767px) {
+      font-size: 12px;
+    }
   `,
 
   CartButton: styled.button`
@@ -101,6 +124,11 @@ const Style = {
     &::before {
       content: '장바구니';
       padding-right: 6px;
+    }
+
+    /* 모바일 */
+    @media screen and (max-width: 767px) {
+      font-size: 12px;
     }
   `,
 };

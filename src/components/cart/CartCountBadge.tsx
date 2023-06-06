@@ -20,5 +20,13 @@ const Style = {
     border-radius: 50%;
 
     background-color: #04c09e;
+
+    /* 모바일 */
+    @media screen and (max-width: 767px) {
+      width: 25px;
+      height: 25px;
+
+      font-size: 14px;
+    }
   `,
 };

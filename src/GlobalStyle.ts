@@ -37,6 +37,7 @@ const GlobalStyle = createGlobalStyle`
   html, body {
     height:100%;
     font-family: 'Baemin', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: var(--grey-400);
     
     -ms-overflow-style: none; /* for Internet Explorer, Edge */
     scrollbar-width: none; /* for Firefox */
@@ -45,7 +46,13 @@ const GlobalStyle = createGlobalStyle`
     ::-webkit-scrollbar {
       display: none; /* for Chrome, Safari, and Opera */
     }
+
+    &:has(dialog[open]) {
+      overflow: hidden;
+    }
   }
+
+
 
   img, picture, video, canvas, svg {
     display: block;max-width:100%;
@@ -69,6 +76,33 @@ const GlobalStyle = createGlobalStyle`
   ul,
   li {
       list-style: none;
+  }
+
+  &.sr-only{
+    position:absolute;
+    z-index:-1000;
+    width:1px;
+    height:1px;
+    overflow:hidden;
+    opacity:0;
+  }
+
+  &.skeleton {
+    background: linear-gradient(-90deg, #aaa, #f0f0f0, #aaa, #f0f0f0);
+    background-size: 400%;
+    animation: skeleton-animation 5s infinite ease-out;
+  }
+
+  @keyframes skeleton-animation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
   }
 
   @font-face {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import { styled } from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { checkedCartItemIdsState } from '../../recoil/atoms';
@@ -8,47 +8,27 @@ import { useCart } from '../../hooks/useCart';
 import CartItem from './CartItem';
 import TotalPayment from './TotalPayment';
 import Button from '../common/Button';
-import Checkbox from '../common/Checkbox';
+import ErrorDisplay from '../ErrorDisplay';
 
 export default function CartList() {
   const { cartList, deleteFromCart } = useCart();
+  const totalProductsPrice = useRecoilValue(totalProductsPriceState);
   const cartItemIds = cartList.map((cartItem) => cartItem.id);
   const [checkedItemIds, setCheckedItemIds] = useRecoilState(checkedCartItemIdsState(cartItemIds));
-  const [isAllChecked, setIsAllChecked] = useState(true);
-  const totalProductsPrice = useRecoilValue(totalProductsPriceState);
-
-  const handleCheckedItem = (id: number) => {
-    if (checkedItemIds.includes(id)) {
-      setCheckedItemIds((prev) => prev.filter((itemId) => itemId !== id));
-      return;
-    }
-    setCheckedItemIds((prev) => [...prev, id]);
-  };
 
   const handleAllChecked = () => {
-    if (isAllChecked) {
+    if (cartList.length === checkedItemIds.length) {
       setCheckedItemIds([]);
-      setIsAllChecked(false);
       return;
     }
 
     setCheckedItemIds(cartList.map((cartItem) => cartItem.id));
-    setIsAllChecked(true);
   };
 
   const deleteCheckedItems = () => {
     checkedItemIds.forEach((itemId) => deleteFromCart(itemId));
     setCheckedItemIds([]);
   };
-
-  useEffect(() => {
-    if (cartList.length === checkedItemIds.length) {
-      setIsAllChecked(true);
-      return;
-    }
-
-    if (isAllChecked === true) setIsAllChecked(false);
-  }, [cartList, checkedItemIds, isAllChecked]);
 
   return (
     <Style.Container>
@@ -60,17 +40,13 @@ export default function CartList() {
           ) : (
             <Style.CartItems>
               {cartList.map((cartItemInfo) => (
-                <Style.ProductContainer key={cartItemInfo.id}>
-                  <Style.CheckBoxWrapper>
-                    <Checkbox
-                      id={`${cartItemInfo.product.name}-checkbox`}
-                      checked={checkedItemIds.includes(cartItemInfo.id)}
-                      itemId={cartItemInfo.id}
-                      handleCheckedItem={handleCheckedItem}
-                    />
-                  </Style.CheckBoxWrapper>
-                  <CartItem cartItemInfo={cartItemInfo} deleteCheckedItem={setCheckedItemIds} />
-                </Style.ProductContainer>
+                <Style.CartItemWrapper key={cartItemInfo.id}>
+                  <CartItem
+                    cartItemInfo={cartItemInfo}
+                    checkedItemIds={checkedItemIds}
+                    setCheckedItemIds={setCheckedItemIds}
+                  />
+                </Style.CartItemWrapper>
               ))}
             </Style.CartItems>
           )}
@@ -78,7 +54,7 @@ export default function CartList() {
             <Style.TotalCheckbox
               id="total-checkbox"
               type="checkbox"
-              checked={isAllChecked}
+              checked={cartList.length > 0 && cartList.length === checkedItemIds.length}
               onChange={handleAllChecked}
             />
             <Style.TotalSelectCaption htmlFor="total-checkbox">
@@ -90,12 +66,21 @@ export default function CartList() {
               fontSize={'12px'}
               color={'black'}
               onClick={deleteCheckedItems}
+              disabled={checkedItemIds.length === 0}
             >
               선택삭제
             </Button>
           </Style.TotalCheckboxAndDeleteButtonContainer>
         </Style.CartItemsContainer>
-        <TotalPayment totalProductsPrice={totalProductsPrice} deliveryFee={DELIVERY_FEE} />
+        <Style.TotalPaymentWrapper>
+          <ErrorBoundary FallbackComponent={ErrorDisplay}>
+            <TotalPayment
+              checkedCartItemIds={checkedItemIds}
+              deliveryFee={totalProductsPrice > 0 ? DELIVERY_FEE : 0}
+              totalProductsPrice={totalProductsPrice}
+            />
+          </ErrorBoundary>
+        </Style.TotalPaymentWrapper>
       </Style.CartItemsAndPaymentContainer>
     </Style.Container>
   );
@@ -156,7 +141,7 @@ const Style = {
     }
   `,
 
-  ProductContainer: styled.li`
+  CartItemWrapper: styled.li`
     display: flex;
 
     height: 180px;
@@ -165,9 +150,8 @@ const Style = {
     border-bottom: 1px ridge;
   `,
 
-  CheckBoxWrapper: styled.div`
-    margin-right: 20px;
-    border-radius: 2px;
+  TotalPaymentWrapper: styled.div`
+    width: 300px;
   `,
 
   TotalCheckboxAndDeleteButtonContainer: styled.div`

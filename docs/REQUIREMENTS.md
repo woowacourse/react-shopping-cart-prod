@@ -51,3 +51,9 @@
   - [x] 총 상품가격 출력하는 기능
   - [x] 총 배송비를 출력하는 기능
   - [x] 총 주문금액을 출력하는 기능(총 상품가격 + 배송비)
+- [x] OrderItem 컴포넌트 생성
+- [x] OrderList 컴포넌트 생성
+- [x] OrderDetailItem 컴포넌트 생성
+- [x] CouponList 컴포넌트 생성
+- [x] CouponItem 컴포넌트 생성
+- [x] Modal 컴포넌트 생성

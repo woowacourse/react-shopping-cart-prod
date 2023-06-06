@@ -1,14 +1,27 @@
+import { useEffect } from 'react';
 import { styled } from 'styled-components';
 import { useRecoilValue } from 'recoil';
-import { currentProductListState } from '../../recoil/selectors';
+import { selectedHostState } from '../../recoil/atoms';
+import { ProductInfo } from '../../types';
+import { useCart } from '../../hooks/useCart';
 import Product from './Product';
 
-export default function ProductList() {
-  const productList = useRecoilValue(currentProductListState);
+interface Props {
+  products: ProductInfo[];
+}
+
+export default function ProductList({ products }: Props) {
+  const { initCartList } = useCart();
+  const host = useRecoilValue(selectedHostState);
+
+  useEffect(() => {
+    initCartList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [host]);
 
   return (
     <Style.Container>
-      {productList.map((product) => (
+      {products.map((product) => (
         <li key={product.id}>
           <Product productInfo={product} />
         </li>

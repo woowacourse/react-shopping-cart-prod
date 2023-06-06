@@ -1,11 +1,20 @@
+import { Suspense, lazy } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import { styled } from 'styled-components';
-import ProductList from '../components/product/ProductList';
+import { Loading } from '../components/common/Spinner/Loading';
+import ErrorDisplay from '../components/ErrorDisplay';
+
+const ProductPageContent = lazy(() => import('../components/product/ProductPageContent'));
 
 export default function Home() {
   return (
     <Style.Main>
       <Style.Content>
-        <ProductList />
+        <ErrorBoundary FallbackComponent={ErrorDisplay}>
+          <Suspense fallback={<Loading />}>
+            <ProductPageContent />
+          </Suspense>
+        </ErrorBoundary>
       </Style.Content>
     </Style.Main>
   );

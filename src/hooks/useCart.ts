@@ -1,53 +1,83 @@
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useErrorBoundary } from 'react-error-boundary';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { cartListState, selectedHostState } from '../recoil/atoms';
-import { CartItemInfo, ProductInfo } from '../types';
+import { CartItemInfo } from '../types';
 import { CART_BASE_URL } from '../constants';
-import { useSetFetchedData } from './useSetFetchedData';
-import { currentCartListState } from '../recoil/selectors';
+import APIHandler from '../api/APIHandler';
 
-export const useCart = (productInfo?: ProductInfo) => {
+export const useCart = () => {
+  const { showBoundary } = useErrorBoundary();
   const host = useRecoilValue(selectedHostState);
-  const setCartList = useSetRecoilState(cartListState);
-  const cartList = useRecoilValue(currentCartListState);
-  const { api } = useSetFetchedData<CartItemInfo[]>(`${host}${CART_BASE_URL}`, setCartList);
+  const CART_URL = `${host}${CART_BASE_URL}`;
+  const [cartList, setCartList] = useRecoilState(cartListState);
 
-  const getCartItem = (productId?: number) => {
-    const curProductId = productId ? productId : productInfo?.id;
-
-    return cartList.find((cartItem) => cartItem.product.id === curProductId);
+  const initCartList = async () => {
+    const newCartList = await getCartList();
+    if (newCartList) setCartList(newCartList);
   };
 
-  const addToCart = () => {
-    if (!productInfo) return;
-    api.post(`${host}${CART_BASE_URL}`, { productId: productInfo.id }, `${host}${CART_BASE_URL}`);
-  };
+  const getCartList = async () => {
+    try {
+      const responseResult = await APIHandler.get<CartItemInfo[]>(CART_URL);
 
-  const updateProductQuantity = (quantity: number) => {
-    const currentCartItem = getCartItem();
-    if (!currentCartItem) return;
+      if (responseResult.statusCode !== 200) throw new Error(responseResult.errorMessage);
 
-    if (quantity <= 0) {
-      deleteFromCart(currentCartItem.id);
-      return;
+      return responseResult.result;
+    } catch (error) {
+      showBoundary(error);
     }
-
-    api.patch(
-      `${host}${CART_BASE_URL}/${currentCartItem.id}`,
-      { quantity: quantity },
-      `${host}${CART_BASE_URL}`
-    );
   };
 
-  const deleteFromCart = (cartId: number) => {
-    api.delete(`${host}${CART_BASE_URL}/${cartId}`, `${host}${CART_BASE_URL}`);
+  const getCartItem = (productId: number) => {
+    return cartList.find((cartItem) => cartItem.product.id === productId);
   };
 
-  return {
-    cartList,
-    setCartList,
-    getCartItem,
-    addToCart,
-    deleteFromCart,
-    updateProductQuantity,
+  const addToCart = async (productId: number) => {
+    try {
+      const responseResult = await APIHandler.post(CART_URL, { productId: productId });
+
+      if (responseResult.statusCode !== 201) throw new Error(responseResult.errorMessage);
+
+      initCartList();
+    } catch (error) {
+      showBoundary(error);
+    }
   };
+
+  const updateProductQuantity = async (productId: number, quantity: number) => {
+    try {
+      const currentCartItem = getCartItem(productId);
+
+      if (!currentCartItem) throw new Error('[ERROR] 장바구니에 상품 정보가 없습니다.');
+
+      if (quantity <= 0) {
+        deleteFromCart(currentCartItem.id);
+        return;
+      }
+
+      const responseResult = await APIHandler.patch(`${CART_URL}/${currentCartItem.id}`, {
+        quantity: quantity,
+      });
+
+      if (responseResult.statusCode !== 200) throw new Error(responseResult.errorMessage);
+
+      initCartList();
+    } catch (error) {
+      showBoundary(error);
+    }
+  };
+
+  const deleteFromCart = async (cartId: number) => {
+    try {
+      const responseResult = await APIHandler.delete(`${CART_URL}/${cartId}`);
+
+      if (responseResult.statusCode !== 204) throw new Error(responseResult.errorMessage);
+
+      initCartList();
+    } catch (error) {
+      showBoundary(error);
+    }
+  };
+
+  return { cartList, initCartList, getCartItem, addToCart, updateProductQuantity, deleteFromCart };
 };
