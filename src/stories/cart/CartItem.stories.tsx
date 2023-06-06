@@ -20,7 +20,7 @@ export const Default: Story = {
     discountRate: 0,
     discountedPrice: 57600,
     imageUrl:
-      'https://cdn-mart.baemin.com/sellergoods/list/dcee7c3b-230f-482b-a549-ee0ee678222e.jpg?h=400&w=400',
+      'https://cdn-mart.baemin.com/sellergoods/list/dcee7c3b-230f-482b-a549-ee0ee678222e.jpg',
   },
 };
 
@@ -33,7 +33,7 @@ export const ItemDiscount: Story = {
     discountRate: 5,
     discountedPrice: 57000,
     imageUrl:
-      'https://cdn-mart.baemin.com/sellergoods/list/4ece565d-7fbf-4af4-b4a0-e545c15eda10.jpg?h=400&w=400',
+      'https://cdn-mart.baemin.com/sellergoods/list/4ece565d-7fbf-4af4-b4a0-e545c15eda10.jpg',
   },
 };
 

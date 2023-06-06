@@ -13,7 +13,7 @@ const meta = {
     discountRate: 0,
     discountedPrice: 57600,
     imageUrl:
-      'https://cdn-mart.baemin.com/sellergoods/list/dcee7c3b-230f-482b-a549-ee0ee678222e.jpg?h=400&w=400',
+      'https://cdn-mart.baemin.com/sellergoods/list/dcee7c3b-230f-482b-a549-ee0ee678222e.jpg',
   },
 } satisfies Meta<typeof OrderDetailItem>;
 
