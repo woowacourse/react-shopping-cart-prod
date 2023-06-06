@@ -10,7 +10,6 @@ import { useCartFetch } from '../../../hooks/useCartFetch';
 
 const ProductItem = ({ product }: { product: ProductType }) => {
   const { cartData, addCartItemAPI, changeCartQuantityAPI, deleteCartItemAPI } = useCartFetch();
-
   const [cartItemData, setCartItemData] = useState<CartItemType | null>(null);
 
   const [quantity, setQuantity] = useState<number>(0);
@@ -31,17 +30,15 @@ const ProductItem = ({ product }: { product: ProductType }) => {
 
   useEffect(() => {
     const fetchCartData = async () => {
-      if (cartData) {
-        if (cartItemData && cartItemData.quantity !== quantity) {
-          if (quantity > 0) {
-            cartItemData.id && changeCartQuantityAPI(cartItemData.id, { quantity });
-            return;
-          }
-          cartItemData.id && deleteCartItemAPI(cartItemData.id);
+      if (cartItemData && cartItemData.quantity !== quantity) {
+        if (quantity > 0) {
+          cartItemData.id && changeCartQuantityAPI(cartItemData.id, { quantity });
+          return;
         }
-        if (quantity > 0 && !cartItemData) {
-          addCartItemAPI({ productId: product.id });
-        }
+        cartItemData.id && deleteCartItemAPI(cartItemData.id);
+      }
+      if (quantity > 0 && !cartItemData) {
+        addCartItemAPI({ productId: product.id });
       }
     };
     fetchCartData();

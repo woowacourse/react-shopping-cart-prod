@@ -2,11 +2,11 @@ import { base64 } from '../service/apiURL';
 import { checkCartListState, serverState } from '../service/atom';
 import { CartItemType } from '../types/types';
 import { useMutation, useQuery } from 'react-query';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useRecoilState } from 'recoil';
 
 export const useCartFetch = () => {
   const serverURL = useRecoilValue(serverState);
-  const setCheckCartList = useSetRecoilState(checkCartListState);
+  const [checkCartList, setCheckCartList] = useRecoilState(checkCartListState);
 
   const {
     data: cartData,
@@ -90,7 +90,17 @@ export const useCartFetch = () => {
   const changeCartQuantityAPI = (cartId: number, body?: object) =>
     fetchCartData.mutate({ method: 'PATCH', cartId, body });
 
-  const deleteCartItemAPI = (cartId: number) => fetchCartData.mutate({ method: 'DELETE', cartId });
+  const deleteCartItemAPI = (cartId: number) => {
+    const existItemIndex = checkCartList.findIndex((checkCartId) => checkCartId === cartId);
+    if (existItemIndex !== -1) {
+      setCheckCartList((prev) => {
+        const newCartList = [...prev];
+        newCartList.splice(existItemIndex, 1);
+        return newCartList;
+      });
+    }
+    fetchCartData.mutate({ method: 'DELETE', cartId });
+  };
 
   return {
     cartData,
