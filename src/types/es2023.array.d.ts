@@ -14,3 +14,5 @@ declare global {
     toSpliced(start: number, deleteCount: number, ...items: T[]): T[];
   }
 }
+
+export {};
