@@ -55,8 +55,8 @@ export const deleteCartItem = async (cartItemId: number) =>
 
 export const fetchCoupons = async (cartItemIdList: number[]) => {
   const orderQuery = cartItemIdList
-    .map((el) => {
-      return `cartItemId=${el}`;
+    .map((id) => {
+      return `cartItemId=${id}`;
     })
     .join("&");
 
