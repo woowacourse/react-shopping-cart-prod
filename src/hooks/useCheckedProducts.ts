@@ -1,12 +1,11 @@
 import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { hostNameAtom } from '../recoil/hostData';
+import { cartApiAtom } from '../recoil/hostData';
 import { cartProductAtom } from '../recoil/cartProductData';
 import { checkedItemAtom } from '../recoil/checkedProductData';
-import { cartApi } from '../apis/cartProducts';
 
 const useCheckedProducts = () => {
-  const hostName = useRecoilValue(hostNameAtom);
+  const cartApiInstance = useRecoilValue(cartApiAtom);
   const [cartProducts, setCartProducts] = useRecoilState(cartProductAtom);
   const [checkedProducts, setCheckedProducts] = useRecoilState(checkedItemAtom);
 
@@ -24,9 +23,7 @@ const useCheckedProducts = () => {
     );
 
     selectedProducts.forEach((productId) => {
-      cartApi(hostName).then((apiInstance) => {
-        return apiInstance.deleteCartProduct(productId);
-      });
+      cartApiInstance.deleteCartProduct(productId);
     });
   };
 

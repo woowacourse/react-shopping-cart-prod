@@ -1,16 +1,14 @@
 import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-
 import { cartProductAtom } from '../recoil/cartProductData';
 import { deleteProduct, findTargetProduct } from '../domain/cartProductHandler';
-import { cartApi } from '../apis/cartProducts';
 import useProductQuantity from './useProductQuantity';
-import { hostNameAtom } from '../recoil/hostData';
+import { cartApiAtom } from '../recoil/hostData';
 import type { Product } from '../types/product';
 
 const useCartProducts = (product: Product) => {
   const { productId } = product;
-  const hostName = useRecoilValue(hostNameAtom);
+  const cartApiInstance = useRecoilValue(cartApiAtom);
   const [cartProducts, setCartProducts] = useRecoilState(cartProductAtom);
   const { addCount, subtractCount } = useProductQuantity(
     productId,
@@ -19,9 +17,7 @@ const useCartProducts = (product: Product) => {
   const target = findTargetProduct(cartProducts, productId);
 
   const addProduct = async () => {
-    const cartItemId = await cartApi(hostName).then((apiInstance) => {
-      return apiInstance.postCartProduct(product.productId);
-    });
+    const cartItemId = await cartApiInstance.postCartProduct(product.productId);
 
     if (cartItemId)
       setCartProducts([
@@ -32,9 +28,7 @@ const useCartProducts = (product: Product) => {
 
   const removeProduct = () => {
     if (target) {
-      cartApi(hostName).then((apiInstance) => {
-        return apiInstance.deleteCartProduct(target.cartItemId);
-      });
+      cartApiInstance.deleteCartProduct(target.cartItemId);
 
       setCartProducts(deleteProduct(cartProducts, target.cartItemId));
     }
