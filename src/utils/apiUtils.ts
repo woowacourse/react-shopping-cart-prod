@@ -34,8 +34,8 @@ export const postData = async (
 
   if (location !== null) {
     const lastSlashIndex = location.lastIndexOf('/');
-    const orderId = location.slice(lastSlashIndex + 1);
-    return orderId;
+    const id = location.slice(lastSlashIndex + 1);
+    return id;
   }
 
   throw new Error('Location이 없습니다');
