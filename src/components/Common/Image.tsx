@@ -37,6 +37,7 @@ const ImageStyled = {
 
 const ImageBox = styled.img<ImageProps>`
   ${({ size }) => ImageStyled[size]}
+  background-color: ${({ theme }) => theme.colors.gray200};
 `;
 
 export default Image;
