@@ -1,4 +1,4 @@
-import { OrderedItemData } from '../../../types/order';
+import type { OrderedItemData } from '../../../types/order';
 import { priceFormatter } from '../../../utils/formatter';
 import * as S from './OrderDetailItem.styles';
 

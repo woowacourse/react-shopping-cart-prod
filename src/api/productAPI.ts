@@ -1,5 +1,5 @@
 import { API_ENDPOINT } from '../constants/api';
-import { ProductItemData } from '../types/product';
+import type { ProductItemData } from '../types/product';
 import { fetchAPI } from './utils/fetchAPI';
 
 const getProductAPI = (baseUrl: string) => {

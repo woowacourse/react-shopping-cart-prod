@@ -1,8 +1,8 @@
 import { SHIPPING_FEE, SHIPPING_FEE_EXEMPTION_CONDITION } from '../constants';
 import { MEMBER_RANK } from '../constants/member';
-import { CartItemData } from '../types/cart';
-import { MemberInformation } from '../types/member';
-import { OrderedItemData } from '../types/order';
+import type { CartItemData } from '../types/cart';
+import type { MemberInformation } from '../types/member';
+import type { OrderedItemData } from '../types/order';
 
 const getTotalItemDiscountAmount = (itemList: (CartItemData | OrderedItemData)[]) => {
   return itemList.reduce((acc, curr) => {

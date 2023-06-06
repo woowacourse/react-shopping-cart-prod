@@ -1,7 +1,7 @@
 import { selector, selectorFamily } from 'recoil';
 
 import { getOrderAPI } from '../api/orderAPI';
-import { OrderData } from '../types/order';
+import type { OrderData } from '../types/order';
 import { currentServerState } from './server';
 
 const orderListState = selector<OrderData[]>({

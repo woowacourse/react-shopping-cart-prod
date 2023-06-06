@@ -1,4 +1,4 @@
-import { CartItemData } from '../../types/cart';
+import type { CartItemData } from '../../types/cart';
 
 const mockCartList: CartItemData[] = [
   {

@@ -2,7 +2,7 @@ import { DefaultValue, atom, selector, selectorFamily } from 'recoil';
 
 import { getCartAPI } from '../api/cartAPI';
 import { changeCartItemQuantity } from '../domain/cart';
-import { CartCostsData, CartItemData } from '../types/cart';
+import type { CartCostsData, CartItemData } from '../types/cart';
 import { getCosts } from '../utils/costs';
 import { checkedCartIdListState } from './cartCheckbox';
 import { currentMemberInformationState } from './member';

@@ -6,7 +6,7 @@ import { useModal } from '../../../hooks/common/useModal';
 import { useCart } from '../../../hooks/useCart';
 import { useCartCheckbox } from '../../../hooks/useCartCheckbox';
 import { checkedCartItemState } from '../../../store/cartCheckbox';
-import { ProductItemData } from '../../../types/product';
+import type { ProductItemData } from '../../../types/product';
 import { priceFormatter } from '../../../utils/formatter';
 import Checkbox from '../../common/Checkbox/Checkbox';
 import Modal from '../../common/Modal/Modal';

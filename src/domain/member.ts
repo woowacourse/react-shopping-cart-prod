@@ -4,8 +4,8 @@ import {
   MEMBER_RANK,
   MEMBER_RANK_PURCHASE_CONDITION,
 } from '../constants/member';
-import { MemberInformation, MemberRank } from '../types/member';
-import { OrderData } from '../types/order';
+import type { MemberInformation, MemberRank } from '../types/member';
+import type { OrderData } from '../types/order';
 import { getFromLocalStorage, saveToLocalStorage } from '../utils/localStorage';
 
 const getMemberData = () => {

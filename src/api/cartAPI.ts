@@ -1,5 +1,5 @@
 import { API_ENDPOINT, AUTHORIZED_FETCH_OPTION_HEADERS } from '../constants/api';
-import { CartItemData } from '../types/cart';
+import type { CartItemData } from '../types/cart';
 import { fetchAPI } from './utils/fetchAPI';
 
 const getCartAPI = (baseUrl: string) => {

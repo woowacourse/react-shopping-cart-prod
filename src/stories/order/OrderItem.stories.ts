@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 
 import OrderItem from '../../components/order/OrderItem/OrderItem';
 import { mockOrderList } from '../mocks/mockOrderList';

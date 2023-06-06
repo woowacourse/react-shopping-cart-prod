@@ -1,5 +1,5 @@
 import { ORDERS_LOCAL_STORAGE_KEY } from '../constants/localStorage';
-import { OrderCostsData, OrderData, OrderedItemData } from '../types/order';
+import type { OrderCostsData, OrderData, OrderedItemData } from '../types/order';
 import { getCosts } from '../utils/costs';
 import { getFromLocalStorage, saveToLocalStorage } from '../utils/localStorage';
 import { areObjectsEqual } from '../utils/validator';

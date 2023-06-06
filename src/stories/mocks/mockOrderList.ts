@@ -1,4 +1,4 @@
-import { OrderData } from '../../types/order';
+import type { OrderData } from '../../types/order';
 
 const mockOrderList: OrderData[] = [
   {

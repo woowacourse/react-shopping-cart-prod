@@ -1,7 +1,7 @@
 import { selector } from 'recoil';
 
 import { getProductAPI } from '../api/productAPI';
-import { ProductItemData } from '../types/product';
+import type { ProductItemData } from '../types/product';
 import { currentServerState } from './server';
 
 const productListState = selector<ProductItemData[]>({

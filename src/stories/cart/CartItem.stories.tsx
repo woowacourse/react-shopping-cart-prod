@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 
 import CartItem from '../../components/cart/CartItem/CartItem';
 import CartItemSkeleton from '../../components/cart/CartItem/CartItemSkeleton';

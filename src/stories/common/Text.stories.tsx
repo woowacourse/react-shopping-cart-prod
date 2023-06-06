@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 
 import { Text, TextProps } from '../../components/common/Text/Text.styles';
 import { StoryContainer, StoryInfoContainer } from '../styles';

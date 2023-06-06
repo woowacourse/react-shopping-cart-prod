@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 
 import Error from '../../components/common/Error/Error';
 import { HTTP_ERROR_MESSAGE, HTTP_STATUS_CODE } from '../../constants/api';

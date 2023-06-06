@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 
 import CartCheckoutBox from '../../components/cart/CartCheckoutBox/CartCheckoutBox';
 import {
@@ -6,7 +6,7 @@ import {
   MEMBER_INFORMATION_LOCAL_STORAGE_KEY,
 } from '../../constants/localStorage';
 import { MEMBER_DISCOUNT_RATE, MEMBER_RANK } from '../../constants/member';
-import { MemberInformation } from '../../types/member';
+import type { MemberInformation } from '../../types/member';
 import { saveToLocalStorage } from '../../utils/localStorage';
 import { mockCartList } from '../mocks/mockCartList';
 

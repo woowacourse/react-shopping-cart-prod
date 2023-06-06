@@ -1,7 +1,7 @@
 import { RightChevronIcon } from '../../../assets/svg';
 import { PATH } from '../../../constants/path';
 import { ORDER_ITEM_DESCRIPTION_DATA } from '../../../constants/ui';
-import { OrderData } from '../../../types/order';
+import type { OrderData } from '../../../types/order';
 import { dateFormatter, timeFormatter } from '../../../utils/formatter';
 import * as S from './OrderItem.styles';
 

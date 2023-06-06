@@ -1,5 +1,5 @@
 import { API_ENDPOINT, AUTHORIZED_FETCH_OPTION_HEADERS } from '../constants/api';
-import { OrderCartItemsData, OrderData } from '../types/order';
+import type { OrderCartItemsData, OrderData } from '../types/order';
 import { fetchAPI } from './utils/fetchAPI';
 
 const getOrderAPI = (baseUrl: string) => {

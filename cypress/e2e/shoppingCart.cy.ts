@@ -2,8 +2,8 @@ import { SHIPPING_FEE } from '../../src/constants';
 import { MEMBER_INFORMATION_LOCAL_STORAGE_KEY } from '../../src/constants/localStorage';
 import { MEMBER_DISCOUNT_RATE, MEMBER_RANK } from '../../src/constants/member';
 import { PATH } from '../../src/constants/path';
-import { MemberInformation } from '../../src/types/member';
-import { ProductItemData } from '../../src/types/product';
+import type { MemberInformation } from '../../src/types/member';
+import type { ProductItemData } from '../../src/types/product';
 import { priceFormatter } from '../../src/utils/formatter';
 
 const TEST_URL = 'http://localhost:3000/react-shopping-cart-prod';

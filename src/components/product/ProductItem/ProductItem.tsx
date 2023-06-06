@@ -4,7 +4,7 @@ import { useRecoilValue } from 'recoil';
 import { AddIcon } from '../../../assets/svg';
 import { useCart } from '../../../hooks/useCart';
 import { cartItemIdState, cartItemQuantityState } from '../../../store/cart';
-import { ProductItemData } from '../../../types/product';
+import type { ProductItemData } from '../../../types/product';
 import StepperButton from '../../common/StepperButton/StepperButton';
 import Toast from '../../common/Toast/Toast';
 import * as S from './ProductItem.styles';

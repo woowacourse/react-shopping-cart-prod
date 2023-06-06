@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 
 import OrderDetailList from '../../components/orderDetail/OrderDetailList/OrderDetailList';
 import { ORDERS_LOCAL_STORAGE_KEY } from '../../constants/localStorage';

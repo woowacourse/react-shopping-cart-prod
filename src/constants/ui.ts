@@ -1,4 +1,4 @@
-import { OrderData } from '../types/order';
+import type { OrderData } from '../types/order';
 import { priceFormatter } from '../utils/formatter';
 
 const DEFAULT_MIN_COUNT = 1;

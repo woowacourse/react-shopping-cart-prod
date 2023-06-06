@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { useSetRecoilState } from 'recoil';
 
 import ErrorModal from '../../components/common/ErrorModal/ErrorModal';
