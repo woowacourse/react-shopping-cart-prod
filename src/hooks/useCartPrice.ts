@@ -1,10 +1,10 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useRecoilValue } from 'recoil';
 
 import useMultipleChecked from './useMultipleChecked';
 import { checkedPriceState } from '../states/checkedCartProducts';
 
-const DELIVERY_FEE = 3_000;
+export const DELIVERY_FEE = 3_000;
 
 const useExpectedPayment = () => {
   const { isAllUnchecked } = useMultipleChecked();
@@ -16,15 +16,15 @@ const useExpectedPayment = () => {
     [isAllUnchecked]
   );
 
-  const totalPrice = useMemo(
-    () => totalProductPrice + deliveryFee,
+  const calculateTotalPrice = useCallback(
+    (discountPrice = 0) => totalProductPrice + deliveryFee - discountPrice,
     [deliveryFee, totalProductPrice]
   );
 
   return {
-    totalProductPrice: totalProductPrice.toLocaleString('ko-KR'),
-    deliveryFee: deliveryFee.toLocaleString('ko-KR'),
-    totalPrice: totalPrice.toLocaleString('ko-KR'),
+    totalProductPrice: totalProductPrice,
+    deliveryFee: deliveryFee,
+    calculateTotalPrice,
   };
 };
 

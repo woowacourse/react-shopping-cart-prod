@@ -1,6 +1,5 @@
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
-import cartProductApis from '../apis/cartProducts';
 import { cartProductState } from '../states/cartProducts';
 import {
   deleteTargetProduct,
@@ -8,29 +7,24 @@ import {
 } from '../states/cartProducts/util';
 import { serverNameState } from '../states/serverName';
 import { toastState } from '../states/toast/atom';
+import { TOAST_STATE } from '../constants/toast';
+import fetchApis from '../apis/fetchApis';
+import { FETCH_URLS } from '../constants/urls';
 
 const useProductQuantity = (id: number, quantity: number) => {
   const serverName = useRecoilValue(serverNameState);
   const setCartProducts = useSetRecoilState(cartProductState);
   const setToastState = useSetRecoilState(toastState);
 
-  const { patchData, deleteData } = cartProductApis(serverName, '/cart-items');
+  const { patchData, deleteData } = fetchApis(serverName);
 
   const deleteProduct = async () => {
     try {
-      await deleteData(id);
-      setCartProducts((prev) => deleteTargetProduct(prev, id));
-      setToastState({
-        message: '상품을 삭제했어요',
-        variant: 'success',
-        duration: 2000,
-      });
+      await deleteData(`${FETCH_URLS.cartItems}/${id}`);
+      setCartProducts(prev => deleteTargetProduct(prev, id));
+      setToastState(TOAST_STATE.successDeleteProduct);
     } catch (error) {
-      setToastState({
-        message: '상품 삭제를 실패했습니다',
-        variant: 'error',
-        duration: 2000,
-      });
+      setToastState(TOAST_STATE.failedDeleteProduct);
     }
   };
 
@@ -38,16 +32,12 @@ const useProductQuantity = (id: number, quantity: number) => {
     try {
       const updatedQuantity = quantity + 1;
 
-      await patchData(id, updatedQuantity);
-      setCartProducts((prev) =>
-        updateTargetQuantity(prev, id, updatedQuantity)
-      );
-    } catch (error) {
-      setToastState({
-        message: '수량 변경을 실패했습니다',
-        variant: 'error',
-        duration: 2000,
+      await patchData(`${FETCH_URLS.cartItems}/${id}`, {
+        quantity: updatedQuantity,
       });
+      setCartProducts(prev => updateTargetQuantity(prev, id, updatedQuantity));
+    } catch (error) {
+      setToastState(TOAST_STATE.failedUpdateQuantity);
     }
   };
 
@@ -60,16 +50,12 @@ const useProductQuantity = (id: number, quantity: number) => {
         return;
       }
 
-      await patchData(id, updatedQuantity);
-      setCartProducts((prev) =>
-        updateTargetQuantity(prev, id, updatedQuantity)
-      );
-    } catch (error) {
-      setToastState({
-        message: '수량 변경을 실패했습니다',
-        variant: 'error',
-        duration: 2000,
+      await patchData(`${FETCH_URLS.cartItems}/${id}`, {
+        quantity: updatedQuantity,
       });
+      setCartProducts(prev => updateTargetQuantity(prev, id, updatedQuantity));
+    } catch (error) {
+      setToastState(TOAST_STATE.failedUpdateQuantity);
     }
   };
 

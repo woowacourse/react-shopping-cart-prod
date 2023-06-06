@@ -1,61 +1,55 @@
-import styled from 'styled-components';
+import { Suspense } from 'react';
+import { useRecoilValue } from 'recoil';
+import { ErrorBoundary } from 'react-error-boundary';
 
+import styled from 'styled-components';
+import PageTitle from '../components/Common/PageTitle';
+import Message from '../components/Common/Message';
 import CartProductInfo from '../components/Cart/CartProductInfo';
 import ExpectedPaymentBox from '../components/Cart/ExpectedPaymentBox';
 
+import { serverNameState } from '../states/serverName';
+
 const CartPage = () => {
+  const serverName = useRecoilValue(serverNameState);
+
   return (
-    <Main>
-      <PageTitle>장바구니</PageTitle>
-      <CartProductInfo />
-      <ExpectedPaymentBoxWrapper>
-        <ExpectedPaymentBox />
-      </ExpectedPaymentBoxWrapper>
-    </Main>
+    <ErrorBoundary key={serverName} fallback={<Message type="error" />}>
+      <Suspense fallback={<Message type="loading" />}>
+        <Main>
+          <PageTitle>장바구니</PageTitle>
+          <CartPageFlexBox>
+            <CartProductInfo />
+            <ExpectedPaymentBox />
+          </CartPageFlexBox>
+        </Main>
+      </Suspense>
+    </ErrorBoundary>
   );
 };
 
 const Main = styled.main`
-  position: relative;
+  display: flex;
+  flex-direction: column;
 
-  max-width: 1300px;
-  height: calc(100vh - 80px);
-  margin: 0 auto;
-  padding: 0 30px;
-  overflow-y: auto;
+  width: 100%;
+  padding: 30px 120px;
 
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  @media (min-width: ${({ theme }) => theme.breakPoints.medium}) {
-    display: flex;
-    justify-content: space-between;
-    gap: 40px;
+  @media (max-width: ${({ theme }) => theme.breakPoints.large}) {
+    padding: 30px;
   }
 `;
 
-const PageTitle = styled.h2`
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: calc(100% - 60px);
-  height: 120px;
-  padding: 48px 0 0 0;
-  text-align: center;
-  font-size: 32px;
-  font-weight: 600;
-  border-bottom: 4px solid ${({ theme }) => theme.colors.black};
-  transform: translate(-50%, 0);
-`;
+const CartPageFlexBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  width: 100%;
+  margin-top: 40px;
 
-const ExpectedPaymentBoxWrapper = styled.section`
-  margin: 0 0 60px 0;
-
-  @media (min-width: ${({ theme }) => theme.breakPoints.medium}) {
-    position: sticky;
-    top: 90px;
-    margin: 210px 0 0 0;
+  @media (max-width: ${({ theme }) => theme.breakPoints.large}) {
+    flex-direction: column;
+    gap: 0;
   }
 `;
 

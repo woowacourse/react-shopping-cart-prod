@@ -19,16 +19,16 @@ export const Default: Story = {
   args: DEFAULT_ARGS,
 };
 
-export const Primary: Story = {
-  args: { ...DEFAULT_ARGS, primary: true },
+export const primary: Story = {
+  args: { ...DEFAULT_ARGS, hasPrimary: true },
 };
 
 export const Secondary: Story = {
-  args: { ...DEFAULT_ARGS, primary: false },
+  args: { ...DEFAULT_ARGS, hasPrimary: false },
 };
 
 export const SecondaryWithBorder: Story = {
-  args: { ...DEFAULT_ARGS, primary: false, border: true },
+  args: { ...DEFAULT_ARGS, hasPrimary: false, hasBorder: true },
 };
 
 export const Disabled: Story = {

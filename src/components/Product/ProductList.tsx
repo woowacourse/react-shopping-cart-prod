@@ -1,7 +1,7 @@
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
-import ProductItem from './ProductItem';
+import * as List from './ProductItem';
 import Message from '../Common/Message';
 
 import { productState } from '../../states/products';
@@ -11,16 +11,14 @@ const ProductList = () => {
   const serverName = useRecoilValue(serverNameState);
   const products = useRecoilValue(productState(serverName));
 
-  if (products.length === 0) {
-    return <Message type='empty' />;
+  if (!products.length) {
+    return <Message type="empty" />;
   }
 
   return (
     <ProductListContainer>
-      {products.map((product) => (
-        <li key={product.id}>
-          <ProductItem product={product} />
-        </li>
+      {products.map(product => (
+        <List.ProductItem key={product.id} product={product} />
       ))}
     </ProductListContainer>
   );

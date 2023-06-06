@@ -1,33 +1,47 @@
-import type { ButtonHTMLAttributes, ReactNode } from 'react';
+import { ButtonHTMLAttributes, ReactNode } from 'react';
+
 import styled from 'styled-components';
+
+import {
+  DISABLED_MESSAGES,
+  DisabledMessageKeys,
+} from '../../constants/message';
 
 type ButtonSizeType = 'small' | 'medium';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?: ButtonSizeType;
-  autoSize?: boolean;
-  primary?: boolean;
-  border?: boolean;
+  isAutoSize?: boolean;
+  hasPrimary?: boolean;
+  hasBorder?: boolean;
+  disabledMessageKey?: DisabledMessageKeys;
   children: ReactNode;
 }
 
 const Button = ({
   size = 'medium',
-  primary = true,
-  autoSize = false,
-  border = false,
+  hasPrimary = true,
+  isAutoSize = false,
+  hasBorder = false,
+  disabled,
+  disabledMessageKey,
   children,
   ...args
 }: ButtonProps) => {
   return (
     <StyledButton
       size={size}
-      primary={primary}
-      autoSize={autoSize}
-      border={border}
+      hasPrimary={hasPrimary}
+      isAutoSize={isAutoSize}
+      hasBorder={hasBorder}
+      disabled={disabled}
       {...args}
     >
-      {children}
+      {disabled && disabledMessageKey ? (
+        <p>{DISABLED_MESSAGES[disabledMessageKey]}</p>
+      ) : (
+        children
+      )}
     </StyledButton>
   );
 };
@@ -45,25 +59,25 @@ const buttonStyles = {
   },
 };
 
-const StyledButton = styled.button<{
-  size: ButtonSizeType;
-  primary: boolean;
-  autoSize: boolean;
-  border: boolean;
-}>`
-  ${({ size }) => buttonStyles[size]}
-  width: ${({ size, autoSize }) =>
-    autoSize ? '100%' : buttonStyles[size].width};
-  background: ${({ theme, primary }) =>
-    primary ? theme.colors.black : theme.colors.white};
-  color: ${({ theme, primary }) =>
-    primary ? theme.colors.white : theme.colors.black};
-  border: ${({ theme, border }) =>
-    border ? `1px solid ${theme.colors.gray300}` : 'none'};
+const StyledButton = styled(
+  ({ isAutoSize, hasPrimary, hasBorder, ...restProps }: ButtonProps) => (
+    <button {...restProps} />
+  )
+)`
+  ${({ size }) => buttonStyles[size ?? 'medium']}
+  width: ${({ size, isAutoSize }) =>
+    isAutoSize ? '100%' : buttonStyles[size ?? 'medium'].width};
+  background: ${({ theme, hasPrimary }) =>
+    hasPrimary ? theme.colors.black : theme.colors.white};
+  color: ${({ theme, hasPrimary }) =>
+    hasPrimary ? theme.colors.white : theme.colors.black};
+  border: ${({ theme, hasBorder }) =>
+    hasBorder ? `1px solid ${theme.colors.gray300}` : 'none'};
 
   &:disabled {
     cursor: not-allowed;
     background: ${({ theme }) => theme.colors.gray200};
+    color: white;
   }
 `;
 

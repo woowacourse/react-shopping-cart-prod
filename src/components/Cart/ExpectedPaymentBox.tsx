@@ -1,13 +1,38 @@
-import styled from 'styled-components';
+import { ChangeEventHandler, useState } from 'react';
 
+import styled from 'styled-components';
 import Button from '../Common/Button';
+import SelectBox from '../Common/SelectBox';
 
 import useMultipleChecked from '../../hooks/useMultipleChecked';
 import useExpectedPayment from '../../hooks/useCartPrice';
+import { useGetCoupons } from '../../hooks/useGetCoupons';
+import { useOrderProducts } from '../../hooks/useOrderProducts';
+import { useGetSelectedCoupon } from '../../hooks/useGetSelectedCoupon';
+import { Coupon } from '../../types/coupon';
+import { DEFAULT_COUPON_NAME, NO_DISCOUNT } from '../../constants/coupon';
 
 const ExpectedPaymentBox = () => {
   const { isAllUnchecked } = useMultipleChecked();
-  const { totalProductPrice, deliveryFee, totalPrice } = useExpectedPayment();
+  const { totalProductPrice, deliveryFee, calculateTotalPrice } =
+    useExpectedPayment();
+  const orderProducts = useOrderProducts();
+  const coupons = useGetCoupons();
+  const couponNames = coupons.map(coupon => coupon.name);
+  const [selectedCoupon, setSelectedCoupon] = useState<Coupon | null>();
+  const getSelectedCoupon = useGetSelectedCoupon();
+
+  const handleSelectChange: ChangeEventHandler<HTMLSelectElement> = event => {
+    setSelectedCoupon(getSelectedCoupon(event, coupons));
+  };
+
+  const handleOrderClick = () => {
+    const orderPrice = calculateTotalPrice(
+      selectedCoupon ? selectedCoupon.discountPrice : 0
+    );
+
+    orderProducts(orderPrice, selectedCoupon ? selectedCoupon.id : NO_DISCOUNT);
+  };
 
   return (
     <ExpectedPaymentContainer>
@@ -15,19 +40,36 @@ const ExpectedPaymentBox = () => {
       <ExpectedPaymentInfo>
         <PaymentInfoItem>
           <dt>총 상품가격</dt>
-          <dd>{totalProductPrice}원</dd>
+          <dd>{totalProductPrice.toLocaleString('ko-KR')}원</dd>
         </PaymentInfoItem>
         <PaymentInfoItem>
           <dt>총 배송비</dt>
-          <dd>{deliveryFee}원</dd>
+          <dd>{deliveryFee.toLocaleString('ko-KR')}원</dd>
         </PaymentInfoItem>
         <PaymentInfoItem>
           <dt>총 주문금액</dt>
-          <dd>{totalPrice}원</dd>
+          <dd>
+            {calculateTotalPrice(
+              selectedCoupon ? selectedCoupon.discountPrice : 0
+            ).toLocaleString('ko-KR')}
+            원
+          </dd>
         </PaymentInfoItem>
       </ExpectedPaymentInfo>
       <OrderButtonWrapper>
-        <Button type='button' autoSize disabled={isAllUnchecked}>
+        <SelectBox
+          options={[DEFAULT_COUPON_NAME, ...couponNames]}
+          onChange={handleSelectChange}
+          disabled={isAllUnchecked}
+          disabledMessageKey="noSelectProduct"
+        />
+        <Button
+          type="button"
+          isAutoSize
+          disabled={isAllUnchecked}
+          disabledMessageKey="cantOrder"
+          onClick={handleOrderClick}
+        >
           주문하기
         </Button>
       </OrderButtonWrapper>
@@ -36,23 +78,27 @@ const ExpectedPaymentBox = () => {
 };
 
 const ExpectedPaymentContainer = styled.div`
-  min-width: 320px;
-  border: 1px solid ${({ theme }) => theme.colors.gray100};
+  min-width: 400px;
+  height: 460px;
 
-  @media (min-width: ${({ theme }) => theme.breakPoints.large}) {
-    width: 450px;
+  border: 1px solid ${({ theme }) => theme.colors.gray300};
+
+  @media (max-width: ${({ theme }) => theme.breakPoints.large}) {
+    min-width: 0;
+    width: 100%;
   }
 `;
 
 const ExpectedPaymentTitle = styled.h2`
   height: 80px;
   padding: 0 30px;
+
+  border-bottom: 3px solid ${({ theme }) => theme.colors.gray100};
   line-height: 80px;
   font-size: 20px;
-  font-weight: 400;
-  border-bottom: 3px solid ${({ theme }) => theme.colors.gray100};
+  font-weight: 600;
 
-  @media (min-width: ${({ theme }) => theme.breakPoints.small}) {
+  @media (max-width: ${({ theme }) => theme.breakPoints.large}) {
     font-size: 24px;
   }
 `;
@@ -83,8 +129,21 @@ const PaymentInfoItem = styled.dl`
 `;
 
 const OrderButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   padding: 0 30px 30px;
   margin: 40px 0 0 0;
+
+  & > select {
+    width: 100%;
+    height: 40px;
+
+    padding: 0 8px;
+
+    font-size: 20px;
+    font-weight: bold;
+  }
 `;
 
 export default ExpectedPaymentBox;

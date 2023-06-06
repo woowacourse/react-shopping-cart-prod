@@ -11,27 +11,27 @@ interface ProductItemProps {
   product: Product;
 }
 
-const ProductItem = ({ product }: ProductItemProps) => {
+export const ProductItem = ({ product }: ProductItemProps) => {
   const { imageUrl, name, price } = product;
   const { targetProduct, addProduct } = useCartProducts(product);
 
   return (
     <ProductContainer>
-      <Image src={imageUrl} alt={name} loading='lazy' />
+      <Image src={imageUrl} alt={name} loading="lazy" />
       <ProductInfoContainer>
         <dl>
           <ProductName>{name}</ProductName>
           <ProductPrice>{price.toLocaleString('ko-KR')} 원</ProductPrice>
         </dl>
-        {!targetProduct || targetProduct.quantity === 0 ? (
-          <ProductCartBtn type='button' onClick={addProduct}>
-            <CartIcon width={25} height={22} color='gray400' />
+        {!targetProduct || !targetProduct.quantity ? (
+          <ProductCartBtn type="button" onClick={addProduct}>
+            <CartIcon width={25} height={22} color="gray400" />
           </ProductCartBtn>
         ) : (
           <AmountCounter
             count={targetProduct.quantity}
             cartItemId={targetProduct.id}
-            variant='small'
+            variant="small"
           />
         )}
       </ProductInfoContainer>
@@ -39,7 +39,7 @@ const ProductItem = ({ product }: ProductItemProps) => {
   );
 };
 
-const ProductContainer = styled.div`
+const ProductContainer = styled.li`
   width: 282px;
 `;
 
@@ -65,5 +65,3 @@ const ProductCartBtn = styled.button`
   top: 0;
   right: 14px;
 `;
-
-export default ProductItem;

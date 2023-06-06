@@ -11,10 +11,10 @@ import theme from '../src/styles/theme';
 import { handlers } from '../src/mocks/handlers';
 
 let options = {};
-if (location.hostname === 'leejin-yang.github.io') {
+if (location.hostname === 'jeonjeunghoon.github.io') {
   options = {
     serviceWorker: {
-      url: '/react-shopping-cart/mockServiceWorker.js',
+      url: '/react-shopping-cart-prod/mockServiceWorker.js',
     },
   };
 }
@@ -22,7 +22,7 @@ if (location.hostname === 'leejin-yang.github.io') {
 initialize(options);
 
 export const decorators = [
-  (Story) => (
+  Story => (
     <BrowserRouter>
       <RecoilRoot>
         <ThemeProvider theme={theme}>

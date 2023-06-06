@@ -1,7 +1,10 @@
 import { rest } from 'msw';
 
-import { CART_STORAGE_ID } from '../constants/storage';
 import products from './data/products.json';
+import coupons from './data/coupons.json';
+
+import { CART_STORAGE_ID } from '../constants/storage';
+
 import {
   addTargetProduct,
   deleteTargetProduct,
@@ -9,32 +12,61 @@ import {
   updateTargetQuantity,
 } from '../states/cartProducts/util';
 import type { CartProduct } from '../types/product';
+import { Order, OrderDetail } from '../types/order';
+import { FETCH_URLS } from '../constants/urls';
+
+const orders: Order[] = [];
+const orderDetails: OrderDetail[] = [];
 
 export const handlers = [
-  rest.get('/products', (_, res, ctx) => {
-    return res(ctx.delay(2000), ctx.status(200), ctx.json(products));
+  rest.get(FETCH_URLS.products, (_, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.set('Content-Type', 'application/json'),
+      ctx.json(products)
+    );
   }),
 
   rest.get('/products/empty', (_, res, ctx) => {
-    return res(ctx.delay(2000), ctx.status(200), ctx.json([]));
+    return res(ctx.status(200));
   }),
 
   rest.get('/products/error', (_, res, ctx) => {
-    return res(ctx.delay(2000), ctx.status(400), ctx.json({ error: 'fail' }));
+    return res(ctx.status(400));
   }),
 
-  rest.get('/products/network-error', (_, res) => {
-    return res.networkError('Failed to Connect');
+  rest.get('/products/network-error', (_, res, ctx) => {
+    return res(ctx.status(500));
   }),
 
-  rest.get('/cart-items', (_, res, ctx) => {
+  rest.get(FETCH_URLS.cartItems, (_, res, ctx) => {
     return res(
       ctx.status(200),
+      ctx.set('Content-Type', 'application/json'),
       ctx.json(JSON.parse(localStorage.getItem(CART_STORAGE_ID) ?? '[]'))
     );
   }),
 
-  rest.post<{ productId: number }>('/cart-items', (req, res, ctx) => {
+  rest.get('/coupons', (_, res, ctx) => {
+    return res(ctx.status(200), ctx.json(coupons));
+  }),
+
+  rest.get(FETCH_URLS.orders, (_, res, ctx) => {
+    return res(ctx.status(200), ctx.json(orders));
+  }),
+
+  rest.get('/orders/:orderId', (req, res, ctx) => {
+    const { orderId } = req.params;
+    const orderDetail = orderDetails.find(
+      orderDetail => orderDetail.order.orderId === Number(orderId)
+    );
+
+    if (!orderDetail) return res(ctx.status(400));
+
+    return res(ctx.status(200), ctx.json(orderDetail));
+  }),
+
+  rest.post<{ productId: number }>(FETCH_URLS.cartItems, (req, res, ctx) => {
     const { productId } = req.body;
 
     const storedCartProducts: CartProduct[] = JSON.parse(
@@ -42,13 +74,13 @@ export const handlers = [
     );
 
     if (findTargetProduct(storedCartProducts, productId)) {
-      return res(ctx.status(304), ctx.json({ message: 'Already in the Cart' }));
+      return res(ctx.status(304));
     }
 
-    const product = products.find((product) => product.id === productId);
+    const product = products.find(product => product.id === productId);
 
     if (!product) {
-      return res(ctx.status(400), ctx.json({ message: '상품이 없습니다.' }));
+      return res(ctx.status(400));
     }
 
     localStorage.setItem(
@@ -56,7 +88,40 @@ export const handlers = [
       JSON.stringify(addTargetProduct(storedCartProducts, product.id, product))
     );
 
-    return res(ctx.status(201), ctx.json({ message: 'Success to Create' }));
+    return res(ctx.status(201), ctx.set('location', `/${product.id}`));
+  }),
+
+  rest.post<{
+    cartItemIds: number[];
+    totalPrice: number;
+    couponId: number;
+  }>(FETCH_URLS.orders, (req, res, ctx) => {
+    const reqOrder = req.body;
+
+    if (!Object.keys(reqOrder).every(key => key in reqOrder)) {
+      return res(ctx.status(400));
+    }
+
+    const cartItems = JSON.parse(localStorage.getItem(CART_STORAGE_ID) ?? '[]');
+    const orderItems = reqOrder.cartItemIds.map(cartItemId => {
+      return cartItems.find(
+        (cartItem: CartProduct) => cartItem.id === cartItemId
+      );
+    });
+
+    const order = {
+      orderId: orders.length + 1,
+      orderItems: orderItems,
+    };
+    orders.push(order);
+
+    const orderDetail = {
+      order: order,
+      totalPrice: reqOrder.totalPrice,
+    };
+    orderDetails.push(orderDetail);
+
+    return res(ctx.status(200));
   }),
 
   rest.patch<{ quantity: number }>(
@@ -72,7 +137,7 @@ export const handlers = [
       );
 
       if (!findTargetProduct(storedCartProducts, cartProductId)) {
-        return res(ctx.status(304), ctx.json({ message: 'Not in the Cart' }));
+        return res(ctx.status(304));
       }
 
       localStorage.setItem(
@@ -82,11 +147,7 @@ export const handlers = [
         )
       );
 
-      return res(
-        ctx.delay(2000),
-        ctx.status(200),
-        ctx.json({ message: 'Success to Update' })
-      );
+      return res(ctx.status(200));
     }
   ),
 
@@ -100,7 +161,7 @@ export const handlers = [
     );
 
     if (!findTargetProduct(storedCartProducts, cartProductId)) {
-      return res(ctx.status(304), ctx.json({ message: 'Not in the Cart' }));
+      return res(ctx.status(304));
     }
 
     localStorage.setItem(
@@ -108,6 +169,6 @@ export const handlers = [
       JSON.stringify(deleteTargetProduct(storedCartProducts, cartProductId))
     );
 
-    return res(ctx.delay(2000), ctx.status(204));
+    return res(ctx.status(204));
   }),
 ];

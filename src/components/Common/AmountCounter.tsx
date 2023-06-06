@@ -24,18 +24,18 @@ const AmountCounter = ({
 
   return (
     <InputGroup variant={variant}>
-      <CounterInput type='number' value={count} variant={variant} readOnly />
+      <CounterInput type="number" value={count} variant={variant} readOnly />
       <CountBtnContainer>
-        <CountBtn type='button' onClick={addCount} variant={variant}>
+        <CountBtn type="button" onClick={addCount} variant={variant}>
           <ArrowUpIcon />
         </CountBtn>
         <CountBtn
-          type='button'
+          type="button"
           onClick={subtractCount}
           variant={variant}
           disabled={count <= minCount}
         >
-          <ArrowDownIcon />
+          {count <= minCount ? null : <ArrowDownIcon />}
         </CountBtn>
       </CountBtnContainer>
     </InputGroup>
@@ -74,6 +74,10 @@ const amountCounterStyles = {
 const InputGroup = styled.div<AmountCounterStyle>`
   display: flex;
   ${({ variant }) => amountCounterStyles[variant].group}
+
+  @media (max-width: ${({ theme }) => theme.breakPoints.large}) {
+    height: 40px;
+  }
 `;
 
 const CounterInput = styled.input<AmountCounterStyle>`
@@ -85,6 +89,10 @@ const CounterInput = styled.input<AmountCounterStyle>`
   &::-webkit-inner-spin-button,
   &::-webkit-outer-spin-button {
     display: none;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakPoints.large}) {
+    width: 80px;
   }
 `;
 
@@ -104,6 +112,11 @@ const CountBtn = styled.button<AmountCounterStyle>`
       fill: ${({ theme }) => theme.colors.gray200};
     }
     cursor: not-allowed;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakPoints.large}) {
+    width: 40px;
+    height: 20px;
   }
 `;
 

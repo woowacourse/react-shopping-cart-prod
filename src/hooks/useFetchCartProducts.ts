@@ -2,7 +2,9 @@ import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 import { cartProductState } from '../states/cartProducts';
 import { useEffect } from 'react';
 import { serverNameState } from '../states/serverName';
-import cartProductApis from '../apis/cartProducts';
+import fetchApis from '../apis/fetchApis';
+import { CartProduct } from '../types/product';
+import { FETCH_URLS } from '../constants/urls';
 
 const useFetchCartProducts = () => {
   const serverName = useRecoilValue(serverNameState);
@@ -11,11 +13,11 @@ const useFetchCartProducts = () => {
   const resetCartProducts = useResetRecoilState(cartProductState);
 
   useEffect(() => {
-    const { getData } = cartProductApis(serverName, '/cart-items');
+    const { getData } = fetchApis(serverName);
 
     const fetch = async () => {
       try {
-        const cartProducts = await getData();
+        const cartProducts = await getData<CartProduct[]>(FETCH_URLS.cartItems);
         setCartProducts(cartProducts);
       } catch {
         resetCartProducts();

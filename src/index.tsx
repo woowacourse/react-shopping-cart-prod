@@ -1,27 +1,30 @@
-import React from "react";
-import { RecoilRoot } from "recoil";
-import ReactDOM from "react-dom/client";
-import { ThemeProvider } from "styled-components";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import theme from "./styles/theme";
-import GlobalStyle from "./styles";
+import React from 'react';
+import { RecoilRoot } from 'recoil';
+import { createRoot } from 'react-dom/client';
+import { ThemeProvider } from 'styled-components';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import theme from './styles/theme';
+import GlobalStyle from './styles';
 
-import App from "./App";
-import NotFoundPage from "./pages/NotFoundPage";
-import ProductsListPage from "./pages/ProductsListPage";
-import CartPage from "./pages/CartPage";
+import App from './App';
+import NotFoundPage from './pages/NotFoundPage';
+import ProductsListPage from './pages/ProductsListPage';
+import CartPage from './pages/CartPage';
+import OrderPage from './pages/OrderPage';
+import OrderBoxListPage from './pages/OrderBoxListPage';
+import OrderDetailPage from './pages/OrderDetailPage';
 
-import { worker } from "./mocks/browser";
+import { worker } from './mocks/browser';
 
 const main = async () => {
-  if (window.location.pathname === "/react-shopping-cart-prod") {
-    window.location.pathname = "/react-shopping-cart-prod/";
+  if (window.location.pathname === '/react-shopping-cart-prod') {
+    window.location.pathname = '/react-shopping-cart-prod/';
     return;
   }
 
   await worker.start({
     serviceWorker: {
-      url: "/react-shopping-cart-prod/mockServiceWorker.js",
+      url: '/react-shopping-cart-prod/mockServiceWorker.js',
     },
   });
 };
@@ -29,12 +32,20 @@ const main = async () => {
 const router = createBrowserRouter(
   [
     {
-      path: "/",
+      path: '/',
       element: <App />,
       errorElement: <NotFoundPage />,
       children: [
-        { path: "", element: <ProductsListPage /> },
-        { path: "/cart", element: <CartPage /> },
+        { path: '', element: <ProductsListPage /> },
+        { path: 'cart', element: <CartPage /> },
+        {
+          path: 'orders',
+          element: <OrderPage />,
+          children: [
+            { path: '', element: <OrderBoxListPage /> },
+            { path: 'detail/:id', element: <OrderDetailPage /> },
+          ],
+        },
       ],
     },
   ],
@@ -43,9 +54,7 @@ const router = createBrowserRouter(
   }
 );
 
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
-);
+const root = createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <React.StrictMode>
     <RecoilRoot>

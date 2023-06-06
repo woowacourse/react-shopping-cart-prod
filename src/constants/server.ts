@@ -14,6 +14,11 @@ export const SERVER = {
     id: process.env.REACT_APP_ID,
     password: process.env.REACT_APP_PASSWORD,
   },
+  MSW: {
+    url: '',
+    id: process.env.REACT_APP_ID,
+    password: process.env.REACT_APP_PASSWORD,
+  },
 } as const;
 
 export const SERVER_KEYS = Object.keys(SERVER);

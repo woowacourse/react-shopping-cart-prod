@@ -1,7 +1,7 @@
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
-import CartProductItem from './CartProductItem';
+import * as List from './CartProductItem';
 
 import { cartProductState } from '../../states/cartProducts';
 import Message from '../Common/Message';
@@ -12,35 +12,22 @@ const CartProductList = () => {
 
   useFetchCartProducts();
 
-  if (cartProducts.length === 0) {
+  if (!cartProducts.length) {
     return (
       <MessageWrapper>
-        <Message type='cartEmpty' />
+        <Message type="cartEmpty" />
       </MessageWrapper>
     );
   }
 
   return (
-    <CartProductListContainer>
-      {cartProducts.map((cartProduct) => (
-        <li key={cartProduct.id}>
-          <CartProductItem cartProduct={cartProduct} />
-        </li>
+    <ul>
+      {cartProducts.map(cartProduct => (
+        <List.CartProductItem key={cartProduct.id} cartProduct={cartProduct} />
       ))}
-    </CartProductListContainer>
+    </ul>
   );
 };
-
-const CartProductListContainer = styled.ul`
-  & > li {
-    padding: 18px 0;
-    border-top: 1px solid ${({ theme }) => theme.colors.gray200};
-
-    @media (min-width: ${({ theme }) => theme.breakPoints.small}) {
-      padding: 30px 0;
-    }
-  }
-`;
 
 const MessageWrapper = styled.div`
   position: relative;

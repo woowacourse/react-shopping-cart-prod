@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { userEvent, waitFor, within } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
 
-import ProductItem from '../components/Product/ProductItem';
+import { ProductItem } from '../components/Product/ProductItem';
 
 const meta = {
   title: 'Product/ProductItem',

@@ -6,7 +6,6 @@ import {
   useSetRecoilState,
 } from 'recoil';
 
-import cartProductApis from '../apis/cartProducts';
 import { checkedCartProductState } from '../states/checkedCartProducts';
 import { cartProductState } from '../states/cartProducts';
 import {
@@ -16,6 +15,9 @@ import {
 } from '../states/checkedCartProducts/utils';
 import { serverNameState } from '../states/serverName';
 import { toastState } from '../states/toast/atom';
+import { TOAST_STATE } from '../constants/toast';
+import fetchApis from '../apis/fetchApis';
+import { FETCH_URLS } from '../constants/urls';
 
 const useMultipleChecked = () => {
   const serverName = useRecoilValue(serverNameState);
@@ -24,14 +26,14 @@ const useMultipleChecked = () => {
   const [cartProducts, setCartProducts] = useRecoilState(cartProductState);
   const setToastState = useSetRecoilState(toastState);
 
-  const { deleteData } = cartProductApis(serverName, '/cart-items');
+  const { deleteData } = fetchApis(serverName);
 
   const isAllChecked = getIsAllChecked(cartProducts, checked);
   const isAllUnchecked = getIsAllUnchecked(checked);
 
-  const toggleAllProductChecked: ChangeEventHandler<HTMLInputElement> = (
-    event
-  ) => {
+  const toggleAllProductChecked: ChangeEventHandler<
+    HTMLInputElement
+  > = event => {
     const { checked } = event.currentTarget;
 
     if (checked) {
@@ -42,24 +44,24 @@ const useMultipleChecked = () => {
     setChecked([]);
   };
 
+  const deleteCheckedProductState = () => {
+    setCartProducts(prev =>
+      prev.filter(cartProduct => !findTargetChecked(checked, cartProduct.id))
+    );
+
+    resetChecked();
+  };
+
   const deleteCheckedProducts = () => {
     try {
-      checked.forEach(async (item) => {
-        await deleteData(item.id);
+      checked.forEach(async item => {
+        await deleteData(`${FETCH_URLS.cartItems}/${item.id}`);
       });
 
-      setCartProducts((prev) =>
-        prev.filter(
-          (cartProduct) => !findTargetChecked(checked, cartProduct.id)
-        )
-      );
-      setChecked([]);
+      deleteCheckedProductState();
+      setToastState(TOAST_STATE.successDeleteProduct);
     } catch {
-      setToastState({
-        message: '상품 삭제를 실패했습니다',
-        variant: 'error',
-        duration: 2000,
-      });
+      setToastState(TOAST_STATE.failedDeleteProduct);
     }
   };
 
@@ -67,6 +69,7 @@ const useMultipleChecked = () => {
     isAllChecked,
     isAllUnchecked,
     toggleAllProductChecked,
+    deleteCheckedProductState,
     deleteCheckedProducts,
   };
 };

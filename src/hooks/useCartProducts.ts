@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
-import cartProductApis from '../apis/cartProducts';
 import {
   cartProductState,
   targetCartProductState,
@@ -10,6 +9,9 @@ import { addTargetProduct } from '../states/cartProducts/util';
 import type { Product } from '../types/product';
 import { serverNameState } from '../states/serverName';
 import { toastState } from '../states/toast/atom';
+import { TOAST_STATE } from '../constants/toast';
+import fetchApis from '../apis/fetchApis';
+import { FETCH_URLS } from '../constants/urls';
 
 const useCartProducts = (product: Product) => {
   const [cartItemId, setCartItemId] = useState<number>();
@@ -22,11 +24,11 @@ const useCartProducts = (product: Product) => {
   );
   const setToastState = useSetRecoilState(toastState);
 
-  const { postData } = cartProductApis(serverName, '/cart-items');
+  const { postData } = fetchApis(serverName);
 
   const addProduct = async () => {
     try {
-      const location = await postData(id);
+      const location = await postData(FETCH_URLS.cartItems, { productId: id });
 
       const cartItemId = Number(location?.split('/').pop());
 
@@ -35,18 +37,10 @@ const useCartProducts = (product: Product) => {
       }
 
       setCartItemId(cartItemId);
-      setCartProducts((prev) => addTargetProduct(prev, cartItemId, product));
-      setToastState({
-        message: '상품 추가를 성공했습니다.',
-        variant: 'success',
-        duration: 2000,
-      });
+      setCartProducts(prev => addTargetProduct(prev, cartItemId, product));
+      setToastState(TOAST_STATE.successAddProduct);
     } catch {
-      setToastState({
-        message: '상품 추가를 실패했습니다.',
-        variant: 'error',
-        duration: 2000,
-      });
+      setToastState(TOAST_STATE.failedAddProduct);
     }
   };
 
