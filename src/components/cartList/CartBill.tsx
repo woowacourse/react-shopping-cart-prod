@@ -1,30 +1,24 @@
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import * as S from './styles/CartBill.styles';
-import * as api from '../../api';
-import { cartBillTotalPriceState, cartState, checkedListState } from '../../atom/cart';
 import { serverNameState } from '../../atom/serverName';
 import { loginState } from '../../atom/login';
 import { couponState } from '../../atom/coupon';
-import useToast from '../hooks/useToast';
-import { API_SUCCESS_MESSAGE } from '../../constants';
-import { useState } from 'react';
 import { useGetCartList } from '../hooks/useGetCartList';
+import { usePostPurchaseItem } from '../hooks/usePostPurchaseItem';
 
 export default function CartBill() {
-  const cart = useRecoilValue(cartState);
-  const checkedList = useRecoilValue(checkedListState);
   const { getCartsThroughApi } = useGetCartList();
-  const cartBillTotalPrice = useRecoilValue(cartBillTotalPriceState);
-  const deliveryFee = checkedList.filter((checked) => checked).length === 0 ? 0 : 3000;
+  const {
+    postPurchaseItemThroughApi,
+    setSelectedCoupon,
+    couponDiscountPrice,
+    deliveryFee,
+    cartBillTotalPrice,
+    coupons,
+  } = usePostPurchaseItem();
   const serverName = useRecoilValue(serverNameState);
   const loginCredential = useRecoilValue(loginState);
-  const [coupons, setCoupons] = useRecoilState(couponState);
-  const { showToast } = useToast();
-  const [selectedCoupon, setSelectedCoupon] = useState(0);
-  const couponDiscountPrice =
-    ((cartBillTotalPrice + deliveryFee) *
-      coupons.filter((coupon) => coupon.id === selectedCoupon)[0]?.discountRate) /
-      100 || 0;
+  const setCoupons = useSetRecoilState(couponState);
 
   const handleSubmitPurchaseCartItems = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -32,24 +26,9 @@ export default function CartBill() {
     const formData = new FormData(e.currentTarget);
     const couponKind = formData.get('couponKind');
 
-    const purchasingCartItems = checkedList
-      .map(
-        (checked, idx) =>
-          checked && { productId: cart[idx].product.id, quantity: cart[idx].quantity }
-      )
-      .filter(
-        (cartItem): cartItem is { productId: number; quantity: number } =>
-          typeof cartItem !== 'boolean'
-      );
-
-    const couponId = couponKind !== 'null' ? Number(couponKind) : null;
-
-    await api.postPurchaseCartItem(serverName, loginCredential, purchasingCartItems, couponId);
-    setCoupons(coupons.filter((coupon) => coupon.id !== couponId));
-
+    await postPurchaseItemThroughApi(serverName, loginCredential, couponKind);
+    setCoupons(coupons.filter((coupon) => coupon.id !== Number(couponKind)));
     getCartsThroughApi(serverName, loginCredential, true);
-
-    showToast('info', API_SUCCESS_MESSAGE.purchase);
   };
 
   const handleCouponSelected = (e: React.ChangeEvent<HTMLSelectElement>) => {
