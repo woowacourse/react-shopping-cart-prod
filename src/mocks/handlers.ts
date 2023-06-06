@@ -99,4 +99,4 @@ const handleOrders = [
   }),
 ];
 
-export const handlers = handleProducts.concat(handleUsers, handleCart, handleOrders);
+export default [...handleProducts, ...handleUsers, ...handleCart, ...handleOrders];
