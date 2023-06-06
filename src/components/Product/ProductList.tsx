@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { fetchProductsSelector } from '../../recoil/productData';
-
 import ProductItem from './ProductItem';
 import Message from '../Common/Message';
+import { MD, SM } from '../../constants/screenSizes';
 
 const ProductList = () => {
   const products = useRecoilValue(fetchProductsSelector);
@@ -28,11 +28,11 @@ const ProductListContainer = styled.ul`
   grid-row-gap: 84px;
   grid-column-gap: 48px;
 
-  @media (min-width: 640px) and (max-width: 768px) {
+  @media (min-width: ${SM}) and (max-width: ${MD}) {
     grid-template-columns: repeat(2, 282px);
   }
 
-  @media (max-width: 640px) {
+  @media (max-width: ${SM}) {
     grid-template-columns: repeat(1, 282px);
   }
 `;

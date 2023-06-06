@@ -1,5 +1,6 @@
 import { ImgHTMLAttributes } from 'react';
 import styled, { css } from 'styled-components';
+import { XS } from '../../constants/screenSizes';
 
 type ImageType = 'small' | 'medium';
 
@@ -22,7 +23,7 @@ const ImageStyled = {
     width: 144px;
     height: 144px;
 
-    @media (max-width: 420px) {
+    @media (max-width: ${XS}) {
       width: 80px;
       height: 80px;
       font-size: 20px;

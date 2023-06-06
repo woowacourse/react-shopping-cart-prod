@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import OrderProductItem from './OrderProductItem';
+import { SM } from '../../constants/screenSizes';
 import type { OrderedProduct } from '../../types/product';
 
 interface OrderProductListProps {
@@ -60,7 +61,7 @@ const OrderId = styled.span`
 `;
 
 const OrderDataTime = styled.span`
-  @media (max-width: 640px) {
+  @media (max-width: ${SM}) {
     display: none;
   }
 `;

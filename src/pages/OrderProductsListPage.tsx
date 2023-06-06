@@ -4,6 +4,7 @@ import { useRecoilValue } from 'recoil';
 import { hostNameAtom, orderApiAtom } from '../recoil/hostData';
 import OrderProductList from '../components/Order/OrderProductList';
 import Title from '../components/Common/Title';
+import { LG } from '../constants/screenSizes';
 import type { OrderedProduct } from '../types/product';
 
 const OrderProductsListPage = () => {
@@ -32,7 +33,7 @@ const OrderProductsListPage = () => {
 };
 
 const Main = styled.section`
-  max-width: 1100px;
+  max-width: ${LG};
   margin: 0 auto;
   padding: 0 10px 100px 10px;
 `;

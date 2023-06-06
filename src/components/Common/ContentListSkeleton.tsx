@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import Skeleton from './Skeleton';
 import { useRecoilValue } from 'recoil';
 import { totalCartProductSelect } from '../../recoil/cartProductData';
+import { MD, SM } from '../../constants/screenSizes';
 
 interface Props {
   content: 'product' | 'cart';
@@ -31,11 +32,11 @@ const ContentStyled = {
     grid-row-gap: 84px;
     grid-column-gap: 48px;
 
-    @media (min-width: 640px) and (max-width: 768px) {
+    @media (min-width: ${SM}) and (max-width: ${MD}) {
       grid-template-columns: repeat(2, 282px);
     }
 
-    @media (max-width: 640px) {
+    @media (max-width: ${SM}) {
       grid-template-columns: repeat(1, 282px);
     }
   `,

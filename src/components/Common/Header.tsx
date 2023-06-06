@@ -1,12 +1,12 @@
 import styled from 'styled-components';
-
 import { Link } from 'react-router-dom';
 import CartIcon from '../../assets/CartIcon';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { totalCartProductSelect } from '../../recoil/cartProductData';
-import { servers } from '../../constants/server';
 import { hostNameAtom } from '../../recoil/hostData';
-import { HostNameType } from '../../types/server';
+import { servers } from '../../constants/server';
+import { SM, XL, XS } from '../../constants/screenSizes';
+import type { HostNameType } from '../../types/server';
 
 const Header = () => {
   const totalCartProduct = useRecoilValue(totalCartProductSelect);
@@ -57,7 +57,7 @@ const HeaderContainer = styled.header`
 `;
 
 const HeaderContent = styled.div`
-  max-width: 1250px;
+  max-width: ${XL};
   height: 100%;
   margin: 0 auto;
   padding: 0 30px;
@@ -82,7 +82,7 @@ const Logo = styled.h1`
   letter-spacing: 0.1em;
   padding: 10px 0 0;
 
-  @media (max-width: 420px) {
+  @media (max-width: ${XS}) {
     display: none;
   }
 `;
@@ -91,7 +91,7 @@ const ControlContainer = styled.div`
   display: flex;
   gap: 30px;
 
-  @media (max-width: 640px) {
+  @media (max-width: ${SM}) {
     gap: 15px;
   }
 `;
@@ -116,7 +116,7 @@ const MoveOrderListPageBtn = styled.button`
 const DesktopLabel = styled.span`
   display: inline;
 
-  @media (max-width: 640px) {
+  @media (max-width: ${SM}) {
     display: none;
   }
 `;
@@ -124,7 +124,7 @@ const DesktopLabel = styled.span`
 const MobileLabel = styled.span`
   display: none;
 
-  @media (max-width: 640px) {
+  @media (max-width: ${SM}) {
     display: inline;
   }
 `;

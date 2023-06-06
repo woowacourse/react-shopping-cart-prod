@@ -6,6 +6,7 @@ import { hostNameAtom, orderApiAtom } from '../recoil/hostData';
 import OrderProductList from '../components/Order/OrderProductList';
 import PaymentInfoBox from '../components/Order/PaymentInfoBox';
 import Title from '../components/Common/Title';
+import { LG } from '../constants/screenSizes';
 import type { OrderedProduct } from '../types/product';
 
 const OrderDetailsPage = () => {
@@ -35,7 +36,7 @@ const OrderDetailsPage = () => {
 };
 
 const Main = styled.section`
-  max-width: 1100px;
+  max-width: ${LG};
   margin: 0 auto;
   padding: 0 10px 100px 10px;
 `;

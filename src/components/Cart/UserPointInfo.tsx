@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import usePoint from '../../hooks/usePoint';
 import useEstimatedPayment from '../../hooks/useEstimatedPayment';
+import { XS } from '../../constants/screenSizes';
 
 interface UserPointInfoProps {
   onUserUsedPointUpdate: (value: number) => void;
@@ -74,7 +75,7 @@ const UserPointInfoContainer = styled.div`
   height: 220px;
   margin-bottom: 40px;
 
-  @media (max-width: 420px) {
+  @media (max-width: ${XS}) {
     width: 330px;
   }
 `;
