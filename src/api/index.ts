@@ -37,8 +37,8 @@ export const getCarts = async <T>(serverName: ServerNameType, loginCredential: s
 
 export const postCartItem = async (
   serverName: ServerNameType,
-  productId: number,
-  loginCredential: string
+  loginCredential: string,
+  productId: number
 ) => {
   const url = `${BASE_URL_MAP[serverName]}/cart-items`;
   const body = { productId };
