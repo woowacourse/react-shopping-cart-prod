@@ -1,18 +1,19 @@
 import { Fragment, useEffect, useState } from 'react';
 import * as S from './styles/CouponPage.styles';
-import * as api from '../api';
 import { useRecoilValue } from 'recoil';
 import { serverNameState } from '../atom/serverName';
 import { loginState } from '../atom/login';
 import { CouponInfo } from '../types';
+import { useGetCoupon } from '../components/hooks/useGetCoupon';
 
 export default function CouponPage() {
   const serverName = useRecoilValue(serverNameState);
   const loginCredential = useRecoilValue(loginState);
   const [coupons, setCoupons] = useState<CouponInfo[]>([]);
+  const { getCouponThroughApi } = useGetCoupon();
 
   useEffect(() => {
-    api.getCoupon<CouponInfo[]>(serverName, loginCredential).then(setCoupons);
+    getCouponThroughApi(serverName, loginCredential, true, setCoupons);
   }, []);
 
   return (
