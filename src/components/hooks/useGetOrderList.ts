@@ -15,9 +15,10 @@ export const useGetOrderList = () => {
       .catch((e: Error) => {
         if (e.name !== 'Error') {
           showToast('error', API_ERROR_MESSAGE.getOrder);
+          return;
         }
 
-        return showToast('error', e.message);
+        showToast('error', e.message);
       });
   };
 
