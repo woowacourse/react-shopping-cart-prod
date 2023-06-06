@@ -3,12 +3,11 @@ import { useRecoilValue } from 'recoil';
 import * as S from './styles/CartItem.styles';
 import CheckBox from '../common/CheckBox';
 import QuantityInput from '../common/QuantityInput';
-import * as api from '../../api';
-import { API_ERROR_MESSAGE, MAX_QUANTITY } from '../../constants';
-import useToast from '../hooks/useToast';
+import { MAX_QUANTITY } from '../../constants';
 import { serverNameState } from '../../atom/serverName';
 import { loginState } from '../../atom/login';
 import { useGetCartList } from '../hooks/useGetCartList';
+import { useDeleteCartItem } from '../hooks/useDeleteCartItem';
 
 interface Props extends CartItemType {
   checked: boolean;
@@ -19,18 +18,12 @@ interface Props extends CartItemType {
 export default function CartItem(props: Props) {
   const { id, product, quantity, checked, toggleChecked, deleteChecked } = props;
   const { getCartsThroughApi } = useGetCartList();
+  const { deleteCartItemThroughApi } = useDeleteCartItem();
   const serverName = useRecoilValue(serverNameState);
   const loginCredential = useRecoilValue(loginState);
-  const { showToast } = useToast();
 
   const removeCartItem = async () => {
-    try {
-      await api.deleteCartItem(serverName, loginCredential, id);
-      deleteChecked();
-    } catch {
-      showToast('error', API_ERROR_MESSAGE.deleteCartItem);
-      return;
-    }
+    await deleteCartItemThroughApi(serverName, loginCredential, id);
 
     getCartsThroughApi(serverName, loginCredential);
   };

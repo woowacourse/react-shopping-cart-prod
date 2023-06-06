@@ -7,10 +7,12 @@ import { API_ERROR_MESSAGE, API_SUCCESS_MESSAGE } from '../../constants';
 import { serverNameState } from '../../atom/serverName';
 import { loginState } from '../../atom/login';
 import { useGetCartList } from './useGetCartList';
+import { useDeleteCartItem } from './useDeleteCartItem';
 
 const useQuantityInput = (cartItemId: number) => {
   const [input, setInput] = useState('');
   const { getCartsThroughApi } = useGetCartList();
+  const { deleteCartItemThroughApi } = useDeleteCartItem();
   const serverName = useRecoilValue(serverNameState);
   const loginCredential = useRecoilValue(loginState);
   const { showToast } = useToast();
@@ -20,19 +22,7 @@ const useQuantityInput = (cartItemId: number) => {
   };
 
   const deleteCartItem = async () => {
-    await api
-      .deleteCartItem(serverName, loginCredential, cartItemId)
-      .then(() => {
-        showToast('info', API_SUCCESS_MESSAGE.deleteCartItem);
-      })
-      .catch((e: Error) => {
-        if (e.name !== 'Error') {
-          showToast('error', API_ERROR_MESSAGE.server);
-          return;
-        }
-
-        showToast('error', e.message);
-      });
+    await deleteCartItemThroughApi(serverName, loginCredential, cartItemId);
 
     getCart();
   };
