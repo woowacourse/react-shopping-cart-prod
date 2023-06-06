@@ -15,7 +15,12 @@ export default function OrderPage() {
     getOrdersThroughApi(serverName, loginCredential);
   }, []);
 
-  if (!orders) return <></>;
+  if (!orders)
+    return (
+      <S.OrderHeader>
+        <h2>주문목록</h2>
+      </S.OrderHeader>
+    );
 
   return (
     <>
