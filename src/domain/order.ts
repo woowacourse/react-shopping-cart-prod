@@ -40,14 +40,14 @@ const addOrder = (
 
   if (!isValidOrder) return null;
 
-  const order = {
+  const newOrder = {
     id: Number(new Date()),
     orderedItems,
     orderedAt: new Date(),
     ...serverOrderCosts,
   };
 
-  return [...orderList, order];
+  return [...orderList, newOrder];
 };
 
 export { getOrderListData, setOrderListData, addOrder };
