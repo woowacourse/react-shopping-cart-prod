@@ -2,16 +2,17 @@ const priceFormatter = (price: number) => {
   return price === 0 ? 0 : price.toLocaleString();
 };
 
-const dateFormatter = (createdAt: Date) => {
-  return createdAt.toLocaleDateString('sv').replaceAll('-', '.');
+const dateFormatter = (date: string) => {
+  return new Intl.DateTimeFormat('ko-KR', { dateStyle: 'long' }).format(new Date(date));
 };
 
-const timeFormatter = (createdAt: Date) => {
-  const date = new Date(createdAt);
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
+const timeFormatter = (time: string) => {
+  const formatter = new Intl.DateTimeFormat('ko-KR', {
+    timeStyle: 'long',
+    hour12: false,
+  });
 
-  return `${hours}시 ${minutes}분`;
+  return formatter.format(new Date(time)).replace(/(분).*$/, '$1');
 };
 
 export { priceFormatter, dateFormatter, timeFormatter };
