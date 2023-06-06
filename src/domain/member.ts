@@ -18,7 +18,7 @@ const getMemberData = () => {
   return getFromLocalStorage<MemberInformation>(MEMBER_INFORMATION_LOCAL_STORAGE_KEY) ?? newMember;
 };
 
-const seMemberData = (newMemberInformation: MemberInformation) => {
+const setMemberData = (newMemberInformation: MemberInformation) => {
   saveToLocalStorage(MEMBER_INFORMATION_LOCAL_STORAGE_KEY, newMemberInformation);
 };
 
@@ -43,4 +43,4 @@ const updateMemberInformation = (orderList: OrderData[]) => {
     : { ...memberInformation };
 };
 
-export { getMemberData, seMemberData, updateMemberInformation };
+export { getMemberData, setMemberData, updateMemberInformation };

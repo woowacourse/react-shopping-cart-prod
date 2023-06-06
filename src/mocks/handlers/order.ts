@@ -2,7 +2,7 @@ import { rest } from 'msw';
 
 import { API_ENDPOINT, HTTP_STATUS_CODE } from '../../constants/api';
 import { setCartData, updateCart } from '../../domain/cart';
-import { seMemberData, updateMemberInformation } from '../../domain/member';
+import { setMemberData, updateMemberInformation } from '../../domain/member';
 import { addOrder, getOrderListData, setOrderListData } from '../../domain/order';
 import type { PostOrderRequestBody } from '../../types/api';
 
@@ -27,7 +27,7 @@ const orderHandlers = [
     const newCartList = updateCart(cartItemIds);
 
     setOrderListData(newOrderList);
-    seMemberData(newMemberInformation);
+    setMemberData(newMemberInformation);
     setCartData(newCartList);
 
     return res(
