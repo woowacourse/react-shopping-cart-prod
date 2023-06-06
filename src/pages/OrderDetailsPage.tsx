@@ -2,24 +2,22 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
-import { hostNameAtom } from '../recoil/hostData';
+import { hostNameAtom, orderApiAtom } from '../recoil/hostData';
 import OrderProductList from '../components/Order/OrderProductList';
 import PaymentInfoBox from '../components/Order/PaymentInfoBox';
 import Title from '../components/Common/Title';
-import { orderApi } from '../apis/orderProducts';
 import type { OrderedProduct } from '../types/product';
 
 const OrderDetailsPage = () => {
   const hostName = useRecoilValue(hostNameAtom);
+  const orderApiInstance = useRecoilValue(orderApiAtom);
   const [orderDetails, setOrderDetails] = useState<OrderedProduct | null>(null);
   const { orderId } = useParams<{ orderId?: string }>();
   const currentOrderId = orderId!;
 
   useEffect(() => {
-    orderApi(hostName).then((apiInstance) => {
-      apiInstance.fetchOrderDetailsProduct(currentOrderId).then((data) => {
-        setOrderDetails(data);
-      });
+    orderApiInstance.fetchOrderDetailsProduct(currentOrderId).then((data) => {
+      setOrderDetails(data);
     });
   }, [hostName]);
 

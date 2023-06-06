@@ -1,12 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { hostNameAtom } from '../recoil/hostData';
+import { orderApiAtom } from '../recoil/hostData';
 import {
   checkedItemAtom,
   totalPriceSelector,
 } from '../recoil/checkedProductData';
 import { cartProductAtom } from '../recoil/cartProductData';
-import { orderApi } from '../apis/orderProducts';
 import {
   FREE_DELIVERY_THRESHOLD,
   REWARD_POINT_RATE,
@@ -16,6 +15,7 @@ import type { OrderedData } from '../types/product';
 
 const useEstimatedPayment = (usePoint: number) => {
   const navigate = useNavigate();
+  const orderApiInstance = useRecoilValue(orderApiAtom);
   const totalProductPrice = useRecoilValue(totalPriceSelector);
   const totalDeliveryFee =
     totalProductPrice === 0 || totalProductPrice >= FREE_DELIVERY_THRESHOLD
@@ -25,8 +25,6 @@ const useEstimatedPayment = (usePoint: number) => {
   const totalPrice = totalProductPrice
     ? totalProductPrice + totalDeliveryFee - usePoint
     : 0;
-
-  const hostName = useRecoilValue(hostNameAtom);
   const [cartProducts, setCartProducts] = useRecoilState(cartProductAtom);
   const [checkedCartProduct, setCheckedCartProduct] =
     useRecoilState(checkedItemAtom);
@@ -50,10 +48,8 @@ const useEstimatedPayment = (usePoint: number) => {
       totalPrice,
     };
 
-    orderApi(hostName)
-      .then((apiInstance) => {
-        return apiInstance.postOrderProduct(orderData);
-      })
+    orderApiInstance
+      .postOrderProduct(orderData)
       .then(() => {
         setCartProducts([]);
         setCheckedCartProduct([]);
