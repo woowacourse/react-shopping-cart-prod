@@ -13,8 +13,7 @@ const OrderProductList = ({
   orderProducts,
   showDetailsLink,
 }: OrderProductListProps) => {
-  const { orderId, orderDateTime } = orderProducts;
-  const orderItems = orderProducts.orderItems;
+  const { orderId, orderDateTime, orderItems } = orderProducts;
 
   return (
     <OrderProductContainer>

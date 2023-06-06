@@ -7,8 +7,10 @@ interface OrderProductItemProps {
 }
 
 const OrderProductItem = ({ orderProduct }: OrderProductItemProps) => {
-  const { quantity } = orderProduct;
-  const { name, imageUrl, price } = orderProduct.product;
+  const {
+    quantity,
+    product: { name, imageUrl, price },
+  } = orderProduct;
   const totalPrice = price * quantity;
 
   return (
