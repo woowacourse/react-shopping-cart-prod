@@ -22,8 +22,8 @@ const getOrderedItems = (cartItemIds: OrderCartItemsData['cartItemIds']): Ordere
     const cartItemData = currentCartData.find((cartItem) => cartItemId === cartItem.id)!;
 
     return {
-      quantity: cartItemData.quantity,
       ...cartItemData.product,
+      quantity: cartItemData.quantity,
     };
   });
 };
