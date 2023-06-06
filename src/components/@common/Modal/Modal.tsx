@@ -3,11 +3,11 @@ import * as S from './Modal.style';
 
 const Modal = ({ isOpen, onClose, children }: { isOpen: boolean; onClose: () => void; children: ReactNode }) => {
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
-    }
+    if (isOpen) document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = 'visible';
+    };
   }, [isOpen]);
 
   const handleModalContentClick = (event: MouseEvent<HTMLDivElement>) => {
