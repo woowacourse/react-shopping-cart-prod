@@ -3,20 +3,14 @@ import { ChangeEvent } from 'react';
 
 interface CheckBoxProps {
   label?: string;
-  onCheck?: (isCheck: boolean) => void;
   checked: boolean;
   onClick?: () => void;
 }
 
-const CheckBox = ({ label, onCheck, checked, onClick }: CheckBoxProps) => {
+const CheckBox = ({ label, checked, onClick }: CheckBoxProps) => {
   return (
     <CheckBoxWrapper>
-      <CheckBoxInput
-        type="checkbox"
-        checked={checked}
-        onChange={(e: ChangeEvent<HTMLInputElement>) => onCheck && onCheck(e.target.checked)}
-        onClick={() => onClick && onClick()}
-      />
+      <CheckBoxInput type="checkbox" checked={checked} onClick={() => onClick && onClick()} />
       {label && <LabelText>{label}</LabelText>}
     </CheckBoxWrapper>
   );
