@@ -54,11 +54,7 @@ const removeCartItem = (cartList: CartItemData[], cartItemId: CartItemData['id']
 const updateCart = (cartItemIds: number[]) => {
   const cartList = getCartData();
 
-  return cartList.filter((cartItem) => {
-    const ordered = cartItemIds.find((cartItemId) => cartItemId === cartItem.id);
-
-    return !ordered;
-  });
+  return cartList.filter((cartItem) => !cartItemIds.includes(cartItem.id));
 };
 
 export {
