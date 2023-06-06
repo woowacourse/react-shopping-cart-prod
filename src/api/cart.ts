@@ -1,94 +1,28 @@
 import type { CartType, ServerNameType } from '../types';
 
-import { BASE_URL_MAP } from '../constants';
+import fetcher from '../utils/fetcher';
 
-export const getCart = async (serverName: ServerNameType, token: string): Promise<CartType> => {
-  const url = `${BASE_URL_MAP[serverName]}/cart-items`;
-  const response = await fetch(url, {
-    method: 'GET',
-    headers: {
-      Authorization: `Basic ${token}`,
-    },
-  });
+export const getCart = (serverName: ServerNameType, token: string) =>
+  fetcher(serverName, token)<CartType>('GET', 'cart-items');
 
-  if (!response.ok) throw new Error(`${url} GET error`);
-  return response.json();
-};
+export const postCartItem = (serverName: ServerNameType, token: string, productId: number) =>
+  fetcher(serverName, token)('POST', 'cart-items', { productId });
 
-export const postCartItem = async (
-  serverName: ServerNameType,
-  token: string,
-  productId: number
-) => {
-  const url = `${BASE_URL_MAP[serverName]}/cart-items`;
-  const body = JSON.stringify({
-    productId,
-  });
-
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: {
-      Authorization: `Basic ${token}`,
-      'Content-Type': 'application/json',
-    },
-    body,
-  });
-
-  if (!response.ok) throw new Error(`${url} POST Error`);
-};
-
-export const patchCartItemQuantity = async (
+export const patchCartItemQuantity = (
   serverName: ServerNameType,
   token: string,
   cartItemId: number,
   quantity: number
-) => {
-  const url = `${BASE_URL_MAP[serverName]}/cart-items/${cartItemId}`;
-  const body = JSON.stringify({
-    quantity,
-  });
+) => fetcher(serverName, token)('PATCH', `cart-items/${cartItemId}`, { quantity });
 
-  const response = await fetch(url, {
-    method: 'PATCH',
-    headers: {
-      Authorization: `Basic ${token}`,
-      'Content-Type': 'application/json',
-    },
-    body,
-  });
+export const deleteCartItem = (serverName: ServerNameType, token: string, cartItemId: number) =>
+  fetcher(serverName, token)('DELETE', `cart-items/${cartItemId}`);
 
-  if (!response.ok) throw new Error(`${url} PATCH Error`);
-};
-
-export const deleteCartItem = async (
-  serverName: ServerNameType,
-  token: string,
-  cartItemId: number
-) => {
-  const url = `${BASE_URL_MAP[serverName]}/cart-items/${cartItemId}`;
-  const response = await fetch(url, {
-    method: 'DELETE',
-    headers: {
-      Authorization: `Basic ${token}`,
-    },
-  });
-
-  if (!response.ok) throw new Error(`${url} FETCH Error`);
-};
-
-export const deleteCartItems = async (
+export const deleteCartItems = (
   serverName: ServerNameType,
   token: string,
   cartItemIdList: number[]
 ) => {
   const ids = cartItemIdList.map(String).join(',');
-  const url = `${BASE_URL_MAP[serverName]}/cart-items?ids=${ids}`;
-  const response = await fetch(url, {
-    method: 'DELETE',
-    headers: {
-      Authorization: `Basic ${token}`,
-    },
-  });
-
-  if (!response.ok) throw new Error(`${url} FETCH Error`);
+  return fetcher(serverName, token)('DELETE', `cart-items?ids=${ids}`);
 };

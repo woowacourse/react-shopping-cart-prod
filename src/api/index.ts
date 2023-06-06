@@ -8,34 +8,14 @@ import {
   patchCartItemQuantity,
   postCartItem,
 } from './cart';
-import { BASE_URL_MAP } from '../constants';
 import { getOrder, getOrders, postOrder } from './order';
+import fetcher from '../utils/fetcher';
 
-export const getProducts = async (serverName: ServerNameType): Promise<ProductType[]> => {
-  const url = `${BASE_URL_MAP[serverName]}/products`;
-  const response = await fetch(url, {
-    method: 'GET',
-  });
+export const getProducts = async (serverName: ServerNameType) =>
+  fetcher(serverName)<ProductType[]>('GET', 'products');
 
-  if (!response.ok) throw new Error(`${url} GET error`);
-  return response.json();
-};
-
-export const getCoupons = async (
-  serverName: ServerNameType,
-  token: string
-): Promise<CouponType[]> => {
-  const url = `${BASE_URL_MAP[serverName]}/users/me/coupons`;
-  const response = await fetch(url, {
-    method: 'GET',
-    headers: {
-      Authorization: `Basic ${token}`,
-    },
-  });
-
-  if (!response.ok) throw new Error(`${url} GET error`);
-  return response.json();
-};
+export const getCoupons = async (serverName: ServerNameType, token: string) =>
+  fetcher(serverName, token)<CouponType[]>('GET', 'users/me/coupons');
 
 const api = {
   postJoin,
