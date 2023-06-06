@@ -34,7 +34,7 @@ const UserPointInfo = ({ onUserUsedPointUpdate }: UserPointInfoProps) => {
   };
 
   const handleUsedPointOnBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    const userInputPoint = Number(e.target.value);
+    const userInputPoint = e.target.valueAsNumber;
     onUserUsedPointUpdate(userInputPoint);
 
     if (userInputPoint < 3000) {
