@@ -24,7 +24,7 @@ export default function Product({ id, name, price, imageUrl }: Props) {
   const addCartItem = async () => {
     setAddLoading(true);
 
-    postCartItemThroughApi(serverName, loginCredential, id, setAddLoading);
+    await postCartItemThroughApi(serverName, loginCredential, id, setAddLoading);
 
     getCartsThroughApi(serverName, loginCredential);
 

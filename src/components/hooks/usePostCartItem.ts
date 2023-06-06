@@ -7,13 +7,13 @@ import { SetStateAction } from 'react';
 export const usePostCartItem = () => {
   const { showToast } = useToast();
 
-  const postCartItemThroughApi = (
+  const postCartItemThroughApi = async (
     serverName: ServerNameType,
     loginCredential: string,
     productId: number,
     setAddLoading?: React.Dispatch<SetStateAction<boolean>>
   ) => {
-    api
+    await api
       .postCartItem(serverName, loginCredential, productId)
       .then(() => {
         showToast('info', API_SUCCESS_MESSAGE.postCartItem);
