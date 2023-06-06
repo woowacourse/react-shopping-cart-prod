@@ -6,6 +6,7 @@ import {
 import { LocalProductType } from "../types/domain";
 import { getLocalStorage } from "../utils";
 import { parseExpiredDate, parseOrderListData } from "../utils/domain";
+import { generateStatusErrorMessage } from "./generateStatusErrorMessage";
 
 // Base64로 인코딩
 const base64 = btoa(
@@ -26,7 +27,10 @@ const request = async (path: string, init?: RequestInit) => {
     },
   });
 
-  if (!response.ok) throw new Error(response.status.toString());
+  if (!response.ok) {
+    const errorMessage = generateStatusErrorMessage(response.status.toString());
+    throw new Error(errorMessage);
+  }
   return response;
 };
 
