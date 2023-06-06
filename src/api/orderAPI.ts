@@ -1,16 +1,16 @@
 import { API_ENDPOINT, AUTHORIZED_FETCH_OPTION_HEADERS } from '../constants/api';
-import { OrderCartItemsData } from '../types/order';
+import { OrderCartItemsData, OrderData } from '../types/order';
 import { fetchAPI } from './utils/fetchAPI';
 
 const getOrderAPI = (baseUrl: string) => {
-  const getOrderList = async () => {
+  const getOrderList = async (): Promise<OrderData[]> => {
     return await fetchAPI(`${baseUrl}${API_ENDPOINT.ORDERS}`, {
       method: 'GET',
       headers: { Authorization: AUTHORIZED_FETCH_OPTION_HEADERS.Authorization },
     });
   };
 
-  const getOrderDetail = async (orderId: number) => {
+  const getOrderDetail = async (orderId: number): Promise<OrderData> => {
     return await fetchAPI(`${baseUrl}${API_ENDPOINT.ORDERS}/${orderId}`, {
       method: 'GET',
       headers: { Authorization: AUTHORIZED_FETCH_OPTION_HEADERS.Authorization },
