@@ -8,21 +8,23 @@ import { OrderDetailInfo } from '../types';
 import OrderItemDetailList from '../components/OrderList/OrderItemDetailList';
 import { useParams } from 'react-router-dom';
 import OrderBill from '../components/OrderList/OrderBill';
+import { useGetOrderDetailList } from '../components/hooks/useGetOrderDetailList';
 
 export default function OrderDetailPage() {
   const serverName = useRecoilValue(serverNameState);
   const loginCredential = useRecoilValue(loginState);
-  const [orderItem, setOrderItem] = useState<OrderDetailInfo | null>(null);
-  const { id: urlOrderId } = useParams();
+  const { orderItem, getOrderDetailThroughApi } = useGetOrderDetailList();
 
   useEffect(() => {
-    if (!urlOrderId) return;
-    api
-      .getOrderDetail<OrderDetailInfo>(serverName, loginCredential, urlOrderId)
-      .then((orderDetail) => setOrderItem(orderDetail));
+    getOrderDetailThroughApi(serverName, loginCredential);
   }, []);
 
-  if (!orderItem) return <></>;
+  if (!orderItem)
+    return (
+      <S.Wrapper>
+        <S.OrderDetailHeader>주문 내역 상세</S.OrderDetailHeader>
+      </S.Wrapper>
+    );
 
   return (
     <S.Wrapper>
