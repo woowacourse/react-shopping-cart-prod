@@ -37,7 +37,7 @@ export const Menu = styled.div<{ isOpen: boolean }>`
   visibility: ${(props) => (props.isOpen ? 'visible' : 'hidden')};
   opacity: ${(props) => (props.isOpen ? 1 : 0)};
   box-shadow: 0 10px 16px 0 rgba(0, 0, 0, 0.2);
-  z-index: 999;
+  z-index: ${({ theme }) => theme.zIndex.userSelector};
 `;
 
 export const UserInfoWrapper = styled.div`

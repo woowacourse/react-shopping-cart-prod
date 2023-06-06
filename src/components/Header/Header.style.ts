@@ -7,7 +7,7 @@ export const HeaderWrapper = styled.div`
   position: sticky;
   background-color: #fff;
   top: 0;
-  z-index: 444;
+  z-index: ${({ theme }) => theme.zIndex.header};
 `;
 
 export const HeaderContent = styled.div`

@@ -17,4 +17,9 @@ export const theme = {
     xl: '1200px',
     xxl: '1400px',
   },
+  zIndex: {
+    header: 100,
+    userSelector: 110,
+    modal: 200,
+  },
 };
