@@ -3,7 +3,7 @@ const priceFormatter = (price: number) => {
 };
 
 const dateFormatter = (createdAt: Date) => {
-  return new Date(createdAt).toLocaleDateString('sv').replaceAll('-', '.');
+  return createdAt.toLocaleDateString('sv').replaceAll('-', '.');
 };
 
 const timeFormatter = (createdAt: Date) => {
