@@ -1,12 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import * as S from './styles/OrderDetailPage.styles';
-import * as api from '../api';
 import { useRecoilValue } from 'recoil';
 import { serverNameState } from '../atom/serverName';
 import { loginState } from '../atom/login';
-import { OrderDetailInfo } from '../types';
 import OrderItemDetailList from '../components/OrderList/OrderItemDetailList';
-import { useParams } from 'react-router-dom';
 import OrderBill from '../components/OrderList/OrderBill';
 import { useGetOrderDetailList } from '../components/hooks/useGetOrderDetailList';
 
