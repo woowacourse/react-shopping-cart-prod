@@ -18,26 +18,28 @@ export default function CartPage() {
     getCartsThroughApi(serverName, loginCredential, true);
   }, [serverName]);
 
+  if (cartCount === 0)
+    return (
+      <S.EmptyCartMain>
+        <S.Image src="./shoppingBag.svg" />
+        <S.Message>장바구니에 상품이 없습니다.</S.Message>
+        <S.Message>상품을 추가해보세요.</S.Message>
+        <S.StyledLink to="/">상품 담으러 가기</S.StyledLink>
+      </S.EmptyCartMain>
+    );
+
   return (
     <>
       <S.CartHeader>
         <h2>장바구니</h2>
       </S.CartHeader>
-      {cartCount !== 0 ? (
-        <S.CartMain>
-          <CartItemList />
-          <S.CartBillBox>
-            <CartBill />
-          </S.CartBillBox>
-        </S.CartMain>
-      ) : (
-        <S.EmptyCartMain>
-          <S.Image src="./shoppingBag.svg" />
-          <S.Message>장바구니에 상품이 없습니다.</S.Message>
-          <S.Message>상품을 추가해보세요.</S.Message>
-          <S.StyledLink to="/">상품 담으러 가기</S.StyledLink>
-        </S.EmptyCartMain>
-      )}
+
+      <S.CartMain>
+        <CartItemList />
+        <S.CartBillBox>
+          <CartBill />
+        </S.CartBillBox>
+      </S.CartMain>
     </>
   );
 }
