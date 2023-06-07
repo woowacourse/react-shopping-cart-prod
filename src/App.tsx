@@ -1,6 +1,7 @@
 import LoadingHeader from '@Components/Header/LoadingHeader';
 import { Suspense, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
 
 import Header from '@Components/Header';
 import QuickMenu from '@Components/QuickMenu';
@@ -13,25 +14,29 @@ import GlobalStyle, { CommonPageStyle } from '@Styles/GlobalStyle';
 
 import localStorageHelper from '@Utils/localStorageHelper';
 
+import { theme } from './style';
+
 if (!localStorageHelper.hasKey('cartItems')) localStorageHelper.setInitValue('cartItems', []);
 if (!localStorageHelper.hasKey('orderItems')) localStorageHelper.setInitValue('orderItems', []);
 
 function App() {
   return (
     <>
-      <GlobalStyle />
-      <Suspense fallback={<LoadingHeader />}>
-        <Header />
-      </Suspense>
-      <CommonPageStyle>
-        <ErrorBoundary fallback={NotFound}>
-          <Outlet />
-        </ErrorBoundary>
-        <Suspense>
-          <QuickMenu />
-          <QuickMenuMobile />
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <Suspense fallback={<LoadingHeader />}>
+          <Header />
         </Suspense>
-      </CommonPageStyle>
+        <CommonPageStyle>
+          <ErrorBoundary fallback={NotFound}>
+            <Outlet />
+          </ErrorBoundary>
+          <Suspense>
+            <QuickMenu />
+            <QuickMenuMobile />
+          </Suspense>
+        </CommonPageStyle>
+      </ThemeProvider>
     </>
   );
 }

@@ -4,7 +4,7 @@ export const Container = styled.div`
   align-self: flex-start;
   min-width: 360px;
   border: 1px solid #dddddd;
-  color: #333333;
+  color: ${(props) => props.theme.color.gray100};
   display: grid;
   row-gap: 2px;
   @media only screen and (max-width: 1200px) {
@@ -55,7 +55,7 @@ export const DetailPrice = styled.div`
 `;
 
 export const Price = styled.span`
-  color: rgb(6, 192, 158);
+  color: ${(props) => props.theme.color.lightMainColor};
 `;
 
 export const ExpectedAmountLayout = styled.div`
@@ -111,7 +111,7 @@ export const Discount = styled.div`
   margin: 5px 30px 0 0;
   font-size: 16px;
   font-weight: 600;
-  color: rgb(6, 192, 158);
+  color: ${(props) => props.theme.color.lightMainColor};
 `;
 
 export const ButtonContainer = styled.div`

@@ -10,7 +10,7 @@ export const AmountUnusedCoupon = styled.div`
 `;
 
 export const Number = styled.span`
-  color: rgb(6, 192, 158);
+  color: ${(props) => props.theme.color.lightMainColor};
 `;
 
 export const List = styled.ul`

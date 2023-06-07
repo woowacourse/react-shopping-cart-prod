@@ -9,7 +9,7 @@ export const Item = styled.div`
 
   font-size: 24px;
   font-weight: 700;
-  background-color: rgb(51, 51, 51);
+  background-color: ${(props) => props.theme.color.gray100};
   color: white;
 
   cursor: pointer;

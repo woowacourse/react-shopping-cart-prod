@@ -48,7 +48,7 @@ const CancleButton = styled.button`
   height: 80px;
   border-radius: 15px;
   background-color: white;
-  border: 2px solid rgb(71, 201, 180);
+  border: 2px solid ${(props) => props.theme.color.mainColor};
 
   font-size: 20px;
   font-weight: 700;
@@ -60,7 +60,7 @@ const CheckButton = styled.button`
   width: 250px;
   height: 80px;
   border-radius: 15px;
-  background-color: rgb(71, 201, 180);
+  background-color: ${(props) => props.theme.color.mainColor};
 
   font-size: 20px;
   font-weight: 700;

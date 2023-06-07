@@ -5,9 +5,9 @@ export const Title = styled.h2`
   font-size: 32px;
   text-align: center;
   line-height: 37px;
-  color: #333333;
+  color: ${(props) => props.theme.color.gray100};
 
-  border-bottom: 2px solid #333333;
+  border-bottom: 2px solid ${(props) => props.theme.color.gray100};
   padding-bottom: 30px;
 `;
 

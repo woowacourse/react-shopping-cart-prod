@@ -32,6 +32,6 @@ export const CartListLayout = styled.ul`
   row-gap: 1.5px;
 
   & > div {
-    border-bottom: 1px solid #cccccc;
+    border-bottom: 1px solid ${(props) => props.theme.color.gray400};
   }
 `;

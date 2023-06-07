@@ -21,7 +21,7 @@ export const ShoppingItemImage = styled.img`
 `;
 
 export const ShoppingItemName = styled.div`
-  color: #333333;
+  color: ${(props) => props.theme.color.gray100};
   font-size: 18px;
   font-weight: 400;
   line-height: 24px;
@@ -30,6 +30,6 @@ export const ShoppingItemName = styled.div`
 export const PriceAndQuantity = styled.div`
   margin-top: 20px;
 
-  color: #888888;
+  color: ${(props) => props.theme.color.gray200};
   font-weight: 400;
 `;

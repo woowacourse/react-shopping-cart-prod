@@ -22,9 +22,9 @@ export const Image = styled.img`
 export const MainGuideMessage = styled.div`
   font-size: 20px;
   font-weight: 600;
-  color: #333333;
+  color: ${(props) => props.theme.props.gray200};
 `;
 
 export const SubGuideMessage = styled.div`
-  color: #999999;
+  color: ${(props) => props.theme.props.gray200};
 `;

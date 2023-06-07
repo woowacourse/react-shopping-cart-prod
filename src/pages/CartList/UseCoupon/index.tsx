@@ -48,7 +48,7 @@ export const Container = styled.div`
   margin-bottom: 15px;
 
   border: 1px solid #dddddd;
-  color: #333333;
+  color: ${(props) => props.theme.color.gray100};
   background-color: white;
 `;
 

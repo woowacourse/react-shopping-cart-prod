@@ -17,7 +17,7 @@ export const Title = styled.div`
 
 export const Subtitle = styled.div`
   font-size: 24px;
-  color: rgb(6, 192, 158);
+  color: ${(props) => props.theme.color.lightMainColor};
   margin-bottom: 20px;
 `;
 
@@ -35,7 +35,7 @@ export const Detail = styled.div`
 
   border: 1px solid #dddddd;
   border-radius: 10px;
-  background-color: rgb(71, 201, 180);
+  background-color: ${(props) => props.theme.color.mainColor};
   box-shadow: rgba(0, 0, 0, 0.12) 0px 3px 8px;
 `;
 

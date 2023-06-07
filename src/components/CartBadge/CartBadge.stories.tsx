@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import CartBadge from '.';
 
 const Layout = styled.div`
-  background-color: #333333;
+  background-color: ${(props) => props.theme.color.gray100};
   padding: 20px;
 `;
 

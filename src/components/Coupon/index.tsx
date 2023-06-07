@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { CouponType, MemberCouponType } from '@Types/index';
+import { MemberCouponType } from '@Types/index';
 
 interface CouponProps {
   coupon: MemberCouponType;
@@ -113,8 +113,8 @@ const IconContainerLeft = styled.div`
 
   width: 20px;
   height: 50px;
-  border: 2px solid #bbbbbb;
-  border-right: 3px dotted #cccccc;
+  border: 2px solid ${(props) => props.theme.color.gray400};
+  border-right: 3px dotted ${(props) => props.theme.color.gray400};
   background-color: #eeeeee;
 `;
 
@@ -128,7 +128,7 @@ const IconInitial = styled.div<{ isUsed: boolean }>`
   border-radius: 15px;
   background-color: white;
 
-  color: ${(props) => (props.isUsed ? '#aaaaaa' : 'rgb(6, 192, 158)')};
+  color: ${(props) => (props.isUsed ? props.theme.color.gray300 : props.theme.color.mainColor)};
   font-size: 20px;
   font-weight: 900;
 `;
@@ -151,7 +151,7 @@ const Description = styled.div<{ isUsed: boolean }>`
   font-size: 20px;
   font-weight: 600;
   margin-top: 12px;
-  color: ${(props) => (props.isUsed ? '#aaaaaa' : '#222222')};
+  color: ${(props) => (props.isUsed ? props.theme.color.gray300 : props.theme.color.gray100)};
 
   overflow: hidden;
   text-overflow: ellipsis;
@@ -191,7 +191,7 @@ const UseButton = styled.button`
   font-size: 17px;
   font-weight: 600;
   color: white;
-  background-color: rgb(71, 201, 180);
+  background-color: ${(props) => props.theme.color.mainColor};
 
   cursor: pointer;
 `;
@@ -204,7 +204,7 @@ const UsedButton = styled.button`
   font-size: 17px;
   font-weight: 600;
   color: white;
-  background-color: #cccccc;
+  background-color: ${(props) => props.theme.color.gray400};
 
   cursor: pointer;
 `;

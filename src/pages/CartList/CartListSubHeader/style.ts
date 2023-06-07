@@ -5,8 +5,8 @@ export const Title = styled.h2`
   font-size: 32px;
   line-height: 37px;
   text-align: center;
-  color: #333333;
-  border-bottom: 2px solid #333333;
+  color: ${(props) => props.theme.color.gray100};
+  border-bottom: 2px solid ${(props) => props.theme.color.gray100};
   padding-bottom: 30px;
 `;
 
