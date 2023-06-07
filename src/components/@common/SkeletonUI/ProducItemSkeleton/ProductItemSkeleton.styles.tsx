@@ -14,13 +14,13 @@ export const SkeletonElement = styled.div`
   height: 83%;
   background: linear-gradient(90deg, #f0f0f0 25%, #f8f8f8 50%, #f0f0f0 75%);
   background-size: 200px 100%;
-  animation: ${LoadingAnimation} 1s infinite;
 `;
 
 export const SkeletonItemWrapper = styled(SkeletonElement)`
   width: 260px;
   margin: 21px;
   border-radius: 12px;
+  animation: ${LoadingAnimation} 1s infinite;
 `;
 
 export const SkeletonImageOverflowContainer = styled(SkeletonElement)`
