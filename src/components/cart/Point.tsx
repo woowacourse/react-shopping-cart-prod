@@ -30,7 +30,7 @@ const Point = ({ totalPrice }: Props) => {
       <S.Title>Point</S.Title>
       <S.PointWrapper>
         <S.HoldPoint>
-          보유: {holdPoint ? `${holdPoint.toLocaleString()}포인트` : '로딩중'}
+          {holdPoint ? `보유: ${holdPoint.toLocaleString()}포인트` : <S.Spinner />}
         </S.HoldPoint>
         <S.PointField type="number" max={point} value={inputPointValue} onChange={handleChange} />
       </S.PointWrapper>
@@ -44,7 +44,10 @@ const S = {
   `,
   Title: styled.h4``,
 
-  PointWrapper: styled.div``,
+  PointWrapper: styled.div`
+    display: flex;
+    align-items: center;
+  `,
 
   PointField: styled.input`
     width: 100px;
@@ -57,6 +60,25 @@ const S = {
     font-size: small;
     font-weight: 400;
     margin-right: 20px;
+  `,
+
+  Spinner: styled.div`
+    margin-right: 20px;
+    border: 4px solid var(--gray-color-300);
+    border-top: 4px solid var(--mint-color);
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    animation: spin 1s linear infinite;
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
   `,
 };
 
