@@ -6,7 +6,6 @@
   width: 70%;
   padding: 15px;
   border-radius: 10px;
-  /* position: fixed; */
   animation: coupon-twinkle 2s ease-in infinite alternate;
 }
 
