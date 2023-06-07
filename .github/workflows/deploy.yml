@@ -2,7 +2,7 @@ name: Deploy
 
 on:
   push:
-    branches: ["step1"]
+    branches: ["step2"]
 
 jobs:
   deploy:
@@ -31,7 +31,18 @@ jobs:
 
         if: steps.cache.outputs.cache-hit != 'true'
 
-      - run: yarn build
+      - name: Set Environment Variables
+        run: |
+          echo "REACT_APP_USERNAME=${{ secrets.REACT_APP_USERNAME }}" >> $GITHUB_ENV
+          echo "REACT_APP_PASSWORD=${{ secrets.REACT_APP_PASSWORD }}" >> $GITHUB_ENV
+
+      - run: |
+          yarn build
+          cp ./build/index.html ./build/404.html
+
+      - run: |
+          yarn build-storybook
+          mv ./storybook-static ./build/storybook
 
       - uses: peaceiris/actions-gh-pages@v3
         with:

@@ -1,15 +1,16 @@
-import { useRecoilValue } from "recoil";
-import { styled } from "styled-components";
-import { useRouter } from "../hooks/useRouter";
-import { localProductsSelector } from "../recoil/selector";
-import { ROUTER_PATH } from "../router";
+import { useRecoilValue } from 'recoil';
+import { styled } from 'styled-components';
+import { useRouter } from '../hooks/Common/useRouter';
+import { localProductsSelector } from '../recoil/selector';
+import { ROUTER_PATH } from '../router';
 import {
   Header,
   Page,
   CartProductList,
   TotalPriceTable,
   Button,
-} from "../components";
+  ErrorBoundary,
+} from '../components';
 
 const Cart = () => {
   const { goPage } = useRouter();
@@ -27,10 +28,12 @@ const Cart = () => {
             <Button onClick={goPage(ROUTER_PATH.Main)}>상품 담으러 가기</Button>
           </EmptyContainer>
         ) : (
-          <Container>
-            <CartProductList />
-            <TotalPriceTable />
-          </Container>
+          <ErrorBoundary>
+            <Container>
+              <CartProductList />
+              <TotalPriceTable />
+            </Container>
+          </ErrorBoundary>
         )}
       </Page>
     </>

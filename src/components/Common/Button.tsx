@@ -1,8 +1,6 @@
-import { styled } from "styled-components";
+import { styled } from 'styled-components';
 
-export const Button = (
-  props: React.ButtonHTMLAttributes<HTMLButtonElement>
-) => {
+export const Button = (props: React.ButtonHTMLAttributes<HTMLButtonElement>) => {
   return <Wrapper {...props}>{props.children}</Wrapper>;
 };
 

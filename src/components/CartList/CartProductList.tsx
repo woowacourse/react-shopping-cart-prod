@@ -1,21 +1,20 @@
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import type { LocalProductType, ProductType } from "../types/domain";
-import styled from "styled-components";
-import { TrashCanIcon } from "../assets";
-import { Counter } from "./Counter";
-import { localProductsSelector } from "../recoil/selector";
-import { useCheckBox } from "../hooks/useCheckBox";
-import { deleteCartItem } from "../api";
-import { localProductsState, selectedProductsState } from "../recoil/atom";
-import { makeLocalProducts } from "../utils/domain";
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import type { LocalProduct, Product } from '../../types/domain';
+import styled from 'styled-components';
+import { TrashCanIcon } from '../../assets';
+import { Counter } from '../Common/Counter';
+import { localProductsSelector } from '../../recoil/selector';
+import { useCheckBox } from '../../hooks/CartList/useCheckBox';
+import { deleteCartItem } from '../../api';
+import { localProductsState, selectedProductsState } from '../../recoil/atom';
+import { makeLocalProducts } from '../../utils/domain';
+import { useState } from 'react';
 
 export const CartProductList = () => {
-  const localProductsInCart = useRecoilValue<LocalProductType[]>(
-    localProductsSelector
-  );
-  const selectedProducts = useRecoilValue<LocalProductType[]>(
-    selectedProductsState
-  );
+  const [error, setError] = useState<null | Error>(null);
+
+  const localProductsInCart = useRecoilValue<LocalProduct[]>(localProductsSelector);
+  const selectedProducts = useRecoilValue<LocalProduct[]>(selectedProductsState);
   const {
     checkedArray,
     allChecked,
@@ -27,22 +26,38 @@ export const CartProductList = () => {
   const setLocalProducts = useSetRecoilState(localProductsState);
 
   const handleDeleteButtonClicked = async () => {
-    selectedProducts.forEach((product) => {
-      deleteCartItem(product.cartItemId);
-    });
+    try {
+      await Promise.all(selectedProducts.map((product) => deleteCartItem(product.cartItemId)));
+      removeCheckedArray();
+    } catch (error) {
+      if (error instanceof Error) return setError(error);
+    }
 
-    removeCheckedArray();
-    const newProducts = await makeLocalProducts();
-    setLocalProducts(newProducts);
+    try {
+      const newProducts = await makeLocalProducts();
+      setLocalProducts(newProducts);
+    } catch (error) {
+      if (error instanceof Error) return setError(error);
+    }
   };
 
   const handleDelete = (cartItemId: number, index: number) => async () => {
-    await deleteCartItem(cartItemId);
+    try {
+      await deleteCartItem(cartItemId);
+      removeTargetIndex(index);
+    } catch (error) {
+      if (error instanceof Error) return setError(error);
+    }
 
-    removeTargetIndex(index);
-    const newProducts = await makeLocalProducts();
-    setLocalProducts(newProducts);
+    try {
+      const newProducts = await makeLocalProducts();
+      setLocalProducts(newProducts);
+    } catch (error) {
+      if (error instanceof Error) return setError(error);
+    }
   };
+
+  if (error) throw error;
 
   return (
     <Wrapper>
@@ -76,7 +91,7 @@ export const CartProductList = () => {
   );
 };
 
-interface CartProductType extends ProductType {
+interface CartProductType extends Product {
   checked: boolean;
   onDeleteHandler: () => Promise<void>;
   onChangeHandler: () => void;
@@ -97,12 +112,7 @@ const CartProduct = ({
         <img src={TrashCanIcon} alt="휴지통" onClick={onDeleteHandler} />
       </TrashCanIconBox>
       <CheckBoxLabel htmlFor="checkProduct">
-        <CheckBox
-          id="checkProduct"
-          type="checkbox"
-          checked={checked}
-          onChange={onChangeHandler}
-        />
+        <CheckBox id="checkProduct" type="checkbox" checked={checked} onChange={onChangeHandler} />
       </CheckBoxLabel>
       <img src={imageUrl} alt="상품이미지" />
       <Container>

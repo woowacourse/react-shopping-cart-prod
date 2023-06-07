@@ -1,12 +1,15 @@
-import { useRecoilValue } from "recoil";
-import styled from "styled-components";
-import { DELIVERY_FEE } from "../constants";
-import { totalPriceSelector } from "../recoil/selector";
-import { Button } from "./Button";
+import { useRecoilValue } from 'recoil';
+import styled from 'styled-components';
+import { DELIVERY_FEE } from '../../constants';
+import { totalPriceSelector } from '../../recoil/selector';
+import { Button } from '../Common/Button';
+import { useRouter } from '../../hooks/Common/useRouter';
+import { ROUTER_PATH } from '../../router';
 
 export const TotalPriceTable = () => {
   const totalPrice = useRecoilValue(totalPriceSelector);
   const deliveryFee = totalPrice === 0 ? 0 : DELIVERY_FEE;
+  const { goPage } = useRouter();
 
   return (
     <Wrapper>
@@ -23,7 +26,9 @@ export const TotalPriceTable = () => {
         <p>총 주문금액</p>
         <p>{(totalPrice + deliveryFee).toLocaleString()}원</p>
       </RowContainer>
-      <Button disabled={totalPrice === 0}>주문하기</Button>
+      <Button disabled={totalPrice === 0} onClick={goPage(ROUTER_PATH.OrderSheet)}>
+        주문하기
+      </Button>
     </Wrapper>
   );
 };

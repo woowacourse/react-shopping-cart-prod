@@ -1,23 +1,14 @@
-import { fetchCartItems, fetchProducts } from "../api";
-import { MIN_QUANTITY } from "../constants";
-import { CartItemType, LocalProductType, ProductType } from "../types/domain";
+import { fetchCartItems, fetchProducts } from '../api';
+import { MIN_QUANTITY } from '../constants';
+import { CartItem, Coupon, LocalProduct, Order, Product } from '../types/domain';
 
-export const makeLocalProducts = async (): Promise<LocalProductType[]> => {
+export const makeLocalProducts = async (): Promise<LocalProduct[]> => {
   try {
-    const productsResponse = await fetchProducts();
-    const cartItemsresponse = await fetchCartItems();
-    if (!productsResponse.ok)
-      throw new Error(productsResponse.status.toString());
-    if (!cartItemsresponse.ok)
-      throw new Error(cartItemsresponse.status.toString());
+    const products = await fetchProducts();
+    const cartItems = await fetchCartItems();
 
-    const products = await productsResponse.json();
-    const cartItems = await cartItemsresponse.json();
-
-    return products.map((product: ProductType) => {
-      const cartItem = cartItems.find(
-        (cartItem: CartItemType) => cartItem.product.id === product.id
-      );
+    return products.map((product: Product) => {
+      const cartItem = cartItems.find((cartItem: CartItem) => cartItem.product.id === product.id);
       return {
         ...product,
         quantity: cartItem ? cartItem.quantity : MIN_QUANTITY,
@@ -28,4 +19,32 @@ export const makeLocalProducts = async (): Promise<LocalProductType[]> => {
     console.log(error);
     return [];
   }
+};
+
+export const parseExpiredDate = (coupons: Coupon[]) => {
+  if (coupons.length === 0) return coupons;
+
+  const parsedCoupons = coupons.map((coupon) => {
+    const expiredAt = coupon.expiredAt.split('T')[0];
+    return { ...coupon, expiredAt };
+  });
+
+  return parsedCoupons;
+};
+
+export const parseOrderListData = (couponId: number | null, orderList: LocalProduct[]): Order => {
+  const parsedProductList = orderList.map((orderProduct) => {
+    const cartItemId = orderProduct.cartItemId;
+    const quantity = orderProduct.quantity;
+    const name = orderProduct.name;
+    const price = orderProduct.price;
+    const imageUrl = orderProduct.imageUrl;
+
+    return { cartItemId, quantity, name, price, imageUrl };
+  });
+
+  return {
+    couponId: couponId,
+    products: parsedProductList,
+  };
 };

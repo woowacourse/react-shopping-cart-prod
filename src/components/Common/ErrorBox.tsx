@@ -1,15 +1,12 @@
-import { styled } from "styled-components";
-import { ERROR_MESSAGE } from "../constants/index";
+import { styled } from 'styled-components';
+import { ROUTER_PATH } from '../../router';
+import { generateStatusErrorMessage } from '../../utils/generateStatusErrorMessage';
 
-interface ErrorType {
-  status: keyof typeof ERROR_MESSAGE;
-}
-
-const ErrorBox = ({ status }: ErrorType) => {
+const ErrorBox = ({ errorMessage }: { errorMessage: string }) => {
   return (
     <Wrapper>
-      <h2>{status}</h2>
-      <p>{ERROR_MESSAGE[status]}</p>
+      <p>{generateStatusErrorMessage(errorMessage)}</p>
+      <a href={ROUTER_PATH.Main}>홈으로</a>
     </Wrapper>
   );
 };

@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-import { useQuantity } from "../hooks/useQuantity";
+import React from 'react';
+import styled from 'styled-components';
+import { useQuantity } from '../../hooks/Common/useQuantity';
 
 interface CounterProps {
   productId: number;
@@ -8,15 +8,11 @@ interface CounterProps {
 }
 
 export const Counter = ({ productId, deleteable }: CounterProps) => {
-  const {
-    quantity,
-    setNewQuantity,
-    handleQuantityChanged,
-    handleQuantityBlured,
-  } = useQuantity(productId);
+  const { quantity, setNewQuantity, handleQuantityChanged, handleQuantityBlured } =
+    useQuantity(productId);
 
   const handleCountInputKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (!(e.target instanceof HTMLInputElement) || e.key !== "Enter") return;
+    if (!(e.target instanceof HTMLInputElement) || e.key !== 'Enter') return;
     e.target.blur();
   };
 
@@ -40,10 +36,7 @@ export const Counter = ({ productId, deleteable }: CounterProps) => {
       />
       <ArrowBoxContainer>
         <ArrowBox onClick={handleUpArrowBox}>▾</ArrowBox>
-        <ArrowBox
-          onClick={handleDownArrowBox}
-          disabled={!deleteable && quantity === "1"}
-        >
+        <ArrowBox onClick={handleDownArrowBox} disabled={!deleteable && quantity === '1'}>
           ▾
         </ArrowBox>
       </ArrowBoxContainer>

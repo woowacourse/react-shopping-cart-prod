@@ -1,29 +1,34 @@
-import { atom, selector } from "recoil";
-import { LocalProductType, ProductType } from "../types/domain";
-import { fetchProducts } from "../api";
-import { makeLocalProducts } from "../utils/domain";
+import { AtomEffect, atom } from 'recoil';
+import { LocalProduct } from '../types/domain';
+import { DEFAULT_VALUE_SERVER_OWNER, KEY_LOCALSTORAGE_SERVER_OWNER } from '../constants';
 
-export const productsState = atom<ProductType[]>({
-  key: "products",
-  default: selector<ProductType[]>({
-    key: "initialProducts/default",
-    get: async () => {
-      const response = await fetchProducts();
-      if (!response.ok) throw new Error(response.status.toString());
-      return await response.json();
-    },
-  }),
+const localStorageEffect: <T>(key: string) => AtomEffect<T> =
+  (key: string) =>
+  ({ setSelf, onSet }) => {
+    const savedValue = localStorage.getItem(key);
+    if (savedValue !== null) {
+      setSelf(JSON.parse(savedValue));
+    }
+
+    onSet((newValue, _, isReset) => {
+      if (isReset) return localStorage.removeItem(key);
+
+      return localStorage.setItem(key, JSON.stringify(newValue));
+    });
+  };
+
+export const serverOwnerState = atom<string>({
+  key: 'serverOwner',
+  default: DEFAULT_VALUE_SERVER_OWNER,
+  effects: [localStorageEffect<string>(KEY_LOCALSTORAGE_SERVER_OWNER)],
 });
 
-export const localProductsState = atom<LocalProductType[]>({
-  key: "localProducts",
-  default: selector<LocalProductType[]>({
-    key: "products/default",
-    get: () => makeLocalProducts(),
-  }),
+export const localProductsState = atom<LocalProduct[]>({
+  key: 'localProducts',
+  default: [],
 });
 
-export const selectedProductsState = atom<LocalProductType[]>({
-  key: "selectedProducts",
+export const selectedProductsState = atom<LocalProduct[]>({
+  key: 'selectedProducts',
   default: [],
 });

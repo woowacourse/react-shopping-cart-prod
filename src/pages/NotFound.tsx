@@ -1,7 +1,7 @@
-import { styled } from "styled-components";
-import { Button, Header, Page } from "../components";
-import { ROUTER_PATH } from "../router";
-import { useRouter } from "../hooks/useRouter";
+import { styled } from 'styled-components';
+import { Button, Header, Page } from '../components';
+import { ROUTER_PATH } from '../router';
+import { useRouter } from '../hooks/Common/useRouter';
 
 const NotFound = () => {
   const { goPage } = useRouter();
