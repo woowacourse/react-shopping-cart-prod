@@ -29,15 +29,15 @@ export const CartProductList = () => {
     try {
       await Promise.all(selectedProducts.map((product) => deleteCartItem(product.cartItemId)));
       removeCheckedArray();
-    } catch (error: any) {
-      setError(error);
+    } catch (error) {
+      if (error instanceof Error) return setError(error);
     }
 
     try {
       const newProducts = await makeLocalProducts();
       setLocalProducts(newProducts);
-    } catch (error: any) {
-      setError(error);
+    } catch (error) {
+      if (error instanceof Error) return setError(error);
     }
   };
 
@@ -45,15 +45,15 @@ export const CartProductList = () => {
     try {
       await deleteCartItem(cartItemId);
       removeTargetIndex(index);
-    } catch (error: any) {
-      setError(error);
+    } catch (error) {
+      if (error instanceof Error) return setError(error);
     }
 
     try {
       const newProducts = await makeLocalProducts();
       setLocalProducts(newProducts);
-    } catch (error: any) {
-      setError(error);
+    } catch (error) {
+      if (error instanceof Error) return setError(error);
     }
   };
 

@@ -17,8 +17,8 @@ export const useOrderDetail = (orderId: number) => {
     try {
       const orderDetailListData = await fetchOrderList(orderId);
       setOrderDetailList(orderDetailListData);
-    } catch (error: any) {
-      setError(error);
+    } catch (error) {
+      if (error instanceof Error) return setError(error);
     }
   };
 

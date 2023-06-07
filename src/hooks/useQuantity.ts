@@ -29,8 +29,8 @@ export const useQuantity = (productId: number) => {
       }
 
       await changeQuantity(currentLocalProduct.cartItemId, Number(newQuantity));
-    } catch (error: any) {
-      setErrorStatus(error.message);
+    } catch (error) {
+      if (error instanceof Error) return setErrorStatus(error.message);
     } finally {
       setQuantity(newQuantity.toString());
       const newProducts = await makeLocalProducts();

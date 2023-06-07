@@ -19,9 +19,8 @@ export const ProductList = () => {
 
       const newProducts = await makeLocalProducts();
       setLocalProducts(newProducts);
-    } catch (error: any) {
-      setError(error);
-      console.log(error);
+    } catch (error) {
+      if (error instanceof Error) return setError(error);
     }
   };
 

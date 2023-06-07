@@ -10,8 +10,8 @@ export const useOrderList = () => {
     try {
       const orderListData = await fetchOrderList();
       setOrderList(orderListData.orders);
-    } catch (error: any) {
-      setError(error);
+    } catch (error) {
+      if (error instanceof Error) return setError(error);
     }
   };
 
