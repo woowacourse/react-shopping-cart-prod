@@ -31,7 +31,7 @@ export const Menu = styled.div<{ isOpen: boolean }>`
   width: 224px;
   margin-top: 4px;
   padding: 8px;
-  background: #f2f4f6;
+  background: ${({ theme }) => theme.color.gray300};
   border-radius: 16px;
   transition: 0.3s;
   visibility: ${(props) => (props.isOpen ? 'visible' : 'hidden')};
@@ -41,16 +41,16 @@ export const Menu = styled.div<{ isOpen: boolean }>`
 `;
 
 export const UserInfoWrapper = styled.div`
-  border-bottom: 1px solid gainsboro;
+  border-bottom: 1px solid ${({ theme }) => theme.color.gray200};
   padding: 16px 12px;
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.color.white};
   border-radius: 16px 16px 0 0;
 `;
 
 export const UserInfoName = styled.div`
   font-size: 16px;
   font-weight: 500;
-  color: ${({ theme }) => theme.color.dark};
+  color: ${({ theme }) => theme.color.black};
 `;
 
 export const UserInfoId = styled.div`
@@ -60,19 +60,19 @@ export const UserInfoId = styled.div`
   -webkit-box-orient: vertical;
   overflow: hidden;
   font-size: 14px;
-  color: #666;
+  color: ${({ theme }) => theme.color.gray500};
 `;
 
 export const UserInfoPoint = styled.div`
   margin-top: 8px;
   font-size: 16px;
-  color: ${({ theme }) => theme.color.dark};
+  color: ${({ theme }) => theme.color.black};
 `;
 
 export const UserListWrapper = styled.ul`
   display: flex;
   flex-direction: column;
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.color.white};
   border-radius: 0 0 16px 16px;
 `;
 
@@ -84,14 +84,14 @@ export const User = styled.li`
     background-color: aliceblue;
   }
   &:hover > * {
-    color: ${({ theme }) => theme.color.info};
+    color: ${({ theme }) => theme.color.green100};
   }
 `;
 
 export const UserListTitle = styled.div`
   padding: 12px 12px 0 12px;
   font-size: 8px;
-  color: #00a3f9;
+  color: ${({ theme }) => theme.color.blue100};
   font-weight: 700;
 `;
 

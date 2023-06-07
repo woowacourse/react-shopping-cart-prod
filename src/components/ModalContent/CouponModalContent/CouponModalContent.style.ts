@@ -4,8 +4,8 @@ export const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-top: 2px solid #333;
-  background-color: #fff;
+  border-top: 2px solid ${({ theme }) => theme.color.gray900};
+  background-color: ${({ theme }) => theme.color.white};
 `;
 
 export const CouponWrapper = styled.div`
@@ -31,7 +31,7 @@ export const Input = styled.input`
   width: 16px;
   height: 16px;
   &:checked {
-    border: 4px solid ${({ theme }) => theme.color.info};
+    border: 4px solid ${({ theme }) => theme.color.green100};
   }
 `;
 
@@ -42,7 +42,7 @@ export const Coupon = styled.div<{ unavailable: boolean }>`
   height: 124px;
   padding: 20px;
   margin-right: 32px;
-  border: 2px solid #495057;
+  border: 2px solid ${({ theme }) => theme.color.gray700};
   border-radius: 8px;
   box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease;
@@ -56,7 +56,7 @@ export const Coupon = styled.div<{ unavailable: boolean }>`
     unavailable &&
     css`
       & * {
-        color: #495057 !important;
+        color: ${({ theme }) => theme.color.gray700} !important;
       }
       &:hover {
         transform: none;
@@ -73,7 +73,7 @@ export const CouponImage = styled.img`
 export const DiscountPercentage = styled.div`
   font-size: 20px;
   font-weight: 700;
-  color: ${({ theme }) => theme.color.info};
+  color: ${({ theme }) => theme.color.green100};
 `;
 
 export const Name = styled.div`
@@ -91,13 +91,13 @@ export const DiscountAmount = styled.div`
   font-size: 12px;
   font-weight: 700;
   margin-top: 4px;
-  color: #069ff6;
+  color: ${({ theme }) => theme.color.blue200};
 `;
 
 export const Unavailable = styled.div`
   font-size: 12px;
   font-weight: 700;
-  color: red !important;
+  color: ${({ theme }) => theme.color.red} !important;
   margin-top: 4px;
 `;
 
@@ -105,8 +105,8 @@ export const ApplyButton = styled.button`
   width: 284px;
   padding: 16px;
   border-radius: 4px;
-  color: #fff;
-  background-color: ${({ theme }) => theme.color.primary};
+  color: ${({ theme }) => theme.color.white};
+  background-color: ${({ theme }) => theme.color.gray900};
 `;
 
 export const EmptyWrapper = styled.div`
@@ -117,7 +117,7 @@ export const EmptyWrapper = styled.div`
   height: 300px;
   font-size: 12rem;
   font-weight: 500;
-  color: #000;
+  color: ${({ theme }) => theme.color.black};
 `;
 
 export const EmptyDescription = styled.div`

@@ -14,7 +14,7 @@ export const CartCountWrapper = styled.div`
   top: 0;
   right: 0;
   border-radius: 50%;
-  background-color: #04c09e;
+  background-color: ${({ theme }) => theme.color.green100};
   width: 15px;
   height: 15px;
   display: flex;
@@ -25,5 +25,5 @@ export const CartCountWrapper = styled.div`
 export const CartCount = styled.div`
   font-size: 12px;
   font-weight: 500;
-  color: #fff;
+  color: ${({ theme }) => theme.color.white};
 `;

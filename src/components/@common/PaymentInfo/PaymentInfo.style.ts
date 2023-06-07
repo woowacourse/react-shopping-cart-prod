@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const TotalDiscountText = styled.div`
-  color: ${({ theme }) => theme.color.info};
+  color: ${({ theme }) => theme.color.green100};
   font-weight: 700;
   font-size: 16px;
   line-height: 27px;
@@ -16,7 +16,7 @@ export const DiscountPropertyWrapper = styled.div`
 `;
 
 export const DiscountText = styled.div`
-  color: ${({ theme }) => theme.color.secondary};
+  color: ${({ theme }) => theme.color.gray400};
   font-weight: 500;
   font-size: 16px;
   line-height: 27px;

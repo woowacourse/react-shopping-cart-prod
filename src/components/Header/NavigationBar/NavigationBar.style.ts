@@ -14,7 +14,7 @@ export const OrderListIcon = styled.img`
 export const LogoTitle = styled.div`
   font-size: 8px;
   font-weight: 500;
-  color: ${({ theme }) => theme.color.dark};
+  color: ${({ theme }) => theme.color.black};
 `;
 
 export const Logo = styled.div`
@@ -25,11 +25,11 @@ export const Logo = styled.div`
 
 export const OrderListButton = styled.button`
   font-size: 20px;
-  color: ${({ theme }) => theme.color.dark};
+  color: ${({ theme }) => theme.color.black};
 `;
 
 export const SkeletonUserSelector = styled.div`
   width: 44px;
   height: 41px;
-  background-color: gainsboro;
+  background-color: ${({ theme }) => theme.color.gray200};
 `;

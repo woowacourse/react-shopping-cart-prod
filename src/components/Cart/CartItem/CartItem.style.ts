@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const CartItemLayout = styled.div`
   display: flex;
   justify-content: space-between;
-  border-top: 1px solid ${({ theme }) => theme.color.secondary};
+  border-top: 1px solid ${({ theme }) => theme.color.gray400};
   padding: 25px 0px;
 
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
@@ -74,14 +74,14 @@ export const Input = styled.input<{ icon: string }>`
   -webkit-appearance: none;
   width: 28px;
   height: 28px;
-  border: 1px solid #22a6a2;
+  border: 1px solid ${({ theme }) => theme.color.green200};
   border-radius: 2px;
   transform: translateY(0%);
   cursor: pointer;
 
   &:checked {
-    background: #333333;
-    border: 1px solid #3288ff;
+    background: ${({ theme }) => theme.color.gray900};
+    border: 1px solid ${({ theme }) => theme.color.blue300};
   }
 
   &:after {

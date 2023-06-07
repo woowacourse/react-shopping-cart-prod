@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Wrapper = styled.div`
   display: flex;
   padding: 32px 24px;
-  border-top: 1px solid #aaa;
+  border-top: 1px solid ${({ theme }) => theme.color.gray400};
 `;
 
 export const ItemImage = styled.img`
@@ -17,11 +17,11 @@ export const ItemInfo = styled.div`
 
 export const Name = styled.div`
   font-size: 18px;
-  color: #333;
+  color: ${({ theme }) => theme.color.gray900};
 `;
 
 export const ItemSubInfo = styled.div`
   font-size: 14px;
-  color: #888;
+  color: ${({ theme }) => theme.color.gray800};
   padding-top: 12px;
 `;

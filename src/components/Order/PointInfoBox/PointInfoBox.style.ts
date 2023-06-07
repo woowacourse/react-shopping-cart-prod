@@ -23,6 +23,6 @@ export const PaymentInfoWrapper = styled.div`
 
 export const Description = styled.p`
   font-size: 12px;
-  color: red;
+  color: ${({ theme }) => theme.color.red};
   margin-bottom: 4px;
 `;

@@ -5,7 +5,7 @@ export const StepperInputWrapper = styled.div`
 `;
 
 export const Input = styled.input<{ $width: number }>`
-  border: 1px solid #ddd;
+  border: 1px solid ${({ theme }) => theme.color.gray200};
   width: ${({ $width }) => `${$width * 0.63}px`};
   height: ${({ $width }) => `${$width * 0.43}px`};
   text-align: center;
@@ -20,8 +20,8 @@ export const Stepper = styled.button<{ $width: number }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: var(--color-white);
-  border: 1px solid #ddd;
+  background: ${({ theme }) => theme.color.white};
+  border: 1px solid ${({ theme }) => theme.color.gray200};
   width: ${({ $width }) => `${$width - $width * 0.63}px`};
   height: ${({ $width }) => `${($width * 0.43) / 2}px`};
   cursor: pointer;

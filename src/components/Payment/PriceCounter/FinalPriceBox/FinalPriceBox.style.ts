@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const PurchaseWrapper = styled.div`
-  border: 1px solid ${({ theme }) => theme.color.secondary};
+  border: 1px solid ${({ theme }) => theme.color.gray400};
   padding: 12px 30px;
 `;
 
@@ -34,9 +34,9 @@ export const PurchaseButtonWrapper = styled.div`
 
 export const PaymentButton = styled.button`
   padding: 20px 0;
-  background-color: black;
+  background-color: ${({ theme }) => theme.color.black};
   border-radius: 4px;
-  color: white;
+  color: ${({ theme }) => theme.color.white};
   width: 100%;
   font-style: normal;
   font-weight: 400;
@@ -44,8 +44,8 @@ export const PaymentButton = styled.button`
   line-height: 21px;
   margin-bottom: 10px;
   &:disabled {
-    background-color: ${({ theme }) => theme.color.secondary};
-    color: ${({ theme }) => theme.color.light};
+    background-color: ${({ theme }) => theme.color.gray400};
+    color: ${({ theme }) => theme.color.white};
   }
 `;
 

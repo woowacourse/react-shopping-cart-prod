@@ -22,11 +22,11 @@ const Wrapper = styled.div`
 const ServerSkeleton = styled.div`
   width: 60px;
   height: 32px;
-  background-color: gainsboro;
+  background-color: ${({ theme }) => theme.color.gray200};
 `;
 
 const Icon = styled.div`
   width: 44px;
   height: 41px;
-  background-color: gainsboro;
+  background-color: ${({ theme }) => theme.color.gray200};
 `;

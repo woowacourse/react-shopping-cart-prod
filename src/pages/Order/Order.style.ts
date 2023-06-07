@@ -29,8 +29,8 @@ export const HomeButton = styled.button`
   width: 200px;
   height: 40px;
   border-radius: 4px;
-  background-color: ${({ theme }) => theme.color.primary};
-  color: #fff;
+  background-color: ${({ theme }) => theme.color.gray900};
+  color: ${({ theme }) => theme.color.white};
   font-size: 16px;
   font-weight: 500;
 `;

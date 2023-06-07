@@ -13,7 +13,7 @@ export const ProductItemImage = styled.img`
   width: 100%;
   aspect-ratio: 1/1;
 
-  background-color: gainsboro;
+  background-color: ${({ theme }) => theme.color.gray200};
 `;
 
 export const ProductDetails = styled.div`
@@ -25,13 +25,13 @@ export const ProductDetails = styled.div`
 export const ProductName = styled.div`
   height: 16px;
   width: 150px;
-  background-color: gainsboro;
+  background-color: ${({ theme }) => theme.color.gray200};
   margin-bottom: 2px;
 `;
 export const ProductPrice = styled.div`
   height: 20px;
   width: 100px;
-  background-color: gainsboro;
+  background-color: ${({ theme }) => theme.color.gray200};
 `;
 
 export const ProductInfo = styled.div``;

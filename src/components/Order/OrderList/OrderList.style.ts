@@ -8,7 +8,7 @@ export const Wrapper = styled.div`
 `;
 
 export const OrderItemList = styled.div`
-  border: 1px solid #aaa;
+  border: 1px solid ${({ theme }) => theme.color.gray400};
 `;
 
 export const OrderInfo = styled.div`
@@ -16,8 +16,8 @@ export const OrderInfo = styled.div`
   justify-content: space-between;
   padding: 28px 28px;
   font-size: 18px;
-  background-color: #f6f6f6;
-  border-bottom: 1px solid #aaa;
+  background-color: ${({ theme }) => theme.color.gray100};
+  border-bottom: 1px solid ${({ theme }) => theme.color.gray400};
 `;
 
 export const DetailButton = styled.button`

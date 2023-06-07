@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  border: 1px solid ${({ theme }) => theme.color.secondary};
+  border: 1px solid ${({ theme }) => theme.color.gray400};
   margin-bottom: 20px;
   padding: 16px 30px;
 `;
@@ -47,15 +47,15 @@ export const DeleteCouponButton = styled.button`
   height: 16px;
   line-height: 16px;
   border-radius: 50%;
-  background-color: ${({ theme }) => theme.color.primary};
+  background-color: ${({ theme }) => theme.color.gray900};
   font-size: 8px;
   font-weight: 700;
-  color: #fff;
+  color: ${({ theme }) => theme.color.white};
 
   &:hover {
-    border: 1px solid ${({ theme }) => theme.color.primary};
-    background-color: #fff;
-    color: ${({ theme }) => theme.color.primary};
+    border: 1px solid ${({ theme }) => theme.color.gray900};
+    background-color: ${({ theme }) => theme.color.white};
+    color: ${({ theme }) => theme.color.gray900};
   }
 `;
 
@@ -81,7 +81,7 @@ export const Input = styled.input`
   text-align: end;
   padding: 8px 15px 9px;
   margin-right: 12px;
-  border: 1px solid ${({ theme }) => theme.color.secondary};
+  border: 1px solid ${({ theme }) => theme.color.gray400};
   border-radius: 4px;
 `;
 
@@ -91,8 +91,8 @@ export const AllPointButton = styled.button`
   border-radius: 4px;
   font-size: 14px;
   font-weight: 500;
-  background-color: ${({ theme }) => theme.color.primary};
-  color: ${({ theme }) => theme.color.light};
+  background-color: ${({ theme }) => theme.color.gray900};
+  color: ${({ theme }) => theme.color.white};
 `;
 
 export const UserPoint = styled.p`

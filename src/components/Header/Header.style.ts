@@ -2,10 +2,10 @@ import styled from 'styled-components';
 
 export const HeaderWrapper = styled.div`
   width: 100vw;
-  color: ${({ theme }) => theme.color.light};
-  border-bottom: 1px solid ${({ theme }) => theme.color.secondary};
+  color: ${({ theme }) => theme.color.white};
+  border-bottom: 1px solid ${({ theme }) => theme.color.gray400};
   position: sticky;
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.color.white};
   top: 0;
   z-index: ${({ theme }) => theme.zIndex.header};
 `;

@@ -20,7 +20,7 @@ export const Description = styled.p`
   padding: 20px 0;
   text-align: center;
   font-size: 14px;
-  color: #777;
+  color: ${({ theme }) => theme.color.gray600};
 `;
 
 export const ButtonWrapper = styled.div`
@@ -33,8 +33,8 @@ export const ButtonWrapper = styled.div`
 export const HomeButton = styled.button`
   width: 200px;
   height: 40px;
-  background-color: ${({ theme }) => theme.color.primary};
-  color: #fff;
+  background-color: ${({ theme }) => theme.color.gray900};
+  color: ${({ theme }) => theme.color.white};
   border-radius: 4px;
   font-weight: 500;
 `;
@@ -42,8 +42,8 @@ export const HomeButton = styled.button`
 export const ResetButton = styled.button`
   width: 200px;
   height: 40px;
-  background-color: ${({ theme }) => theme.color.secondary};
-  color: #fff;
+  background-color: ${({ theme }) => theme.color.gray400};
+  color: ${({ theme }) => theme.color.white};
   border-radius: 4px;
   font-weight: 500;
 `;
