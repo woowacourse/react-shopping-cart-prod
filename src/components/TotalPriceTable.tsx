@@ -18,6 +18,8 @@ export const TotalPriceTable = ({
   const { goPage } = useRouter();
   const totalPrice = useRecoilValue(totalPriceSelector);
   const deliveryFee = totalPrice === 0 ? 0 : DELIVERY_FEE;
+  const paymentPrice =
+    totalPrice + deliveryFee - (discountPrice ? discountPrice : 0);
 
   return (
     <Wrapper>
@@ -38,14 +40,7 @@ export const TotalPriceTable = ({
       </RowContainer>
       <RowContainer>
         <p>총 주문금액</p>
-        <p>
-          {(
-            totalPrice +
-            deliveryFee -
-            (discountPrice ? discountPrice : 0)
-          ).toLocaleString()}
-          원
-        </p>
+        <p>{paymentPrice.toLocaleString()}원</p>
       </RowContainer>
       {handlePaymentClicked ? (
         <Button onClick={handlePaymentClicked}>결제하기</Button>
