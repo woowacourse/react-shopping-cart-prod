@@ -15,6 +15,7 @@ import {
   totalPaymentPriceSelector,
 } from '../../../../recoil/orderAtom';
 import { LoadingSpinner } from '../../../@common/LoadingSpinner';
+import { isNumber } from '../../../../utils/validation';
 
 type DiscountBoxProps = {
   userPoint: number;
@@ -33,10 +34,17 @@ function DiscountBox({ userPoint }: DiscountBoxProps) {
     fetcher: () => fetchCouponList({ server, auth: memberAuth }),
   });
 
-  const onChangePoint = (e: ChangeEvent<HTMLInputElement>) => {
-    if (Number(e.target.value) > userPoint) setPoint(String(userPoint));
-    else if (Number(e.target.value) > maxAvailablePoint) setPoint(String(maxAvailablePoint));
-    else setPoint(e.target.value);
+  const onChangePoint = (event: ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+
+    if (value === '') {
+      setPoint('');
+      return;
+    }
+    if (!isNumber(value)) return;
+    if (Number(value) > userPoint) setPoint(String(userPoint));
+    else if (Number(value) > maxAvailablePoint) setPoint(String(maxAvailablePoint));
+    else setPoint(value);
   };
 
   const onClickAllPoint = () => {
@@ -47,7 +55,7 @@ function DiscountBox({ userPoint }: DiscountBoxProps) {
   useEffect(() => {
     return () => {
       setCurrentCoupon(null);
-      setPoint('0');
+      setPoint('');
     };
   }, []);
 
