@@ -17,7 +17,7 @@ function CartBox() {
         <S.CartIcon src={NavCartIcon} />
         <LogoTitle>장바구니</LogoTitle>
       </Logo>
-      {cartCount !== 0 && (
+      {cartCount > 0 && (
         <S.CartCountWrapper>
           <S.CartCount>{cartCount}</S.CartCount>
         </S.CartCountWrapper>
