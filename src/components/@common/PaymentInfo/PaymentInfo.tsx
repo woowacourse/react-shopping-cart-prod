@@ -9,6 +9,10 @@ type PaymentInfoProps = {
 
 function PaymentInfo({ totalPrice, pointDiscount, couponDiscount }: PaymentInfoProps) {
   const DELIVERY_FEE = totalPrice > 0 ? 3000 : 0;
+  const hasDiscount = pointDiscount !== undefined && couponDiscount !== undefined;
+  const FINAL_PRICE = hasDiscount
+    ? totalPrice + DELIVERY_FEE - pointDiscount - couponDiscount
+    : totalPrice + DELIVERY_FEE;
 
   return (
     <>
@@ -21,7 +25,7 @@ function PaymentInfo({ totalPrice, pointDiscount, couponDiscount }: PaymentInfoP
         <PurchaseText>배송비</PurchaseText>
         <PurchaseText>+{DELIVERY_FEE.toLocaleString()}원</PurchaseText>
       </PurchasePropertyWrapper>
-      {pointDiscount !== undefined && couponDiscount != undefined && (
+      {hasDiscount && (
         <S.DiscountWrapper>
           <PurchasePropertyWrapper>
             <S.TotalDiscountText>할인</S.TotalDiscountText>
@@ -40,12 +44,7 @@ function PaymentInfo({ totalPrice, pointDiscount, couponDiscount }: PaymentInfoP
       <Vacant />
       <PurchasePropertyWrapper>
         <PurchaseText>총 결제 금액</PurchaseText>
-        <PurchaseText>
-          {pointDiscount !== undefined && couponDiscount !== undefined
-            ? (totalPrice + DELIVERY_FEE - couponDiscount - pointDiscount).toLocaleString()
-            : (totalPrice + DELIVERY_FEE).toLocaleString()}
-          원
-        </PurchaseText>
+        <PurchaseText>{FINAL_PRICE.toLocaleString()}원</PurchaseText>
       </PurchasePropertyWrapper>
     </>
   );
