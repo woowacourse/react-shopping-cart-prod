@@ -1,8 +1,8 @@
 import { Suspense } from 'react';
 
 import PageHeading from '../../components/common/PageHeading/PageHeading';
+import { SpinnerContainer } from '../../components/common/SpinnerContainer/SpinnerContainer.styles';
 import OrderList from '../../components/order/OrderList/OrderList';
-import OrderListFallback from '../../components/order/OrderList/OrderListFallback';
 import { useScrollToTop } from '../../hooks/common/useScrollToTop';
 
 const OrderPage = () => {
@@ -11,7 +11,7 @@ const OrderPage = () => {
   return (
     <>
       <PageHeading>주문 목록</PageHeading>
-      <Suspense fallback={<OrderListFallback />}>
+      <Suspense fallback={<SpinnerContainer />}>
         <OrderList />
       </Suspense>
     </>

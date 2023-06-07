@@ -4,7 +4,7 @@ import { Text } from '../Text/Text.styles';
 
 const SpinnerContainer = styled.div`
   position: relative;
-  top: 50%;
+  top: calc(50% - 48px);
   display: flex;
   flex-direction: column;
   justify-content: center;

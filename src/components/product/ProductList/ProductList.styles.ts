@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const ProductListContainer = styled.ol`
+const List = styled.ol`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -8,4 +8,4 @@ const ProductListContainer = styled.ol`
   column-gap: 20px;
 `;
 
-export { ProductListContainer };
+export { List };

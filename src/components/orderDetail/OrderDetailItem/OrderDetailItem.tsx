@@ -1,29 +1,28 @@
 import type { OrderedItemData } from '../../../types/order';
 import { priceFormatter } from '../../../utils/formatter';
+import { Text } from '../../common/Text/Text.styles';
 import * as S from './OrderDetailItem.styles';
 
 type OrderDetailItemProps = OrderedItemData;
 
 const OrderDetailItem = ({ ...information }: OrderDetailItemProps) => {
   return (
-    <S.OrderDetailItemContainer>
-      <S.OrderDetailItemImage src={information.imageUrl} alt={information.name} />
-      <S.OrderDetailItemInformation>
-        <S.OrderDetailItemName>{information.name}</S.OrderDetailItemName>
-        <S.OrderDetailItemPriceContainer>
-          <S.OrderDetailItemConsumerPrice as="span">
+    <S.ItemContainer>
+      <S.ItemImage src={information.imageUrl} alt={information.name} />
+      <S.ItemContent>
+        <Text className="semi-bold">{information.name}</Text>
+        <div>
+          <Text className="semi-bold" as="span">
             {priceFormatter(information.discountedPrice)}원
-          </S.OrderDetailItemConsumerPrice>
+          </Text>
           {information.discountRate > 0 && (
-            <S.OrderDetailItemOriginalPrice>
-              {priceFormatter(information.price)}원
-            </S.OrderDetailItemOriginalPrice>
+            <Text css={S.originalPriceStyle}>{priceFormatter(information.price)}원</Text>
           )}
           <S.VerticalLine />
-          <S.OrderDetailItemQuantity>{information.quantity}개</S.OrderDetailItemQuantity>
-        </S.OrderDetailItemPriceContainer>
-      </S.OrderDetailItemInformation>
-    </S.OrderDetailItemContainer>
+          <Text css={S.quantityStyle}>{information.quantity}개</Text>
+        </div>
+      </S.ItemContent>
+    </S.ItemContainer>
   );
 };
 

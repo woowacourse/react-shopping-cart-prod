@@ -63,6 +63,19 @@ const GlobalStyle = createGlobalStyle`
     border-radius: ${theme.borderRadius.small};
     animation: ${skeleton} 5s infinite ease-out;
   }
+
+  .skeleton::after {
+    font-size: 0;
+    content: 'loading';
+  }
+
+  .medium {
+    font-weight: 500;
+  }
+
+  .semi-bold {
+    font-weight: 600;
+  }
 `;
 
 export default GlobalStyle;

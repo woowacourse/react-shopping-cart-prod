@@ -1,6 +1,4 @@
-import styled from 'styled-components';
-
-import { Button } from '../Button/Button.styles';
+import styled, { css } from 'styled-components';
 
 const StepperContainer = styled.div`
   width: fit-content;
@@ -12,7 +10,19 @@ const StepperContainer = styled.div`
   border-radius: ${({ theme }) => theme.borderRadius.small};
 `;
 
-const StepperButton = styled(Button)`
+const StepperInput = styled.input`
+  width: 40px;
+  height: 24px;
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  font-weight: 400;
+  text-align: center;
+  border: none;
+  outline: none;
+`;
+
+const buttonStyle = css`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -31,16 +41,4 @@ const StepperButton = styled(Button)`
   }
 `;
 
-const StepperInput = styled.input`
-  width: 40px;
-  height: 24px;
-  margin: 0;
-  padding: 0;
-  font-size: 16px;
-  font-weight: 400;
-  text-align: center;
-  border: none;
-  outline: none;
-`;
-
-export { StepperContainer, StepperButton, StepperInput };
+export { StepperContainer, StepperInput, buttonStyle };

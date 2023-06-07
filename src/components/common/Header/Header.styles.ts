@@ -1,6 +1,4 @@
-import styled from 'styled-components';
-
-import { Button } from '../Button/Button.styles';
+import styled, { css } from 'styled-components';
 
 const HeaderContainer = styled.header`
   position: fixed;
@@ -13,7 +11,7 @@ const HeaderContainer = styled.header`
   z-index: 2;
 `;
 
-const HeaderMainContentContainer = styled.div`
+const HeaderContent = styled.div`
   position: relative;
   max-width: 1080px;
   margin: 0 auto;
@@ -22,7 +20,7 @@ const HeaderMainContentContainer = styled.div`
   align-items: center;
 `;
 
-const HeaderRightContainer = styled.section`
+const RightContainer = styled.section`
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -53,21 +51,7 @@ const Logo = styled.img`
   }
 `;
 
-const CartButton = styled(Button)`
-  position: absolute;
-  width: initial;
-  padding: 8px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  @media screen and (max-width: 600px) {
-    right: -8px;
-  }
-`;
-
-const CartItemCount = styled.span`
+const Badge = styled.span`
   position: absolute;
   height: 14px;
   right: 8px;
@@ -97,18 +81,32 @@ const CartIcon = styled.img`
   margin-bottom: ${({ theme }) => theme.spacer.spacing1};
 `;
 
-const HeaderButtonLabel = styled.span`
+const ButtonLabel = styled.span`
   font-size: 10px;
   font-weight: 400;
 `;
 
+const buttonStyle = css`
+  position: absolute;
+  width: initial;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  @media screen and (max-width: 600px) {
+    right: -8px;
+  }
+`;
+
 export {
   HeaderContainer,
-  HeaderMainContentContainer,
-  HeaderRightContainer,
+  HeaderContent,
+  RightContainer,
   Logo,
-  CartButton,
-  CartItemCount,
+  Badge,
   CartIcon,
-  HeaderButtonLabel,
+  ButtonLabel,
+  buttonStyle,
 };

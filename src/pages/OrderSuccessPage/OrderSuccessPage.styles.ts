@@ -1,10 +1,8 @@
-import { styled } from 'styled-components';
+import { css, styled } from 'styled-components';
 
 import { TickCircleIcon } from '../../assets/svg';
-import { Button } from '../../components/common/Button/Button.styles';
-import { Text } from '../../components/common/Text/Text.styles';
 
-const OrderSuccessMessageContainer = styled.div`
+const InformationContainer = styled.div`
   position: relative;
   top: 50%;
   display: flex;
@@ -22,7 +20,7 @@ const OrderSuccessMessageContainer = styled.div`
   }
 `;
 
-const OrderSuccessIcon = styled(TickCircleIcon)`
+const SuccessIcon = styled(TickCircleIcon)`
   width: 64px;
   height: 64px;
   margin-bottom: ${({ theme }) => theme.spacer.spacing4};
@@ -33,22 +31,16 @@ const OrderSuccessIcon = styled(TickCircleIcon)`
   }
 `;
 
-const OrderSuccessIdText = styled(Text)`
+const messageStyle = css`
   margin: ${({ theme }) => theme.spacer.spacing2} 0;
 `;
 
-const HomeButton = styled(Button)`
+const homeButtonStyle = css`
   margin-top: ${({ theme }) => theme.spacer.spacing3};
 `;
 
-const OrderDetailButton = styled(Button)`
+const detailButtonStyle = css`
   margin-top: ${({ theme }) => theme.spacer.spacing2};
 `;
 
-export {
-  OrderSuccessMessageContainer,
-  OrderSuccessIcon,
-  OrderSuccessIdText,
-  HomeButton,
-  OrderDetailButton,
-};
+export { InformationContainer, SuccessIcon, messageStyle, homeButtonStyle, detailButtonStyle };

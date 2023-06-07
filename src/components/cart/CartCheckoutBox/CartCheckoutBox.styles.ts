@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import { Text } from '../../common/Text/Text.styles';
 
-const CartCheckoutBoxWrapper = styled.aside`
+const BoxWrapper = styled.aside`
   position: relative;
   width: 284px;
   padding-top: 40px;
@@ -12,7 +12,7 @@ const CartCheckoutBoxWrapper = styled.aside`
   }
 `;
 
-const CheckoutInformationContainer = styled.div`
+const BoxContent = styled.div`
   position: sticky;
   top: 133px;
   padding: ${({ theme }) => theme.spacer.spacing4};
@@ -24,17 +24,13 @@ const CheckoutInformationContainer = styled.div`
   }
 `;
 
-const CheckoutInformationTextContainer = styled.div`
+const InformationData = styled.dl`
   margin-bottom: ${({ theme }) => theme.spacer.spacing3};
   display: flex;
   justify-content: space-between;
 `;
 
-const CheckoutValueText = styled(Text)`
-  letter-spacing: -0.2px;
-`;
-
-const CheckoutInformationSubTextContainer = styled.div`
+const SubInformationData = styled.div`
   margin-bottom: ${({ theme }) => theme.spacer.spacing3};
   display: flex;
   justify-content: space-between;
@@ -44,7 +40,13 @@ const CheckoutInformationSubTextContainer = styled.div`
   }
 `;
 
-const CheckoutMembershipDiscountInformation = styled.div`
+const InformationDataLabel = styled(Text).attrs({ as: 'dt' })``;
+
+const InformationDataDescription = styled(Text).attrs({ as: 'dd' })`
+  letter-spacing: -0.2px;
+`;
+
+const MembershipData = styled.div`
   margin-bottom: ${({ theme }) => theme.spacer.spacing4};
   display: flex;
   justify-content: flex-end;
@@ -67,22 +69,18 @@ const MembershipRank = styled.span`
   border: 1px solid ${({ theme }) => theme.color.primary};
 `;
 
-const CheckoutTotalPriceContainer = styled(CheckoutInformationTextContainer)`
+const TotalInformationData = styled(InformationData)`
   margin-top: ${({ theme }) => theme.spacer.spacing4};
 `;
 
-const CheckoutTotalPriceValueText = styled(CheckoutValueText)`
-  font-weight: 600;
-`;
-
 export {
-  CartCheckoutBoxWrapper,
-  CheckoutInformationContainer,
-  CheckoutInformationTextContainer,
-  CheckoutTotalPriceContainer,
-  CheckoutInformationSubTextContainer,
-  CheckoutMembershipDiscountInformation,
+  BoxWrapper,
+  BoxContent,
+  InformationData,
+  SubInformationData,
+  InformationDataLabel,
+  InformationDataDescription,
+  MembershipData,
+  TotalInformationData,
   MembershipRank,
-  CheckoutValueText,
-  CheckoutTotalPriceValueText,
 };

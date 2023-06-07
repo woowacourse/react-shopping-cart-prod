@@ -6,6 +6,7 @@ import Logo from '../../../assets/png/logo.png';
 import CartIcon from '../../../assets/svg/cart-icon.svg';
 import { PATH } from '../../../constants/path';
 import { cartListItemCountState } from '../../../store/cart';
+import Button from '../Button/Button';
 import ServerSelect from '../ServerSelect/ServerSelect';
 import * as S from './Header.styles';
 import UserInformation from './UserInformation/UserInformation';
@@ -20,24 +21,23 @@ const Header = () => {
       <Suspense fallback={<UserInformationSkeleton />}>
         <UserInformation />
       </Suspense>
-      <S.HeaderMainContentContainer>
+      <S.HeaderContent>
         <S.Logo src={Logo} alt="logo" onClick={() => navigate(PATH.ROOT)} />
-        <S.HeaderRightContainer>
+        <S.RightContainer>
           <ServerSelect onChange={() => navigate(PATH.ROOT)} />
-          <S.CartButton
+          <Button
+            css={S.buttonStyle}
             type="button"
             aria-labelledby="cart-button"
             variant="textButton"
             onClick={() => navigate(PATH.CART)}
           >
-            {cartListItemCount.contents > 0 && (
-              <S.CartItemCount>{cartListItemCount.contents}</S.CartItemCount>
-            )}
+            {cartListItemCount.contents > 0 && <S.Badge>{cartListItemCount.contents}</S.Badge>}
             <S.CartIcon src={CartIcon} alt="cart icon" />
-            <S.HeaderButtonLabel id="cart-button">장바구니</S.HeaderButtonLabel>
-          </S.CartButton>
-        </S.HeaderRightContainer>
-      </S.HeaderMainContentContainer>
+            <S.ButtonLabel id="cart-button">장바구니</S.ButtonLabel>
+          </Button>
+        </S.RightContainer>
+      </S.HeaderContent>
     </S.HeaderContainer>
   );
 };

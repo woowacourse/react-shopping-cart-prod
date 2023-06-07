@@ -1,12 +1,13 @@
+import { Text } from '../../common/Text/Text.styles';
 import * as S from './ProductItem.styles';
 
 const ProductItemSkeleton = () => {
   return (
-    <S.ProductItemContainer>
+    <S.ItemContainer>
       <S.ItemImageContainer className="skeleton" />
-      <S.ItemName className="skeleton" />
-      <S.ItemPriceContainer className="skeleton" />
-    </S.ProductItemContainer>
+      <Text css={S.nameStyle} className="skeleton" />
+      <Text css={S.nameStyle} className="skeleton" />
+    </S.ItemContainer>
   );
 };
 

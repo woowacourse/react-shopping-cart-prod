@@ -1,9 +1,6 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-import { Button } from '../../common/Button/Button.styles';
-import { Text } from '../../common/Text/Text.styles';
-
-const ProductItemContainer = styled.li`
+const ItemContainer = styled.li`
   width: 200px;
   display: flex;
   flex-direction: column;
@@ -23,6 +20,14 @@ const ItemImageContainer = styled.div`
     width: 150px;
     height: 150px;
   }
+`;
+
+const ItemImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: ${({ theme }) => theme.borderRadius.small};
+  background-color: ${({ theme }) => theme.color.gray2};
 `;
 
 const ItemButtonWrapper = styled.div`
@@ -47,7 +52,7 @@ const ItemButtonWrapper = styled.div`
   }
 `;
 
-const ItemButton = styled(Button)`
+const buttonStyle = css`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -65,15 +70,7 @@ const ItemButton = styled(Button)`
   }
 `;
 
-const ItemImage = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: ${({ theme }) => theme.borderRadius.small};
-  background-color: ${({ theme }) => theme.color.gray2};
-`;
-
-const ItemName = styled(Text)`
+const nameStyle = css`
   margin-top: 2px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -81,33 +78,9 @@ const ItemName = styled(Text)`
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 
-  &.skeleton::after {
-    font-size: 0;
-    content: 'loading';
+  &.skeleton {
+    height: 28px;
   }
 `;
 
-const ItemPriceContainer = styled.div`
-  min-height: 28px;
-  margin-top: 2px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  font-weight: 600;
-  letter-spacing: -0.3px;
-
-  &.skeleton::after {
-    font-size: 0;
-    content: 'loading';
-  }
-`;
-
-export {
-  ProductItemContainer,
-  ItemImageContainer,
-  ItemButtonWrapper,
-  ItemButton,
-  ItemImage,
-  ItemName,
-  ItemPriceContainer,
-};
+export { ItemContainer, ItemImageContainer, ItemImage, ItemButtonWrapper, buttonStyle, nameStyle };

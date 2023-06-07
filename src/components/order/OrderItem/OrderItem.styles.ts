@@ -3,11 +3,11 @@ import styled from 'styled-components';
 
 import { Text } from '../../common/Text/Text.styles';
 
-const OrderItemContainer = styled.li`
+const ItemContainer = styled.li`
   width: 100%;
 `;
 
-const OrderItemHeader = styled.div`
+const ItemHeader = styled.div`
   margin-bottom: ${({ theme }) => theme.spacer.spacing3};
   padding-bottom: 12px;
   display: flex;
@@ -15,11 +15,7 @@ const OrderItemHeader = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.color.gray3};
 `;
 
-const OrderDate = styled(Text)`
-  font-weight: 500;
-`;
-
-const OrderDetailLink = styled(Link)`
+const HeaderLink = styled(Link)`
   display: flex;
   align-items: center;
   gap: ${({ theme }) => theme.spacer.spacing1};
@@ -33,12 +29,12 @@ const OrderDetailLink = styled(Link)`
   }
 `;
 
-const OrderItemContent = styled.div`
+const ItemContent = styled.div`
   display: flex;
   gap: ${({ theme }) => theme.spacer.spacing4};
 `;
 
-const OrderItemImage = styled.img`
+const ItemImage = styled.img`
   width: 100px;
   height: 100px;
   background-color: ${({ theme }) => theme.color.gray2};
@@ -46,37 +42,36 @@ const OrderItemImage = styled.img`
   border-radius: ${({ theme }) => theme.borderRadius.small};
 `;
 
-const OrderInformation = styled.div`
+const ItemInformation = styled.div`
   display: flex;
   flex-direction: column;
   gap: 6px;
 `;
 
-const OrderInformationData = styled.dl`
+const InformationData = styled.dl`
   display: flex;
   gap: ${({ theme }) => theme.spacer.spacing3};
 `;
 
-const OrderInformationDataLabel = styled(Text)`
+const DataLabel = styled(Text).attrs({ as: 'dt' })`
   position: relative;
   top: 1px;
   min-width: 50px;
   color: ${({ theme }) => theme.color.gray4};
 `;
 
-const OrderInformationDataDescription = styled(Text)`
+const DataDescription = styled(Text).attrs({ as: 'dd' })`
   font-weight: 500;
 `;
 
 export {
-  OrderItemContainer,
-  OrderItemHeader,
-  OrderDate,
-  OrderDetailLink,
-  OrderItemContent,
-  OrderItemImage,
-  OrderInformation,
-  OrderInformationData,
-  OrderInformationDataLabel,
-  OrderInformationDataDescription,
+  ItemContainer,
+  ItemHeader,
+  HeaderLink,
+  ItemContent,
+  ItemImage,
+  ItemInformation,
+  InformationData,
+  DataLabel,
+  DataDescription,
 };

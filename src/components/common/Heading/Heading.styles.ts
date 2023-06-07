@@ -36,6 +36,7 @@ const getSizeStyling = (size: Required<HeadingProps>['size']) => {
 const Heading = styled.div<HeadingProps>`
   font-weight: 600;
   ${({ size = 'medium' }) => getSizeStyling(size)}
+  ${(props) => props.css}
 `;
 
 export { Heading };

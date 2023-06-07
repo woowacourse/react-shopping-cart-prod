@@ -1,9 +1,6 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-import { SpinnerContainer } from '../../common/SpinnerContainer/SpinnerContainer.styles';
-import { Text } from '../../common/Text/Text.styles';
-
-const OrderListContainer = styled.ol`
+const List = styled.ol`
   max-width: calc(100vw - 48px);
   width: 960px;
   display: flex;
@@ -26,25 +23,16 @@ const OrderListContainer = styled.ol`
   }
 `;
 
-const OrderListEmptyImage = styled.img`
+const EmptyImage = styled.img`
   width: 150px;
   height: 150px;
   margin-bottom: ${({ theme }) => theme.spacer.spacing3};
 `;
 
-const OrderListEmptyMessage = styled(Text)`
+const emptyMessageStyle = css`
   margin-bottom: ${({ theme }) => theme.spacer.spacing4};
   font-weight: 600;
   text-align: center;
 `;
 
-const OrderListFallbackSpinnerContainer = styled(SpinnerContainer)`
-  top: calc(50% - 48px);
-`;
-
-export {
-  OrderListContainer,
-  OrderListEmptyImage,
-  OrderListEmptyMessage,
-  OrderListFallbackSpinnerContainer,
-};
+export { List, EmptyImage, emptyMessageStyle };

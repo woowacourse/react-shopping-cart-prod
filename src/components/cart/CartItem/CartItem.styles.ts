@@ -1,9 +1,6 @@
-import { styled } from 'styled-components';
+import { css, styled } from 'styled-components';
 
-import Button from '../../common/Button/Button';
-import { Text } from '../../common/Text/Text.styles';
-
-const CartItemContainer = styled.li`
+const ItemContainer = styled.li`
   display: flex;
   align-items: center;
 
@@ -13,7 +10,7 @@ const CartItemContainer = styled.li`
   }
 `;
 
-const CartItemImageWrapper = styled.div`
+const ImageWrapper = styled.div`
   width: 80px;
   height: 80px;
   margin-left: ${({ theme }) => theme.spacer.spacing3};
@@ -24,7 +21,7 @@ const CartItemImageWrapper = styled.div`
   }
 `;
 
-const CartItemImage = styled.img`
+const ItemImage = styled.img`
   width: 100%;
   height: 100%;
   background-color: ${({ theme }) => theme.color.gray2};
@@ -32,7 +29,7 @@ const CartItemImage = styled.img`
   border-radius: ${({ theme }) => theme.borderRadius.small};
 `;
 
-const CartItemInformationContainer = styled.div`
+const ItemContent = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -47,24 +44,7 @@ const CartItemInformationContainer = styled.div`
   }
 `;
 
-const CartItemName = styled(Text)`
-  width: 300px;
-  margin-right: ${({ theme }) => theme.spacer.spacing4};
-  overflow: hidden;
-  white-space: nowrap;
-  word-break: break-all;
-
-  &.skeleton::after {
-    font-size: 0;
-    content: 'loading';
-  }
-
-  @media screen and (max-width: 600px) {
-    width: 100%;
-  }
-`;
-
-const CartItemPriceContainer = styled.div`
+const PriceContainer = styled.div`
   width: 126px;
   margin-right: 12px;
   padding-left: 12px;
@@ -90,17 +70,30 @@ const CartItemPriceContainer = styled.div`
   }
 `;
 
-const CustomerPrice = styled(Text)`
-  font-weight: 500;
+const nameStyle = css`
+  width: 300px;
+  margin-right: ${({ theme }) => theme.spacer.spacing4};
+  overflow: hidden;
+  white-space: nowrap;
+  word-break: break-all;
+
+  &.skeleton::after {
+    font-size: 0;
+    content: 'loading';
+  }
+
+  @media screen and (max-width: 600px) {
+    width: 100%;
+  }
 `;
 
-const OriginalPrice = styled(Text)`
+const originalPriceStyle = css`
   color: #b1b3b5;
   font-weight: normal;
   text-decoration: line-through;
 `;
 
-const CartItemDeleteButton = styled(Button)`
+const buttonStyle = css`
   width: 30px;
   height: 30px;
   padding: 0;
@@ -134,13 +127,12 @@ const CartItemDeleteButton = styled(Button)`
 `;
 
 export {
-  CartItemContainer,
-  CartItemImageWrapper,
-  CartItemImage,
-  CartItemInformationContainer,
-  CartItemName,
-  CartItemPriceContainer,
-  CustomerPrice,
-  OriginalPrice,
-  CartItemDeleteButton,
+  ItemContainer,
+  ImageWrapper,
+  ItemImage,
+  ItemContent,
+  PriceContainer,
+  nameStyle,
+  originalPriceStyle,
+  buttonStyle,
 };

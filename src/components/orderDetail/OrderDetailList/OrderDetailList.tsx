@@ -5,6 +5,7 @@ import HTTPError from '../../../api/utils/HTTPError';
 import { HTTP_ERROR_MESSAGE, HTTP_STATUS_CODE } from '../../../constants/api';
 import { orderState } from '../../../store/order';
 import { Divider } from '../../common/Divider/Divider.styles';
+import Heading from '../../common/Heading/Heading';
 import OrderDetailItem from '../OrderDetailItem/OrderDetailItem';
 import * as S from './OrderDetailList.styles';
 
@@ -23,15 +24,17 @@ const OrderDetailList = ({ orderId }: OrderDetailListProps) => {
 
   return (
     <>
-      <S.OrderDetailListHeading size="xSmall">주문번호 {orderId}</S.OrderDetailListHeading>
-      <S.OrderDetailListContainer>
+      <Heading css={S.headingStyle} size="xSmall">
+        주문번호 {orderId}
+      </Heading>
+      <S.List>
         {order.orderedItems.map((orderedItem, index) => (
           <Fragment key={index}>
             <OrderDetailItem {...orderedItem} />
             <Divider />
           </Fragment>
         ))}
-      </S.OrderDetailListContainer>
+      </S.List>
     </>
   );
 };

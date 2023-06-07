@@ -1,9 +1,7 @@
 import styled from 'styled-components';
+import { css } from 'styled-components';
 
-import { Button } from '../../common/Button/Button.styles';
-import { Text } from '../../common/Text/Text.styles';
-
-const OrderDetailItemContainer = styled.div`
+const ItemContainer = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
@@ -15,7 +13,7 @@ const OrderDetailItemContainer = styled.div`
   }
 `;
 
-const OrderDetailItemImage = styled.img`
+const ItemImage = styled.img`
   width: 100px;
   height: 100px;
   background-color: ${({ theme }) => theme.color.gray2};
@@ -23,27 +21,19 @@ const OrderDetailItemImage = styled.img`
   border-radius: ${({ theme }) => theme.borderRadius.small};
 `;
 
-const OrderDetailItemInformation = styled.div`
+const ItemContent = styled.div`
   @media screen and (max-width: 600px) {
     & > * {
       width: 208px;
     }
   }
-`;
 
-const OrderDetailItemName = styled(Text)`
-  font-weight: 600;
-`;
-
-const OrderDetailItemPriceContainer = styled.div`
-  margin-top: ${({ theme }) => theme.spacer.spacing2};
-  display: flex;
-  align-items: center;
-  letter-spacing: -0.3px;
-`;
-
-const OrderDetailItemConsumerPrice = styled(Text)`
-  font-weight: 600;
+  & > div {
+    margin-top: ${({ theme }) => theme.spacer.spacing2};
+    display: flex;
+    align-items: center;
+    letter-spacing: -0.3px;
+  }
 `;
 
 const VerticalLine = styled.div`
@@ -52,37 +42,15 @@ const VerticalLine = styled.div`
   border-left: 1px solid ${({ theme }) => theme.color.gray2};
 `;
 
-const OrderDetailItemOriginalPrice = styled(Text)`
+const originalPriceStyle = css`
   margin-left: ${({ theme }) => theme.spacer.spacing2};
   color: #b1b3b5;
   font-weight: normal;
   text-decoration: line-through;
 `;
 
-const OrderDetailItemQuantity = styled(Text)`
+const quantityStyle = css`
   margin-left: ${({ theme }) => theme.spacer.spacing3};
 `;
 
-const AddToCartButton = styled(Button)`
-  position: absolute;
-  right: 0;
-  width: initial;
-
-  @media screen and (max-width: 600px) {
-    position: relative;
-    left: 116px;
-  }
-`;
-
-export {
-  OrderDetailItemContainer,
-  OrderDetailItemImage,
-  OrderDetailItemInformation,
-  OrderDetailItemName,
-  OrderDetailItemPriceContainer,
-  OrderDetailItemConsumerPrice,
-  VerticalLine,
-  OrderDetailItemOriginalPrice,
-  OrderDetailItemQuantity,
-  AddToCartButton,
-};
+export { ItemContainer, ItemImage, ItemContent, VerticalLine, originalPriceStyle, quantityStyle };

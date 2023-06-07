@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 
-const UserInformationContainer = styled.div`
+const InformationContainer = styled.div`
   position: relative;
   max-width: 1080px;
   margin: 0 auto;
@@ -26,14 +26,14 @@ const UserRank = styled.span`
   background-color: ${({ theme }) => theme.color.white};
 `;
 
-const OrderLink = styled.span`
+const Link = styled.span`
   color: ${({ theme }) => theme.color.black};
   font-size: 12px;
   letter-spacing: -0.2px;
   line-height: 20px;
 `;
 
-const UserInformationContentSkeleton = styled.span`
+const InformationContentSkeleton = styled.span`
   width: 86px;
   min-height: 21px;
 
@@ -43,4 +43,4 @@ const UserInformationContentSkeleton = styled.span`
   }
 `;
 
-export { UserInformationContainer, UserRank, OrderLink, UserInformationContentSkeleton };
+export { InformationContainer, UserRank, Link, InformationContentSkeleton };

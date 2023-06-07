@@ -103,6 +103,8 @@ const Button = styled.button<ButtonProps>`
     background-color: ${({ theme }) => theme.color.gray3};
     border-color: ${({ theme }) => theme.color.gray3};
   }
+
+  ${(props) => props.css}
 `;
 
 export { Button };

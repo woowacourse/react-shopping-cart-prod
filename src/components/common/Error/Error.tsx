@@ -3,8 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import type { HTTPErrorInfo } from '../../../api/utils/HTTPError';
 import ErrorImage from '../../../assets/png/error-image.png';
 import { PATH } from '../../../constants/path';
+import Button from '../Button/Button';
 import Heading from '../Heading/Heading';
 import ServerSelect from '../ServerSelect/ServerSelect';
+import { Text } from '../Text/Text.styles';
 import * as S from './Error.styles';
 
 export interface ErrorProps {
@@ -21,17 +23,17 @@ const Error = ({ message, information, resetError }: ErrorProps) => {
   };
 
   return (
-    <S.ErrorWrapper>
-      <S.ErrorContentContainer>
-        <S.ErrorImage src={ErrorImage} alt="error" />
+    <S.ContentWrapper>
+      <S.Content>
+        <S.Image src={ErrorImage} alt="error" />
         <Heading size="xSmall">{message}</Heading>
-        {information?.BODY && <S.ErrorBodyText>{information.BODY}</S.ErrorBodyText>}
-        <S.ErrorResetButton variant="primary" onClick={resetError}>
+        {information?.BODY && <Text css={S.textStyle}>{information.BODY}</Text>}
+        <Button css={S.buttonStyle} variant="primary" onClick={resetError}>
           {information?.BUTTON ?? '새로고침'}
-        </S.ErrorResetButton>
+        </Button>
         <ServerSelect onChange={handleServerChange} />
-      </S.ErrorContentContainer>
-    </S.ErrorWrapper>
+      </S.Content>
+    </S.ContentWrapper>
   );
 };
 

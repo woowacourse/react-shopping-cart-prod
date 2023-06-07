@@ -1,38 +1,31 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-import { Heading } from '../../common/Heading/Heading.styles';
 import { Text } from '../../common/Text/Text.styles';
 
-const OrderDetailPurchaseInformationHeading = styled(Heading).attrs({ as: 'h6' })`
-  margin-bottom: ${({ theme }) => theme.spacer.spacing3};
-  padding-bottom: ${({ theme }) => theme.spacer.spacing3};
-  border-bottom: 2px solid ${({ theme }) => theme.color.gray6};
-`;
-
-const OrderDetailPurchaseInformationContainer = styled.div`
+const InformationContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacer.spacing3};
 `;
 
-const PurchaseInformationData = styled.dl`
+const InformationData = styled.dl`
   display: flex;
   justify-content: space-between;
   font-weight: 500;
 `;
 
-const PurchaseInformationDataLabel = styled(Text)`
+const DataLabel = styled(Text).attrs({ as: 'dt' })`
   color: ${({ theme }) => theme.color.gray4};
 `;
 
-const PurchaseInformationDataDescription = styled(Text)`
+const DataDescription = styled(Text).attrs({ as: 'dd' })`
   letter-spacing: -0.2px;
 `;
 
-export {
-  OrderDetailPurchaseInformationHeading,
-  OrderDetailPurchaseInformationContainer,
-  PurchaseInformationData,
-  PurchaseInformationDataLabel,
-  PurchaseInformationDataDescription,
-};
+const headingStyle = css`
+  margin-bottom: ${({ theme }) => theme.spacer.spacing3};
+  padding-bottom: ${({ theme }) => theme.spacer.spacing3};
+  border-bottom: 2px solid ${({ theme }) => theme.color.gray6};
+`;
+
+export { InformationContainer, InformationData, DataLabel, DataDescription, headingStyle };

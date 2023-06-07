@@ -9,12 +9,12 @@ const UserInformation = () => {
   const memberInformation = useRecoilValue(currentMemberInformationState);
 
   return (
-    <S.UserInformationContainer>
+    <S.InformationContainer>
       <S.UserRank>{memberInformation.rank}</S.UserRank>
       <Link to={PATH.ORDER}>
-        <S.OrderLink>주문 내역</S.OrderLink>
+        <S.Link>주문 내역</S.Link>
       </Link>
-    </S.UserInformationContainer>
+    </S.InformationContainer>
   );
 };
 

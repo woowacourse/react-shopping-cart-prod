@@ -4,6 +4,7 @@ import type { ChangeEvent, ComponentPropsWithoutRef } from 'react';
 import { AddIcon, MinusIcon } from '../../../assets/svg';
 import { DEFAULT_MAX_COUNT, DEFAULT_MIN_COUNT } from '../../../constants/ui';
 import { isNumber } from '../../../utils/validator';
+import Button from '../Button/Button';
 import * as S from './StepperButton.styles';
 
 interface StepperButtonProps extends ComponentPropsWithoutRef<'div'> {
@@ -36,7 +37,8 @@ const StepperButton = ({
 
   return (
     <S.StepperContainer className={`stepper-button ${className}`} {...attributes}>
-      <S.StepperButton
+      <Button
+        css={S.buttonStyle}
         type="button"
         aria-label="카운트 감소"
         disabled={count === minCount}
@@ -45,14 +47,15 @@ const StepperButton = ({
         onClick={() => handleCountChange(count - 1)}
       >
         <MinusIcon />
-      </S.StepperButton>
+      </Button>
       <S.StepperInput
         name="count"
         value={count}
         aria-label="카운트 입력"
         onChange={onChange}
       ></S.StepperInput>
-      <S.StepperButton
+      <Button
+        css={S.buttonStyle}
         type="button"
         aria-label="카운트 증가"
         disabled={count === maxCount}
@@ -61,7 +64,7 @@ const StepperButton = ({
         onClick={() => handleCountChange(count + 1)}
       >
         <AddIcon />
-      </S.StepperButton>
+      </Button>
     </S.StepperContainer>
   );
 };

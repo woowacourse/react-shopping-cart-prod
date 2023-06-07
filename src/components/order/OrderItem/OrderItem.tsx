@@ -3,6 +3,7 @@ import { PATH } from '../../../constants/path';
 import { ORDER_ITEM_DESCRIPTION_DATA } from '../../../constants/ui';
 import type { OrderData } from '../../../types/order';
 import { dateFormatter, timeFormatter } from '../../../utils/formatter';
+import { Text } from '../../common/Text/Text.styles';
 import * as S from './OrderItem.styles';
 
 type OrderItemProps = OrderData;
@@ -11,31 +12,27 @@ const OrderItem = ({ ...information }: OrderItemProps) => {
   const firstOrderItem = information.orderedItems[0];
 
   return (
-    <S.OrderItemContainer>
-      <S.OrderItemHeader>
-        <S.OrderDate size="large">
+    <S.ItemContainer>
+      <S.ItemHeader>
+        <Text className="medium" size="large">
           {dateFormatter(information.orderedAt)} ({timeFormatter(information.orderedAt)})
-        </S.OrderDate>
-        <S.OrderDetailLink to={`${PATH.ORDER}/${information.id}`}>
+        </Text>
+        <S.HeaderLink to={`${PATH.ORDER}/${information.id}`}>
           주문내역 상세보기 <RightChevronIcon />
-        </S.OrderDetailLink>
-      </S.OrderItemHeader>
-      <S.OrderItemContent>
-        <S.OrderItemImage src={firstOrderItem.imageUrl} alt={firstOrderItem.name} />
-        <S.OrderInformation>
+        </S.HeaderLink>
+      </S.ItemHeader>
+      <S.ItemContent>
+        <S.ItemImage src={firstOrderItem.imageUrl} alt={firstOrderItem.name} />
+        <S.ItemInformation>
           {ORDER_ITEM_DESCRIPTION_DATA.map((descriptionItem, index) => (
-            <S.OrderInformationData key={index}>
-              <S.OrderInformationDataLabel size="small" as="dt">
-                {descriptionItem.LABEL}
-              </S.OrderInformationDataLabel>
-              <S.OrderInformationDataDescription>
-                {descriptionItem.value(information)}
-              </S.OrderInformationDataDescription>
-            </S.OrderInformationData>
+            <S.InformationData key={index}>
+              <S.DataLabel size="small">{descriptionItem.LABEL}</S.DataLabel>
+              <S.DataDescription>{descriptionItem.value(information)}</S.DataDescription>
+            </S.InformationData>
           ))}
-        </S.OrderInformation>
-      </S.OrderItemContent>
-    </S.OrderItemContainer>
+        </S.ItemInformation>
+      </S.ItemContent>
+    </S.ItemContainer>
   );
 };
 

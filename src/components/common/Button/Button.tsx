@@ -1,8 +1,10 @@
 import type { ComponentPropsWithoutRef } from 'react';
+import type { CSSProp } from 'styled-components';
 
 import * as S from './Button.styles';
 
 export interface ButtonProps extends ComponentPropsWithoutRef<'button'> {
+  css?: CSSProp;
   variant?: 'default' | 'primary' | 'secondary' | 'danger' | 'textButton';
   size?: 'small' | 'medium' | 'large';
 }

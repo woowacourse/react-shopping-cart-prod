@@ -1,8 +1,8 @@
-import { styled } from 'styled-components';
+import { css, styled } from 'styled-components';
 
 import { Text } from '../../common/Text/Text.styles';
 
-const CartListHeaderContainer = styled.header`
+const HeaderContainer = styled.header`
   padding-bottom: ${({ theme }) => theme.spacer.spacing3};
   display: flex;
   align-items: center;
@@ -10,11 +10,7 @@ const CartListHeaderContainer = styled.header`
   border-bottom: 1px solid ${({ theme }) => theme.color.gray4};
 `;
 
-const CartItemAllSelectText = styled(Text)`
-  margin-left: ${({ theme }) => theme.spacer.spacing3};
-`;
-
-const CartItemPartialSelectDeleteButton = styled(Text)`
+const DeleteButton = styled(Text).attrs({ as: 'button' })`
   margin-left: ${({ theme }) => theme.spacer.spacing3};
   background-color: transparent;
   font-weight: inherit;
@@ -33,9 +29,8 @@ const VerticalLine = styled.div`
   border-left: 1px solid ${({ theme }) => theme.color.gray2};
 `;
 
-export {
-  CartListHeaderContainer,
-  CartItemAllSelectText,
-  CartItemPartialSelectDeleteButton,
-  VerticalLine,
-};
+const textStyle = css`
+  margin-left: ${({ theme }) => theme.spacer.spacing3};
+`;
+
+export { HeaderContainer, DeleteButton, VerticalLine, textStyle };

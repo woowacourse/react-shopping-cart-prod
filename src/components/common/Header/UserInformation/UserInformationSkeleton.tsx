@@ -2,9 +2,9 @@ import * as S from './UserInformation.styles';
 
 const UserInformationSkeleton = () => {
   return (
-    <S.UserInformationContainer>
-      <S.UserInformationContentSkeleton className="skeleton" />
-    </S.UserInformationContainer>
+    <S.InformationContainer>
+      <S.InformationContentSkeleton className="skeleton" />
+    </S.InformationContainer>
   );
 };
 

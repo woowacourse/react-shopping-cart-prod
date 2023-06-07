@@ -1,20 +1,17 @@
-import { styled } from 'styled-components';
+import { css, styled } from 'styled-components';
 
-import { Button } from '../../common/Button/Button.styles';
-import { Text } from '../../common/Text/Text.styles';
-
-const CartItemDeleteContainer = styled.div`
+const ContentContainer = styled.div`
   width: 300px;
 `;
 
-const CartItemDeleteMessage = styled(Text)`
+const messageStyle = css`
   margin: ${({ theme }) => theme.spacer.spacing4};
   padding: ${({ theme }) => theme.spacer.spacing3} 0;
   font-weight: 600;
   text-align: center;
 `;
 
-const CartItemDeleteButtonContainer = styled.div`
+const ButtonContainer = styled.div`
   display: flex;
   border-top: 1px solid ${({ theme }) => theme.color.gray2};
 
@@ -26,19 +23,13 @@ const CartItemDeleteButtonContainer = styled.div`
   }
 `;
 
-const CartItemDeleteCancelButton = styled(Button)`
+const cancelButtonStyle = css`
   border-right: 1px solid ${({ theme }) => theme.color.gray2};
   border-radius: 0 0 0 ${({ theme }) => theme.borderRadius.medium};
 `;
 
-const CartItemDeleteButton = styled(Button)`
+const deleteButtonStyle = css`
   border-radius: 0 0 ${({ theme }) => theme.borderRadius.medium} 0;
 `;
 
-export {
-  CartItemDeleteContainer,
-  CartItemDeleteMessage,
-  CartItemDeleteButtonContainer,
-  CartItemDeleteCancelButton,
-  CartItemDeleteButton,
-};
+export { ContentContainer, messageStyle, ButtonContainer, cancelButtonStyle, deleteButtonStyle };

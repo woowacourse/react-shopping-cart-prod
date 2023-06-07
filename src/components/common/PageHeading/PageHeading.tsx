@@ -1,3 +1,4 @@
+import Heading from '../Heading/Heading';
 import * as S from './PageHeading.styles';
 
 interface PageHeadingProps {
@@ -5,7 +6,11 @@ interface PageHeadingProps {
 }
 
 const PageHeading = ({ children }: PageHeadingProps) => {
-  return <S.PageHeading size="small">{children}</S.PageHeading>;
+  return (
+    <Heading css={S.headingStyle} size="small">
+      {children}
+    </Heading>
+  );
 };
 
 export default PageHeading;

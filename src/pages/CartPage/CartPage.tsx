@@ -15,7 +15,7 @@ const CartPage = () => {
   return (
     <>
       <PageHeading>장바구니</PageHeading>
-      <S.CartInformationContainer>
+      <S.InformationContainer>
         <div>
           <CartListHeader />
           <Suspense fallback={<CartListSkeleton />}>
@@ -25,7 +25,7 @@ const CartPage = () => {
         <Suspense fallback={<CartCheckoutBoxSkeleton />}>
           <CartCheckoutBox />
         </Suspense>
-      </S.CartInformationContainer>
+      </S.InformationContainer>
     </>
   );
 };

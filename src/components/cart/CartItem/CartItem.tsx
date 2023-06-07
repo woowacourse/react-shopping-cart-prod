@@ -8,9 +8,11 @@ import { useCartCheckbox } from '../../../hooks/useCartCheckbox';
 import { checkedCartItemState } from '../../../store/cartCheckbox';
 import type { ProductItemData } from '../../../types/product';
 import { priceFormatter } from '../../../utils/formatter';
+import Button from '../../common/Button/Button';
 import Checkbox from '../../common/Checkbox/Checkbox';
 import Modal from '../../common/Modal/Modal';
 import StepperButton from '../../common/StepperButton/StepperButton';
+import { Text } from '../../common/Text/Text.styles';
 import CartItemDelete from '../CartItemDelete/CartItemDelete';
 import * as S from './CartItem.styles';
 
@@ -50,36 +52,39 @@ const CartItem = ({
   }, [cartItemId, handleModalClose, removeItem]);
 
   return (
-    <S.CartItemContainer>
+    <S.ItemContainer>
       <Checkbox checked={isChecked} onChange={onCheckboxChange} />
-      <S.CartItemImageWrapper>
-        <S.CartItemImage src={imageUrl} alt={name} />
-      </S.CartItemImageWrapper>
-      <S.CartItemInformationContainer>
-        <S.CartItemName>{name}</S.CartItemName>
+      <S.ImageWrapper>
+        <S.ItemImage src={imageUrl} alt={name} />
+      </S.ImageWrapper>
+      <S.ItemContent>
+        <Text css={S.nameStyle}>{name}</Text>
         <StepperButton
           className="stepper-button"
           count={quantity}
           handleCountChange={handleQuantityChange}
         />
-        <S.CartItemPriceContainer>
-          <S.CustomerPrice>{priceFormatter(discountedPrice * quantity)}원</S.CustomerPrice>
+        <S.PriceContainer>
+          <Text className="medium">{priceFormatter(discountedPrice * quantity)}원</Text>
           {discountRate > 0 && (
-            <S.OriginalPrice size="small">{priceFormatter(price * quantity)}원</S.OriginalPrice>
+            <Text css={S.originalPriceStyle} size="small">
+              {priceFormatter(price * quantity)}원
+            </Text>
           )}
-        </S.CartItemPriceContainer>
-        <S.CartItemDeleteButton
+        </S.PriceContainer>
+        <Button
+          css={S.buttonStyle}
           aria-label="상품 삭제"
           variant="textButton"
           onClick={handleModalOpen}
         >
           <CloseIcon />
-        </S.CartItemDeleteButton>
-      </S.CartItemInformationContainer>
+        </Button>
+      </S.ItemContent>
       <Modal isOpen={isModalOpen} handleClose={handleModalClose}>
         <CartItemDelete handleModalClose={handleModalClose} removeItem={handleRemoval} />
       </Modal>
-    </S.CartItemContainer>
+    </S.ItemContainer>
   );
 };
 

@@ -1,13 +1,10 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-import { Button } from '../Button/Button.styles';
-import { Text } from '../Text/Text.styles';
-
-const ErrorWrapper = styled.div`
+const ContentWrapper = styled.div`
   position: relative;
 `;
 
-const ErrorContentContainer = styled.div`
+const Content = styled.div`
   position: relative;
   top: 50%;
   left: 50%;
@@ -36,19 +33,19 @@ const ErrorContentContainer = styled.div`
   }
 `;
 
-const ErrorImage = styled.img`
+const Image = styled.img`
   width: 200px;
   height: 200x;
   margin-bottom: ${({ theme }) => theme.spacer.spacing4};
 `;
 
-const ErrorBodyText = styled(Text)`
+const textStyle = css`
   margin-bottom: ${({ theme }) => theme.spacer.spacing2};
 `;
 
-const ErrorResetButton = styled(Button)`
+const buttonStyle = css`
   margin-top: ${({ theme }) => theme.spacer.spacing3};
   width: 250px;
 `;
 
-export { ErrorWrapper, ErrorContentContainer, ErrorImage, ErrorBodyText, ErrorResetButton };
+export { ContentWrapper, Content, Image, textStyle, buttonStyle };

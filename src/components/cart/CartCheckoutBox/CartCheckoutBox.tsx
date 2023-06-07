@@ -7,7 +7,6 @@ import { checkedCartIdListState } from '../../../store/cartCheckbox';
 import { currentMemberInformationState } from '../../../store/member';
 import { priceFormatter } from '../../../utils/formatter';
 import Button from '../../common/Button/Button';
-import { Text } from '../../common/Text/Text.styles';
 import * as S from './CartCheckoutBox.styles';
 
 const CartCheckoutBox = () => {
@@ -23,55 +22,55 @@ const CartCheckoutBox = () => {
   }, [checkedIdList, orderCheckedItems]);
 
   return (
-    <S.CartCheckoutBoxWrapper>
-      <S.CheckoutInformationContainer>
-        <S.CheckoutInformationTextContainer>
-          <Text>상품 금액</Text>
-          <S.CheckoutValueText>
+    <S.BoxWrapper>
+      <S.BoxContent>
+        <S.InformationData>
+          <S.InformationDataLabel>상품 금액</S.InformationDataLabel>
+          <S.InformationDataDescription>
             {priceFormatter(cartListCheckoutCosts.totalItemPrice)}원
-          </S.CheckoutValueText>
-        </S.CheckoutInformationTextContainer>
-        <S.CheckoutInformationSubTextContainer>
-          <Text size="small">&#8735; 상품 할인 금액</Text>
-          <S.CheckoutValueText size="small">
+          </S.InformationDataDescription>
+        </S.InformationData>
+        <S.SubInformationData>
+          <S.InformationDataLabel size="small">&#8735; 상품 할인 금액</S.InformationDataLabel>
+          <S.InformationDataDescription size="small">
             {cartListCheckoutCosts.totalItemDiscountAmount < 0
               ? priceFormatter(cartListCheckoutCosts.totalItemDiscountAmount)
               : priceFormatter(-cartListCheckoutCosts.totalItemDiscountAmount)}
             원
-          </S.CheckoutValueText>
-        </S.CheckoutInformationSubTextContainer>
-        <S.CheckoutInformationSubTextContainer>
-          <Text size="small">&#8735; 등급 할인 금액</Text>
-          <S.CheckoutValueText size="small">
+          </S.InformationDataDescription>
+        </S.SubInformationData>
+        <S.SubInformationData>
+          <S.InformationDataLabel size="small">&#8735; 등급 할인 금액</S.InformationDataLabel>
+          <S.InformationDataDescription size="small">
             {cartListCheckoutCosts.totalMemberDiscountAmount < 0
               ? priceFormatter(cartListCheckoutCosts.totalMemberDiscountAmount)
               : priceFormatter(-cartListCheckoutCosts.totalMemberDiscountAmount)}
             원
-          </S.CheckoutValueText>
-        </S.CheckoutInformationSubTextContainer>
-        <S.CheckoutMembershipDiscountInformation>
+          </S.InformationDataDescription>
+        </S.SubInformationData>
+        <S.MembershipData>
           <S.MembershipRank>{memberInformation.rank}</S.MembershipRank>
-          <Text size="small" as="span">
+          <S.InformationDataDescription size="small" as="span">
             {memberInformation.discountRate}% 할인
-          </Text>
-        </S.CheckoutMembershipDiscountInformation>
-        <S.CheckoutInformationTextContainer>
-          <Text>배송비</Text>
-          <S.CheckoutValueText>
+          </S.InformationDataDescription>
+        </S.MembershipData>
+        <S.InformationData>
+          <S.InformationDataLabel>배송비</S.InformationDataLabel>
+          <S.InformationDataDescription>
             {priceFormatter(cartListCheckoutCosts.shippingFee)}원
-          </S.CheckoutValueText>
-        </S.CheckoutInformationTextContainer>
-        <S.CheckoutTotalPriceContainer>
-          <Text>결제 예정 금액</Text>
-          <S.CheckoutTotalPriceValueText>
+          </S.InformationDataDescription>
+        </S.InformationData>
+        <S.TotalInformationData>
+          <S.InformationDataLabel>결제 예정 금액</S.InformationDataLabel>
+          <S.InformationDataDescription className="semi-bold">
             {priceFormatter(cartListCheckoutCosts.totalPrice)}원
-          </S.CheckoutTotalPriceValueText>
-        </S.CheckoutTotalPriceContainer>
+          </S.InformationDataDescription>
+        </S.TotalInformationData>
         <Button variant="primary" disabled={isCartEmpty} onClick={handleOrder}>
           {isCartEmpty ? '상품을 담아주세요' : '주문하기'}
         </Button>
-      </S.CheckoutInformationContainer>
-    </S.CartCheckoutBoxWrapper>
+      </S.BoxContent>
+    </S.BoxWrapper>
   );
 };
 
