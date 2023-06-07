@@ -16,6 +16,9 @@ const useAddToCartButton = ({ id, name, price, imageUrl, refetchCartList }: AddT
 
   const handleAddToCartButton = async () => {
     await createCartItem({ body: { productId: id } });
+
+    if (createCartItemState.status === 'fail') return showToast(TOAST_MESSAGES.ERROR);
+
     showToast(TOAST_MESSAGES.CREATED);
     await refetchCartList({});
 
