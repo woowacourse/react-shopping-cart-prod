@@ -3,27 +3,27 @@ import type { OrderCartItemsData, OrderData } from '../types/order';
 import { fetchAPI } from './utils/fetchAPI';
 
 const getOrderAPI = (baseUrl: string) => {
-  const getOrderList = async (): Promise<OrderData[]> => {
-    return await fetchAPI(`${baseUrl}${API_ENDPOINT.ORDERS}`, {
+  const getOrderList = (): Promise<OrderData[]> => {
+    return fetchAPI(`${baseUrl}${API_ENDPOINT.ORDERS}`, {
       method: 'GET',
       headers: { Authorization: AUTHORIZED_FETCH_OPTION_HEADERS.Authorization },
     });
   };
 
-  const getOrderDetail = async (orderId: number): Promise<OrderData> => {
-    return await fetchAPI(`${baseUrl}${API_ENDPOINT.ORDERS}/${orderId}`, {
+  const getOrderDetail = (orderId: number): Promise<OrderData> => {
+    return fetchAPI(`${baseUrl}${API_ENDPOINT.ORDERS}/${orderId}`, {
       method: 'GET',
       headers: { Authorization: AUTHORIZED_FETCH_OPTION_HEADERS.Authorization },
     });
   };
 
-  const postOrder = async (cartItemsData: OrderCartItemsData): Promise<Response> => {
+  const postOrder = (cartItemsData: OrderCartItemsData): Promise<Response> => {
     const data = {
       ...cartItemsData,
     };
     const jsonData = JSON.stringify(data);
 
-    return await fetchAPI(`${baseUrl}${API_ENDPOINT.ORDERS}`, {
+    return fetchAPI(`${baseUrl}${API_ENDPOINT.ORDERS}`, {
       method: 'POST',
       headers: AUTHORIZED_FETCH_OPTION_HEADERS,
       body: jsonData,

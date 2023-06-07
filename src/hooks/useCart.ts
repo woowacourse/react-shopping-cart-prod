@@ -110,8 +110,8 @@ const useCart = () => {
       [cartAPI]
     ),
     {
-      onSuccess: async () => {
-        await refreshCart();
+      onSuccess: () => {
+        refreshCart();
       },
       onError: (error) => {
         handleCartError(error, CART_API_ERROR_MESSAGE.DELETE);
@@ -127,8 +127,8 @@ const useCart = () => {
       [cartAPI]
     ),
     {
-      onSuccess: async () => {
-        await refreshCart();
+      onSuccess: () => {
+        refreshCart();
       },
       onError: (error) => {
         handleCartError(error, CART_API_ERROR_MESSAGE.DELETE);

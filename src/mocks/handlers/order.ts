@@ -7,7 +7,7 @@ import { addOrder, getOrderListData, setOrderListData } from '../../domain/order
 import type { PostOrderRequestBody } from '../../types/api';
 
 const orderHandlers = [
-  rest.get(API_ENDPOINT.ORDERS, async (req, res, ctx) => {
+  rest.get(API_ENDPOINT.ORDERS, (req, res, ctx) => {
     const orderList = getOrderListData();
 
     return res(ctx.delay(400), ctx.status(HTTP_STATUS_CODE.OK), ctx.json(orderList));

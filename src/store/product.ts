@@ -6,7 +6,7 @@ import { currentServerState } from './server';
 
 const productListState = selector<ProductItemData[]>({
   key: 'productList',
-  get: async ({ get }) => {
+  get: ({ get }) => {
     const currentServer = get(currentServerState);
     const productAPI = getProductAPI(currentServer);
 
