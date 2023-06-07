@@ -29,7 +29,6 @@ const PriceWrapper = ({ totalPrice }: Props) => {
       orderToItems();
       setCheckedItems([]);
       navigate('/');
-      window.location.reload();
     }
   };
 
