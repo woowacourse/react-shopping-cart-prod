@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef } from 'react';
+import type { ComponentPropsWithoutRef } from 'react';
 
 import { CheckedIcon, UncheckedIcon } from '../../../assets/svg';
 import * as S from './Checkbox.styles';

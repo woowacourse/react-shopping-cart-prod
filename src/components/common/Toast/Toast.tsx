@@ -1,4 +1,5 @@
-import { PropsWithChildren, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import type { PropsWithChildren } from 'react';
 import { createPortal } from 'react-dom';
 
 import { TOAST_SHOW_DURATION } from '../../../constants/ui';

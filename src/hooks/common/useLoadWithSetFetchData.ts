@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-import HTTPError from '../../api/utils/HTTPError';
+import type HTTPError from '../../api/utils/HTTPError';
 
 type SetDataFunction<T, V> = (variables: V) => Promise<T>;
 

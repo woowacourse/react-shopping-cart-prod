@@ -1,4 +1,5 @@
-import { KeyboardEvent, PropsWithChildren, useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
+import type { KeyboardEvent, PropsWithChildren } from 'react';
 import { createPortal } from 'react-dom';
 
 import { ESC_KEY } from '../../../constants';

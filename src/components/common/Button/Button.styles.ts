@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-import { ButtonProps } from './Button';
+import type { ButtonProps } from './Button';
 
 const getVariantStyling = (variant: Required<ButtonProps>['variant']) => {
   const style = {

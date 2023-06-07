@@ -1,4 +1,4 @@
-import { MEMBER_RANK } from '../constants/member';
+import type { MEMBER_RANK } from '../constants/member';
 
 interface MemberAuthorization {
   username: string;

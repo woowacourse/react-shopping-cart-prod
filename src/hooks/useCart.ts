@@ -4,7 +4,7 @@ import { useRecoilCallback, useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { getCartAPI } from '../api/cartAPI';
 import { getOrderAPI } from '../api/orderAPI';
-import HTTPError from '../api/utils/HTTPError';
+import type HTTPError from '../api/utils/HTTPError';
 import {
   CART_API_ERROR_MESSAGE,
   HTTP_STATUS_CODE,

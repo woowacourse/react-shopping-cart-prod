@@ -1,4 +1,5 @@
-import { ChangeEvent, ComponentPropsWithoutRef, useCallback } from 'react';
+import { useCallback } from 'react';
+import type { ChangeEvent, ComponentPropsWithoutRef } from 'react';
 
 import { AddIcon, MinusIcon } from '../../../assets/svg';
 import { DEFAULT_MAX_COUNT, DEFAULT_MIN_COUNT } from '../../../constants/ui';

@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react';
+import type { ChangeEvent } from 'react';
 import { useRecoilCallback, useRecoilValue } from 'recoil';
 
 import { API_BASE_URL_LIST } from '../../../constants/api';

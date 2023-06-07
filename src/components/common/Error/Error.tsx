@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-import { HTTPErrorInfo } from '../../../api/utils/HTTPError';
+import type { HTTPErrorInfo } from '../../../api/utils/HTTPError';
 import ErrorImage from '../../../assets/png/error-image.png';
 import { PATH } from '../../../constants/path';
 import Heading from '../Heading/Heading';

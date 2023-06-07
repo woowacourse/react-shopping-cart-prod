@@ -1,7 +1,8 @@
-import { Component, ComponentType, PropsWithChildren } from 'react';
+import { Component } from 'react';
+import type { ComponentType, PropsWithChildren } from 'react';
 
 import HTTPError from '../../../api/utils/HTTPError';
-import { ErrorProps } from '../Error/Error';
+import type { ErrorProps } from '../Error/Error';
 
 interface ErrorBoundaryProps {
   Fallback: ComponentType<ErrorProps>;

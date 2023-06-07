@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Text, TextProps } from '../../components/common/Text/Text.styles';
+import { Text } from '../../components/common/Text/Text.styles';
+import type { TextProps } from '../../components/common/Text/Text.styles';
 import { StoryContainer, StoryInfoContainer } from '../styles';
 
 const meta = {

@@ -1,4 +1,4 @@
-import { HTTP_ERROR_MESSAGE } from '../constants/api';
+import type { HTTP_ERROR_MESSAGE } from '../constants/api';
 import type { CartItemData } from './cart';
 import type { OrderCartItemsData } from './order';
 import type { ProductItemData } from './product';
