@@ -48,7 +48,7 @@ const CartItem = ({ cart, refetchCartList }: CartItemProps) => {
             <Styled.DeleteButton onClick={handleDeleteButton}>
               <Styled.TrashLogo />
             </Styled.DeleteButton>
-            <StepperInput initialValue={cart.quantity} cartItem={cart} refetchCartList={refetchCartList} usedplace='cartPage' />
+            <StepperInput initialValue={cart.quantity} cartItem={cart} refetchCartList={refetchCartList} width={88} />
             <span>{product.price.toLocaleString()}원</span>
           </Styled.itemFunctionWrapper>
         </Styled.CartItem>
