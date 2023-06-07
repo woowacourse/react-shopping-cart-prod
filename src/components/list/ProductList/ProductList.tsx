@@ -3,18 +3,19 @@ import ProductItem from '../../box/ProductItem/ProductItem';
 import ErrorBox from '../../common/ErrorBox/ErrorBox';
 import LoadingSpinner from '../../common/LoadingSpinner/LoadingSpinner';
 import useProduct from '../../../hooks/useProduct';
+import EmptyList from '../../common/EmptyList';
 
 const ProductList = () => {
-  const { productData, isFetching } = useProduct();
+  const { productData, isFetching, isError } = useProduct();
 
   if (isFetching) {
     return <LoadingSpinner />;
   }
-  if (!productData) {
+  if (isError || !productData) {
     return <ErrorBox errorType="network" />;
   }
   if (productData.length === 0) {
-    return <ErrorBox errorType="emptyList" />;
+    return <EmptyList text="상품이 없습니다" />;
   }
   return (
     <ProductListWrapper>

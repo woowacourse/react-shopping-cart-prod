@@ -1,14 +1,15 @@
 import styled from '@emotion/styled';
-import { TrashCanIcon } from '../../../assets';
-import InputStepper from '../../common/InputStepper/InputStepper';
-import type { CartItemType } from '../../../types/types';
-import CheckBox from '../../common/CheckBox/CheckBox';
-import { Text } from '../../common/Text/Text';
+import { TrashCanIcon } from '../../../../assets';
+import InputStepper from '../../../common/InputStepper/InputStepper';
+import type { CartItemType } from '../../../../types/types';
+import CheckBox from '../../../common/CheckBox/CheckBox';
+import { Text } from '../../../common/Text/Text';
 import { useState } from 'react';
-import getPriceFormat from '../../../utils/getPriceFormat';
-import { useModal } from '../../../hooks/useModal';
-import { useCartFetch } from '../../../hooks/useCartFetch';
-import useCheckCart from '../../../hooks/useCheckCart';
+import getPriceFormat from '../../../../utils/getPriceFormat';
+import { useModal } from '../../../../hooks/useModal';
+import { useCartFetch } from '../../../../hooks/useCartFetch';
+import useCheckCart from '../../../../hooks/useCheckCart';
+import { deleteModalState } from '../../../../service/atom';
 
 const CartItem = ({ cart }: { cart: CartItemType }) => {
   const { check, changeCheckCartList } = useCheckCart(cart.id);
@@ -18,7 +19,7 @@ const CartItem = ({ cart }: { cart: CartItemType }) => {
 
   const totalPrice = check ? cart.product.price : 0;
 
-  const { openModal } = useModal();
+  const { openModal } = useModal(deleteModalState);
 
   const deleteCartItem = () => {
     deleteCartItemAPI(cart.id);
@@ -38,7 +39,7 @@ const CartItem = ({ cart }: { cart: CartItemType }) => {
         <ProductImage src={cart.product.imageUrl} />
         <CartInfoWrapper>
           <CartInfoHead>
-            <Text size="smallest" weight="light">
+            <Text size="smaller" weight="light">
               {cart.product.name}
             </Text>
             <TrashCanIcon
@@ -53,18 +54,18 @@ const CartItem = ({ cart }: { cart: CartItemType }) => {
             minNumber={1}
           />
           <CardInfoFoot>
-            <Text size="smallest" weight="normal">
+            <Text size="smaller" weight="normal">
               {getPriceFormat(cart.product.price)} 원
             </Text>
           </CardInfoFoot>
         </CartInfoWrapper>
       </CartItemInner>
       <CartItemFoot>
-        <Text size="smallest" weight="light">
+        <Text size="smaller" weight="light">
           {`상품금액 ${getPriceFormat(totalPrice)}원 X ${quantity}개`}
         </Text>
         &nbsp;=&nbsp;
-        <Text size="smallest" weight="normal">
+        <Text size="smaller" weight="normal">
           {`총 ${getPriceFormat(totalPrice * quantity)}원`}
         </Text>
       </CartItemFoot>

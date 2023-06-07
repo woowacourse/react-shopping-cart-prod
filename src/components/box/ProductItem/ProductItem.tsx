@@ -49,14 +49,17 @@ const ProductItem = ({ product }: { product: ProductType }) => {
 
   return (
     <ProductWrapper>
-      <ProductImage src={product.imageUrl} alt={product.name} loading="lazy" />
+      <ProductImageWrapper>
+        <ProductImage src={product.imageUrl} alt={product.name} loading="lazy" />
+      </ProductImageWrapper>
+
       <ProductInfoWrapper>
         <ProductTextWrapper>
-          <Text size="smallest" weight="light" color="#333333">
+          <Text size="smaller" weight="light">
             {product.name}
           </Text>
-          <Text size="small" weight="light" color="#333333" lineHeight="33px">
-            {getPriceFormat(product.price)} 원
+          <Text size="small" weight="bold">
+            {getPriceFormat(product.price)}원
           </Text>
         </ProductTextWrapper>
         {quantity === 0 ? (
@@ -81,7 +84,7 @@ const ProductItem = ({ product }: { product: ProductType }) => {
 
 export default ProductItem;
 
-const skeletonAnimation = keyframes`
+export const skeletonAnimation = keyframes`
   0% {
     background-position: 100% 0;
   }
@@ -94,18 +97,26 @@ const ProductWrapper = styled.div`
   display: flex;
   flex-direction: column;
 
-  width: 282px;
+  width: 250px;
 `;
+
+const ProductImageWrapper = styled.div`
+  overflow: hidden;
+  width: 100%;
+  height: 250px;
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+`;
+
 const ProductImage = styled.img`
   object-fit: cover;
-
-  width: 100%;
-  height: 282px;
   transition: all 0.32s ease;
 
+  width: 100%;
+  height: 100%;
+
   &:hover {
-    transform: translateY(-10px) scale(1.05);
-    box-shadow: 1px 14px 24px hsla(218, 53%, 10%, 12%);
+    transform: scale(1.05);
   }
 
   background: linear-gradient(120deg, #e5e5e5 20%, #f0f0f0 28%, #f0f0f0 40%, #e5e5e5 48%);

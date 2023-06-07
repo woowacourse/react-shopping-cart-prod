@@ -5,18 +5,19 @@ interface TextListProps {
   label: string;
   text: string;
   primary?: boolean;
+  color?: string;
 }
 
-const TextList = ({ label, text, primary }: TextListProps) => {
+const TextList = ({ label, text, primary, color }: TextListProps) => {
   return (
     <TextListWrapper>
-      <Text size="smallest" weight="light">
+      <Text size="smaller" weight="light">
         {label}
       </Text>
       <Text
-        size={primary ? 'small' : 'smallest'}
+        size={primary ? 'small' : 'smaller'}
         weight={primary ? 'bold' : 'light'}
-        color={primary ? '#04C09E' : undefined}
+        color={color ?? (primary ? '#04C09E' : undefined)}
       >
         {text}
       </Text>

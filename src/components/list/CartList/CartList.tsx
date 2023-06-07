@@ -1,18 +1,21 @@
 import styled from '@emotion/styled';
-import CartItem from '../../box/CartItem/CartItem';
+import CartItem from '../../box/Cart/CartItem/CartItem';
 import CheckBox from '../../common/CheckBox/CheckBox';
 import Button from '../../common/Button/Button';
 import { Text } from '../../common/Text/Text';
 import { useModal } from '../../../hooks/useModal';
 import { useCartFetch } from '../../../hooks/useCartFetch';
 import { useRecoilState } from 'recoil';
-import { checkCartListState } from '../../../service/atom';
+import { checkCartListState, deleteModalState } from '../../../service/atom';
+import { CartItemType } from '../../../types/types';
+import LoadingSpinner from '../../common/LoadingSpinner/LoadingSpinner';
+import ErrorBox from '../../common/ErrorBox/ErrorBox';
+import EmptyList from '../../common/EmptyList';
 
 const CartList = () => {
-  const { cartData, deleteCartItemAPI } = useCartFetch();
+  const { cartData, deleteCartItemAPI, isFetching } = useCartFetch();
   const [checkCartList, setCheckCartList] = useRecoilState(checkCartListState);
-
-  const { openModal } = useModal();
+  const { openModal } = useModal(deleteModalState);
 
   const deleteSelectCart = async () => {
     checkCartList.forEach((cartId) => {
@@ -48,21 +51,37 @@ const CartList = () => {
           />
         </CartListFoot>
       </CartListHead>
-      <Cart>
-        {cartData?.map((cart) => (
-          <CartItem key={cart.id} cart={cart} />
-        ))}
-      </Cart>
+      <CartComp cartData={cartData} isFetching={isFetching} />
     </CartListWrapper>
   );
 };
 
 export default CartList;
 
+const CartComp = ({ cartData, isFetching }: { cartData?: CartItemType[]; isFetching: boolean }) => {
+  if (isFetching) {
+    return <LoadingSpinner />;
+  }
+  if (!cartData) {
+    return <ErrorBox errorType="network" />;
+  }
+  if (cartData.length === 0) {
+    return <EmptyList text="장바구니에 상품이 없습니다" />;
+  }
+  return (
+    <Cart>
+      {cartData?.map((cart) => (
+        <CartItem key={cart.id} cart={cart} />
+      ))}
+    </Cart>
+  );
+};
+
 const CartListWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
 `;
 
 const CartListHead = styled.div`

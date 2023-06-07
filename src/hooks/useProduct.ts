@@ -7,7 +7,11 @@ import { base64 } from '../service/apiURL';
 const useProduct = () => {
   const serverURL = useRecoilValue(serverState);
 
-  const { data: productData, isFetching } = useQuery<ProductType[]>('products', async () => {
+  const {
+    data: productData,
+    isFetching,
+    isError,
+  } = useQuery<ProductType[]>('products', async () => {
     const res = await fetch(`${serverURL}/products`, {
       method: 'GET',
       headers: {
@@ -21,6 +25,7 @@ const useProduct = () => {
   return {
     productData,
     isFetching,
+    isError,
   };
 };
 

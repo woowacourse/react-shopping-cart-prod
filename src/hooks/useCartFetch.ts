@@ -2,24 +2,41 @@ import { base64 } from '../service/apiURL';
 import { checkCartListState, serverState } from '../service/atom';
 import { CartItemType } from '../types/types';
 import { useMutation, useQuery } from 'react-query';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 export const useCartFetch = () => {
   const serverURL = useRecoilValue(serverState);
-  const setCheckCartList = useSetRecoilState(checkCartListState);
+  const [checkCartList, setCheckCartList] = useRecoilState(checkCartListState);
+
+  const calcTotalPrice = () => {
+    return checkCartList.reduce((prev, curr) => {
+      const cartItem = cartData && cartData.find((cart) => cart.id === curr);
+      if (cartItem) {
+        const { product, quantity } = cartItem;
+        return prev + product.price * quantity;
+      }
+      return prev + 0;
+    }, 0);
+  };
 
   const fetchCartData = async () => {
     const res = await fetch(`${serverURL}/cart-items`, {
       method: 'GET',
       headers: {
         Authorization: `Basic ${base64}`,
+        'Content-Type': 'application/json',
       },
     });
     const data = await res.json();
     return data;
   };
 
-  const { data: cartData, refetch } = useQuery<CartItemType[]>('cart', fetchCartData, {
+  const {
+    data: cartData,
+    refetch,
+    isFetching,
+    isLoading,
+  } = useQuery<CartItemType[]>('cart', fetchCartData, {
     onError: (e) => {
       console.log(e);
     },
@@ -90,5 +107,8 @@ export const useCartFetch = () => {
     addCartItemAPI,
     changeCartQuantityAPI,
     deleteCartItemAPI,
+    calcTotalPrice: calcTotalPrice(),
+    isFetching,
+    isLoading,
   };
 };
