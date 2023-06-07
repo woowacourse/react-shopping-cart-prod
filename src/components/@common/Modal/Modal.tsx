@@ -4,6 +4,10 @@ import * as Styled from './Modal.styles.tsx';
 const Modal = () => {
   const { isModalOpened, modalContent, closeModal } = useModal();
 
+  if (!isModalOpened) {
+    return null;
+  }
+
   return (
     <Styled.ModalContainer isModalOpened={isModalOpened} onClick={closeModal}>
       <Styled.ModalContent onClick={(event) => event.stopPropagation()}>{modalContent}</Styled.ModalContent>

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const ModalContainer = styled.div<{ isModalOpened: boolean }>`
-  display: ${({ isModalOpened }) => (isModalOpened ? 'block' : 'none')};
+  display: block;
   position: fixed;
   z-index: 1;
   left: 0;
