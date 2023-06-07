@@ -1,7 +1,7 @@
 import styled, { keyframes } from 'styled-components';
 import { ToastInfoType } from '../../../types';
 
-const toastAnim = keyframes`
+const toastAnimation = keyframes`
   0% {
     transform: translate(-50%, 20px);
     opacity: 0;
@@ -19,7 +19,7 @@ const toastAnim = keyframes`
 `;
 
 export const Wrapper = styled.div<{ type: ToastInfoType['type'] }>`
-  animation: ${toastAnim} 2s linear;
+  animation: ${toastAnimation} 2s linear;
   position: absolute;
   left: 50%;
   bottom: 80px;
