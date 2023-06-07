@@ -27,9 +27,9 @@ export const CartProductList = () => {
   } = useCheckBox();
 
   const handleDeleteButtonClicked = async () => {
-    selectedProducts.forEach(async (product) => {
-      await deleteCartItemApi(product.cartItemId);
-    });
+    await Promise.all(
+      selectedProducts.map((product) => deleteCartItemApi(product.cartItemId))
+    );
 
     removeCheckedArray();
     await updateLocalProducts();
