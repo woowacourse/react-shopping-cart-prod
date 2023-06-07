@@ -9,24 +9,31 @@ type PaymentInfoBoxProps = {
   paymentPrice: number;
 };
 
-function PaymentInfoBox({ orderItems, usedCoupons, usedPoint, paymentPrice }: PaymentInfoBoxProps) {
+function PaymentInfoBox({ orderItems, usedCoupons, usedPoint }: PaymentInfoBoxProps) {
   const originalPrice = orderItems.reduce(
     (acc, { productPrice, productQuantity }) => acc + productPrice * productQuantity,
     0
   );
 
-  const couponDiscount =
-    usedCoupons.length === 0
-      ? 0
-      : usedCoupons[0].discountPercent === 0
-      ? usedCoupons[0].discountAmount
-      : (originalPrice / 100) * usedCoupons[0].discountPercent;
+  const calculateCouponDiscount = (usedCoupons: Coupon[]) => {
+    if (usedCoupons.length === 0) return 0;
+
+    const { discountAmount, discountPercent } = usedCoupons[0];
+
+    if (discountPercent === 0) return discountAmount;
+
+    return (originalPrice / 100) * discountPercent;
+  };
 
   return (
     <S.Wrapper>
       <S.Title>결제정보</S.Title>
       <S.PaymentInfoWrapper>
-        <PaymentInfo totalPrice={originalPrice} couponDiscount={couponDiscount} pointDiscount={usedPoint} />
+        <PaymentInfo
+          totalPrice={originalPrice}
+          couponDiscount={calculateCouponDiscount(usedCoupons)}
+          pointDiscount={usedPoint}
+        />
       </S.PaymentInfoWrapper>
     </S.Wrapper>
   );
