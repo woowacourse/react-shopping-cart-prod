@@ -8,13 +8,14 @@ const LoginPage = () => {
     const target = event.target as HTMLFormElement;
     const data = new FormData(target);
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const values = {
       email: data.get('email'),
       password: data.get('password'),
     };
 
     // todo: JWT 도입 예정
-    alert('JWT 도입 예정입니다. 🔑 \n' + JSON.stringify(values));
+    alert('서비스를 준비중입니다 🫠');
   };
 
   return (
