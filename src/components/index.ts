@@ -1,4 +1,4 @@
-export { Header } from "./common/Header";
+export { Header } from "./Header";
 export { Page } from "./common/Page";
 export { Button } from "./common/Button";
 export { Loading } from "./common/Loading";

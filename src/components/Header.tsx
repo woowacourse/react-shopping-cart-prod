@@ -1,13 +1,13 @@
 import styled from "styled-components";
-import { CartIcon, HumanIcon } from "../../assets";
+import { CartIcon, HumanIcon } from "../assets";
 import { useRecoilValue } from "recoil";
-import { cartNumberSelector } from "../../recoil/selector";
-import { ROUTER_PATH } from "../../router";
-import { useRouter } from "../../hooks/useRouter";
-import { loginState, memberState } from "../../recoil/atom";
+import { cartNumberSelector } from "../recoil/selector";
+import { ROUTER_PATH } from "../router";
+import { useRouter } from "../hooks/useRouter";
+import { loginState, memberState } from "../recoil/atom";
 import { useLocation } from "react-router-dom";
-import { ServerSelectBox } from "./../ServerSelectBox";
-import { useLoginForm } from "../../hooks/useLoginForm";
+import { ServerSelectBox } from "./ServerSelectBox";
+import { useLoginForm } from "../hooks/useLoginForm";
 
 export const Header = () => {
   const { goPage } = useRouter();
@@ -17,6 +17,7 @@ export const Header = () => {
   const cartNumber = useRecoilValue(cartNumberSelector);
   const isLogined = useRecoilValue(loginState);
 
+  console.log(location.pathname);
   return (
     <Wrapper>
       <TitleContainer onClick={goPage(ROUTER_PATH.Main)}>
@@ -164,6 +165,7 @@ const CartBox = styled.p<{ pathname: string }>`
 
 const MypageBox = styled.p<{ pathname: string }>`
   color: ${(props) =>
+    props.pathname === ROUTER_PATH.MyPage ||
     props.pathname === ROUTER_PATH.OrderHistory ||
     props.pathname === ROUTER_PATH.OrderDetail
       ? "white"
