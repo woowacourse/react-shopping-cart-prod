@@ -13,6 +13,7 @@ import OrderListPage from './pages/OrderListPage/OrderListPage.tsx';
 import Modal from './components/@common/Modal/Modal.tsx';
 import LoginPage from './pages/LoginPage/LoginPage.tsx';
 import ROUTES from './constants/ROUTES.ts';
+import NotFoundPage from './pages/NotFoundPage/NotFoundPage.tsx';
 
 const App = () => {
   return (
@@ -30,6 +31,7 @@ const App = () => {
               <Route path={ROUTES.ORDER} element={<OrderListPage />} />
               <Route path={`${ROUTES.ORDER}/:orderId`} element={<OrderDetailPage />} />
               <Route path={ROUTES.ERROR} element={<ErrorPage />} />
+              <Route path='*' element={<NotFoundPage />} />
             </Routes>
           </Layout>
           <Modal />
