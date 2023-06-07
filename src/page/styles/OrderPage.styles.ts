@@ -14,10 +14,6 @@ export const OrderHeader = styled.div`
   color: #333333;
 
   @media (max-width: 1199px) {
-    width: 660px;
-  }
-
-  @media (max-width: 670px) {
     width: 100%;
   }
 `;
@@ -27,4 +23,8 @@ export const OrderItemListWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 1199px) {
+    width: 100%;
+  }
 `;

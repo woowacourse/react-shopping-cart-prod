@@ -8,6 +8,15 @@ export const Wrapper = styled.div`
     justify-content: space-between;
     align-items: start;
   }
+
+  @media (max-width: 1199px) {
+    > div:last-of-type {
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+    width: 100%;
+  }
 `;
 
 export const OrderDetailHeader = styled.div`
@@ -24,10 +33,6 @@ export const OrderDetailHeader = styled.div`
   color: #333333;
 
   @media (max-width: 1199px) {
-    width: 660px;
-  }
-
-  @media (max-width: 670px) {
     width: 100%;
   }
 `;

@@ -10,11 +10,11 @@ export default function OrderItemDetailList(props: OrderDetailInfo) {
       <S.OrderDetailIdTitle>
         <p>주문번호 : {orderId}</p>
       </S.OrderDetailIdTitle>
-      <div>
+      <S.OrderItemDetailWrapper>
         {items.map((item, idx) => (
           <OrderItemDetail key={idx} {...item} />
         ))}
-      </div>
+      </S.OrderItemDetailWrapper>
     </S.Wrapper>
   );
 }

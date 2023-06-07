@@ -15,7 +15,7 @@ export const Wrapper = styled.div`
 `;
 
 export const ImageWrapper = styled.div`
-  & > {
+  & > img {
     width: 140px;
     height: 140px;
     object-fit: cover;
