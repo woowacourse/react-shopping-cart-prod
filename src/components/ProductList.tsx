@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import type { LocalProductType } from '../types/domain';
+import type { LocalProduct } from '../types/domain';
 import { CartGrayIcon } from '../assets';
 import { Counter } from './Counter';
 import { MIN_QUANTITY } from '../constants';
@@ -28,14 +28,14 @@ export const ProductList = () => {
 
   return (
     <Wrapper>
-      {localProducts.map((product: LocalProductType) => (
+      {localProducts.map((product: LocalProduct) => (
         <Product key={product.id} {...product} handleCartClicked={handleCartClicked} />
       ))}
     </Wrapper>
   );
 };
 
-interface ProductType extends LocalProductType {
+interface ProductType extends LocalProduct {
   handleCartClicked: (productId: number) => Promise<void>;
 }
 

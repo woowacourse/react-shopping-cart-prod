@@ -1,5 +1,5 @@
 import { AtomEffect, atom } from 'recoil';
-import { LocalProductType } from '../types/domain';
+import { LocalProduct } from '../types/domain';
 import { DEFAULT_VALUE_SERVER_OWNER, KEY_LOCALSTORAGE_SERVER_OWNER } from '../constants';
 
 const localStorageEffect: <T>(key: string) => AtomEffect<T> =
@@ -23,12 +23,12 @@ export const serverOwnerState = atom<string>({
   effects: [localStorageEffect<string>(KEY_LOCALSTORAGE_SERVER_OWNER)],
 });
 
-export const localProductsState = atom<LocalProductType[]>({
+export const localProductsState = atom<LocalProduct[]>({
   key: 'localProducts',
   default: [],
 });
 
-export const selectedProductsState = atom<LocalProductType[]>({
+export const selectedProductsState = atom<LocalProduct[]>({
   key: 'selectedProducts',
   default: [],
 });

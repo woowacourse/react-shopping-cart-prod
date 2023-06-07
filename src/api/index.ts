@@ -1,8 +1,7 @@
 import { DEFAULT_VALUE_SERVER_OWNER, KEY_LOCALSTORAGE_SERVER_OWNER, SERVERS } from '../constants';
-import { LocalProductType } from '../types/domain';
+import { LocalProduct } from '../types/domain';
 import { getLocalStorage } from '../utils';
 import { parseExpiredDate, parseOrderListData } from '../utils/domain';
-import { generateStatusErrorMessage } from '../utils/generateStatusErrorMessage';
 
 // Base64로 인코딩
 const base64 = btoa(process.env.REACT_APP_USERNAME + ':' + process.env.REACT_APP_PASSWORD);
@@ -56,7 +55,7 @@ export const fetchCoupons = async (cartItemIdList: number[]) => {
 };
 
 export const fetchAddOrderList = async (
-  orderListData: LocalProductType[],
+  orderListData: LocalProduct[],
   couponId: number | null,
 ) => {
   const parsedOrderListData = parseOrderListData(couponId, orderListData);

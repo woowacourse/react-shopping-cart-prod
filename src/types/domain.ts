@@ -1,23 +1,23 @@
-export interface ProductType {
+export interface Product {
   id: number;
   name: string;
   price: number;
   imageUrl: string;
 }
 
-export interface CartItemType {
+export interface CartItem {
   id: number;
   quantity: number;
-  product: ProductType;
+  product: Product;
 }
 
-export interface LocalProductType extends ProductType {
+export interface LocalProduct extends Product {
   quantity: number;
   cartItemId: number;
 }
 
 export interface Coupon {
-  id: number | null;
+  id: number;
   name: string;
   minOrderPrice: number;
   maxDiscountPrice: number;
@@ -27,13 +27,13 @@ export interface Coupon {
 }
 
 export interface Order {
-  couponId: Coupon['id'];
-  products: Omit<LocalProductType, 'id'>[];
+  couponId: number | null;
+  products: Omit<LocalProduct, 'id'>[];
 }
 
 export interface OrderItemList {
   id: number;
-  products: Omit<LocalProductType, 'cartItemId'>[];
+  products: Omit<LocalProduct, 'cartItemId'>[];
 }
 
 export interface OrderDetail extends OrderItemList {

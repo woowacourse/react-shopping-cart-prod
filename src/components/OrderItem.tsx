@@ -1,7 +1,7 @@
 import { styled } from 'styled-components';
-import { LocalProductType } from '../types/domain';
+import { LocalProduct } from '../types/domain';
 
-export const OrderItem = ({ orderItem }: { orderItem: Omit<LocalProductType, 'cartItemId'> }) => {
+export const OrderItem = ({ orderItem }: { orderItem: Omit<LocalProduct, 'cartItemId'> }) => {
   return (
     <Wrapper>
       <ItemImage src={orderItem.imageUrl} alt='상품이미지'/>

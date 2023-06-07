@@ -3,7 +3,7 @@ import { localProductsState } from '../recoil/atom';
 import React, { useEffect, useState } from 'react';
 import { MAX_LENGTH_QUANTITY, MAX_QUANTITY, MIN_QUANTITY } from '../constants';
 import { changeQuantity, deleteCartItem } from '../api';
-import { LocalProductType } from '../types/domain';
+import { LocalProduct } from '../types/domain';
 import { makeLocalProducts } from '../utils/domain';
 
 export const useQuantity = (productId: number) => {
@@ -11,7 +11,7 @@ export const useQuantity = (productId: number) => {
   const [localProducts, setLocalProducts] = useRecoilState(localProductsState);
   const [quantity, setQuantity] = useState<string | undefined>('0');
   const currentLocalProduct = localProducts.find(
-    (product: LocalProductType) => product.id === productId,
+    (product: LocalProduct) => product.id === productId,
   );
 
   useEffect(() => {

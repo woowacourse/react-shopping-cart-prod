@@ -2,7 +2,7 @@ import { styled } from 'styled-components';
 import { Button } from './Button';
 import { totalPriceSelector } from '../recoil/selector';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { LocalProductType } from '../types/domain';
+import { LocalProduct } from '../types/domain';
 import { fetchAddOrderList } from '../api';
 import { makeLocalProducts } from '../utils/domain';
 import { localProductsState } from '../recoil/atom';
@@ -17,7 +17,7 @@ export const TotalPriceWithCouponTable = ({
   discountPrice: number | null;
   couponId: number | null;
   setIsOrderComplete: React.Dispatch<React.SetStateAction<boolean>>;
-  orderList: LocalProductType[];
+  orderList: LocalProduct[];
 }) => {
   const totalPrice = useRecoilValue(totalPriceSelector);
 

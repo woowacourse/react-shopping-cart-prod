@@ -1,8 +1,8 @@
 import { styled } from 'styled-components';
-import { LocalProductType } from '../types/domain';
+import { LocalProduct } from '../types/domain';
 
 interface OrderSheetProductPropsType {
-  orderItem: LocalProductType;
+  orderItem: LocalProduct;
 }
 
 export const OrderSheetProduct = ({ orderItem }: OrderSheetProductPropsType) => {

@@ -1,16 +1,14 @@
 import { fetchCartItems, fetchProducts } from '../api';
 import { MIN_QUANTITY } from '../constants';
-import { CartItemType, Coupon, LocalProductType, Order, ProductType } from '../types/domain';
+import { CartItem, Coupon, LocalProduct, Order, Product } from '../types/domain';
 
-export const makeLocalProducts = async (): Promise<LocalProductType[]> => {
+export const makeLocalProducts = async (): Promise<LocalProduct[]> => {
   try {
     const products = await fetchProducts();
     const cartItems = await fetchCartItems();
 
-    return products.map((product: ProductType) => {
-      const cartItem = cartItems.find(
-        (cartItem: CartItemType) => cartItem.product.id === product.id,
-      );
+    return products.map((product: Product) => {
+      const cartItem = cartItems.find((cartItem: CartItem) => cartItem.product.id === product.id);
       return {
         ...product,
         quantity: cartItem ? cartItem.quantity : MIN_QUANTITY,
@@ -34,10 +32,7 @@ export const parseExpiredDate = (coupons: Coupon[]) => {
   return parsedCoupons;
 };
 
-export const parseOrderListData = (
-  couponId: number | null,
-  orderList: LocalProductType[],
-): Order => {
+export const parseOrderListData = (couponId: number | null, orderList: LocalProduct[]): Order => {
   const parsedProductList = orderList.map((orderProduct) => {
     const cartItemId = orderProduct.cartItemId;
     const quantity = orderProduct.quantity;

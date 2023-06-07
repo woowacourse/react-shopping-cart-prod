@@ -21,7 +21,7 @@ export const OrderSheet = () => {
   const checkedCartList = useRecoilValue(selectedProductsState);
   const [isOrderComplete, setIsOrderComplete] = useState<boolean>(false);
   const [selectedCoupon, setSelectedCoupon] = useState<Coupon>({
-    id: null,
+    id: 0,
     name: '',
     minOrderPrice: 0,
     maxDiscountPrice: 0,

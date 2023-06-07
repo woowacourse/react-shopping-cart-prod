@@ -1,5 +1,5 @@
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import type { LocalProductType, ProductType } from '../types/domain';
+import type { LocalProduct, Product } from '../types/domain';
 import styled from 'styled-components';
 import { TrashCanIcon } from '../assets';
 import { Counter } from './Counter';
@@ -13,8 +13,8 @@ import { useState } from 'react';
 export const CartProductList = () => {
   const [error, setError] = useState<null | Error>(null);
 
-  const localProductsInCart = useRecoilValue<LocalProductType[]>(localProductsSelector);
-  const selectedProducts = useRecoilValue<LocalProductType[]>(selectedProductsState);
+  const localProductsInCart = useRecoilValue<LocalProduct[]>(localProductsSelector);
+  const selectedProducts = useRecoilValue<LocalProduct[]>(selectedProductsState);
   const {
     checkedArray,
     allChecked,
@@ -91,7 +91,7 @@ export const CartProductList = () => {
   );
 };
 
-interface CartProductType extends ProductType {
+interface CartProductType extends Product {
   checked: boolean;
   onDeleteHandler: () => Promise<void>;
   onChangeHandler: () => void;

@@ -1,8 +1,8 @@
 import { styled } from 'styled-components';
 import { OrderSheetProduct } from './OrderSheetProduct';
-import { LocalProductType } from '../types/domain';
+import { LocalProduct } from '../types/domain';
 
-export const OrderSheetList = ({ orderList }: { orderList: LocalProductType[] }) => {
+export const OrderSheetList = ({ orderList }: { orderList: LocalProduct[] }) => {
   return (
     <Wrapper>
       <OrderSheetProductQuantityText>
