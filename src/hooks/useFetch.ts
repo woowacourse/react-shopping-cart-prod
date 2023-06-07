@@ -58,7 +58,7 @@ const useFetch = <T>({ url, method = 'GET', isNotAutomaticallyFetched = false }:
         })
         .catch((error) => {
           setFetchState((prevState) => ({ ...prevState, status: 'fail', error: error as Error }));
-          navigate('/error', { state: { error: error as Error } });
+          navigate('/error', { state: { error: error instanceof Error } });
         });
     },
     [url, method, navigate, serverName]
