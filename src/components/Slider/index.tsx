@@ -53,9 +53,7 @@ const Slider = ({ children }: React.PropsWithChildren) => {
 
     currentSlide.current = postion;
 
-    for (let a = 0; a < 1; a++) {
-      slideRef.current.style.transform = `translateX(-${(postion * 100 * a * 1) / sliceItems.length}%)`;
-    }
+    slideRef.current.style.transform = `translateX(-${(postion * 100) / sliceItems.length}%)`;
   };
 
   useEffect(() => {

@@ -1,13 +1,14 @@
+import { Product } from '@Types/index';
+
 import * as S from './style';
 
 interface OrderItemProps {
   quantity: number;
-  price: number;
-  name: string;
-  imageUrl: string;
+  product: Product;
 }
 
-function OrderItem({ quantity, price, name, imageUrl }: OrderItemProps) {
+function OrderItem({ quantity, product }: OrderItemProps) {
+  const { price, imageUrl, name } = product;
   const textPrice = `${price.toLocaleString()} 원`;
   const textQuantity = ` / 수량 : ${quantity}개`;
 

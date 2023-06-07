@@ -25,12 +25,9 @@ function OrderItems({ orderId, date, cartItems, price, width = '100%' }: OrderIt
         </S.ShowDetailButton>
       </S.OrderTitle>
       <S.OrderItemsContainer>
-        {cartItems
-          .map((item) => {
-            const { id, name, imageUrl, price } = item.product;
-            return <OrderItem key={id} price={price} name={name} imageUrl={imageUrl} quantity={item.quantity} />;
-          })
-          .slice(0, 2)}
+        {cartItems.map((item) => (
+          <OrderItem key={item.product.id} product={item.product} quantity={item.quantity} />
+        ))}
       </S.OrderItemsContainer>
     </S.Container>
   );

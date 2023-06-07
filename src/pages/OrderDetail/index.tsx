@@ -26,10 +26,9 @@ function OrderDetail() {
           <S.ShowDetailButton onClick={() => navigate('/order-list')}>전체목록 {'>'}</S.ShowDetailButton>
         </S.OrderTitle>
         <S.OrderItemsContainer>
-          {cartItems.map((item) => {
-            const { id, name, imageUrl, price } = item.product;
-            return <OrderItem key={id} price={price} name={name} imageUrl={imageUrl} quantity={item.quantity} />;
-          })}
+          {cartItems.map((item) => (
+            <OrderItem key={item.product.id} product={item.product} quantity={item.quantity} />
+          ))}
         </S.OrderItemsContainer>
         <TotalPrice totalPrice={totalPrice} />
       </S.Container>

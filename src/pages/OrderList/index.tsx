@@ -1,7 +1,5 @@
 import { Suspense } from 'react';
 
-import SkeletonCartItem from '@Pages/CartList/CartItem/SkeletonCartItem';
-
 import Order from './OrderContents';
 import SkeltonPurChasedItems from './PurchasedItems/SkeletonPurChasedItmes';
 import * as S from './style';
@@ -15,7 +13,6 @@ const OrderList = () => {
           <Order />
         </Suspense>
       </S.Container>
-      ;
     </>
   );
 };
