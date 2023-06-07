@@ -1,12 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 import * as S from './OrderList.style';
-import type { OrderItem as OrderItemType } from '../../../types/types';
+import type { OrderItem as OrderItemData } from '../../../types/types';
 import { OrderItem } from '../OrderItem';
 import { GMTToLocalTime } from '../../../utils/time';
 
 type OrderListProps = {
   orderId: number;
-  orderItems: OrderItemType[];
+  orderItems: OrderItemData[];
   createdAt: string;
   detail?: boolean;
 };
