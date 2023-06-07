@@ -44,26 +44,41 @@ function Order() {
     loadItemList();
   }, [server, memberAuth]);
 
-  return (
-    <>
-      <PageTitle>주문목록</PageTitle>
-      <FatBorder />
-      <S.OrderListWrapper>
-        {loading && (
+  if (loading)
+    return (
+      <>
+        <PageTitle>주문목록</PageTitle>
+        <FatBorder />
+        <S.OrderListWrapper>
           <EmptyCartWrapper>
             <LoadingSpinner />
           </EmptyCartWrapper>
-        )}
-        {orders &&
-          orders.orderResponses.length !== 0 &&
-          [...orders.orderResponses].reverse().map((order) => <OrderList key={order.orderId} {...order} />)}
-        {orders && orders.orderResponses.length === 0 && (
+        </S.OrderListWrapper>
+      </>
+    );
+
+  if (orders && orders.orderResponses.length === 0) {
+    return (
+      <>
+        <PageTitle>주문목록</PageTitle>
+        <FatBorder />
+        <S.OrderListWrapper>
           <S.EmptyOrderWrapper>
             <S.Title>텅</S.Title>
             <S.Description>주문 목록이 없어요.</S.Description>
             <S.HomeButton onClick={() => navigate(PAGE_PATH.HOME)}>상품 구입하러 가기</S.HomeButton>
           </S.EmptyOrderWrapper>
-        )}
+        </S.OrderListWrapper>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <PageTitle>주문목록</PageTitle>
+      <FatBorder />
+      <S.OrderListWrapper>
+        {orders && [...orders.orderResponses].reverse().map((order) => <OrderList key={order.orderId} {...order} />)}
       </S.OrderListWrapper>
     </>
   );
