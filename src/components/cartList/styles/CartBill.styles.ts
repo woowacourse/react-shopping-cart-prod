@@ -74,6 +74,7 @@ export const BillRow = styled.div`
   > select {
     text-align: center;
     font-size: 20px;
+    color: #333333;
   }
 `;
 
