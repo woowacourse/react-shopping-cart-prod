@@ -10,7 +10,7 @@ import { serverState } from '../../recoil/serverAtom';
 import { fetchCartList } from '../../api/api';
 import { useEffect } from 'react';
 import { cartState } from '../../recoil/cartAtoms';
-import { PAGE_PATH } from '../../constants/path';
+import { PAGE_PATH } from '../../constants';
 import { useNavigate } from 'react-router-dom';
 import { LoadingSpinner } from '../../components/@common/LoadingSpinner';
 import { EmptyCartWrapper } from '../Cart/Cart.style';

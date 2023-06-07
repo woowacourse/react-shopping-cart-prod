@@ -4,7 +4,7 @@ import { Cart } from './pages/Cart';
 import { Order } from './pages/Order';
 import { OrderDetail } from './pages/OrderDetail';
 import { Layout } from './components/Layout';
-import { PAGE_PATH } from './constants/path';
+import { PAGE_PATH } from './constants';
 import { Payment } from './pages/Payment';
 import { NotFound } from './pages/NotFound';
 

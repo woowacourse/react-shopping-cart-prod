@@ -4,7 +4,7 @@ import { cartCountSelector } from '../../recoil/cartAtoms.ts';
 import { useNavigate } from 'react-router-dom';
 import { FatBorder, PageTitle } from '../../style/style.ts';
 import CartList from '../../components/Cart/CartList/CartList.tsx';
-import { PAGE_PATH } from '../../constants/path.ts';
+import { PAGE_PATH } from '../../constants/index.ts';
 import PurchaseBox from '../../components/Cart/PurchaseBox/PurchaseBox.tsx';
 
 function Cart() {

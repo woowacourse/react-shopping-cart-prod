@@ -4,7 +4,7 @@ import { useRecoilValue } from 'recoil';
 import { couponState, pointState, totalPaymentPriceSelector } from '../../../../recoil/orderAtom';
 import { fetchPostOrder } from '../../../../api/fetcher';
 import { useNavigate } from 'react-router-dom';
-import { PAGE_PATH } from '../../../../constants/path';
+import { PAGE_PATH } from '../../../../constants';
 import { orderRequestData } from '../../../../recoil/orderAtom';
 import { memberAuthorization } from '../../../../recoil/userAtoms';
 import { serverState } from '../../../../recoil/serverAtom';

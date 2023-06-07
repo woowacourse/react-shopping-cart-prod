@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { LOCAL_STORAGE_KEY, PAGE_PATH } from '../../constants/path';
+import { LOCAL_STORAGE_KEY, PAGE_PATH } from '../../constants';
 import * as S from './NotFound.style';
 import { useSetRecoilState } from 'recoil';
 import { serverState } from '../../recoil/serverAtom';

@@ -1,3 +1,4 @@
+import { DELIVERY_FEE } from '../../../constants';
 import { PurchasePropertyWrapper, PurchaseText, Vacant } from '../../Cart/PurchaseBox/PurchaseBox.style';
 import * as S from './PaymentInfo.style';
 
@@ -8,11 +9,9 @@ type PaymentInfoProps = {
 };
 
 function PaymentInfo({ totalPrice, pointDiscount, couponDiscount }: PaymentInfoProps) {
-  const DELIVERY_FEE = totalPrice > 0 ? 3000 : 0;
+  const deliveryFee = totalPrice > 0 ? DELIVERY_FEE : 0;
   const hasDiscount = pointDiscount !== undefined && couponDiscount !== undefined;
-  const FINAL_PRICE = hasDiscount
-    ? totalPrice + DELIVERY_FEE - pointDiscount - couponDiscount
-    : totalPrice + DELIVERY_FEE;
+  const finalPrice = hasDiscount ? totalPrice + deliveryFee - pointDiscount - couponDiscount : totalPrice + deliveryFee;
 
   return (
     <>
@@ -23,7 +22,7 @@ function PaymentInfo({ totalPrice, pointDiscount, couponDiscount }: PaymentInfoP
       </PurchasePropertyWrapper>
       <PurchasePropertyWrapper>
         <PurchaseText>배송비</PurchaseText>
-        <PurchaseText>+{DELIVERY_FEE.toLocaleString()}원</PurchaseText>
+        <PurchaseText>+{deliveryFee.toLocaleString()}원</PurchaseText>
       </PurchasePropertyWrapper>
       {hasDiscount && (
         <S.DiscountWrapper>
@@ -44,7 +43,7 @@ function PaymentInfo({ totalPrice, pointDiscount, couponDiscount }: PaymentInfoP
       <Vacant />
       <PurchasePropertyWrapper>
         <PurchaseText>총 결제 금액</PurchaseText>
-        <PurchaseText>{FINAL_PRICE.toLocaleString()}원</PurchaseText>
+        <PurchaseText>{finalPrice.toLocaleString()}원</PurchaseText>
       </PurchasePropertyWrapper>
     </>
   );

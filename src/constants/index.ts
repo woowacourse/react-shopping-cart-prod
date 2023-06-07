@@ -10,3 +10,5 @@ export const LOCAL_STORAGE_KEY = {
   CURRENT_MEMBER_ID: 'currentMemberId',
   SERVER: 'server',
 };
+
+export const DELIVERY_FEE = 3000;

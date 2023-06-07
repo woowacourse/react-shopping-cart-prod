@@ -6,7 +6,7 @@ import { serverState } from '../../../recoil/serverAtom';
 import useGetQuery from '../../../hooks/useGetQuery';
 import { Point } from '../../../types/types';
 import { fetchMemberPoint } from '../../../api/fetcher';
-import { PAGE_PATH } from '../../../constants/path';
+import { PAGE_PATH } from '../../../constants';
 import NavOrderListIcon from '../../../assets/list.svg';
 import { UserSelector } from './UserSelector';
 import { memberAuthorization, memberPointState } from '../../../recoil/userAtoms';

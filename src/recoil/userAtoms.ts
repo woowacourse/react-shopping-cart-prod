@@ -4,7 +4,7 @@ import { Member, Point } from '../types/types';
 import { encrypt } from '../utils/authorization';
 import { fetchMemberList } from '../api/fetcher';
 import { serverState } from './serverAtom';
-import { LOCAL_STORAGE_KEY } from '../constants/path';
+import { LOCAL_STORAGE_KEY } from '../constants';
 
 export const memberListState = atom<Member[]>({
   key: 'memberListState',

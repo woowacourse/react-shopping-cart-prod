@@ -6,7 +6,7 @@ import { useRecoilValue } from 'recoil';
 import { memberPublicInformation } from '../../recoil/userAtoms';
 import { orderState } from '../../recoil/orderAtom';
 import { useNavigate } from 'react-router-dom';
-import { PAGE_PATH } from '../../constants/path';
+import { PAGE_PATH } from '../../constants';
 
 function Payment() {
   const order = useRecoilValue(orderState);

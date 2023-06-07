@@ -2,7 +2,7 @@ import bigTitleLogo from '../../assets/logo.png';
 import smallTitleLogo from '../../assets/small-logo.png';
 import { useNavigate } from 'react-router-dom';
 import { Container } from '../../style/style';
-import { PAGE_PATH } from '../../constants/path.ts';
+import { PAGE_PATH } from '../../constants/index.ts';
 import NavigationBar from './NavigationBar/NavigationBar.tsx';
 import * as S from './Header.style';
 import { Suspense } from 'react';

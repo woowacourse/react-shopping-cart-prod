@@ -1,6 +1,6 @@
 import { atom } from 'recoil';
 import { localStorageEffect } from '../utils/localStorage';
-import { LOCAL_STORAGE_KEY } from '../constants/path';
+import { LOCAL_STORAGE_KEY } from '../constants';
 
 export const serverState = atom<string>({
   key: 'serverState',

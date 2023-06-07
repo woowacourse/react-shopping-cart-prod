@@ -1,5 +1,6 @@
 import { atom, selector } from 'recoil';
 import { CartItem, OrderRequest } from '../types/types';
+import { DELIVERY_FEE } from '../constants';
 
 export const orderState = atom<CartItem[] | null>({
   key: 'orderState',
@@ -54,7 +55,7 @@ export const couponAppliedPriceSelector = selector({
     const totalPrice = get(totalPaymentPriceSelector);
     const coupon = get(couponState);
 
-    if (coupon) return totalPrice - coupon.discountPrice + 3000;
-    return totalPrice + 3000;
+    if (coupon) return totalPrice - coupon.discountPrice + DELIVERY_FEE;
+    return totalPrice + DELIVERY_FEE;
   },
 });

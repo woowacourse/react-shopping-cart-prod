@@ -3,7 +3,7 @@ import NavCartIcon from '../../../../assets/nav-cart.svg';
 
 import { Logo, LogoTitle } from '../NavigationBar.style';
 import * as S from './CartBox.style';
-import { PAGE_PATH } from '../../../../constants/path';
+import { PAGE_PATH } from '../../../../constants';
 import { useRecoilValue } from 'recoil';
 import { cartCountSelector } from '../../../../recoil/cartAtoms';
 
