@@ -1,16 +1,12 @@
 import { useCallback } from 'react';
-import { Item } from '../../types/CartList.ts';
+import { Item, Product } from '../../types/CartList.ts';
 import useCart from '../useCart.ts';
 import useCreateCartItem from '../requests/useCreateCartItem.ts';
 import { useToast } from '../useToast.ts';
 import TOAST_MESSAGES from '../../constants/TOAST_MESSAGES.ts';
 
-type AddToCartButtonProps = {
+type AddToCartButtonProps = Product & {
   cartItemNumber: number | undefined;
-  id: number;
-  name: string;
-  price: number;
-  imageUrl: string;
   refetchCartList: ({}) => void;
 };
 
