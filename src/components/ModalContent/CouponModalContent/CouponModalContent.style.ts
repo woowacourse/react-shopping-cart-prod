@@ -55,8 +55,8 @@ export const Coupon = styled.div<{ unavailable: boolean }>`
   ${({ unavailable }) =>
     unavailable &&
     css`
-      & * {
-        color: ${({ theme }) => theme.color.gray700} !important;
+      & *:not(:last-child) {
+        color: ${({ theme }) => theme.color.gray700};
       }
       &:hover {
         transform: none;
@@ -97,7 +97,7 @@ export const DiscountAmount = styled.div`
 export const Unavailable = styled.div`
   font-size: 12px;
   font-weight: 700;
-  color: ${({ theme }) => theme.color.red} !important;
+  color: ${({ theme }) => theme.color.red};
   margin-top: 4px;
 `;
 
