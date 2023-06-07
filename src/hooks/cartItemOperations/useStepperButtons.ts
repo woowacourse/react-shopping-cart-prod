@@ -3,13 +3,10 @@ import useCart from '../useCart.ts';
 import usePostUpdateCartItem from '../requests/usePostUpdateCartItem.ts';
 import { useToast } from '../useToast.ts';
 import TOAST_MESSAGES from '../../constants/TOAST_MESSAGES.ts';
+import { Product } from '../../types/CartList.ts';
 
-type StpperButtonsHookProps = {
+type StpperButtonsHookProps = Product & {
   cartItemNumber: number | undefined;
-  id: number;
-  name: string;
-  price: number;
-  imageUrl: string;
   refetchCartList: ({}) => void;
 };
 
