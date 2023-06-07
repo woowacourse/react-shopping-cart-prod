@@ -14,7 +14,7 @@ export const ModalContainer = styled.div<{ isModalOpened: boolean }>`
 
 export const ModalContent = styled.div`
   width: 80%;
-  margin: 15% auto;
+  margin: 150px auto;
   padding: 20px;
   border: 1px solid #888;
   border-radius: 16px;
