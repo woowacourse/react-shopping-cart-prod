@@ -6,6 +6,7 @@ import { LocalProductType } from '../types/domain';
 import { fetchAddOrderList } from '../api';
 import { makeLocalProducts } from '../utils/domain';
 import { localProductsState } from '../recoil/atom';
+import { DELIVERY_FEE } from '../constants';
 
 export const TotalPriceWithCouponTable = ({
   discountPrice,
@@ -43,11 +44,11 @@ export const TotalPriceWithCouponTable = ({
       </DiscountContainer>
       <RowContainer>
         <p>배송비</p>
-        <p>{Number(3000).toLocaleString()}원</p>
+        <p>{Number(DELIVERY_FEE).toLocaleString()}원</p>
       </RowContainer>
       <RowContainer>
         <p>총 주문금액</p>
-        <p>{(totalPrice - (discountPrice ?? 0) + 3000).toLocaleString()}원</p>
+        <p>{(totalPrice - (discountPrice ?? 0) + DELIVERY_FEE).toLocaleString()}원</p>
       </RowContainer>
       <Button onClick={handleOrderButton}>주문확정</Button>
     </Wrapper>

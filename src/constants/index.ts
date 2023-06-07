@@ -5,7 +5,7 @@ export const MAX_LENGTH_QUANTITY = 2;
 export const KEY_LOCALSTORAGE_SERVER_OWNER = 'owner';
 export const DEFAULT_VALUE_SERVER_OWNER = '애쉬';
 
-export const DELIVERY_FEE = 3000;
+export const DELIVERY_FEE = 3_000;
 
 export const SERVERS: Record<string, string> = {
   리오: 'https://woowa-reo.store',
