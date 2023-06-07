@@ -4,7 +4,7 @@ import { fetchAPI } from './utils/fetchAPI';
 
 const getCartAPI = (baseUrl: string) => {
   const getCartList = (): Promise<CartItemData[]> => {
-    return fetchAPI(`${baseUrl}${API_ENDPOINT.CART_ITEMS}`, {
+    return fetchAPI(`${baseUrl}${API_ENDPOINT.CART_ITEMS}/`, {
       method: 'GET',
       headers: { Authorization: AUTHORIZED_FETCH_OPTION_HEADERS.Authorization },
     });
@@ -16,7 +16,7 @@ const getCartAPI = (baseUrl: string) => {
     };
     const jsonData = JSON.stringify(data);
 
-    return fetchAPI(`${baseUrl}${API_ENDPOINT.CART_ITEMS}`, {
+    return fetchAPI(`${baseUrl}${API_ENDPOINT.CART_ITEMS}/`, {
       method: 'POST',
       headers: AUTHORIZED_FETCH_OPTION_HEADERS,
       body: jsonData,

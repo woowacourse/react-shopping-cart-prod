@@ -4,7 +4,7 @@ import { fetchAPI } from './utils/fetchAPI';
 
 const getMemberAPI = (baseUrl: string) => {
   const getMemberInfo = (): Promise<MemberInformation> => {
-    return fetchAPI(`${baseUrl}${API_ENDPOINT.MEMBER}`, {
+    return fetchAPI(`${baseUrl}${API_ENDPOINT.MEMBER}/`, {
       method: 'GET',
       headers: { Authorization: AUTHORIZED_FETCH_OPTION_HEADERS.Authorization },
     });

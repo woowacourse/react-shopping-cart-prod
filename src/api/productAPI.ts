@@ -4,7 +4,7 @@ import { fetchAPI } from './utils/fetchAPI';
 
 const getProductAPI = (baseUrl: string) => {
   const getProductList = (): Promise<ProductItemData[]> => {
-    return fetchAPI(`${baseUrl}${API_ENDPOINT.PRODUCTS}`);
+    return fetchAPI(`${baseUrl}${API_ENDPOINT.PRODUCTS}/`);
   };
 
   return { getProductList };
