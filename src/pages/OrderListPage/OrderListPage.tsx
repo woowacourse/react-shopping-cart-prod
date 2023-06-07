@@ -12,13 +12,13 @@ const OrderListPage = () => {
       <Styled.OrderListPageContent>
         <MainPageText>주문목록</MainPageText>
         <MainTextBorder />
-        {orderListData && orderListData.orders.length === 0 && <EmptyCartComponent />}
-
-        {orderListData &&
-          orderListData.orders.length > 0 &&
+        {orderListData && orderListData.orders.length > 0 ? (
           orderListData.orders.map((orderData) => {
             return <OrderList key={orderData.orderId} orderData={orderData} hasDetailNavigateButton />;
-          })}
+          })
+        ) : (
+          <EmptyCartComponent />
+        )}
       </Styled.OrderListPageContent>
     </Styled.OrderListPageWrapper>
   );
