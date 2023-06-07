@@ -4,6 +4,7 @@ import { cartTotalPriceSelector } from '../../../stores/cartListStore.ts';
 import useOrderItems from '../../../hooks/cartItemOperations/useOrderItems.ts';
 import useModal from '../../../hooks/useModal.ts';
 import OrderReviewList from '../../@common/Modal/ModalContents/OrderReviewList/OrderReviewList.tsx';
+import DISCOUNT from '../../../constants/DISCOUNT.ts';
 
 const CartPriceBox = () => {
   const totalItemPrice = useRecoilValue(cartTotalPriceSelector);
@@ -16,8 +17,8 @@ const CartPriceBox = () => {
     openModal(<OrderReviewList cartListForReview={selectedCartList} />);
   };
 
-  const discountedPrice = totalItemPrice >= 100000 ? totalItemPrice * 0.1 : 0;
-  const shippingFee = totalItemPrice >= 50000 ? 0 : 3000;
+  const discountedPrice = totalItemPrice >= DISCOUNT.PRICE_FOR_ADDITIONAL_DISCOUNT ? totalItemPrice * DISCOUNT.ADDITIONAL_DISCOUNT : 0;
+  const shippingFee = totalItemPrice >= DISCOUNT.PRICE_FOR_FREE_SHIPPING ? 0 : DISCOUNT.SHIPPING_FEE;
 
   return (
     <>
