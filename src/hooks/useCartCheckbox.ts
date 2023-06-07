@@ -24,7 +24,7 @@ const useCartCheckbox = () => {
         const isAllChecked = await snapshot.getPromise(isCartAllCheckedState);
 
         set(checkedCartIdListState, () => {
-          return isAllChecked ? new Set([]) : new Set([...cartIdList]);
+          return isAllChecked ? new Set([]) : new Set(cartIdList);
         });
       },
     []
@@ -36,7 +36,7 @@ const useCartCheckbox = () => {
         const isChecked = await snapshot.getPromise(checkedCartItemState(cartItemId));
 
         set(checkedCartIdListState, (prevCheckedCartIdList) => {
-          const newCheckedIdList = new Set([...prevCheckedCartIdList]);
+          const newCheckedIdList = new Set(prevCheckedCartIdList);
 
           isChecked ? newCheckedIdList.delete(cartItemId) : newCheckedIdList.add(cartItemId);
 
