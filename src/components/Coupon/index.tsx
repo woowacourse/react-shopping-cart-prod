@@ -54,7 +54,7 @@ const Container = styled.li<{ isSelect: boolean }>`
 
   overflow: hidden;
 
-  z-index: 1;
+  z-index: ${(props) => props.theme.zIndex.middle};
 
   @media only screen and (max-width: 768px) {
     zoom: 0.6;

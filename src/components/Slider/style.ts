@@ -23,7 +23,7 @@ export const LeftButton = styled.button`
   background-color: rgba(240, 240, 240, 0.7);
   cursor: pointer;
 
-  z-index: 1;
+  z-index: ${(props) => props.theme.zIndex.middle};
 `;
 
 export const RightButton = styled.button`
@@ -36,7 +36,7 @@ export const RightButton = styled.button`
   background-color: rgba(240, 240, 240, 0.7);
   cursor: pointer;
 
-  z-index: 1;
+  z-index: ${(props) => props.theme.zIndex.middle};
 `;
 
 export const Container = styled.div`
@@ -50,5 +50,5 @@ export const Container = styled.div`
   font-size: 20px;
   background-color: lightblue;
 
-  z-index: 0;
+  z-index: ${(props) => props.theme.zIndex.back};
 `;

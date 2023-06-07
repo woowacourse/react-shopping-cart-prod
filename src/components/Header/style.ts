@@ -2,10 +2,10 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   position: fixed;
-  background-color: #333333;
+  background-color: ${(props) => props.theme.color.gray100};
   padding: 10px 0;
   width: 100%;
-  z-index: 99;
+  z-index: ${(props) => props.theme.zIndex.front};
 `;
 
 export const Layout = styled.div`

@@ -1,6 +1,6 @@
 import { useRecoilState, useSetRecoilState } from 'recoil';
 
-import { OrderItemType, Servers } from '@Types/index';
+import { OrderIteminterface, Servers } from '@Types/index';
 
 import useCartItems from '@Hooks/useCartItems';
 

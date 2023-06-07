@@ -7,4 +7,10 @@ export const theme = {
     gray300: '#AAAAAA',
     gray400: '#CCCCCC',
   },
+
+  zIndex: {
+    front: 99,
+    middle: 1,
+    back: 0,
+  },
 };
