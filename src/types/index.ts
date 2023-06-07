@@ -27,7 +27,7 @@ export interface selectedCouponItemType {
   isSelected: boolean;
 }
 
-export interface OrderItemType {
+interface OrderItemType {
   id: number;
   name: string;
   imageUrl: string;

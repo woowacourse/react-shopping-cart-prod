@@ -1,11 +1,11 @@
 import { useCallback } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { originState } from '../store/origin';
 import productListState from '../store/product';
 
 const useProducts = () => {
-  const [, setProductItem] = useRecoilState(productListState);
+  const setProductItem = useSetRecoilState(productListState);
   const origin = useRecoilValue(originState);
 
   const fetchProductList = useCallback(async () => {

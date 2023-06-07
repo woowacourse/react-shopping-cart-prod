@@ -4,7 +4,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { USER_TOKEN } from '../constants';
 import { couponListState } from '../store/coupon';
 import { originState } from '../store/origin';
-import { CouponItemType, selectedCouponItemType } from '../types';
+import { CouponItemType } from '../types';
 
 const useCoupon = () => {
   const [couponList, setCouponList] = useRecoilState(couponListState);
