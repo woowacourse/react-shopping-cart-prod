@@ -27,7 +27,7 @@ const OrderItem = ({ ...information }: OrderItemProps) => {
           {ORDER_ITEM_DESCRIPTION_DATA.map((descriptionItem, index) => (
             <S.InformationData key={index}>
               <S.DataLabel size="small">{descriptionItem.LABEL}</S.DataLabel>
-              <S.DataDescription>{descriptionItem.value(information)}</S.DataDescription>
+              <S.DataDescription>{descriptionItem.VALUE(information)}</S.DataDescription>
             </S.InformationData>
           ))}
         </S.ItemInformation>
