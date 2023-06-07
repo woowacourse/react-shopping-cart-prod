@@ -3,7 +3,7 @@ import { useRecoilValue } from 'recoil';
 import * as S from './styles/CartItem.styles';
 import CheckBox from '../common/CheckBox';
 import QuantityInput from '../common/QuantityInput';
-import { MAX_QUANTITY } from '../../constants';
+import { PRODUCT_MAX_QUANTITY } from '../../constants';
 import { serverNameState } from '../../atom/serverName';
 import { loginState } from '../../atom/login';
 import { useGetCartList } from '../hooks/useGetCartList';
@@ -40,7 +40,7 @@ export default function CartItem(props: Props) {
         <S.RemoveButton onClick={removeCartItem}>
           <Image src="./trashCan.svg" />
         </S.RemoveButton>
-        <QuantityInput cartItemId={id} min={1} max={MAX_QUANTITY} />
+        <QuantityInput cartItemId={id} min={1} max={PRODUCT_MAX_QUANTITY} />
         <S.Price>{(product.price * quantity).toLocaleString()}원</S.Price>
       </S.ControlBox>
     </S.Wrapper>

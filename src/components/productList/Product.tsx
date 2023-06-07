@@ -4,7 +4,7 @@ import { useRecoilValue } from 'recoil';
 import * as S from './styles/Product.styles';
 import QuantityInput from '../common/QuantityInput';
 import { cartState } from '../../atom/cart';
-import { MAX_QUANTITY } from '../../constants';
+import { PRODUCT_MAX_QUANTITY } from '../../constants';
 import { serverNameState } from '../../atom/serverName';
 import { loginState } from '../../atom/login';
 import { useGetCartList } from '../hooks/useGetCartList';
@@ -40,7 +40,7 @@ export default function Product({ id, name, price, imageUrl }: Props) {
         </S.ImageWrapper>
         <S.ControlBox hasCartItem={cartItem === undefined}>
           {cartItem ? (
-            <QuantityInput cartItemId={cartItem.id} min={0} max={MAX_QUANTITY} />
+            <QuantityInput cartItemId={cartItem.id} min={0} max={PRODUCT_MAX_QUANTITY} />
           ) : (
             <S.CartItemAddButton onClick={addCartItem} disabled={addLoading}>
               <Image src="./cart.svg" />

@@ -3,7 +3,7 @@ import { useRecoilValue } from 'recoil';
 import * as S from './styles/ProductList.styles';
 import Product from './Product';
 import SkeletonProduct from './SkeletonProduct';
-import { SKELETONS_LENGTH } from '../../constants';
+import { PRODUCT_SKELETONS_LENGTH } from '../../constants';
 import { serverNameState } from '../../atom/serverName';
 import { loginState } from '../../atom/login';
 import { useGetProductList } from '../hooks/useGetProductList';
@@ -29,7 +29,9 @@ export default function ProductList() {
   return (
     <S.Wrapper>
       {products === null
-        ? Array.from({ length: SKELETONS_LENGTH }).map((_, idx) => <SkeletonProduct key={idx} />)
+        ? Array.from({ length: PRODUCT_SKELETONS_LENGTH }).map((_, idx) => (
+            <SkeletonProduct key={idx} />
+          ))
         : products.map((product) => <Product key={product.id} {...product} />)}
     </S.Wrapper>
   );
