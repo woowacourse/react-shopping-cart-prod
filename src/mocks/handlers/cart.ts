@@ -23,7 +23,7 @@ const cartHandlers = [
 
     const newCartList = addCartItem(currentCartData, productId);
 
-    if (!newCartList) {
+    if (newCartList === null) {
       return res(ctx.status(HTTP_STATUS_CODE.NOT_FOUND));
     }
 
@@ -42,7 +42,7 @@ const cartHandlers = [
 
     const newCartList = changeCartItemQuantity(currentCartData, Number(cartItemId), quantity);
 
-    if (!newCartList) {
+    if (newCartList === null) {
       return res(ctx.status(HTTP_STATUS_CODE.NOT_FOUND));
     }
 
@@ -56,7 +56,7 @@ const cartHandlers = [
     const currentCartData = getCartData();
     const newCartList = removeCartItem(currentCartData, Number(cartItemId));
 
-    if (currentCartData.length === 0 || !newCartList) {
+    if (currentCartData.length === 0 || newCartList === null) {
       return res(ctx.status(HTTP_STATUS_CODE.NOT_FOUND));
     }
 

@@ -14,7 +14,7 @@ interface OrderDetailPurchaseInformationProps {
 const OrderDetailPurchaseInformation = ({ orderId }: OrderDetailPurchaseInformationProps) => {
   const order = useRecoilValue(orderState(orderId));
 
-  if (!order) {
+  if (order === null) {
     throw new HTTPError(HTTP_STATUS_CODE.NOT_FOUND, {
       payload: HTTP_ERROR_MESSAGE[HTTP_STATUS_CODE.NOT_FOUND],
     });

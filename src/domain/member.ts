@@ -39,7 +39,7 @@ const updateMemberInformation = (orderList: OrderData[]) => {
     null
   );
 
-  return newRank
+  return newRank !== null
     ? {
         ...memberInformation,
         rank: newRank,

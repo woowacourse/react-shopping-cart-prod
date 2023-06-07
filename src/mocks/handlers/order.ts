@@ -19,7 +19,7 @@ const orderHandlers = [
 
     const newOrderList = addOrder(cartItemIds, costs, currentOrderListData);
 
-    if (!newOrderList) {
+    if (newOrderList === null) {
       return res(ctx.status(HTTP_STATUS_CODE.CONFLICT));
     }
 
