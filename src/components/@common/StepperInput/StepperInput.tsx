@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import useCartItemOperations from '../../../hooks/cartItemOperations/useCartItemOperations.ts';
 import * as Styled from './StepperInput.styles.tsx';
 import { Item } from '../../../types/CartList.ts';
+import { NUMERIC_REGEXP } from '../../../constants/REGEX.ts';
 
 type StepperInputProps = {
   initialValue: number;
@@ -24,7 +25,7 @@ const StepperInput = ({ cartItem, refetchCartList, width }: StepperInputProps) =
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    if (value === '' || /^[0-9]*$/i.test(value)) {
+    if (value === '' || NUMERIC_REGEXP.test(value)) {
       setInputValue(value);
     }
   };
