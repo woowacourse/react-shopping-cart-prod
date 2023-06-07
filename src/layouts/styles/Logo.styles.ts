@@ -8,7 +8,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Select = styled.select`
-  width: 20px;
+  width: 24px;
   height: 48px;
   border: none;
   margin-left: 12px;
