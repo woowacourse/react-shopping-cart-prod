@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 
 import CartCheckoutBox from '../../components/cart/CartCheckoutBox/CartCheckoutBox';
+import CartCheckoutBoxSkeleton from '../../components/cart/CartCheckoutBox/CartCheckoutBoxSkeleton';
 import CartList from '../../components/cart/CartList/CartList';
 import CartListSkeleton from '../../components/cart/CartList/CartListSkeleton';
 import CartListHeader from '../../components/cart/CartListHeader/CartListHeader';
@@ -21,7 +22,9 @@ const CartPage = () => {
             <CartList />
           </Suspense>
         </div>
-        <CartCheckoutBox />
+        <Suspense fallback={<CartCheckoutBoxSkeleton />}>
+          <CartCheckoutBox />
+        </Suspense>
       </S.CartInformationContainer>
     </>
   );
