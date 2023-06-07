@@ -12,7 +12,7 @@ import OrderDetailPage from './pages/OrderDetailPage/OrderDetailPage.tsx';
 import OrderListPage from './pages/OrderListPage/OrderListPage.tsx';
 import Modal from './components/@common/Modal/Modal.tsx';
 import LoginPage from './pages/LoginPage/LoginPage.tsx';
-import routes from './constants/routes.ts';
+import ROUTES from './constants/ROUTES.ts';
 
 const App = () => {
   return (
@@ -24,12 +24,12 @@ const App = () => {
           <Header />
           <Layout>
             <Routes>
-              <Route path={routes.list} element={<ListPage />} />
-              <Route path={routes.login} element={<LoginPage />} />
-              <Route path={routes.cart} element={<CartPage />} />
-              <Route path={routes.order} element={<OrderListPage />} />
-              <Route path={`${routes.order}/:orderId`} element={<OrderDetailPage />} />
-              <Route path={routes.error} element={<ErrorPage />} />
+              <Route path={ROUTES.LIST} element={<ListPage />} />
+              <Route path={ROUTES.LOGIN} element={<LoginPage />} />
+              <Route path={ROUTES.CART} element={<CartPage />} />
+              <Route path={ROUTES.ORDER} element={<OrderListPage />} />
+              <Route path={`${ROUTES.ORDER}/:orderId`} element={<OrderDetailPage />} />
+              <Route path={ROUTES.ERROR} element={<ErrorPage />} />
             </Routes>
           </Layout>
           <Modal />

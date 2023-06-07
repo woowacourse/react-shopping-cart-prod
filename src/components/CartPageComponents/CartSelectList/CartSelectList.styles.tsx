@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import viewports from '../../../constants/viewports';
+import VIEWPORTS from '../../../constants/VIEWPORTS.ts';
 
 export const CartSelectListWrapper = styled.div`
   width: 60%;
   margin: 30px 0;
 
-  @media screen and (max-width: ${viewports.md}) {
+  @media screen and (max-width: ${VIEWPORTS.md}) {
     width: 100%;
     margin-top: 20px;
   }
@@ -18,7 +18,7 @@ export const CartQuantityText = styled.p`
   line-height: 33px;
   color: var(--color-brownish-red);
 
-  @media screen and (max-width: ${viewports.sm}) {
+  @media screen and (max-width: ${VIEWPORTS.sm}) {
     font-size: 18px;
     line-height: 28px;
   }

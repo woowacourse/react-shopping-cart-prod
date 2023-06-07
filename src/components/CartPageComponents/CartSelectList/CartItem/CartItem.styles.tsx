@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { ImageContainer, ImageOverflowContainer, ProductItemImage } from '../../../ProductItem/ProductItem.styles.tsx';
 import TrashIcon from '../../../@common/TrashIcon/TrashIcon.tsx';
-import viewports from '../../../../constants/viewports.ts';
+import VIEWPORTS from '../../../../constants/VIEWPORTS.ts';
 
 export const CartItem = styled.li`
   display: flex;
@@ -37,7 +37,7 @@ export const ItemTitle = styled.span`
   white-space: nowrap;
   overflow: hidden;
 
-  @media screen and (max-width: ${viewports.md}) {
+  @media screen and (max-width: ${VIEWPORTS.md}) {
     width: 30%;
   }
 `;

@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import useCart from '../useCart.ts';
 import usePostUpdateCartItem from '../requests/usePostUpdateCartItem.ts';
 import { useToast } from '../useToast.ts';
-import toastMessages from '../../constants/toastMessages.ts';
+import TOAST_MESSAGES from '../../constants/TOAST_MESSAGES.ts';
 
 type StpperButtonsHookProps = {
   cartItemNumber: number | undefined;
@@ -29,7 +29,7 @@ const useStepperButtons = ({ cartItemNumber, id, name, price, imageUrl, refetchC
     if (!cartItemNumber) return;
     await updateCartItem({ param: cartItemNumber, body: { quantity: quantity - 1 } });
     if (quantity === 1) {
-      showToast(toastMessages.deleted);
+      showToast(TOAST_MESSAGES.DELETED);
     }
     await refetchCartList({});
     updateCart({ id: cartItemNumber, quantity: quantity - 1, product: { id, name, price, imageUrl }, isSelected: true });

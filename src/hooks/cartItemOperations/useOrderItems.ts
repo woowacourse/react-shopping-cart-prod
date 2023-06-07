@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import usePostCreateOrder from '../requests/usePostCreateOrder.ts';
 import { useEffect } from 'react';
 import { useToast } from '../useToast.ts';
-import toastMessages from '../../constants/toastMessages.ts';
+import TOAST_MESSAGES from '../../constants/TOAST_MESSAGES.ts';
 import useModal from '../useModal.ts';
 
 const useOrderItems = () => {
@@ -27,7 +27,7 @@ const useOrderItems = () => {
 
   useEffect(() => {
     if (createOrderState.status === 'success' && createOrderState.data) {
-      showToast(toastMessages.ordered);
+      showToast(TOAST_MESSAGES.ORDERED);
       navigate(`/order/${createOrderState.data.orderId}`, { state: { makeOrder: createOrderState.data } });
       closeModal();
     }

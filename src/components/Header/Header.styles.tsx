@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components';
-import viewports from '../../constants/viewports.ts';
+import VIEWPORTS from '../../constants/VIEWPORTS.ts';
 
 const slideDown = keyframes`
   0% {
@@ -29,7 +29,7 @@ export const HeaderContainer = styled.div`
     padding: 0 80px;
   }
 
-  @media screen and (max-width: ${viewports.md}) {
+  @media screen and (max-width: ${VIEWPORTS.md}) {
     padding: 0 16px;
   }
 `;
@@ -60,12 +60,12 @@ export const LogoImage = styled.img`
   height: 91px;
   margin: 0 16px 14px 0;
 
-  @media screen and (max-width: ${viewports.md}) {
+  @media screen and (max-width: ${VIEWPORTS.md}) {
     width: 150px;
     height: 50px;
   }
 
-  @media screen and (max-width: ${viewports.sm}) {
+  @media screen and (max-width: ${VIEWPORTS.sm}) {
     display: none;
   }
 `;
@@ -83,7 +83,7 @@ export const OrderListButton = styled.button`
     transform: rotate(3deg);
   }
 
-  @media screen and (max-width: ${viewports.md}) {
+  @media screen and (max-width: ${VIEWPORTS.md}) {
     font-size: 16px;
   }
 `;
@@ -106,7 +106,7 @@ export const ShoppingCartButtonText = styled.span`
   color: var(--color-brownish-red);
   margin-right: 6px;
 
-  @media screen and (max-width: ${viewports.md}) {
+  @media screen and (max-width: ${VIEWPORTS.md}) {
     font-size: 16px;
   }
 `;

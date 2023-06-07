@@ -1,6 +1,6 @@
 import { OrderResponse } from '../../../types/responses/OrderResponse.ts';
 import { useNavigate } from 'react-router-dom';
-import routes from '../../../constants/routes.ts';
+import ROUTES from '../../../constants/ROUTES.ts';
 import * as Styled from './OrderList.styles.tsx';
 
 type OrderListProps = {
@@ -12,7 +12,7 @@ const OrderList = ({ orderData, hasDetailNavigateButton }: OrderListProps) => {
   const navigate = useNavigate();
 
   const handleDetailButton = () => {
-    navigate(`${routes.order}/${orderData.orderId}`, { state: { makeOrder: orderData } });
+    navigate(`${ROUTES.ORDER}/${orderData.orderId}`, { state: { makeOrder: orderData } });
   };
 
   return (

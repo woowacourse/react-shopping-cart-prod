@@ -4,9 +4,9 @@ export type CartUpdateBody = {
 };
 
 export type UserCredentialData = {
-  id: number;
-  email: string;
-  password: string;
+  ID: number;
+  EMAIL: string;
+  PASSWORD: string;
 };
 
 export type ServerNames = 'ROY' | 'SPLIT' | 'IRAE';

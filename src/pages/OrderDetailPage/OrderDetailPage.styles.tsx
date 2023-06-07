@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { CartMainText, MainTextBorder } from '../CartPage/CartPage.styles.tsx';
-import viewports from '../../constants/viewports.ts';
+import VIEWPORTS from '../../constants/VIEWPORTS.ts';
 
 export const OrderDetailPageWrapper = styled.div`
   display: flex;
@@ -21,7 +21,7 @@ export const PriceBoxWrapper = styled.div`
   justify-content: flex-end;
   margin-top: 10px;
 
-  @media screen and (max-width: ${viewports.md}) {
+  @media screen and (max-width: ${VIEWPORTS.md}) {
     justify-content: center;
   }
 `;
@@ -33,7 +33,7 @@ export const PriceBoxContent = styled.div`
   border: 2px solid var(--color-header);
   color: var(--color-brownish-red);
 
-  @media screen and (max-width: ${viewports.md}) {
+  @media screen and (max-width: ${VIEWPORTS.md}) {
     width: 100%;
   }
 `;

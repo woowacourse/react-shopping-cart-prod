@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import viewports from '../../constants/viewports.ts';
+import VIEWPORTS from '../../constants/VIEWPORTS.ts';
 
 export const CartPageContainer = styled.div`
   height: calc(100vh - 80px);
@@ -7,7 +7,7 @@ export const CartPageContainer = styled.div`
   disaply: flex;
   justify-content: center;
 
-  @media screen and (max-width: ${viewports.sm}) {
+  @media screen and (max-width: ${VIEWPORTS.sm}) {
     padding: 30px 0;
   }
 `;
@@ -20,7 +20,7 @@ export const CartMainText = styled.h1`
   text-align: center;
   color: var(--color-brownish-red);
 
-  @media screen and (max-width: ${viewports.md}) {
+  @media screen and (max-width: ${VIEWPORTS.md}) {
     font-size: 20px;
   }
 `;
@@ -45,7 +45,7 @@ export const MainTextBorder = styled.hr`
     }
   }
 
-  @media screen and (max-width: ${viewports.sm}) {
+  @media screen and (max-width: ${VIEWPORTS.sm}) {
     margin-top: 15px;
     margin-bottom: 30px;
   }
@@ -57,13 +57,13 @@ export const CartSelectListContainer = styled.div`
   gap: 100px;
   padding: 0 79px;
 
-  @media screen and (max-width: ${viewports.md}) {
+  @media screen and (max-width: ${VIEWPORTS.md}) {
     flex-direction: column;
     padding: 0 24px;
     gap: 0;
   }
 
-  @media screen and (max-width: ${viewports.sm}) {
+  @media screen and (max-width: ${VIEWPORTS.sm}) {
     span {
       font-size: 16px;
     }

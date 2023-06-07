@@ -1,8 +1,8 @@
-import { endPoints } from '../../constants/endPoints.ts';
+import { END_POINTS } from '../../constants/END_POINTS.ts';
 import useFetch from '../useFetch.ts';
 
 const usePostUpdateCartItem = () => {
-  const [updateCartItemState, updateCartItem] = useFetch<null>({ url: endPoints.cart, method: 'PATCH' });
+  const [updateCartItemState, updateCartItem] = useFetch<null>({ url: END_POINTS.CART, method: 'PATCH' });
 
   return { updateCartItemState, updateCartItem };
 };

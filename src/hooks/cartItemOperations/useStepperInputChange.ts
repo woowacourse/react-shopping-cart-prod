@@ -3,7 +3,7 @@ import useCart from '../useCart.ts';
 import usePostUpdateCartItem from '../requests/usePostUpdateCartItem.ts';
 import useDeleteCartItem from '../requests/useDeleteCartItem.ts';
 import { useToast } from '../useToast.ts';
-import toastMessages from '../../constants/toastMessages.ts';
+import TOAST_MESSAGES from '../../constants/TOAST_MESSAGES.ts';
 
 type StepperInputChangeProps = {
   cartItemNumber: number | undefined;
@@ -36,7 +36,7 @@ const useStepperInputChange = ({ cartItemNumber, id, name, price, imageUrl, refe
 
         updateCart({ id: cartItemNumber, quantity: 0, product: { id, name, price, imageUrl }, isSelected: false });
         refetchCartList({});
-        showToast(toastMessages.deleted);
+        showToast(TOAST_MESSAGES.DELETED);
 
         return;
       }

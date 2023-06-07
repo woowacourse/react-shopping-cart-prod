@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import viewports from '../../../constants/viewports.ts';
+import VIEWPORTS from '../../../constants/VIEWPORTS.ts';
 
 export const CartPriceBoxWrapper = styled.div`
   width: calc(28%- 100px);
   margin-top: 75px;
 
-  @media screen and (max-width: ${viewports.md}) {
+  @media screen and (max-width: ${VIEWPORTS.md}) {
     width: 100%;
     margin: 30px 0;
   }
@@ -17,7 +17,7 @@ export const CartPriceBoxContent = styled.div`
   border: 2.3px solid var(--color-header);
   border-radius: 20px;
 
-  @media screen and (max-width: ${viewports.md}) {
+  @media screen and (max-width: ${VIEWPORTS.md}) {
     width: 100%;
     position: static;
     border: none;
@@ -33,7 +33,7 @@ export const CartPriceBoxContentTitle = styled.h3`
   padding: 35px 0 35px 30px;
   color: var(--color-brownish-red);
 
-  @media screen and (max-width: ${viewports.md}) {
+  @media screen and (max-width: ${VIEWPORTS.md}) {
     padding: 20px 0;
     text-align: center;
   }
@@ -42,7 +42,7 @@ export const CartPriceBoxContentTitle = styled.h3`
 export const CartPriceTextWrapper = styled.div`
   padding: 35px 30px;
 
-  @media screen and (max-width: ${viewports.sm}) {
+  @media screen and (max-width: ${VIEWPORTS.sm}) {
     padding: 20px 0;
   }
 `;
@@ -76,7 +76,7 @@ export const OrderButton = styled.button`
     transform: scale(1.03);
   }
 
-  @media screen and (max-width: ${viewports.sm}) {
+  @media screen and (max-width: ${VIEWPORTS.sm}) {
     height: 50px;
   }
 `;

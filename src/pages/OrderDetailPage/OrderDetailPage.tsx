@@ -3,7 +3,7 @@ import useGetOrderDetail from '../../hooks/requests/useGetOrderDetail.ts';
 import { useEffect } from 'react';
 import { OrderResponse } from '../../types/responses/OrderResponse.ts';
 import OrderList from '../../components/@common/OrderList/OrderList.tsx';
-import routes from '../../constants/routes.ts';
+import ROUTES from '../../constants/ROUTES.ts';
 import * as Styled from './OrderDetailPage.styles.tsx';
 
 const OrderDetailPage = () => {
@@ -13,11 +13,11 @@ const OrderDetailPage = () => {
   const { data, fetchOrderDetail } = useGetOrderDetail(orderId as string);
 
   const handleOrderListButton = () => {
-    navigate(routes.order);
+    navigate(ROUTES.ORDER);
   };
 
   const handleProductListButton = () => {
-    navigate(routes.list);
+    navigate(ROUTES.LIST);
   };
 
   useEffect(() => {

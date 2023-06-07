@@ -3,7 +3,7 @@ import { Item } from '../../types/CartList.ts';
 import useCart from '../useCart.ts';
 import useCreateCartItem from '../requests/useCreateCartItem.ts';
 import { useToast } from '../useToast.ts';
-import toastMessages from '../../constants/toastMessages.ts';
+import TOAST_MESSAGES from '../../constants/TOAST_MESSAGES.ts';
 
 type AddToCartButtonProps = {
   cartItemNumber: number | undefined;
@@ -21,7 +21,7 @@ const useAddToCartButton = ({ cartItemNumber, id, name, price, imageUrl, refetch
 
   const handleAddToCartButton = useCallback(async () => {
     await createCartItem({ body: { productId: id } });
-    showToast(toastMessages.created);
+    showToast(TOAST_MESSAGES.CREATED);
     await refetchCartList({});
 
     if (createCartItemState.status === 'success' && createCartItemState.data) {
