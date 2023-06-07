@@ -1,11 +1,15 @@
+import Fetcher from './Fetcher';
+import { isProducts } from '../types/typeGuards';
+import { ERROR_MESSAGES } from '../constants/errorMessages';
+import { Product } from '../types/product';
+
 export const fetchProducts = async (url: string) => {
-  const response = await fetch(url, {});
+  const { value } = await Fetcher.fetch<Product[]>({
+    url,
+    method: 'GET',
+    typeGuard: isProducts,
+    errorMessages: ERROR_MESSAGES.getProduct,
+  });
 
-  if (!response.ok) {
-    throw new Error('상품 목록을 불러올 수 없습니다.');
-  }
-
-  const products = await response.json();
-
-  return products;
+  return value;
 };

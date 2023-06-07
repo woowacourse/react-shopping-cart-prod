@@ -7,6 +7,8 @@ import useCartPage from './useCartPage';
 import empty from '../../../assets/image/empty.png';
 import { ResetButton } from '../../common/ErrorFallback/ErrorFallback';
 import { useNavigate } from 'react-router-dom';
+import colors from '../../../colors';
+import FullWidthTitle from '../../common/FullWidthTitle/FullWidthTitle';
 
 const CartPage = () => {
   const navigate = useNavigate();
@@ -14,7 +16,6 @@ const CartPage = () => {
     cart,
     checkedItemIds,
     isAllChecked,
-    calcTotalPrice,
     handleCheckboxChange,
     handleAllCheckboxChange,
     handleSelectedItemDelete,
@@ -22,9 +23,7 @@ const CartPage = () => {
 
   return (
     <Container>
-      <TitleWrapper>
-        <Title>장바구니</Title>
-      </TitleWrapper>
+      <FullWidthTitle>장바구니</FullWidthTitle>
       <Spacer height={34} />
       <Inner>
         <CartList>
@@ -66,7 +65,7 @@ const CartPage = () => {
           <Spacer height={20} />
         </CartList>
         <TotalWrapper>
-          <CartTotal totalProductPrice={calcTotalPrice()} />
+          <CartTotal />
         </TotalWrapper>
       </Inner>
     </Container>
@@ -75,26 +74,11 @@ const CartPage = () => {
 
 const Container = styled.div``;
 
-const TitleWrapper = styled.div`
-  height: 67px;
-  border-bottom: 4px solid #333;
-`;
-
-const Title = styled.h2`
-  font-family: 'Noto Sans KR';
-  font-weight: 700;
-  font-size: 32px;
-  line-height: 37px;
-  text-align: center;
-  letter-spacing: 0.5px;
-  color: #333;
-`;
-
 const CartList = styled.ul`
   width: 735px;
 
   & > li {
-    border-bottom: 1.5px solid #ccc;
+    border-bottom: 1.5px solid ${colors.transparentGold};
   }
 
   & > li:last-child {
@@ -124,7 +108,7 @@ const AllCheckBoxContainer = styled.div`
   display: flex;
   align-items: center;
   height: 60px;
-  border-bottom: 4px solid #aaaaaa;
+  border-bottom: 2px solid ${colors.transparentGold};
 
   & > span {
     font-size: 18px;
@@ -139,6 +123,7 @@ const ImageContainer = styled.div`
 `;
 
 const Image = styled.img`
+  padding: 30px;
   width: 250px;
 `;
 
@@ -152,15 +137,15 @@ const DeleteButton = styled.button`
   width: 98px;
   height: 35px;
   margin-left: auto;
-  font-family: 'Noto Sans KR';
   font-size: 16px;
   line-height: 21px;
   text-align: center;
-  color: #333;
-  border: 1px solid #bbb;
+  color: ${colors.gold};
+  border: 1px solid ${colors.gold};
 
   &:disabled {
-    color: #bbb;
+    border-color: ${colors.transparentGold};
+    color: ${colors.transparentGold};
   }
 `;
 

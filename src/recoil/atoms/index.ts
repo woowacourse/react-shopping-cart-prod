@@ -1,10 +1,24 @@
 import { atom } from 'recoil';
 import { ToastProps } from '../../components/common/Toast/Toast';
-import type { CartItem } from '../../types/product';
+import type { CartItem, PointsInfo } from '../../types/product';
+import { Order } from '../../types/order';
 
 export const cartState = atom<CartItem[]>({
   key: 'cartState',
   default: [],
+});
+
+export const checkedItemIdsState = atom<Set<number>>({
+  key: 'checkedItemIdsState',
+  default: new Set(),
+});
+
+export const pointsState = atom<PointsInfo>({
+  key: 'pointsState',
+  default: {
+    selectedPoints: 0,
+    maxPoints: 0,
+  },
 });
 
 export const toastState = atom<ToastProps[]>({
@@ -15,4 +29,9 @@ export const toastState = atom<ToastProps[]>({
 export const serverOriginState = atom<string>({
   key: 'serverOriginState',
   default: 'http://somsom.techcourse.store',
+});
+
+export const ordersState = atom<Order[]>({
+  key: 'ordersState',
+  default: [],
 });

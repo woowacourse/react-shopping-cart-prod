@@ -5,6 +5,7 @@ import { initialize, mswDecorator } from 'msw-storybook-addon';
 import type { Preview } from '@storybook/react';
 import { handlers } from '../src/mocks/handlers/index';
 import { MemoryRouter } from 'react-router-dom';
+import { themes } from '@storybook/theming';
 
 initialize();
 
@@ -18,6 +19,9 @@ const preview: Preview = {
       },
     },
     msw: handlers,
+    docs: {
+      theme: themes.dark,
+    },
   },
 };
 

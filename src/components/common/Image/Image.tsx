@@ -35,7 +35,7 @@ const ImageWrapper = styled.div<{ size: ImageSize }>`
 `;
 
 export const imageSizeMapper = {
-  large: '282px',
+  large: '272px',
   medium: '145px',
   small: '70px',
 };

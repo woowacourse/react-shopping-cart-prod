@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { css, keyframes, styled } from 'styled-components';
+import { TbCircleCheck, TbCircleX } from 'react-icons/tb';
 import useToast from './useToast';
 
 export interface ToastProps {
@@ -25,6 +26,9 @@ const Toast = ({ id, status = 'success', message, isActive }: ToastProps) => {
 
   return (
     <Container id={id} ref={toastRef} status={status} $isActive={isActive}>
+      <IconContainer>
+        {status === 'success' ? <TbCircleCheck /> : <TbCircleX />}
+      </IconContainer>
       <Message>{message}</Message>
     </Container>
   );
@@ -62,6 +66,7 @@ const Container = styled.div<{
   padding: 16px 16px;
   border-radius: 4px;
   min-width: 50px;
+  height: 60px;
 
   ${({ $isActive }) =>
     $isActive
@@ -81,6 +86,18 @@ const Container = styled.div<{
       return '#e53e53';
     }
   }};
+`;
+
+const IconContainer = styled.div`
+  width: 28px;
+  height: 28px;
+  margin-right: 5px;
+  padding: 2px;
+
+  * {
+    color: white;
+    font-size: 24px;
+  }
 `;
 
 const Message = styled.span`

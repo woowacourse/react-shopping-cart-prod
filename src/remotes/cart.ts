@@ -1,64 +1,49 @@
-import { base64 } from '../constants/auth';
+import { auth } from '../constants/auth';
 import type { CartItem, Product } from '../types/product';
+import Fetcher from './Fetcher';
+import { ERROR_MESSAGES } from '../constants/errorMessages';
+import { isCartItems } from '../types/typeGuards';
 
 export const fetchCartItems = async (url: string) => {
-  const response = await fetch(url, {
-    headers: {
-      Authorization: `Basic ${base64}`,
-    },
+  const { value } = await Fetcher.fetch<CartItem[]>({
+    url,
+    auth: `Basic ${auth}`,
+    method: 'GET',
+    typeGuard: isCartItems,
+    errorMessages: ERROR_MESSAGES.getCart,
   });
 
-  if (!response.ok) {
-    throw new Error('장바구니 목록을 불러올 수 없습니다.');
-  }
-
-  const cartItems = await response.json();
-
-  return cartItems;
+  return value;
 };
 
 export const addCartItem = async (url: string, productId: Product['id']) => {
-  const response = await fetch(url, {
+  await Fetcher.fetchNoResponseJSON({
+    url,
+    auth: `Basic ${auth}`,
     method: 'POST',
-    headers: {
-      Authorization: `Basic ${base64}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(productId),
+    body: JSON.stringify({ productId }),
+    errorMessages: ERROR_MESSAGES.addCart,
   });
-
-  if (!response.ok) {
-    throw new Error('장바구니 추가에 실패했습니다.');
-  }
 };
 
 export const updateQuantity = async (
   url: string,
   quantity: CartItem['quantity'],
 ) => {
-  const response = await fetch(url, {
+  await Fetcher.fetchNoResponseJSON({
+    url,
+    auth: `Basic ${auth}`,
     method: 'PATCH',
-    headers: {
-      Authorization: `Basic ${base64}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(quantity),
+    body: JSON.stringify({ quantity }),
+    errorMessages: ERROR_MESSAGES.changeCart,
   });
-
-  if (!response.ok) {
-    throw new Error('수량 업데이트에 실패했습니다.');
-  }
 };
 
 export const removeCartItem = async (url: string) => {
-  const response = await fetch(url, {
+  await Fetcher.fetchNoResponseJSON({
+    url,
+    auth: `Basic ${auth}`,
     method: 'DELETE',
-    headers: {
-      Authorization: `Basic ${base64}`,
-    },
+    errorMessages: ERROR_MESSAGES.removeCart,
   });
-
-  if (!response.ok) {
-    throw new Error('장바구니에서 삭제하는 데 실패했습니다.');
-  }
 };

@@ -1,21 +1,14 @@
 import { styled } from 'styled-components';
 import Spacer from '../../common/Spacer/Spacer';
-import { formatPrice } from '../../../utils/formatPrice';
+import PointsInput from '../PointsInput/PointsInput';
+import usePurchaseChecker from './usePurchaseChecker';
+import usePurchaser from './usePurchaser';
+import colors from '../../../colors';
 
-const FREE_SHIPPING_PRICE = 30_000;
-const SHIPPING_FEE = 3_000;
-
-const calcTotalOrderPrice = (
-  totalProductPrice: number,
-  isFreeShipping: boolean,
-) => {
-  if (totalProductPrice <= 0) return 0;
-
-  return isFreeShipping ? totalProductPrice : totalProductPrice + SHIPPING_FEE;
-};
-
-const CartTotal = ({ totalProductPrice }: { totalProductPrice: number }) => {
-  const isFreeShipping = totalProductPrice >= FREE_SHIPPING_PRICE;
+const CartTotal = () => {
+  const { cartPrice, finalPrice, isPurchasePossible, buttonMessage } =
+    usePurchaseChecker();
+  const { purchase } = usePurchaser();
 
   return (
     <Container>
@@ -26,41 +19,22 @@ const CartTotal = ({ totalProductPrice }: { totalProductPrice: number }) => {
       <Detail>
         <PriceWrapper>
           <dt>총 상품가격</dt>
-          <dd>{formatPrice(totalProductPrice)}</dd>
+          <dd>{cartPrice}</dd>
         </PriceWrapper>
         <Spacer height={19} />
         <PriceWrapper>
-          <dt>배송비</dt>
-          {isFreeShipping ? (
-            <OrderDetail>
-              <dd>
-                <s>{formatPrice(SHIPPING_FEE)}</s>
-              </dd>
-              <span>
-                ({formatPrice(FREE_SHIPPING_PRICE)} 이상 주문시 무료배송)
-              </span>
-            </OrderDetail>
-          ) : (
-            <dd>{formatPrice(totalProductPrice > 0 ? SHIPPING_FEE : 0)}</dd>
-          )}
+          <dt>포인트</dt>
+          <PointsInput />
         </PriceWrapper>
         <Spacer height={41} />
         <PriceWrapper>
           <dt>총 주문금액</dt>
-          <dd>
-            {formatPrice(
-              calcTotalOrderPrice(totalProductPrice, isFreeShipping),
-            )}
-          </dd>
+          <dd>{finalPrice}</dd>
         </PriceWrapper>
       </Detail>
       <Spacer height={43} />
-      <OrderButton disabled={totalProductPrice === 0}>
-        {totalProductPrice === 0
-          ? '장바구니에 상품을 담아주세요.'
-          : `주문하기 (총 ${formatPrice(
-              calcTotalOrderPrice(totalProductPrice, isFreeShipping),
-            )})`}
+      <OrderButton disabled={!isPurchasePossible} onClick={purchase}>
+        {buttonMessage}
       </OrderButton>
     </Container>
   );
@@ -73,24 +47,24 @@ const Container = styled.div`
   flex-direction: column;
   width: 448px;
   height: 410px;
-  border: 1px solid #ddd;
+  border: 1px solid ${colors.transparentGold};
+  background-color: ${colors.pureBlack};
 `;
 
 const TitleWrapper = styled.div`
   display: flex;
   align-items: center;
   height: 81px;
-  border-bottom: 3px solid #dddddd;
+  border-bottom: 3px solid ${colors.transparentGold};
   padding: 0 30px;
 `;
 
 const Title = styled.h3`
-  font-family: 'Noto Sans KR';
   font-size: 24px;
   font-weight: normal;
   line-height: 33px;
   letter-spacing: 0.5px;
-  color: #333333;
+  color: ${colors.gold};
 `;
 
 const Detail = styled.dl`
@@ -105,34 +79,26 @@ const PriceWrapper = styled.div`
 
   & > dt,
   dd {
-    font-family: 'Noto Sans KR';
     font-weight: 700;
     font-size: 20px;
     line-height: 27px;
     letter-spacing: 0.5px;
-    color: #333333;
+    color: ${colors.lightGold};
   }
-`;
-
-const OrderDetail = styled.div`
-  display: flex;
-  flex-direction: column;
-  text-align: right;
 `;
 
 const OrderButton = styled.button`
   width: 388px;
   height: 73px;
   margin: 0 auto;
-  background: #333333;
-  font-family: 'Noto Sans KR';
+  background: ${colors.gold};
   font-size: 24px;
   line-height: 21px;
   text-align: center;
-  color: #ffffff;
+  color: ${colors.pureBlack};
 
   &:disabled {
-    background-color: #afafaf;
+    background-color: ${colors.transparentGold};
   }
 `;
 

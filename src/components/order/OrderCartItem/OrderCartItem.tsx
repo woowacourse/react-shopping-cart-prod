@@ -1,15 +1,15 @@
 import { styled } from 'styled-components';
 import Image from '../../common/Image/Image';
 import { formatPrice } from '../../../utils/formatPrice';
-import type { CartItem } from '../../../types/product';
+import colors from '../../../colors';
+import type { OrderItem } from '../../../types/order';
 
-interface OrderListItemProps {
-  item: CartItem;
+interface OrderProductItemProps {
+  item: OrderItem;
 }
 
-const OrderListItem = ({ item }: OrderListItemProps) => {
-  const { quantity, product } = item;
-  const { name, price, imageUrl } = product;
+const OrderCartItem = ({ item }: OrderProductItemProps) => {
+  const { quantity, name, price, imageUrl } = item;
   const totalPrice = price * quantity;
 
   return (
@@ -31,6 +31,7 @@ const Container = styled.li`
   height: 220px;
   column-gap: 33px;
   padding: 0 26px;
+  background-color: ${colors.pureBlack};
 `;
 
 const Inner = styled.div`
@@ -41,19 +42,17 @@ const Inner = styled.div`
 `;
 
 const Title = styled.span`
-  font-family: 'Noto Sans KR';
   font-size: 20px;
   line-height: 24px;
   letter-spacing: 0.5px;
-  color: #333;
+  color: ${colors.lightGold};
 `;
 
 const Detail = styled.span`
-  font-family: 'Noto Sans KR';
   font-size: 16px;
   line-height: 20px;
   letter-spacing: 0.5px;
-  color: #888;
+  color: ${colors.pureWhite};
 `;
 
-export default OrderListItem;
+export default OrderCartItem;

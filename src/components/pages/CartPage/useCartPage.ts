@@ -1,24 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useRecoilState } from 'recoil';
+import { checkedItemIdsState } from '../../../recoil/atoms';
+
 import useCartService from '../../../hooks/useCartService';
 import type { CartItem } from '../../../types/product';
 
 const useCartPage = () => {
   const { cart, removeAllProductsFromCart } = useCartService();
-  const [checkedItemIds, setCheckedItemIds] = useState(
-    new Set(cart.map((cartItem) => cartItem.id)),
-  );
+  const [checkedItemIds, setCheckedItemIds] =
+    useRecoilState(checkedItemIdsState);
+
   const isAllChecked = cart.length > 0 && checkedItemIds.size === cart.length;
-
-  const calcTotalPrice = () => {
-    const checkedItems = cart.filter((cartItem) =>
-      checkedItemIds.has(cartItem.id),
-    );
-
-    return checkedItems.reduce(
-      (prev, item) => prev + item.product.price * item.quantity,
-      0,
-    );
-  };
 
   const handleCheckboxChange = (clickedItemId: CartItem['id']) => {
     const nextIds = new Set(checkedItemIds);
@@ -61,7 +53,6 @@ const useCartPage = () => {
     cart,
     checkedItemIds,
     isAllChecked,
-    calcTotalPrice,
     handleCheckboxChange,
     handleAllCheckboxChange,
     handleSelectedItemDelete,

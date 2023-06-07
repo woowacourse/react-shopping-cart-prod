@@ -1,18 +1,40 @@
 import { styled } from 'styled-components';
-import OrderList from '../../order/OrderList/OrderList';
+import OrderTable from '../../order/OrderTable/OrderTable';
+import FullWidthTitle from '../../common/FullWidthTitle/FullWidthTitle';
+import colors from '../../../colors';
+import { useRecoilValueLoadable } from 'recoil';
+import { orderDetailQuery } from '../../../recoil/selectors';
+import { useParams } from 'react-router-dom';
+import { formatPrice } from '../../../utils/formatPrice';
+import ErrorComponent from '../../common/Error/ErrorComponent';
+import Spinner from '../../common/Spinner/Spinner';
 
 const OrderDetailPage = () => {
+  const { orderId } = useParams();
+
+  if (orderId === undefined) {
+    throw new Error('주소가 잘못되었습니다.');
+  }
+
+  const orderInfo = useRecoilValueLoadable(orderDetailQuery(orderId));
+
+  if (orderInfo.state === 'loading') {
+    return <Spinner />;
+  }
+
+  if (orderInfo.state === 'hasError') {
+    return <ErrorComponent>{orderInfo.contents.message}</ErrorComponent>;
+  }
+
   return (
     <Container>
-      <TitleWrapper>
-        <Title>주문 내역 상세</Title>
-      </TitleWrapper>
-      <OrderList />
+      <FullWidthTitle>주문 내역 상세</FullWidthTitle>
+      <OrderTable orderInfo={orderInfo.contents} showDetailButton={false} />
       <OrderTotal>
         <OrderTotalHeader>결제금액 정보</OrderTotalHeader>
         <OrderTotalPrice>
           <span>총 결제금액</span>
-          <span>325,600원</span>
+          <span>{formatPrice(orderInfo.contents.price)}</span>
         </OrderTotalPrice>
       </OrderTotal>
     </Container>
@@ -25,26 +47,11 @@ const Container = styled.div`
   row-gap: 28px;
 `;
 
-const TitleWrapper = styled.div`
-  height: 67px;
-  border-bottom: 4px solid #333;
-`;
-
-const Title = styled.h2`
-  font-family: 'Noto Sans KR';
-  font-weight: 700;
-  font-size: 32px;
-  line-height: 37px;
-  text-align: center;
-  letter-spacing: 0.5px;
-  color: #333;
-`;
-
 const OrderTotal = styled.div`
   width: 560px;
   height: 207px;
   margin-left: auto;
-  border: 1px solid #aaa;
+  border: 1px solid ${colors.transparentGold};
 `;
 
 const OrderTotalHeader = styled.div`
@@ -52,28 +59,32 @@ const OrderTotalHeader = styled.div`
   align-items: center;
   height: 92px;
   padding: 0 30px;
-  background: #f6f6f6;
-  border-bottom: 1px solid #aaa;
-  font-family: 'Noto Sans KR';
+  background: ${colors.pureBlack};
+  border-bottom: 1px solid ${colors.transparentGold};
   font-weight: 700;
   font-size: 28px;
   line-height: 28px;
   letter-spacing: 0.5px;
-  color: #333;
+  color: ${colors.gold};
 `;
 
 const OrderTotalPrice = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 115px;
+  height: 114px;
   padding: 0 30px;
-  font-family: 'Noto Sans KR';
   font-weight: 700;
   font-size: 24px;
   line-height: 24px;
   letter-spacing: 0.5px;
-  color: #333;
+  color: ${colors.gold};
+  background-color: ${colors.pureBlack};
+  border-bottom: ${colors.transparentGold};
+
+  & span {
+    color: ${colors.lightGold};
+  }
 `;
 
 export default OrderDetailPage;

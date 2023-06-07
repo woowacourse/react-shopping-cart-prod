@@ -5,7 +5,8 @@ import Checkbox from '../../common/Checkbox/Checkbox';
 import useCartService from '../../../hooks/useCartService';
 import { formatPrice } from '../../../utils/formatPrice';
 import Spacer from '../../common/Spacer/Spacer';
-import { TrashIcon } from '../../../assets/svg';
+import { HiOutlineTrash } from 'react-icons/hi';
+import colors from '../../../colors';
 import type { CartItem } from '../../../types/product';
 
 interface CartListItemProps {
@@ -52,7 +53,7 @@ const CartListItem = ({
             aria-label="장바구니에서 삭제하기"
             onClick={() => removeProductFromCart(cartItemId)}
           >
-            <TrashIcon />
+            <HiOutlineTrash />
           </DeleteButton>
           <Counter
             count={quantity}
@@ -90,11 +91,10 @@ const Contents = styled.div`
 
 const Title = styled.p`
   margin-left: 20px;
-  font-family: 'Noto Sans KR';
   font-size: 20px;
   line-height: 24px;
   letter-spacing: 0.5px;
-  color: #333333;
+  color: ${colors.lightGold};
 
   @media only screen and (max-width: 600px) {
     font-size: 16px;
@@ -127,14 +127,18 @@ const DeleteButton = styled.button`
   border: none;
   background-color: transparent;
   cursor: pointer;
+
+  & * {
+    color: ${colors.red};
+    font-size: 26px;
+  }
 `;
 
 const Price = styled.p`
-  font-family: 'Noto Sans KR';
   font-size: 18px;
   line-height: 24px;
   letter-spacing: 0.5px;
-  color: #333333;
+  color: ${colors.lightGold};
 `;
 
 export default CartListItem;
