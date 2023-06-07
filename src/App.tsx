@@ -3,17 +3,11 @@ import GlobalStyle from './styles/GlobalStyle.tsx';
 import Header from './components/Header/Header.tsx';
 import Layout from './components/@common/Layout/Layout.tsx';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import ListPage from './pages/ListPage/ListPage.tsx';
 import { RecoilRoot } from 'recoil';
-import CartPage from './pages/CartPage/CartPage.tsx';
-import ErrorPage from './pages/ErrorPage/ErrorPage.tsx';
 import ToastProvider from './providers/toast/ToastProvider.tsx';
-import OrderDetailPage from './pages/OrderDetailPage/OrderDetailPage.tsx';
-import OrderListPage from './pages/OrderListPage/OrderListPage.tsx';
 import Modal from './components/@common/Modal/Modal.tsx';
-import LoginPage from './pages/LoginPage/LoginPage.tsx';
 import ROUTES from './constants/ROUTES.ts';
-import NotFoundPage from './pages/NotFoundPage/NotFoundPage.tsx';
+import { ListPage, CartPage, ErrorPage, OrderDetailPage, OrderListPage, LoginPage, NotFoundPage } from './pages';
 
 const App = () => {
   return (
