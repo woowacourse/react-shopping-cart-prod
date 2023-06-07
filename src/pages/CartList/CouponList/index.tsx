@@ -44,10 +44,8 @@ const CouponList = ({ onClose }: CouponListProps) => {
         {memberCoupon.map((item) => (
           <Coupon
             key={item.id}
-            name={item.name}
-            description={item.description}
+            coupon={item}
             isSelect={item.id === usingCoupon.id}
-            isUsed={item.isUsed}
             handleClick={makeSelectCoupon(item)}
             handleDeleteButton={makeDeleteCoupon(item)}
           />

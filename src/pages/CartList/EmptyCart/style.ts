@@ -1,10 +1,5 @@
 import styled from 'styled-components';
 
-export const Warpper = styled.div`
-  place-items: center;
-  min-height: 100vh;
-`;
-
 export const Container = styled.div`
   width: 100%;
   display: flex;

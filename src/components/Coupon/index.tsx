@@ -1,29 +1,22 @@
 import styled from 'styled-components';
 
+import { CouponType, MemberCouponType } from '@Types/index';
+
 interface CouponProps {
-  name?: string;
-  description?: string;
+  coupon: MemberCouponType;
   isSelect?: boolean;
-  isUsed?: boolean;
   handleClick?: () => void;
   handleDeleteButton?: () => void;
 }
 
-const Coupon = ({
-  name,
-  description,
-  isSelect = false,
-  isUsed = false,
-  handleClick,
-  handleDeleteButton,
-}: CouponProps) => {
+const Coupon = ({ coupon, isSelect = false, handleClick, handleDeleteButton }: CouponProps) => {
   return (
     <Container isSelect={isSelect}>
       <LeftContents>
         <IconContainer>
           <IconContainerLeft />
           <IconContainerRight>
-            <IconInitial isUsed={isUsed}>C</IconInitial>
+            <IconInitial isUsed={coupon.isUsed}>C</IconInitial>
           </IconContainerRight>
           <Hole $position="bottom:-6px" $backgroundColor="#cccccc" />
           <Hole $position="top:-6px" $backgroundColor="#eeeeee" />
@@ -32,15 +25,15 @@ const Coupon = ({
       <RightContents>
         <CenterContents>
           <div>
-            <Name>{name}</Name>
-            <Description isUsed={isUsed}>{description}</Description>
+            <Name>{coupon.name}</Name>
+            <Description isUsed={coupon.isUsed}>{coupon.description}</Description>
           </div>
           <Expiration>
-            2023-5-30 ~ {isUsed && <DeleteButton onClick={handleDeleteButton}>삭제하기</DeleteButton>}
+            2023-5-30 ~ {coupon.isUsed && <DeleteButton onClick={handleDeleteButton}>삭제하기</DeleteButton>}
           </Expiration>
         </CenterContents>
         <ButtonWrapper>
-          {isUsed ? (
+          {coupon.isUsed ? (
             <UsedButton>사용완료</UsedButton>
           ) : (
             <UseButton onClick={handleClick}>{isSelect ? '✔' : '사용'}</UseButton>
