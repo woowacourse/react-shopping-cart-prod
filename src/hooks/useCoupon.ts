@@ -79,19 +79,13 @@ const useCoupon = () => {
 
   const setCheckCoupon = useCallback(
     (couponId: number) => {
-      const result = couponList.map((coupon) => {
-        if (coupon.couponId === couponId) {
-          return {
-            ...coupon,
-            isSelected: true,
-          };
-        }
-        return coupon;
-      }) as selectedCouponItemType[];
-
-      setCouponList(result.filter((coupon) => coupon.couponId === couponId));
+      setCouponList((prevCouponList) =>
+        prevCouponList.map((coupon) =>
+          coupon.couponId === couponId ? { ...coupon, isSelected: true } : coupon
+        )
+      );
     },
-    [couponList, setCouponList]
+    [setCouponList]
   );
 
   const resetCheckedCoupon = useCallback(() => {

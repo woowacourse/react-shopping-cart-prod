@@ -4,7 +4,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { USER_TOKEN } from '../constants';
 import { cartListState } from '../store/cart';
 import { originState } from '../store/origin';
-import { CartItemType, ProductItemType } from '../types';
+import { BeforeBuyItemType, CartItemType, ProductItemType } from '../types';
 
 const useCartList = () => {
   const [cartItem, setCartItemList] = useRecoilState(cartListState);
@@ -179,16 +179,15 @@ const useCartList = () => {
   };
 
   const getCheckedCartItems = useCallback(() => {
-    const filterdData = cartItem.filter((item) => {
-      return item.isChecked;
-    });
-
-    return filterdData.map((item) => {
-      return {
-        id: item.product.id,
-        quantity: item.quantity,
-      };
-    });
+    return cartItem.reduce((accumulator, item) => {
+      if (item.isChecked) {
+        accumulator.push({
+          id: item.product.id,
+          quantity: item.quantity,
+        });
+      }
+      return accumulator;
+    }, [] as BeforeBuyItemType[]);
   }, [cartItem]);
 
   return {
