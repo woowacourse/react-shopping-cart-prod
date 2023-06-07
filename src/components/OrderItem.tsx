@@ -4,7 +4,7 @@ import { LocalProductType } from '../types/domain';
 export const OrderItem = ({ orderItem }: { orderItem: Omit<LocalProductType, 'cartItemId'> }) => {
   return (
     <Wrapper>
-      <ItemImage src={orderItem.imageUrl} />
+      <ItemImage src={orderItem.imageUrl} alt='상품이미지'/>
       <ItemDetail>
         <ItemName>{orderItem.name}</ItemName>
         <ItemInfo>{`${Number(orderItem.price).toLocaleString()}원 / 수량 : ${
