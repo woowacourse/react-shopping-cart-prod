@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { OrderDetail } from '../types/domain';
+import { OrderDetail } from '../../types/domain';
 
 export const OrderTotalPriceBox = ({
   totalProductPrice,

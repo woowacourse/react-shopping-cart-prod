@@ -1,10 +1,10 @@
 import { useRecoilState } from 'recoil';
-import { localProductsState } from '../recoil/atom';
+import { localProductsState } from '../../recoil/atom';
 import React, { useEffect, useState } from 'react';
-import { MAX_LENGTH_QUANTITY, MAX_QUANTITY, MIN_QUANTITY } from '../constants';
-import { changeQuantity, deleteCartItem } from '../api';
-import { LocalProduct } from '../types/domain';
-import { makeLocalProducts } from '../utils/domain';
+import { MAX_LENGTH_QUANTITY, MAX_QUANTITY, MIN_QUANTITY } from '../../constants';
+import { changeQuantity, deleteCartItem } from '../../api';
+import { LocalProduct } from '../../types/domain';
+import { makeLocalProducts } from '../../utils/domain';
 
 export const useQuantity = (productId: number) => {
   const [errorStatus, setErrorStatus] = useState<string>('');

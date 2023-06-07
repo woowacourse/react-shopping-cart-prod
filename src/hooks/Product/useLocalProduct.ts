@@ -1,6 +1,6 @@
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { localProductsState, serverOwnerState } from '../recoil/atom';
-import { makeLocalProducts } from '../utils/domain';
+import { localProductsState, serverOwnerState } from '../../recoil/atom';
+import { makeLocalProducts } from '../../utils/domain';
 import { useEffect } from 'react';
 
 export const useLocalProduct = () => {

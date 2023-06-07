@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 import { OrderSheetProduct } from './OrderSheetProduct';
-import { LocalProduct } from '../types/domain';
+import { LocalProduct } from '../../types/domain';
 
 export const OrderSheetList = ({ orderList }: { orderList: LocalProduct[] }) => {
   return (

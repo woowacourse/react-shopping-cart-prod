@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { fetchOrderList } from '../api';
-import { OrderDetail } from '../types/domain';
+import { fetchOrderList } from '../../api';
+import { OrderDetail } from '../../types/domain';
 
 export const useOrderDetail = (orderId: number) => {
   const [orderDetailList, setOrderDetailList] = useState<OrderDetail>({

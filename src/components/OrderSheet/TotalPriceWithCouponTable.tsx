@@ -1,12 +1,12 @@
 import { styled } from 'styled-components';
-import { Button } from './Button';
-import { totalPriceSelector } from '../recoil/selector';
+import { Button } from '../Common/Button';
+import { totalPriceSelector } from '../../recoil/selector';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { LocalProduct } from '../types/domain';
-import { fetchAddOrderList } from '../api';
-import { makeLocalProducts } from '../utils/domain';
-import { localProductsState } from '../recoil/atom';
-import { DELIVERY_FEE } from '../constants';
+import { LocalProduct } from '../../types/domain';
+import { fetchAddOrderList } from '../../api';
+import { makeLocalProducts } from '../../utils/domain';
+import { localProductsState } from '../../recoil/atom';
+import { DELIVERY_FEE } from '../../constants';
 
 export const TotalPriceWithCouponTable = ({
   discountPrice,

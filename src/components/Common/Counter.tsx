@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useQuantity } from '../hooks/useQuantity';
+import { useQuantity } from '../../hooks/Common/useQuantity';
 
 interface CounterProps {
   productId: number;

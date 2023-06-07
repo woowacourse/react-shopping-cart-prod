@@ -1,6 +1,6 @@
 import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
-import { useRouter } from '../hooks/useRouter';
+import { useRouter } from '../hooks/Common/useRouter';
 import { localProductsSelector } from '../recoil/selector';
 import { ROUTER_PATH } from '../router';
 import {

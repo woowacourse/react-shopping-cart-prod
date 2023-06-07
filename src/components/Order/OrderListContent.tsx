@@ -1,8 +1,8 @@
 import { styled } from 'styled-components';
-import { useOrderList } from '../hooks/useOrderList';
-import { Button } from './Button';
-import { ROUTER_PATH } from '../router';
-import { useRouter } from '../hooks/useRouter';
+import { useOrderList } from '../../hooks/Order/useOrderList';
+import { Button } from '../Common/Button';
+import { ROUTER_PATH } from '../../router';
+import { useRouter } from '../../hooks/Common/useRouter';
 import { OrderList } from './OrderList';
 
 export const OrderListContent = () => {

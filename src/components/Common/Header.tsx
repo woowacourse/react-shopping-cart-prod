@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import { CartIcon } from '../assets';
+import { CartIcon } from '../../assets';
 import { useRecoilValue } from 'recoil';
-import { localProductsSelector } from '../recoil/selector';
-import { ROUTER_PATH } from '../router';
-import { useRouter } from '../hooks/useRouter';
-import { ServerSelectBox } from './ServerSelectBox';
+import { localProductsSelector } from '../../recoil/selector';
+import { ROUTER_PATH } from '../../router';
+import { useRouter } from '../../hooks/Common/useRouter';
+import { ServerSelectBox } from '../SelectBox/ServerSelectBox';
 
 export const Header = () => {
   const { goPage } = useRouter();

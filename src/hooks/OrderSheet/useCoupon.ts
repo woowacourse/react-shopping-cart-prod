@@ -1,8 +1,8 @@
 import { useRecoilValue } from 'recoil';
-import { selectedProductsState } from '../recoil/atom';
+import { selectedProductsState } from '../../recoil/atom';
 import { useEffect, useState } from 'react';
-import { fetchCoupons } from '../api';
-import { Coupon } from '../types/domain';
+import { fetchCoupons } from '../../api';
+import { Coupon } from '../../types/domain';
 
 export const useCoupon = () => {
   const checkedCartList = useRecoilValue(selectedProductsState);

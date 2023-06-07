@@ -1,12 +1,12 @@
 import styled from 'styled-components';
-import type { LocalProduct } from '../types/domain';
-import { CartGrayIcon } from '../assets';
-import { Counter } from './Counter';
-import { MIN_QUANTITY } from '../constants';
-import { addCartItem } from '../api';
-import { makeLocalProducts } from '../utils/domain';
+import type { LocalProduct } from '../../types/domain';
+import { CartGrayIcon } from '../../assets';
+import { Counter } from '../Common/Counter';
+import { MIN_QUANTITY } from '../../constants';
+import { addCartItem } from '../../api';
+import { makeLocalProducts } from '../../utils/domain';
 import { useState } from 'react';
-import { useLocalProduct } from '../hooks/useLocalProduct';
+import { useLocalProduct } from '../../hooks/Product/useLocalProduct';
 
 export const ProductList = () => {
   const { localProducts, setLocalProducts } = useLocalProduct();

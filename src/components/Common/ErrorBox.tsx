@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
-import { ROUTER_PATH } from '../router';
-import { generateStatusErrorMessage } from '../utils/generateStatusErrorMessage';
+import { ROUTER_PATH } from '../../router';
+import { generateStatusErrorMessage } from '../../utils/generateStatusErrorMessage';
 
 const ErrorBox = ({ errorMessage }: { errorMessage: string }) => {
   return (

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { ArrowDownIcon } from '../assets';
-import { Coupon } from '../types/domain';
+import { ArrowDownIcon } from '../../assets';
+import { Coupon } from '../../types/domain';
 
 interface CouponContainerProps {
   available: string;

@@ -1,8 +1,8 @@
 import { styled } from 'styled-components';
-import { OrderList } from './OrderList';
+import { OrderList } from '../Order/OrderList';
 import { OrderTotalPriceBox } from './OrderTotalPriceBox';
 import { useLocation } from 'react-router-dom';
-import { useOrderDetail } from '../hooks/useOrderdetail';
+import { useOrderDetail } from '../../hooks/OrderDetail/useOrderdetail';
 
 export const OrderDetailContent = () => {
   const location = useLocation();

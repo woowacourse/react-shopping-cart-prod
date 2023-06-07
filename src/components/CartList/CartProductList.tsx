@@ -1,13 +1,13 @@
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import type { LocalProduct, Product } from '../types/domain';
+import type { LocalProduct, Product } from '../../types/domain';
 import styled from 'styled-components';
-import { TrashCanIcon } from '../assets';
-import { Counter } from './Counter';
-import { localProductsSelector } from '../recoil/selector';
-import { useCheckBox } from '../hooks/useCheckBox';
-import { deleteCartItem } from '../api';
-import { localProductsState, selectedProductsState } from '../recoil/atom';
-import { makeLocalProducts } from '../utils/domain';
+import { TrashCanIcon } from '../../assets';
+import { Counter } from '../Common/Counter';
+import { localProductsSelector } from '../../recoil/selector';
+import { useCheckBox } from '../../hooks/CartList/useCheckBox';
+import { deleteCartItem } from '../../api';
+import { localProductsState, selectedProductsState } from '../../recoil/atom';
+import { makeLocalProducts } from '../../utils/domain';
 import { useState } from 'react';
 
 export const CartProductList = () => {

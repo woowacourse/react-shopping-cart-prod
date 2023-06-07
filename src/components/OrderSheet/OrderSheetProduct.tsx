@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { LocalProduct } from '../types/domain';
+import { LocalProduct } from '../../types/domain';
 
 interface OrderSheetProductPropsType {
   orderItem: LocalProduct;

@@ -1,10 +1,10 @@
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { DELIVERY_FEE } from '../constants';
-import { totalPriceSelector } from '../recoil/selector';
-import { Button } from './Button';
-import { useRouter } from '../hooks/useRouter';
-import { ROUTER_PATH } from '../router';
+import { DELIVERY_FEE } from '../../constants';
+import { totalPriceSelector } from '../../recoil/selector';
+import { Button } from '../Common/Button';
+import { useRouter } from '../../hooks/Common/useRouter';
+import { ROUTER_PATH } from '../../router';
 
 export const TotalPriceTable = () => {
   const totalPrice = useRecoilValue(totalPriceSelector);

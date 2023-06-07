@@ -1,9 +1,9 @@
 import { styled } from 'styled-components';
-import { SERVERS } from '../constants';
-import { ROUTER_PATH } from '../router';
-import { useRouter } from '../hooks/useRouter';
+import { SERVERS } from '../../constants';
+import { ROUTER_PATH } from '../../router';
+import { useRouter } from '../../hooks/Common/useRouter';
 import { useRecoilState } from 'recoil';
-import { serverOwnerState } from '../recoil/atom';
+import { serverOwnerState } from '../../recoil/atom';
 
 export const ServerSelectBox = () => {
   const { goPage } = useRouter();

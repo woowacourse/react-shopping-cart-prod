@@ -9,10 +9,10 @@ import {
 } from '../components';
 import { useState } from 'react';
 import { Coupon } from '../types/domain';
-import { useCoupon } from '../hooks/useCoupon';
+import { useCoupon } from '../hooks/OrderSheet/useCoupon';
 import { selectedProductsState } from '../recoil/atom';
 import { useRecoilValue } from 'recoil';
-import { useRouter } from '../hooks/useRouter';
+import { useRouter } from '../hooks/Common/useRouter';
 import { ROUTER_PATH } from '../router';
 
 export const OrderSheet = () => {

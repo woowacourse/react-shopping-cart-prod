@@ -1,8 +1,8 @@
 import { styled } from 'styled-components';
 import { OrderItem } from './OrderItem';
-import { useRouter } from '../hooks/useRouter';
-import { ROUTER_PATH } from '../router';
-import { OrderItemList } from '../types/domain';
+import { useRouter } from '../../hooks/Common/useRouter';
+import { ROUTER_PATH } from '../../router';
+import { OrderItemList } from '../../types/domain';
 
 type OrderListProps = {
   detail?: boolean;
