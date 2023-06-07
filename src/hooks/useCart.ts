@@ -21,7 +21,7 @@ import type { APIErrorMessage } from '../types/api';
 import type { CartItemData } from '../types/cart';
 import type { OrderCartItemsData } from '../types/order';
 import type { ProductItemData } from '../types/product';
-import { useMutationFetch } from './common/useMutationFetch';
+import { useLoadWithSetFetchData } from './common/useLoadWithSetFetchData';
 import { useToast } from './common/useToast';
 
 const useCart = () => {
@@ -62,7 +62,7 @@ const useCart = () => {
     [setErrorModalMessage]
   );
 
-  const { mutate: addItem } = useMutationFetch<CartItemData, ProductItemData>(
+  const { setData: addItem } = useLoadWithSetFetchData<CartItemData, ProductItemData>(
     useRecoilCallback(
       () => async (product) => {
         const response = await cartAPI.postCartItem(product.id);
@@ -83,7 +83,7 @@ const useCart = () => {
     }
   );
 
-  const { mutate: updateItemQuantity } = useMutationFetch<
+  const { setData: updateItemQuantity } = useLoadWithSetFetchData<
     void,
     { cartItemId: number; quantity: number }
   >(
@@ -102,7 +102,7 @@ const useCart = () => {
     }
   );
 
-  const { mutate: removeItem } = useMutationFetch<void, number>(
+  const { setData: removeItem } = useLoadWithSetFetchData<void, number>(
     useCallback(
       async (cartItemId) => {
         await cartAPI.deleteCartItem(cartItemId);
@@ -119,7 +119,7 @@ const useCart = () => {
     }
   );
 
-  const { mutate: removeCheckedItems } = useMutationFetch<void, number[]>(
+  const { setData: removeCheckedItems } = useLoadWithSetFetchData<void, number[]>(
     useCallback(
       async (cartItemIds) => {
         await Promise.all(cartItemIds.map((cartItemId) => cartAPI.deleteCartItem(cartItemId)));
@@ -136,7 +136,7 @@ const useCart = () => {
     }
   );
 
-  const { mutate: orderCheckedItems } = useMutationFetch<string, number[]>(
+  const { setData: orderCheckedItems } = useLoadWithSetFetchData<string, number[]>(
     useRecoilCallback(
       ({ snapshot }) =>
         async (cartItemIds) => {

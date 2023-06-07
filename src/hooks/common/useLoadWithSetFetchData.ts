@@ -2,47 +2,48 @@ import { useCallback, useState } from 'react';
 
 import HTTPError from '../../api/utils/HTTPError';
 
-type MutationFunction<T, V> = (variables: V) => Promise<T>;
+type SetDataFunction<T, V> = (variables: V) => Promise<T>;
 
-interface MutationOptions<T> {
+interface SetDataOptions<T> {
   onSuccess?: (data: T) => void;
   onError?: (error: HTTPError) => void;
 }
 
-interface MutationResult<V> {
-  mutate: (variables: V) => void;
+interface SetResult<V> {
+  setData: (variables: V) => void;
   state: {
     isLoading: boolean;
     error: Error | HTTPError | null;
   };
 }
 
-const useMutationFetch = <T, V = undefined>(
-  mutationFn: MutationFunction<T, V>,
-  { onSuccess, onError }: MutationOptions<T> = {}
-): MutationResult<V> => {
+const useLoadWithSetFetchData = <T, V = undefined>(
+  setDataFn: SetDataFunction<T, V>,
+  { onSuccess, onError }: SetDataOptions<T> = {}
+): SetResult<V> => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | HTTPError | null>(null);
 
-  const mutate = useCallback(
+  const setData = useCallback(
     (variables: V) => {
       setIsLoading(true);
-      mutationFn(variables)
+      setDataFn(variables)
         .then((data) => {
-          setIsLoading(false);
           setError(null);
           onSuccess?.(data);
         })
         .catch((error) => {
-          setIsLoading(false);
           setError(error);
           onError?.(error);
+        })
+        .finally(() => {
+          setIsLoading(false);
         });
     },
-    [mutationFn, onSuccess, onError]
+    [setDataFn, onSuccess, onError]
   );
 
-  return { mutate, state: { isLoading, error } };
+  return { setData, state: { isLoading, error } };
 };
 
-export { useMutationFetch };
+export { useLoadWithSetFetchData };
