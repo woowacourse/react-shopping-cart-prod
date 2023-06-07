@@ -2,6 +2,7 @@ import useGetOrderList from '../../hooks/requests/useGetOrderList.ts';
 import OrderList from '../../components/@common/OrderList/OrderList.tsx';
 import * as Styled from './OrderListPage.styles.tsx';
 import EmptyCartComponent from '../../components/@common/EmptyComponent/EmptyCartComponent.tsx';
+import { MainPageText, MainTextBorder } from '../../styles/CommonStyles.tsx';
 
 const OrderListPage = () => {
   const { data: orderListData } = useGetOrderList();
@@ -9,8 +10,8 @@ const OrderListPage = () => {
   return (
     <Styled.OrderListPageWrapper>
       <Styled.OrderListPageContent>
-        <Styled.OrderListPageTitle>주문목록</Styled.OrderListPageTitle>
-        <Styled.OrderListPageTitleBorder />
+        <MainPageText>주문목록</MainPageText>
+        <MainTextBorder />
         {orderListData && orderListData.orders.length === 0 && <EmptyCartComponent />}
 
         {orderListData &&

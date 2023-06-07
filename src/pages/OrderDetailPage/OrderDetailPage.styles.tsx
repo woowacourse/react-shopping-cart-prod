@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { CartMainText, MainTextBorder } from '../CartPage/CartPage.styles.tsx';
 import VIEWPORTS from '../../constants/VIEWPORTS.ts';
 import { ButtonWithHoverScalingEffect } from '../../styles/CommonStyles.tsx';
 
@@ -12,10 +11,6 @@ export const OrderDetailPageWrapper = styled.div`
 export const OrderDetailPageContent = styled.div`
   width: 60%;
 `;
-
-export const OrderDetailPageTitle = styled(CartMainText)``;
-
-export const OrderDetailPageTitleBorder = styled(MainTextBorder)``;
 
 export const PriceBoxWrapper = styled.div`
   display: flex;

@@ -5,6 +5,7 @@ import { OrderResponse } from '../../types/responses/OrderResponse.ts';
 import OrderList from '../../components/@common/OrderList/OrderList.tsx';
 import ROUTES from '../../constants/ROUTES.ts';
 import * as Styled from './OrderDetailPage.styles.tsx';
+import { MainPageText, MainTextBorder } from '../../styles/CommonStyles.tsx';
 
 const OrderDetailPage = () => {
   const navigate = useNavigate();
@@ -33,8 +34,8 @@ const OrderDetailPage = () => {
       {orderData && (
         <Styled.OrderDetailPageWrapper>
           <Styled.OrderDetailPageContent>
-            <Styled.OrderDetailPageTitle>주문 내역 상세</Styled.OrderDetailPageTitle>
-            <Styled.OrderDetailPageTitleBorder />
+            <MainPageText>주문 내역 상세</MainPageText>
+            <MainTextBorder />
 
             <OrderList orderData={orderData} />
 
