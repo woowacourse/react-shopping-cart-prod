@@ -6,7 +6,7 @@ import { cartSelectedItemsSelector } from '../../../stores/cartListStore.ts';
 import useCart from '../../../hooks/useCart.ts';
 import { useEffect } from 'react';
 import useSetCartListStoreFromServer from '../../../hooks/useSetCartListStoreFromServer.ts';
-import EmptyComponent from '../../@common/EmptyComponent/EmptyComponent.tsx';
+import EmptyCartComponent from '../../@common/EmptyComponent/EmptyCartComponent.tsx';
 
 const CartSelectList = () => {
   const { data: cartList, status: cartListFetchingStatus, refetchCartList } = useGetCartList();
@@ -22,7 +22,7 @@ const CartSelectList = () => {
 
   return (
     <Styled.CartSelectListWrapper>
-      {!cartList?.length && cartListFetchingStatus === 'success' && <EmptyComponent />}
+      {!cartList?.length && cartListFetchingStatus === 'success' && <EmptyCartComponent />}
 
       {cartList && cartList?.length > 0 && (
         <>

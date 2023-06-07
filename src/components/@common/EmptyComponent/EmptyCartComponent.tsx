@@ -1,6 +1,6 @@
 import EmptyPicture from '../../../assets/empty-box.png';
 import * as Styled from './EmptyComponent.styles.tsx';
-const EmptyComponent = () => {
+const EmptyCartComponent = () => {
   return (
     <Styled.EmptyComponentWrapper>
       <Styled.EmptyImage src={EmptyPicture} alt='empty jewelry box' aria-label='empty jewelry box' />
@@ -13,4 +13,4 @@ const EmptyComponent = () => {
   );
 };
 
-export default EmptyComponent;
+export default EmptyCartComponent;
