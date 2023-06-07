@@ -30,10 +30,9 @@ const CartSelectList = () => {
           <Styled.CartQuantityDivider />
           <div>
             <div>
-              {cartList &&
-                cartList.map((cart) => {
-                  return <CartItem key={cart.id} cart={cart} refetchCartList={refetchCartList} />;
-                })}
+              {cartList.map((cart) => {
+                return <CartItem key={cart.id} cart={cart} refetchCartList={refetchCartList} />;
+              })}
               <Styled.SelectAllButton onClick={selectAllItems}>전체선택</Styled.SelectAllButton>
               <span>
                 ({selectedItemsCount}/{allItemsCount})
