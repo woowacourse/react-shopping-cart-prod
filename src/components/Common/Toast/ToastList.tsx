@@ -1,7 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 import { createPortal } from 'react-dom';
 import { useRecoilValue } from 'recoil';
-import { $ToastStateList } from '../../../recoil/atom';
+import { $ToastStateList } from 'src/recoil/atom';
 import styles from './index.module.scss';
 import Toast from '.';
 

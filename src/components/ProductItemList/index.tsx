@@ -1,29 +1,28 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+
 import { useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
-import { MESSAGE } from '../../constants';
-import useGetQuery from '../../hooks/useGetQuery';
-import useToast from '../../hooks/useToast';
-import { $CurrentServerUrl } from '../../recoil/atom';
-import { Product } from '../../types';
-import LoadingView from '../Common/LoadingView';
-import ProductItem from '../ProductItem';
+import fetchData from 'src/api';
+import ProductItem from 'src/components/ProductItem';
+import useFetch from 'src/hooks/useFetch';
+import { $CurrentServerUrl } from 'src/recoil/atom';
+import { Product } from 'src/types';
 import styles from './index.module.scss';
 
 function ProductItemList() {
   const currentServerUrl = useRecoilValue($CurrentServerUrl);
-  const { data: productsData, loading, error } = useGetQuery<Product[]>(`${currentServerUrl}/products`);
-  const Toast = useToast();
+  const { result: productsData, refreshFetch } = useFetch({
+    fetch: fetchData<Product[]>,
+    arg: { url: `${currentServerUrl}/products` },
+    key: 'products',
+    suspense: true,
+  });
 
   useEffect(() => {
-    if (error) {
-      Toast.error(MESSAGE.PRODUCT_GET_FAILED);
-    }
-  }, [error]);
-
-  if (loading) {
-    return <LoadingView />;
-  }
+    refreshFetch({
+      url: `${currentServerUrl}/products`,
+    });
+  }, [currentServerUrl]);
 
   return (
     <section className={styles.container}>

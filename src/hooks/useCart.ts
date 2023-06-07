@@ -1,9 +1,9 @@
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { MESSAGE, USER } from '../constants';
-import { $CartList, $CheckedCartIdList, $CurrentServerUrl } from '../recoil/atom';
+import { API_URL, MESSAGE, USER } from 'src/constants';
+import { $CartList, $CheckedCartIdList, $CurrentServerUrl } from 'src/recoil/atom';
 import useMutation from './useMutation';
 import useToast from './useToast';
-import type { CartItem, Product } from '../types';
+import type { CartItem, Product } from 'src/types';
 
 const useCart = () => {
   const Toast = useToast();
@@ -11,7 +11,7 @@ const useCart = () => {
   const [cartList, setCartList] = useRecoilState($CartList(currentServerUrl));
   const setCheckedCartIdList = useSetRecoilState($CheckedCartIdList(currentServerUrl));
 
-  const addCartQuery = useMutation<Record<string, number>, CartItem>({
+  const { mutateQuery: addCartQuery, isLoading: addLoading } = useMutation<Record<string, number>, CartItem>({
     onSuccess: data => {
       const regex = /[^0-9]/g;
       const cartId = data?.headers.get('Location')?.replace(regex, '');
@@ -25,12 +25,12 @@ const useCart = () => {
 
       Toast.success(MESSAGE.ADD_CART_SUCCESSFUL);
     },
-    onFailure: () => {
-      Toast.error(MESSAGE.ADD_CART_FAILED);
+    onFailure: message => {
+      Toast.error(message ?? MESSAGE.ADD_CART_FAILED);
     },
   });
 
-  const deleteCartQuery = useMutation<Record<string, number>, CartItem>({
+  const { mutateQuery: deleteCartQuery, isLoading: deleteLoading } = useMutation<Record<string, number>, CartItem>({
     onSuccess: data => {
       const regex = /(\d+)$/;
       const cartId = data?.fetchInformation.url.match(regex)?.at(1);
@@ -40,12 +40,12 @@ const useCart = () => {
 
       Toast.success(MESSAGE.DELETE_CART_SUCCESSFUL);
     },
-    onFailure: () => {
-      Toast.error(MESSAGE.DELETE_CART_FAILED);
+    onFailure: message => {
+      Toast.error(message ?? MESSAGE.DELETE_CART_FAILED);
     },
   });
 
-  const mutateQuantityQuery = useMutation<Record<string, number>, CartItem>({
+  const { mutateQuery: mutateQuantityQuery, isLoading: mutateLoading } = useMutation<Record<string, number>, CartItem>({
     onSuccess: data => {
       const regex = /(\d+)$/;
       const cartId = data?.fetchInformation.url.match(regex)?.at(1);
@@ -55,14 +55,14 @@ const useCart = () => {
         setCartList(prev => prev.map(item => (item.id === Number(cartId) ? { ...item, quantity } : item)));
       }
     },
-    onFailure: () => {
-      Toast.error(MESSAGE.MUTATE_CART_FAILED);
+    onFailure: message => {
+      Toast.error(message ?? MESSAGE.MUTATE_CART_FAILED);
     },
   });
 
   const mutateQuantity = async (cartId: number, quantity: number) => {
     await mutateQuantityQuery({
-      url: `${currentServerUrl}/cart-items/${cartId}`,
+      url: `${currentServerUrl}${API_URL.CART_ITEM(`${cartId}`)}`,
       method: 'PATCH',
       bodyData: { quantity },
       headers: {
@@ -74,17 +74,18 @@ const useCart = () => {
 
   const deleteCartItem = async (cartId: number) => {
     await deleteCartQuery({
-      url: `${currentServerUrl}/cart-items/${cartId}`,
+      url: `${currentServerUrl}${API_URL.CART_ITEM(`${cartId}`)}`,
       method: 'DELETE',
       headers: {
         Authorization: `Basic ${btoa(USER)}`,
+        'Content-Type': 'application/json',
       },
     });
   };
 
   const addCartItem = async (product: Product) => {
     await addCartQuery({
-      url: `${currentServerUrl}/cart-items`,
+      url: `${currentServerUrl}${API_URL.CART}`,
       method: 'POST',
       bodyData: { productId: product.id },
       headers: {
@@ -95,11 +96,14 @@ const useCart = () => {
     });
   };
 
+  const loading = addLoading || deleteLoading || mutateLoading;
+
   return {
     cartList,
     mutateQuantity,
     deleteCartItem,
     addCartItem,
+    loading,
   };
 };
 

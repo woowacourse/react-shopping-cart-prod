@@ -1,18 +1,19 @@
 import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
-import LoadingView from '../components/Common/LoadingView';
-import ToastList from '../components/Common/Toast/ToastList';
-import Header from '../components/Header';
+import ToastList from 'src/components/Common/Toast/ToastList';
+import ErrorBoundary from 'src/components/ErrorBoundary';
+import FetchFail from 'src/components/FetchFail';
+import Header from 'src/components/Header';
 
 function Root() {
   return (
-    <>
-      <Suspense fallback={<LoadingView />}>
+    <ErrorBoundary fallback={<FetchFail />}>
+      <Suspense>
         <Header />
         <Outlet />
+        <ToastList />
       </Suspense>
-      <ToastList />
-    </>
+    </ErrorBoundary>
   );
 }
 

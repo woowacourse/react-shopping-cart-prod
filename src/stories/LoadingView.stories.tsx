@@ -1,4 +1,4 @@
-import LoadingView from '../components/Common/LoadingView';
+import LoadingView from 'src/components/Common/LoadingView';
 import type { Meta, StoryObj } from '@storybook/react';
 
 type Story = StoryObj<typeof LoadingView>;

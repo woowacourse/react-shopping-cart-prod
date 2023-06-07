@@ -1,7 +1,11 @@
-import { ReactComponent as TrashBox } from '../../assets/trash-box.svg';
-import CountButton from '../Common/CountButton';
+import { RiDeleteBinLine } from 'react-icons/ri';
+import CheckBox from 'src/components/Common/CheckBox';
+import CountButton from 'src/components/Common/CountButton';
+import Modal from 'src/components/Common/Modal';
+import ModalNotification from 'src/components/Common/ModalNotification';
+import useModal from 'src/hooks/useModal';
 import styles from './index.module.scss';
-import type { CartItem } from '../../types';
+import type { CartItem } from 'src/types';
 
 interface CartProductItemProps {
   cartItem: CartItem;
@@ -16,12 +20,16 @@ function CartProductItem({ cartItem, toggleCheck, checked, mutateQuantity, delet
   const { id, product, quantity } = cartItem;
   const { name, imageUrl, price } = product;
 
+  const { isModalOpen, openModal, closeModal } = useModal();
+
   const handleDeleteButton = () => {
-    deleteCartItem(id);
+    openModal();
   };
+
   const handleUpButton = () => {
     mutateQuantity(id, quantity + 1);
   };
+
   const handleDownButton = () => {
     if (quantity > 1) {
       mutateQuantity(id, quantity - 1);
@@ -30,23 +38,32 @@ function CartProductItem({ cartItem, toggleCheck, checked, mutateQuantity, delet
 
   return (
     <div className={styles.container}>
-      <input type="checkbox" className={styles['check-box']} onChange={toggleCheck} checked={checked} />
+      <CheckBox changeHandler={toggleCheck} checked={checked} />
       <img src={imageUrl} alt={name} className={styles.image} />
       <div className={styles['item-info']}>
-        <div>
-          <div className={styles['product-title']}>{name}</div>
+        <div className={styles['product-title']}>{name}</div>
+        <div className={styles['handle-container']}>
           <button type="button" onClick={handleDeleteButton}>
-            <TrashBox size={24} />
+            <RiDeleteBinLine />
           </button>
+          <CountButton
+            size="large"
+            count={quantity}
+            handleUpButton={handleUpButton}
+            handleDownButton={handleDownButton}
+          />
+          <div className={styles['product-price']}>{(price * quantity).toLocaleString()} 원</div>
         </div>
-        <CountButton
-          size="large"
-          count={quantity}
-          handleUpButton={handleUpButton}
-          handleDownButton={handleDownButton}
-        />
-        <div className={styles['product-price']}>{(price * quantity).toLocaleString()} 원</div>
       </div>
+      {isModalOpen && (
+        <Modal closeEvent={closeModal} direction="center">
+          <ModalNotification
+            message={{ title: '정말 삭제하시겠습니까?' }}
+            cancelCallback={closeModal}
+            assignCallback={() => deleteCartItem(id)}
+          />
+        </Modal>
+      )}
     </div>
   );
 }

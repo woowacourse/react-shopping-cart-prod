@@ -1,15 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useRecoilState, useRecoilValue } from 'recoil';
-import useCart from '../../hooks/useCart';
-import { $CheckedCartIdList, $CurrentServerUrl } from '../../recoil/atom';
-import CartProductItem from '../CartProductItem';
+import CartProductItem from 'src/components/CartProductItem';
+import CheckBox from 'src/components/Common/CheckBox';
+import Modal from 'src/components/Common/Modal';
+import ModalNotification from 'src/components/Common/ModalNotification';
+import useCart from 'src/hooks/useCart';
+import useModal from 'src/hooks/useModal';
+import { $CheckedCartIdList, $CurrentServerUrl } from 'src/recoil/atom';
 import styles from './index.module.scss';
-import type { CartItem } from '../../types';
+import type { CartItem } from 'src/types';
 
 function CartProductItemList() {
   const currentServerUrl = useRecoilValue($CurrentServerUrl);
   const [checkedCartIdList, setCheckedCartIdList] = useRecoilState($CheckedCartIdList(currentServerUrl));
   const { cartList, deleteCartItem, mutateQuantity } = useCart();
+
+  const { isModalOpen, openModal, closeModal } = useModal();
 
   const checkAllCartItem: React.ChangeEventHandler<HTMLInputElement> = ({ target: { checked } }) => {
     if (checked) {
@@ -33,7 +39,17 @@ function CartProductItemList() {
 
   return (
     <div className={styles.container}>
-      <h3 className={styles.title}>배송 상품 {`(${cartList.length}개)`}</h3>
+      <div className={styles['check-menu']}>
+        <CheckBox
+          changeHandler={checkAllCartItem}
+          checked={cartList.length === checkedCartIdList.length}
+          size="large"
+        />
+        <div>전체 선택 ({`${checkedCartIdList.length}/${cartList.length}`})</div>
+        <button type="button" onClick={openModal}>
+          선택 삭제
+        </button>
+      </div>
       <section className={styles['cart-container']}>
         {cartList?.map((item: CartItem) => (
           <CartProductItem
@@ -46,18 +62,17 @@ function CartProductItemList() {
           />
         ))}
       </section>
-      <div className={styles['check-menu']}>
-        <input
-          type="checkbox"
-          className={styles['check-box']}
-          onChange={checkAllCartItem}
-          checked={cartList.length === checkedCartIdList.length}
-        />
-        <div>전체 선택 ({`${checkedCartIdList.length}/${cartList.length}`})</div>
-        <button type="button" onClick={deleteCheckedCartItem}>
-          선택 삭제
-        </button>
-      </div>
+      {isModalOpen && (
+        <Modal direction="center" closeEvent={closeModal}>
+          <ModalNotification
+            message={{
+              title: `${checkedCartIdList.length}개의 품목을 삭제하시겠습니까? \n삭제한다면 되돌릴 수 없습니다.`,
+            }}
+            cancelCallback={closeModal}
+            assignCallback={deleteCheckedCartItem}
+          />
+        </Modal>
+      )}
     </div>
   );
 }

@@ -1,18 +1,24 @@
 import { rest } from 'msw';
 import { LOCAL_STORAGE_KEY } from '../constants';
-import { cartItems, products } from '../data/mockData';
-import { CartItem, Product } from '../types';
-import { setLocalStorage } from '../utils/localStorage';
+import { cartItems, products, orderList, paymentsData } from '../data/mockData';
+import { CartItem, Order, Payments, Product } from '../types';
+import { getLocalStorage, setLocalStorage } from '../utils/localStorage';
 
 const handlers = [
   // 제품 목록
-  rest.get('/products', (req, res, ctx) => res(ctx.delay(2000), ctx.status(200), ctx.json(products))),
+  rest.get('/products', (req, res, ctx) => {
+    if (products === null) return res(ctx.delay(2000), ctx.status(401), ctx.json({ message: '물품 목록이 없습니다.' }));
+
+    return res(ctx.delay(2000), ctx.status(200), ctx.json(products));
+  }),
 
   // 제품 추가
   rest.post('/products', (req, res, ctx) => {
     const newData = req.json();
     const id = Math.random().toString(36).substring(7);
     const responseWithId = { ...newData, id: Number(id) };
+    if (products === null) return res(ctx.delay(2000), ctx.status(401), ctx.json({ message: '물품 목록이 없습니다.' }));
+
     products.push(responseWithId as unknown as Product);
 
     return res(ctx.status(201), ctx.json(responseWithId));
@@ -21,6 +27,8 @@ const handlers = [
   // 특정 id의 제품 정보
   rest.get('/products/:id', (req, res, ctx) => {
     const { id } = req.params;
+    if (products === null) return res(ctx.delay(2000), ctx.status(401), ctx.json({ message: '물품 목록이 없습니다.' }));
+
     const product = products.find(item => item.id === Number(id));
     const responseWithId = { ...product, id };
 
@@ -33,6 +41,9 @@ const handlers = [
   // 특정 id 제품 삭제
   rest.delete('/products/:id', (req, res, ctx) => {
     const { id } = req.params;
+
+    if (products === null) return res(ctx.delay(2000), ctx.status(401), ctx.json({ message: '물품 목록이 없습니다.' }));
+
     const index = products.findIndex(item => item.id === Number(id));
 
     if (index !== -1) {
@@ -45,6 +56,8 @@ const handlers = [
   // 특정 id 제품 수정
   rest.put('/products/:id', (req, res, ctx) => {
     const { id } = req.params;
+    if (products === null) return res(ctx.delay(2000), ctx.status(401), ctx.json({ message: '물품 목록이 없습니다.' }));
+
     const index = products.findIndex(item => item.id === Number(id));
 
     if (index !== -1) {
@@ -60,6 +73,8 @@ const handlers = [
   // 장바구니 아이템 추가
   rest.post<CartItem>('/cart-items', async (req, res, ctx) => {
     const { productId } = await req.json();
+
+    if (products === null) return res(ctx.status(401), ctx.json({ message: '물품 목록이 없습니다.' }));
 
     const item = {
       id: Math.floor(Math.random() * 1000),
@@ -101,6 +116,105 @@ const handlers = [
       return res(ctx.delay(100), ctx.status(204), ctx.set('Location', `/cart-items/${cartItemsId}`));
     }
     return res(ctx.status(404));
+  }),
+
+  // 주문 목록 추가
+  rest.post('/orders', async (req, res, ctx) => {
+    const { cartItemIds } = await req.json();
+
+    const selected = cartItems.filter(item => cartItemIds.includes(item.id));
+
+    const orderItem: Order = {
+      id: Math.floor(Math.random() * 1000),
+      orderTime: new Date().toDateString(),
+      productList: selected.map(item => ({
+        name: item.product.name,
+        quantity: item.quantity,
+        totalPrice: item.product.price * item.quantity,
+        imageUrl: item.product.imageUrl,
+      })),
+    };
+
+    orderList.push(orderItem);
+
+    setLocalStorage<Order[]>(LOCAL_STORAGE_KEY.ORDER_LIST, orderList);
+
+    const updatedCartItems = cartItems.filter(item => !cartItemIds.includes(item.id));
+    setLocalStorage<CartItem[]>(LOCAL_STORAGE_KEY.CART_ITEM, updatedCartItems);
+
+    return res(ctx.delay(100), ctx.status(201), ctx.set('Location', `/orders/${orderItem.id}`));
+  }),
+
+  // 주문 가격표 출력
+  rest.get('/total-cart-price', async (req, res, ctx) => {
+    const cartItemIds = req.url.searchParams.getAll('cartItemIds');
+
+    const originalPrice = getLocalStorage<CartItem[]>(LOCAL_STORAGE_KEY.CART_ITEM, []).reduce((acc, item) => {
+      if (cartItemIds.find((id: string) => id === String(item.id))) {
+        return acc + item.quantity * item.product.price;
+      }
+      return acc;
+    }, 0);
+
+    const discounts = [];
+
+    if (originalPrice >= 50_000) {
+      discounts.push({
+        discountPolicy: '5만원 이상 주문 시 10% 할인',
+        discountAmount: Math.floor(originalPrice / 1000) * 100,
+      });
+    }
+    const discountedPrice = originalPrice - discounts.reduce((acc, { discountAmount }) => acc + discountAmount, 0);
+    const deliveryFee = 3000;
+
+    paymentsData.originalPrice = originalPrice;
+    paymentsData.discounts = discounts;
+    paymentsData.discountedPrice = discountedPrice;
+    paymentsData.deliveryFee = deliveryFee;
+    paymentsData.finalPrice = discountedPrice + deliveryFee;
+    setLocalStorage(LOCAL_STORAGE_KEY.PAYMENTS, paymentsData);
+
+    return res(ctx.delay(50), ctx.status(201), ctx.json(paymentsData));
+  }),
+
+  // 주문 목록 조회 api
+  rest.get('/orders', (req, res, ctx) => res(ctx.delay(500), ctx.status(200), ctx.json(orderList))),
+
+  rest.get('/orders/:orderId', (req, res, ctx) => {
+    const { orderId } = req.params;
+
+    const orderDetail = orderList.find(order => order.id === Number(orderId));
+
+    if (!orderDetail) {
+      return res(ctx.status(401), ctx.json({ message: '존재하지 않는 주문 번호 입니다.' }));
+    }
+
+    const originalPrice = orderDetail.productList.reduce((acc, cur) => {
+      const updated = acc + cur.totalPrice;
+      return updated;
+    }, 0);
+
+    const discounts = [];
+
+    if (originalPrice >= 50_000) {
+      discounts.push({
+        discountPolicy: '5만원 이상 주문 시 10% 할인',
+        discountAmount: Math.floor(originalPrice / 1000) * 100,
+      });
+    }
+
+    const discountedPrice = originalPrice - discounts.reduce((acc, { discountAmount }) => acc + discountAmount, 0);
+    const deliveryFee = 3000;
+
+    const payments: Payments = {
+      originalPrice,
+      discounts,
+      discountedPrice,
+      deliveryFee,
+      finalPrice: discountedPrice + deliveryFee,
+    };
+
+    return res(ctx.status(200), ctx.json({ ...orderDetail, paymentAmount: payments }));
   }),
 ];
 

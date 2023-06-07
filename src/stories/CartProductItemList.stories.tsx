@@ -1,5 +1,5 @@
 import { rest } from 'msw';
-import CartProductItemList from '../components/CartProductItemList';
+import CartProductItemList from 'src/components/CartProductItemList';
 import type { Meta, StoryObj } from '@storybook/react';
 
 type Story = StoryObj<typeof CartProductItemList>;

@@ -1,3 +1,5 @@
+@import url(//fonts.googleapis.com/earlyaccess/hanna.css);
+
 :root {
   --primary-color: #333333;
   --mint-color: #04c092;
@@ -5,11 +7,14 @@
   --white-color: #ffffff;
   --white-color-001: #f2f2f2;
   --white-color-002: #f6f1f1;
+  --gray-color-001: #aaaaaa;
+  --orange-color: rgb(255, 102, 16);
 }
 
 html {
   width: 100%;
 }
+
 *,
 *::before,
 *::after {
@@ -27,10 +32,10 @@ button {
 *:focus {
   outline: none;
 }
+
 body {
   margin: 0;
-  font-family: 'Noto Sans KR', ‘Roboto’, -apple-system, BlinkMacSystemFont, ‘Segoe UI’, ‘Oxygen’, ‘Ubuntu’, ‘Cantarell’,
-    ‘Fira Sans’, ‘Droid Sans’, ‘Helvetica Neue’, sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Open Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-style: normal;

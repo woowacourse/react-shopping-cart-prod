@@ -1,7 +1,8 @@
-import { ReactComponent as ShopIcon } from '../../assets/mini-shop-icon.svg';
-import useCart from '../../hooks/useCart';
-import { Product } from '../../types';
-import CountButton from '../Common/CountButton';
+import { ReactComponent as ShopIcon } from 'src/assets/mini-shop-icon.svg';
+import CountButton from 'src/components/Common/CountButton';
+import LoadingSpinner from 'src/components/Common/LoadingSpinner';
+import useUpdateCartItem from 'src/hooks/useUpdateCartItem';
+import { Product } from 'src/types';
 import styles from './index.module.scss';
 
 interface AddCardButtonProps {
@@ -9,28 +10,11 @@ interface AddCardButtonProps {
 }
 
 function AddCartButton({ product }: AddCardButtonProps) {
-  const { cartList, addCartItem, mutateQuantity, deleteCartItem } = useCart();
-  const cart = cartList?.find(cartItem => cartItem.product.id === product.id);
+  const { cart, handleUpButton, handleDownButton, handleClick, loading } = useUpdateCartItem({ product });
 
-  const handleClick = async () => {
-    await addCartItem(product);
-  };
-  const handleUpButton = async () => {
-    if (cart) {
-      await mutateQuantity(cart.id, cart.quantity + 1);
-    }
-  };
-  const handleDownButton = async () => {
-    if (cart) {
-      if (cart.quantity <= 1) {
-        await deleteCartItem(cart.id);
-        return;
-      }
-      await mutateQuantity(cart.id, cart.quantity - 1);
-    }
-  };
-
-  return (
+  return loading ? (
+    <LoadingSpinner size="small" />
+  ) : (
     <div className={styles.container}>
       {cart?.product.id === product.id ? (
         <CountButton

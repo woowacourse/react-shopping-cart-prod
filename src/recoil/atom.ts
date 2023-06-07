@@ -1,14 +1,15 @@
 /* eslint-disable @typescript-eslint/return-await */
 import { atom, atomFamily } from 'recoil';
-import { USER } from '../constants';
-import userServerUrlList from '../data/serverData';
-import { getLocalStorage } from '../utils/localStorage';
-import type { CartItem, ToastState } from '../types';
+import { API_URL, USER } from 'src/constants';
+import userServerUrlList from 'src/data/serverData';
+import { getLocalStorage } from 'src/utils/localStorage';
+import type { CartItem, ToastState } from 'src/types';
 
 const getCart = async (url: string) => {
-  const response = await fetch(`${url}/cart-items`, {
+  const response = await fetch(`${url}${API_URL.CART}`, {
     headers: {
       Authorization: `Basic ${btoa(USER)}`,
+      'Content-Type': 'application/json',
     },
   });
 
@@ -30,10 +31,15 @@ export const $ToastStateList = atom<ToastState[]>({
 
 export const $CurrentServerUrl = atom<string>({
   key: 'CurrentServerUrl',
-  default: userServerUrlList[getLocalStorage('name', '로지')],
+  default: userServerUrlList[getLocalStorage('name', 'msw')],
 });
 
 export const $CartList = atomFamily<CartItem[], string>({
   key: 'CartList',
   default: async url => await getCart(url),
+});
+
+export const $ModalState = atom({
+  key: 'ModalState',
+  default: false,
 });

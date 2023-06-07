@@ -1,0 +1,23 @@
+.main-view-blank {
+  display: flex;
+  flex-direction: column;
+  row-gap: 24px;
+
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+
+  & > p {
+    font-weight: 700;
+    font-size: 28px;
+  }
+
+  & > button {
+    width: 200px;
+    height: 40px;
+
+    background: var(--mint-color);
+    color: white;
+    border-radius: 6px;
+  }
+}

@@ -1,6 +1,6 @@
 import { within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import AddCartButton from '../components/AddCartButton';
+import AddCartButton from 'src/components/AddCartButton';
 import type { Meta, StoryObj } from '@storybook/react';
 
 type Story = StoryObj<typeof AddCartButton>;

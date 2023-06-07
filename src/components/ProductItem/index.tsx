@@ -1,6 +1,6 @@
-import AddCartButton from '../AddCartButton';
+import AddCartButton from 'src/components/AddCartButton';
 import styles from './index.module.scss';
-import type { Product } from '../../types';
+import type { Product } from 'src/types';
 
 interface ProductItemProps {
   product: Product;
