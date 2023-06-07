@@ -16,16 +16,16 @@ const main = async () => {
       url: '/react-shopping-cart-prod/mockServiceWorker.js',
     },
   });
-};
 
-const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
-root.render(
-  <React.StrictMode>
-    <RecoilRoot>
-      <GlobalStyle />
-      <App />
-    </RecoilRoot>
-  </React.StrictMode>,
-);
+  const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+  root.render(
+    <React.StrictMode>
+      <RecoilRoot>
+        <GlobalStyle />
+        <App />
+      </RecoilRoot>
+    </React.StrictMode>,
+  );
+};
 
 main();
