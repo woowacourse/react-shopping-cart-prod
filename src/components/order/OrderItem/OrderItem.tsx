@@ -8,6 +8,8 @@ import * as S from './OrderItem.styles';
 type OrderItemProps = OrderData;
 
 const OrderItem = ({ ...information }: OrderItemProps) => {
+  const firstOrderItem = information.orderedItems[0];
+
   return (
     <S.OrderItemContainer>
       <S.OrderItemHeader>
@@ -19,10 +21,7 @@ const OrderItem = ({ ...information }: OrderItemProps) => {
         </S.OrderDetailLink>
       </S.OrderItemHeader>
       <S.OrderItemContent>
-        <S.OrderItemImage
-          src={information.orderedItems[0].imageUrl}
-          alt={information.orderedItems[0].name}
-        />
+        <S.OrderItemImage src={firstOrderItem.imageUrl} alt={firstOrderItem.name} />
         <S.OrderInformation>
           {ORDER_ITEM_DESCRIPTION_DATA.map((descriptionItem, index) => (
             <S.OrderInformationData key={index}>
