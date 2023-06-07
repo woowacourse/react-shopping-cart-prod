@@ -26,14 +26,12 @@ export const CartProductList = () => {
   const setLocalProducts = useSetRecoilState(localProductsState);
 
   const handleDeleteButtonClicked = async () => {
-    selectedProducts.forEach((product) => {
-      try {
-        deleteCartItem(product.cartItemId);
-        removeCheckedArray();
-      } catch (error: any) {
-        setError(error);
-      }
-    });
+    try {
+      await Promise.all(selectedProducts.map((product) => deleteCartItem(product.cartItemId)));
+      removeCheckedArray();
+    } catch (error: any) {
+      setError(error);
+    }
 
     try {
       const newProducts = await makeLocalProducts();
