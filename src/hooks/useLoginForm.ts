@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
-import { postLoginApi } from "../api";
+import { api } from "../api";
 import { KEY_LOCALSTORAGE_LOGIN_TOKEN } from "../constants";
 import { loginState } from "../recoil/atom";
 import { ROUTER_PATH } from "../router";
@@ -36,7 +36,7 @@ export const useLoginForm = () => {
     try {
       const base64 = btoa(username + ":" + password);
       setLocalStorage(KEY_LOCALSTORAGE_LOGIN_TOKEN, base64);
-      const response = await postLoginApi();
+      const response = await api.post("/auth/login");
       if (!response.ok) {
         throw new Error(response.status.toString());
       }

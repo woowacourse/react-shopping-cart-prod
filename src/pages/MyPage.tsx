@@ -1,7 +1,7 @@
 import { useLayoutEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { api, postCouponApi } from "../api";
+import { api } from "../api";
 import { Button, CouponSelectBox, Header, Page } from "../components";
 import { useRouter } from "../hooks/useRouter";
 import { useToast } from "../hooks/useToast";
@@ -36,8 +36,14 @@ const MyPage = () => {
   };
 
   const handleButtonClicked = async () => {
+    const expiredDate = new Date();
+    expiredDate.setMonth(expiredDate.getMonth() + 1);
+
     try {
-      const response = await postCouponApi(coupons[selectedCouponIndex].id);
+      const response = await api.post(
+        `/coupons/${coupons[selectedCouponIndex].id}`,
+        { expiredAt: expiredDate }
+      );
       if (!response.ok) throw new Error(response.status.toString());
 
       showToast("success", "쿠폰이 발급되었습니다!");

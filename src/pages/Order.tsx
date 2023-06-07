@@ -2,7 +2,7 @@ import { useLayoutEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { styled } from "styled-components";
-import { api, postOrderApi } from "../api";
+import { api } from "../api";
 import {
   CouponSelectBox,
   Header,
@@ -58,16 +58,18 @@ const Order = () => {
 
   const handlePaymentClicked = async () => {
     try {
-      const payloads: Omit<LocalProductType, "id">[] = selectedProducts.map(
-        (product) => {
+      const orderedProducts: Omit<LocalProductType, "id">[] =
+        selectedProducts.map((product) => {
           const newProduct = structuredClone(product);
           delete newProduct.id;
           return newProduct;
-        }
-      );
+        });
       const couponId =
         selectedCouponIndex === -1 ? null : coupons[selectedCouponIndex].id;
-      await postOrderApi(payloads, couponId);
+      await api.post("orders", {
+        products: orderedProducts,
+        couponId: couponId,
+      });
       navigate(ROUTER_PATH.Main);
       showToast("success", "결제가 완료되었습니다 👍🏻");
       updateLocalProducts();

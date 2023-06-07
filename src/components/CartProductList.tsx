@@ -5,9 +5,9 @@ import { TrashCanIcon } from "../assets";
 import { Counter } from "./Counter";
 import { localProductsSelector } from "../recoil/selector";
 import { useCheckBox } from "../hooks/useCheckBox";
-import { deleteCartItemApi } from "../api";
 import { selectedProductsState } from "../recoil/atom";
 import { useLocalProducts } from "../hooks/useLocalProducts";
+import { api } from "../api";
 
 export const CartProductList = () => {
   const { updateLocalProducts } = useLocalProducts();
@@ -28,7 +28,9 @@ export const CartProductList = () => {
 
   const handleDeleteButtonClicked = async () => {
     await Promise.all(
-      selectedProducts.map((product) => deleteCartItemApi(product.cartItemId))
+      selectedProducts.map((product) =>
+        api.delete(`/cart-items/${product.cartItemId}`)
+      )
     );
 
     removeCheckedArray();
@@ -37,7 +39,7 @@ export const CartProductList = () => {
 
   const handleTrashCanClicked =
     (cartItemId: number, index: number) => async () => {
-      await deleteCartItemApi(cartItemId);
+      await api.delete(`/cart-items/${cartItemId}`);
 
       removeTargetIndex(index);
       await updateLocalProducts();

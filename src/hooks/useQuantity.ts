@@ -2,7 +2,7 @@ import { useRecoilValue } from "recoil";
 import { localProductsState } from "../recoil/atom";
 import React, { useEffect, useState } from "react";
 import { MAX_LENGTH_QUANTITY, MAX_QUANTITY, MIN_QUANTITY } from "../constants";
-import { patchQuantityApi, deleteCartItemApi } from "../api";
+import { api } from "../api";
 import { LocalProductType } from "../types/domain";
 import { useLocalProducts } from "./useLocalProducts";
 
@@ -25,16 +25,16 @@ export const useQuantity = (productId: number) => {
 
     try {
       if (newQuantity === 0) {
-        const response = await deleteCartItemApi(
-          currentLocalProduct.cartItemId
+        const response = await api.delete(
+          `/cart-items/${currentLocalProduct.cartItemId}`
         );
         if (!response.ok) {
           throw new Error(response.status.toString());
         }
       } else {
-        const response = await patchQuantityApi(
-          currentLocalProduct.cartItemId,
-          Number(newQuantity)
+        const response = await api.patch(
+          `/cart-items/${currentLocalProduct.cartItemId}`,
+          { quantity: Number(newQuantity) }
         );
         if (!response.ok) {
           throw new Error(response.status.toString());
