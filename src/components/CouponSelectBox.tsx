@@ -18,7 +18,7 @@ export const CouponSelectBox = ({
 
   return (
     <Wrapper>
-      <TitleContainer $isOpen={isOpen} onClick={() => setIsOpen(!isOpen)}>
+      <TitleContainer isOpen={isOpen} onClick={() => setIsOpen(!isOpen)}>
         <p>쿠폰적용하기</p>
         <img src={ArrowDownIcon} alt="화살표" />
       </TitleContainer>
@@ -74,7 +74,7 @@ const Wrapper = styled.section`
   }
 `;
 
-const TitleContainer = styled.div<{ $isOpen: boolean }>`
+const TitleContainer = styled.div<{ isOpen: boolean }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -87,7 +87,7 @@ const TitleContainer = styled.div<{ $isOpen: boolean }>`
   border-bottom: 3px solid #dddddd;
 
   & > img {
-    transform: ${(props) => props.$isOpen && 'rotate(-180deg)'};
+    transform: ${(props) => props.isOpen && 'rotate(-180deg)'};
     transition: all 0.3s linear;
   }
 `;
