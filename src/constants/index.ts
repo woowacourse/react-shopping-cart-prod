@@ -12,3 +12,5 @@ export const LOCAL_STORAGE_KEY = {
 };
 
 export const DELIVERY_FEE = 3000;
+
+export const POINT_PERCENTAGE = 0.01;
