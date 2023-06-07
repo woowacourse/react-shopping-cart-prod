@@ -2,6 +2,7 @@ import { styled } from 'styled-components';
 import { pointSelector } from '../../store/PointSelector';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { inputPointValueState } from '../../store/InputPointValueState';
+import { DELIVERY_FEE } from '../../constants';
 
 type Props = {
   totalPrice: number;
@@ -16,7 +17,7 @@ const Point = ({ totalPrice }: Props) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value.trim() !== '' ? Number(event.target.value) : 0;
 
-    if (totalPrice + 3000 < value) {
+    if (totalPrice + DELIVERY_FEE < value) {
       alert('총 주문금액보다 넘게 포인트를 사용할 수는 없습니다.');
       return;
     }
