@@ -1,11 +1,11 @@
-import { getCartItemsApi, getProductsApi } from "../api";
+import { api } from "../api";
 import { MIN_QUANTITY } from "../constants";
 import { CartItemType, LocalProductType, ProductType } from "../types/domain";
 
 export const makeLocalProducts = async (): Promise<LocalProductType[]> => {
   try {
-    const productsResponse = await getProductsApi();
-    const cartItemsresponse = await getCartItemsApi();
+    const productsResponse = await api.get("/products");
+    const cartItemsresponse = await api.get("/cart-items", true);
 
     if (!productsResponse.ok)
       throw new Error(productsResponse.status.toString());
@@ -33,7 +33,7 @@ export const makeLocalProducts = async (): Promise<LocalProductType[]> => {
 
 export const makeProducts = async (): Promise<LocalProductType[]> => {
   try {
-    const productsResponse = await getProductsApi();
+    const productsResponse = await api.get("/products");
 
     if (!productsResponse.ok)
       throw new Error(productsResponse.status.toString());

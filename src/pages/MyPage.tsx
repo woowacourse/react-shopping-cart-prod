@@ -1,7 +1,7 @@
 import { useLayoutEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { getCouponsApi, postCouponApi } from "../api";
+import { api, postCouponApi } from "../api";
 import { Button, CouponSelectBox, Header, Page } from "../components";
 import { useRouter } from "../hooks/useRouter";
 import { useToast } from "../hooks/useToast";
@@ -19,7 +19,7 @@ const MyPage = () => {
   useLayoutEffect(() => {
     const fetchCoupons = async () => {
       try {
-        const response = await getCouponsApi();
+        const response = await api.get("/coupons", true);
         if (!response.ok) throw new Error(response.status.toString());
         const data = await response.json();
         setCoupons(data.coupons);

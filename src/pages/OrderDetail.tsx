@@ -1,7 +1,7 @@
 import { useLayoutEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { styled } from "styled-components";
-import { getOrderDetailApi } from "../api";
+import { api } from "../api";
 import { Header, OrderHistory, Page } from "../components";
 import { OrderDetailType } from "../types/domain";
 
@@ -16,7 +16,7 @@ const OrderDetail = () => {
   useLayoutEffect(() => {
     const fetchCoupons = async () => {
       try {
-        const response = await getOrderDetailApi(Number(orderId));
+        const response = await api.get(`/orders/${orderId}`, true);
         if (!response.ok) throw new Error(response.status.toString());
         const data = await response.json();
 

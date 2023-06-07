@@ -2,7 +2,7 @@ import { useLayoutEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { styled } from "styled-components";
-import { getMyCouponsApi, postOrderApi } from "../api";
+import { api, postOrderApi } from "../api";
 import {
   CouponSelectBox,
   Header,
@@ -28,10 +28,14 @@ const Order = () => {
   useLayoutEffect(() => {
     const fetchMyCoupons = async () => {
       try {
-        const requestedCartItemIds = selectedProducts.map(
-          (product) => product.cartItemId
+        const cartItemIdsQuery = selectedProducts
+          .map((product) => "cartItemId=" + product.cartItemId.toString())
+          .join("&");
+
+        const response = await api.get(
+          `/orders/coupons?${cartItemIdsQuery}`,
+          true
         );
-        const response = await getMyCouponsApi(requestedCartItemIds);
         if (!response.ok) throw new Error(response.status.toString());
         const data = await response.json();
         setCoupons(data.coupons);

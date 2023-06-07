@@ -8,144 +8,41 @@ import {
 } from "../constants";
 import { LocalProductType } from "../types/domain";
 
-const getProductsApi = () =>
-  fetch(
-    `${
-      SERVERS[
-        getLocalStorage(
-          KEY_LOCALSTORAGE_SERVER_OWNER,
-          DEFAULT_VALUE_SERVER_OWNER
+export const api = {
+  get: (path: string, isAuthRequired?: boolean) => {
+    return isAuthRequired
+      ? fetch(
+          `${
+            SERVERS[
+              getLocalStorage(
+                KEY_LOCALSTORAGE_SERVER_OWNER,
+                DEFAULT_VALUE_SERVER_OWNER
+              )
+            ]
+          }${path}`,
+          {
+            headers: {
+              Authorization: `Basic ${getLocalStorage(
+                KEY_LOCALSTORAGE_LOGIN_TOKEN,
+                DEFAULT_VALUE_LOGIN_TOKEN
+              )}`,
+            },
+          }
         )
-      ]
-    }/products`
-  );
+      : fetch(
+          `${
+            SERVERS[
+              getLocalStorage(
+                KEY_LOCALSTORAGE_SERVER_OWNER,
+                DEFAULT_VALUE_SERVER_OWNER
+              )
+            ]
+          }${path}`
+        );
+  },
 
-const getCartItemsApi = async () =>
-  fetch(
-    `${
-      SERVERS[
-        getLocalStorage(
-          KEY_LOCALSTORAGE_SERVER_OWNER,
-          DEFAULT_VALUE_SERVER_OWNER
-        )
-      ]
-    }/cart-items`,
-    {
-      headers: {
-        Authorization: `Basic ${getLocalStorage(
-          KEY_LOCALSTORAGE_LOGIN_TOKEN,
-          DEFAULT_VALUE_LOGIN_TOKEN
-        )}`,
-      },
-    }
-  );
-
-const getMemberApi = () =>
-  fetch(
-    `${
-      SERVERS[
-        getLocalStorage(
-          KEY_LOCALSTORAGE_SERVER_OWNER,
-          DEFAULT_VALUE_SERVER_OWNER
-        )
-      ]
-    }/members/profile`,
-    {
-      headers: {
-        Authorization: `Basic ${getLocalStorage(
-          KEY_LOCALSTORAGE_LOGIN_TOKEN,
-          DEFAULT_VALUE_LOGIN_TOKEN
-        )}`,
-      },
-    }
-  );
-
-const getCouponsApi = () =>
-  fetch(
-    `${
-      SERVERS[
-        getLocalStorage(
-          KEY_LOCALSTORAGE_SERVER_OWNER,
-          DEFAULT_VALUE_SERVER_OWNER
-        )
-      ]
-    }/coupons`,
-    {
-      headers: {
-        Authorization: `Basic ${getLocalStorage(
-          KEY_LOCALSTORAGE_LOGIN_TOKEN,
-          DEFAULT_VALUE_LOGIN_TOKEN
-        )}`,
-        "Content-Type": "application/json",
-      },
-    }
-  );
-
-const getMyCouponsApi = (cartItemIds: number[]) => {
-  const cartItemIdsQuery = cartItemIds
-    .map((id) => "cartItemId=" + id.toString())
-    .join("&");
-
-  return fetch(
-    `${
-      SERVERS[
-        getLocalStorage(
-          KEY_LOCALSTORAGE_SERVER_OWNER,
-          DEFAULT_VALUE_SERVER_OWNER
-        )
-      ]
-    }/orders/coupons?${cartItemIdsQuery}`,
-    {
-      headers: {
-        Authorization: `Basic ${getLocalStorage(
-          KEY_LOCALSTORAGE_LOGIN_TOKEN,
-          DEFAULT_VALUE_LOGIN_TOKEN
-        )}`,
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  // post: (path: string, payload: Object<T> )  => {},
 };
-
-const getOrdersApi = () =>
-  fetch(
-    `${
-      SERVERS[
-        getLocalStorage(
-          KEY_LOCALSTORAGE_SERVER_OWNER,
-          DEFAULT_VALUE_SERVER_OWNER
-        )
-      ]
-    }/orders`,
-    {
-      headers: {
-        Authorization: `Basic ${getLocalStorage(
-          KEY_LOCALSTORAGE_LOGIN_TOKEN,
-          DEFAULT_VALUE_LOGIN_TOKEN
-        )}`,
-      },
-    }
-  );
-
-const getOrderDetailApi = (orderId: number) =>
-  fetch(
-    `${
-      SERVERS[
-        getLocalStorage(
-          KEY_LOCALSTORAGE_SERVER_OWNER,
-          DEFAULT_VALUE_SERVER_OWNER
-        )
-      ]
-    }/orders/${orderId}`,
-    {
-      headers: {
-        Authorization: `Basic ${getLocalStorage(
-          KEY_LOCALSTORAGE_LOGIN_TOKEN,
-          DEFAULT_VALUE_LOGIN_TOKEN
-        )}`,
-      },
-    }
-  );
 
 const patchQuantityApi = async (cartItemId: number, newQuantity: number) =>
   fetch(
@@ -290,13 +187,6 @@ const deleteCartItemApi = async (cartItemId: number) =>
   );
 
 export {
-  getProductsApi,
-  getCartItemsApi,
-  getCouponsApi,
-  getMyCouponsApi,
-  getMemberApi,
-  getOrdersApi,
-  getOrderDetailApi,
   patchQuantityApi,
   postLoginApi,
   postCartItemApi,
