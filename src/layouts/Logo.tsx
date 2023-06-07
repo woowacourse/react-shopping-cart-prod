@@ -3,6 +3,7 @@ import { SERVER_NAMES } from '../constants';
 import { ServerNameType } from '../types';
 import * as S from './styles/Logo.styles';
 import { serverNameState } from '../atom/serverName';
+import Image from '../components/common/Image';
 
 export default function Logo() {
   const [serverName, setServerName] = useRecoilState(serverNameState);
@@ -14,7 +15,7 @@ export default function Logo() {
   return (
     <S.Wrapper>
       <S.HomeLink to="/">
-        <img src="./logo.svg" />
+        <Image src="./logo.svg" />
         <S.LogoTitle>{serverName}</S.LogoTitle>
       </S.HomeLink>
       <S.Select value={serverName} onChange={onChangeSelect}>

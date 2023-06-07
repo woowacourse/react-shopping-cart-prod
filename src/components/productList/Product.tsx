@@ -9,6 +9,7 @@ import { serverNameState } from '../../atom/serverName';
 import { loginState } from '../../atom/login';
 import { useGetCartList } from '../hooks/useGetCartList';
 import { usePostCartItem } from '../hooks/usePostCartItem';
+import Image from '../common/Image';
 
 interface Props extends ProductType {}
 
@@ -31,20 +32,18 @@ export default function Product({ id, name, price, imageUrl }: Props) {
     setAddLoading(false);
   };
 
-  const setAltSrc = (e: React.SyntheticEvent<HTMLImageElement>) => {
-    e.currentTarget.src = './emptyProduct.svg';
-  };
-
   return (
     <>
       <S.Wrapper>
-        <S.Image src={imageUrl} onError={setAltSrc} />
+        <S.ImageWrapper>
+          <Image src={imageUrl} />
+        </S.ImageWrapper>
         <S.ControlBox hasCartItem={cartItem === undefined}>
           {cartItem ? (
             <QuantityInput cartItemId={cartItem.id} min={0} max={MAX_QUANTITY} />
           ) : (
             <S.CartItemAddButton onClick={addCartItem} disabled={addLoading}>
-              <img src="./cart.svg" />
+              <Image src="./cart.svg" />
             </S.CartItemAddButton>
           )}
         </S.ControlBox>

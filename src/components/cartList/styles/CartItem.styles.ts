@@ -18,10 +18,13 @@ export const Wrapper = styled.div`
   }
 `;
 
-export const Image = styled.img`
-  width: 144px;
-  height: 144px;
-  object-fit: cover;
+export const ImageWrapper = styled.div`
+  & > img {
+    width: 144px;
+    height: 144px;
+
+    object-fit: cover;
+  }
 
   @media (max-width: 448px) {
     width: 120px;

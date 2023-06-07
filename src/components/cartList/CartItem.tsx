@@ -8,6 +8,7 @@ import { serverNameState } from '../../atom/serverName';
 import { loginState } from '../../atom/login';
 import { useGetCartList } from '../hooks/useGetCartList';
 import { useDeleteCartItem } from '../hooks/useDeleteCartItem';
+import Image from '../common/Image';
 
 interface Props extends CartItemType {
   checked: boolean;
@@ -28,18 +29,16 @@ export default function CartItem(props: Props) {
     getCartsThroughApi(serverName, loginCredential);
   };
 
-  const setAltSrc = (e: React.SyntheticEvent<HTMLImageElement>) => {
-    e.currentTarget.src = './emptyProduct.svg';
-  };
-
   return (
     <S.Wrapper>
       <CheckBox checked={checked} onClickCheckbox={toggleChecked} />
-      <S.Image src={product.imageUrl} onError={setAltSrc} />
+      <S.ImageWrapper>
+        <Image src={product.imageUrl} width="144px" height="144px" />
+      </S.ImageWrapper>
       <S.ProductName>{product.name}</S.ProductName>
       <S.ControlBox>
         <S.RemoveButton onClick={removeCartItem}>
-          <img src="./trashCan.svg" />
+          <Image src="./trashCan.svg" />
         </S.RemoveButton>
         <QuantityInput cartItemId={id} min={1} max={MAX_QUANTITY} />
         <S.Price>{(product.price * quantity).toLocaleString()}원</S.Price>

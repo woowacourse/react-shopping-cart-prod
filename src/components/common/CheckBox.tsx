@@ -1,5 +1,6 @@
 import { useId } from 'react';
 import * as S from './styles/CheckBox.styles';
+import Image from './Image';
 
 interface Props {
   checked: boolean;
@@ -13,7 +14,7 @@ export default function CheckBox({ checked, onClickCheckbox }: Props) {
     <S.Wrapper>
       <input id={id} type="checkbox" checked={checked} readOnly />
       <S.CheckboxLabel htmlFor={id} onClick={onClickCheckbox}>
-        {checked && <img src="./whiteCheck.svg" />}
+        {checked && <Image src="./whiteCheck.svg" />}
       </S.CheckboxLabel>
     </S.Wrapper>
   );

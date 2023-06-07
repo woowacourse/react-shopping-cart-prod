@@ -21,10 +21,12 @@ export const OrderIdTitle = styled.div`
   font-size: 18px;
 `;
 
-export const Image = styled.img`
-  width: 140px;
-  height: 140px;
-  object-fit: cover;
+export const ImageWrapper = styled.div`
+  & > img {
+    width: 140px;
+    height: 140px;
+    object-fit: cover;
+  }
 `;
 
 export const OrderDetail = styled.div`
