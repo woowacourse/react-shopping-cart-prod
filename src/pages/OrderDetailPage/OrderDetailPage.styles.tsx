@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { CartMainText, MainTextBorder } from '../CartPage/CartPage.styles.tsx';
 import VIEWPORTS from '../../constants/VIEWPORTS.ts';
+import { ButtonWithHoverScalingEffect } from '../../styles/CommonStyles.tsx';
 
 export const OrderDetailPageWrapper = styled.div`
   display: flex;
@@ -56,15 +57,10 @@ export const PriceInnerContent = styled.ul`
   }
 `;
 
-export const DetailPageButton = styled.button`
+export const DetailPageButton = styled(ButtonWithHoverScalingEffect)`
   margin: 10px 10px 0 0;
   padding: 10px;
   background: var(--color-header);
   border: none;
   border-radius: 16px;
-  transition: transform 0.2s ease-in-out;
-
-  &:hover {
-    transform: scale(1.04);
-  }
 `;

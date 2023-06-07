@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { ButtonWithHoverScalingEffect } from '../../../../../styles/CommonStyles.tsx';
 
 export const List = styled.ul``;
 
@@ -23,21 +24,15 @@ export const Price = styled.p`
   margin: 15px;
 `;
 
-export const Button = styled.button`
+export const Button = styled(ButtonWithHoverScalingEffect)`
   margin-top: 20px;
   padding: 10px 20px;
   border: none;
   background-color: var(--color-header);
   color: var(--color-brownish-red);
-  cursor: pointer;
   border-radius: 16px;
-  transition: transform 0.2s ease-in-out;
 
   &:not(:last-child) {
     margin-right: 10px;
-  }
-
-  &:hover {
-    transform: scale(1.05);
   }
 `;

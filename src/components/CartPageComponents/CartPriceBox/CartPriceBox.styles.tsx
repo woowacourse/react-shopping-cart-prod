@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import VIEWPORTS from '../../../constants/VIEWPORTS.ts';
+import { ButtonWithHoverScalingEffect } from '../../../styles/CommonStyles.tsx';
 
 export const CartPriceBoxWrapper = styled.div`
   width: calc(28%- 100px);
@@ -64,17 +65,11 @@ export const CartPriceText = styled.span`
   color: var(--color-brownish-red);
 `;
 
-export const OrderButton = styled.button`
+export const OrderButton = styled(ButtonWithHoverScalingEffect)`
   width: 100%;
   height: 59px;
   border: none;
   background-color: var(--color-header);
-  transition: transform 0.1s ease-in-out;
-  cursor: pointer;
-
-  &:hover {
-    transform: scale(1.03);
-  }
 
   @media screen and (max-width: ${VIEWPORTS.sm}) {
     height: 50px;

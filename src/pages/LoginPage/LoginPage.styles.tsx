@@ -1,4 +1,5 @@
 import styled, { keyframes } from 'styled-components';
+import { ButtonWithHoverScalingEffect } from '../../styles/CommonStyles.tsx';
 
 export const LoginPageWrapper = styled.div`
   display: flex;
@@ -60,15 +61,10 @@ export const Input = styled.input`
   border-radius: 5px;
 `;
 
-export const Button = styled.button`
+export const Button = styled(ButtonWithHoverScalingEffect)`
   padding: 10px;
   border: none;
   background-color: var(--color-header);
   cursor: pointer;
   border-radius: 5px;
-  transition: transform 0.2s ease-in-out;
-
-  &:hover {
-    transform: scale(1.05);
-  }
 `;

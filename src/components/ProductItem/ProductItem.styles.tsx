@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { ButtonWithHoverScalingEffect } from '../../styles/CommonStyles.tsx';
 
 export const ProductItemWrapper = styled.div`
   width: 300px;
@@ -57,14 +58,7 @@ export const ProductItemInfoUpperBoundary = styled.div`
   height: 56px;
 `;
 
-export const CartButton = styled.button`
+export const CartButton = styled(ButtonWithHoverScalingEffect)`
   border: none;
   background: transparent;
-  cursor: pointer;
-
-  transition: scale 0.5s ease-in-out;
-
-  &:hover {
-    transform: scale(1.1);
-  }
 `;

@@ -1,5 +1,6 @@
 import styled, { keyframes } from 'styled-components';
 import VIEWPORTS from '../../constants/VIEWPORTS.ts';
+import { ButtonWithHoverScalingEffect } from '../../styles/CommonStyles.tsx';
 
 const slideDown = keyframes`
   0% {
@@ -42,17 +43,12 @@ export const HeaderWrapper = styled.div`
   align-items: center;
 `;
 
-export const LogoButton = styled.button`
+export const LogoButton = styled(ButtonWithHoverScalingEffect)`
   background: transparent;
   border: none;
   display: flex;
   align-items: center;
   cursor: pointer;
-  transition: transform 0.3s;
-
-  &:hover {
-    transform: scale(1.02);
-  }
 `;
 
 export const LogoImage = styled.img`
