@@ -13,12 +13,10 @@ import GlobalStyle, { CommonPageStyle } from '@Styles/GlobalStyle';
 
 import localStorageHelper from '@Utils/localStorageHelper';
 
-function App() {
-  useEffect(() => {
-    if (!localStorageHelper.hasKey('cartItems')) localStorageHelper.setInitValue('cartItems', []);
-    if (!localStorageHelper.hasKey('orderItems')) localStorageHelper.setInitValue('orderItems', []);
-  }, []);
+if (!localStorageHelper.hasKey('cartItems')) localStorageHelper.setInitValue('cartItems', []);
+if (!localStorageHelper.hasKey('orderItems')) localStorageHelper.setInitValue('orderItems', []);
 
+function App() {
   return (
     <>
       <GlobalStyle />
