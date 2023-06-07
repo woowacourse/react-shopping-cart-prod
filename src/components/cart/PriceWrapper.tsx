@@ -32,36 +32,27 @@ const PriceWrapper = ({ totalPrice }: Props) => {
     }
   };
 
-  const Price = (id: string, description: string, price: string) => (
-    <section id={id}>
-      <li>{description}</li>
-      <p>{price}</p>
-    </section>
-  );
-
   return (
     <S.PriceWrapper>
       <S.PriceLabel>결제예상금액</S.PriceLabel>
       <S.PriceInfo>
-        {totalPrice !== 0 ? (
-          <>
-            {Price('total-product-price', '총 상품가격', `${totalPrice.toLocaleString()}원`)}
-            {Price('delivery-fee', '총 배송비', `${DELIVERY_FEE.toLocaleString()}원`)}
-            <Point totalPrice={totalPrice} />
-            {Price(
-              'total-price',
-              '총 주문금액',
-              `${(totalPrice + DELIVERY_FEE - Number(inputPointValue)).toLocaleString()}원`,
-            )}
-          </>
-        ) : (
-          <>
-            {Price('total-product-price', '총 상품가격', `0원`)}
-            {Price('delivery-fee', '총 배송비', `0원`)}
-            <Point totalPrice={totalPrice} />
-            {Price('total-price', '총 주문금액', `0원`)}
-          </>
-        )}
+        <section id="total-product-price">
+          <li>총 상품가격</li>
+          <p>{totalPrice !== 0 ? `${totalPrice.toLocaleString()}원` : '0원'}</p>
+        </section>
+        <section id="delivery-fee">
+          <li>총 배송비</li>
+          <p>{totalPrice !== 0 ? `${DELIVERY_FEE.toLocaleString()}원` : '0원'}</p>
+        </section>
+        <Point totalPrice={totalPrice} />
+        <section id="total-price">
+          <li>총 주문금액</li>
+          <p>
+            {totalPrice !== 0
+              ? `${(totalPrice + DELIVERY_FEE - Number(inputPointValue)).toLocaleString()}원`
+              : '0원'}
+          </p>
+        </section>
       </S.PriceInfo>
       <S.OrderButton onClick={handleOrderButtonClick}>주문하기</S.OrderButton>
     </S.PriceWrapper>
