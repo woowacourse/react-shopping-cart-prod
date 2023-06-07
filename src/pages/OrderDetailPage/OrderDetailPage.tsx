@@ -10,7 +10,7 @@ const OrderDetailPage = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
   const { orderId } = useParams();
-  const { data, fetchOrderDetail } = useGetOrderDetail(orderId as string);
+  const { data, fetchOrderDetail } = useGetOrderDetail(orderId || '');
 
   const handleOrderListButton = () => {
     navigate(ROUTES.ORDER);
