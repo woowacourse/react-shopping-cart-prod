@@ -35,7 +35,7 @@ const CartList = () => {
     checkedItems,
     isChecked,
     setCheckedItems,
-    totalPrice,
+    subtotal,
     handleCheckAllItems,
     handleCheckedItem,
     handleRemoveCheckedItem,
@@ -52,6 +52,10 @@ const CartList = () => {
     <S.ItemListWrapper>{isLoading ? <LoadingSpinner /> : cartList}</S.ItemListWrapper>
   );
 
+  useEffect(() => {
+    console.log(cart.length);
+  });
+
   return (
     <>
       <S.Title>장바구니</S.Title>
@@ -64,7 +68,7 @@ const CartList = () => {
         />
         <S.ContentWrapper>
           {itemList}
-          <PriceWrapper totalPrice={totalPrice} />
+          <PriceWrapper subtotal={subtotal} />
         </S.ContentWrapper>
       </S.Wrapper>
     </>

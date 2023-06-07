@@ -5,19 +5,19 @@ import { inputPointValueState } from '../../store/InputPointValueState';
 import { DELIVERY_FEE } from '../../constants';
 
 type Props = {
-  totalPrice: number;
+  subtotal: number;
 };
 
-const Point = ({ totalPrice }: Props) => {
-  const point = useRecoilValue(pointSelector);
+const Point = ({ subtotal }: Props) => {
+  const availablePoint = useRecoilValue(pointSelector);
   const [inputPointValue, setInputPointValue] = useRecoilState(inputPointValueState);
 
-  const holdPoint = point - Number(inputPointValue);
+  const remainingPoint = availablePoint - Number(inputPointValue);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value.trim() !== '' ? Number(event.target.value) : 0;
 
-    if (totalPrice + DELIVERY_FEE < value) {
+    if (subtotal + DELIVERY_FEE < value) {
       alert('총 주문금액보다 넘게 포인트를 사용할 수는 없습니다.');
       return;
     }
@@ -29,10 +29,15 @@ const Point = ({ totalPrice }: Props) => {
     <S.Wrapper>
       <S.Title>Point</S.Title>
       <S.PointWrapper>
-        <S.HoldPoint>
-          {holdPoint ? `보유: ${holdPoint.toLocaleString()}포인트` : <S.Spinner />}
-        </S.HoldPoint>
-        <S.PointField type="number" max={point} value={inputPointValue} onChange={handleChange} />
+        <S.RemainingPoint>
+          {remainingPoint ? `보유: ${remainingPoint.toLocaleString()}포인트` : <S.Spinner />}
+        </S.RemainingPoint>
+        <S.PointField
+          type="number"
+          max={availablePoint}
+          value={inputPointValue}
+          onChange={handleChange}
+        />
       </S.PointWrapper>
     </S.Wrapper>
   );
@@ -56,7 +61,7 @@ const S = {
     padding-left: 3px;
   `,
 
-  HoldPoint: styled.span`
+  RemainingPoint: styled.span`
     font-size: small;
     font-weight: 400;
     margin-right: 20px;

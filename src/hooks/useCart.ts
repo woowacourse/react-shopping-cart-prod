@@ -21,7 +21,7 @@ export const useCart = () => {
     return checkedItems.includes(id);
   };
 
-  const totalPrice = useRecoilValue(totalPriceSelector(checkedItems));
+  const subtotal = useRecoilValue(totalPriceSelector(checkedItems));
 
   const handleRemoveFromCartList = (id: number) => (e: MouseEvent<HTMLButtonElement>) => {
     removeProductItemFromCart(id);
@@ -54,7 +54,7 @@ export const useCart = () => {
     checkedItems,
     isChecked,
     setCheckedItems,
-    totalPrice,
+    subtotal,
     handleRemoveFromCartList,
     handleCheckAllItems,
     handleCheckedItem,

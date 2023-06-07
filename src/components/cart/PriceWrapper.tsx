@@ -8,10 +8,10 @@ import { inputPointValueState } from '../../store/InputPointValueState';
 import { useNavigate } from 'react-router-dom';
 
 type Props = {
-  totalPrice: number;
+  subtotal: number;
 };
 
-const PriceWrapper = ({ totalPrice }: Props) => {
+const PriceWrapper = ({ subtotal }: Props) => {
   const setCheckedItems = useSetRecoilState(checkedItemsState);
   const inputPointValue = useRecoilValue(inputPointValueState);
 
@@ -20,7 +20,7 @@ const PriceWrapper = ({ totalPrice }: Props) => {
   const { orderToItems } = useOrder();
 
   const handleOrderButtonClick = () => {
-    if (totalPrice === 0) {
+    if (subtotal === 0) {
       alert('선택 후 주문을 해주세요.');
       return;
     }
@@ -38,18 +38,18 @@ const PriceWrapper = ({ totalPrice }: Props) => {
       <S.PriceInfo>
         <section id="total-product-price">
           <li>총 상품가격</li>
-          <p>{totalPrice !== 0 ? `${totalPrice.toLocaleString()}원` : '0원'}</p>
+          <p>{subtotal !== 0 ? `${subtotal.toLocaleString()}원` : '0원'}</p>
         </section>
         <section id="delivery-fee">
           <li>총 배송비</li>
-          <p>{totalPrice !== 0 ? `${DELIVERY_FEE.toLocaleString()}원` : '0원'}</p>
+          <p>{subtotal !== 0 ? `${DELIVERY_FEE.toLocaleString()}원` : '0원'}</p>
         </section>
-        <Point totalPrice={totalPrice} />
+        <Point subtotal={subtotal} />
         <section id="total-price">
           <li>총 주문금액</li>
           <p>
-            {totalPrice !== 0
-              ? `${(totalPrice + DELIVERY_FEE - Number(inputPointValue)).toLocaleString()}원`
+            {subtotal !== 0
+              ? `${(subtotal + DELIVERY_FEE - Number(inputPointValue)).toLocaleString()}원`
               : '0원'}
           </p>
         </section>
