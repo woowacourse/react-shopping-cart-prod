@@ -19,10 +19,10 @@ export const Header = () => {
       <InfoContainer>
         <ServerSelectBox />
         <CartContainer>
-          <p onClick={goPage(ROUTER_PATH.Cart)}>장바구니</p>
+          <div onClick={goPage(ROUTER_PATH.Cart)}>장바구니</div>
           {cartProducts.length > 0 && <ItemQuantityBox>{cartProducts.length}</ItemQuantityBox>}
         </CartContainer>
-        <p onClick={goPage(ROUTER_PATH.Order)}>주문 목록</p>
+        <div onClick={goPage(ROUTER_PATH.Order)}>주문 목록</div>
       </InfoContainer>
     </Wrapper>
   );
