@@ -4,6 +4,11 @@ import { serverNameState } from '../atom/serverName';
 import { useRecoilValue } from 'recoil';
 import * as S from './styles/Login.styles';
 import { usePostLogin } from '../components/hooks/usePostLogin';
+import {
+  LOGIN_SINGUP_FORMAT,
+  LOGIN_SINGUP_ID_PLACEHOLDER,
+  LOGIN_SINGUP_PW_PLACEHOLDER,
+} from '../constants';
 
 export default function Login() {
   const serverName = useRecoilValue(serverNameState);
@@ -41,21 +46,22 @@ export default function Login() {
           <S.LoginLabel>아이디</S.LoginLabel>
           <S.LoginInput
             name="id"
-            placeholder="4~10글자 사이의 아이디를 입력하세요."
+            placeholder={LOGIN_SINGUP_ID_PLACEHOLDER}
             autoFocus
             maxLength={8}
-            pattern=".{2,8}"
+            pattern={LOGIN_SINGUP_FORMAT}
             required
-            title="4~10글자 사이의 아이디를 입력해주세요."
+            title={LOGIN_SINGUP_ID_PLACEHOLDER}
           />
           <S.LoginLabel>비밀번호</S.LoginLabel>
           <S.LoginInput
             name="password"
-            placeholder="4~10글자 사이의 비밀번호를 입력하세요."
+            placeholder={LOGIN_SINGUP_PW_PLACEHOLDER}
             maxLength={8}
-            pattern=".{2,8}"
+            pattern={LOGIN_SINGUP_FORMAT}
             required
-            title="4~10글자 사이의 아이디를 입력해주세요."
+            type="password"
+            title={LOGIN_SINGUP_PW_PLACEHOLDER}
           />
           <S.LoginButton>로그인</S.LoginButton>
         </S.LoginWrapper>
