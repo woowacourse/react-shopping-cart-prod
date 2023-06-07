@@ -4,6 +4,7 @@ import { checkedItemListState, totalPriceSelector } from '../../../recoil/cartAt
 import PaymentInfo from '../../@common/PaymentInfo/PaymentInfo.tsx';
 import { useNavigate } from 'react-router-dom';
 import { orderState } from '../../../recoil/orderAtom.ts';
+import { PAGE_PATH } from '../../../constants/path.ts';
 
 function PurchaseBox() {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ function PurchaseBox() {
 
   const purchaseCartItems = () => {
     setPaymentItems(purchaseItem);
-    navigate('/payment');
+    navigate(PAGE_PATH.PAYMENT);
   };
 
   return (
