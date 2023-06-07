@@ -14,6 +14,7 @@ export const useLocalProduct = () => {
 
   useEffect(() => {
     setNewLocalProducts();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [serverOwner]);
 
   return { localProducts, setLocalProducts };
