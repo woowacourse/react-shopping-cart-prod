@@ -58,6 +58,8 @@ export const CouponContainer = styled.div`
   border-radius: 20px;
   background-color: #fdfdfd;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+  cursor: pointer;
 `;
 
 export const LeftContents = styled.div`
@@ -111,6 +113,4 @@ export const DownLoadButton = styled.button`
   font-weight: 900;
   background-color: transparent;
   margin-bottom: 40px;
-
-  cursor: pointer;
 `;

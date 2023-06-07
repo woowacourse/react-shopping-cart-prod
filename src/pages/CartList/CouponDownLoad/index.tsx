@@ -15,7 +15,7 @@ const CouponDownload = ({ coupon, isDownLoaded = true, handleClick }: CouponDown
     <S.Container>
       <S.Title>쿠폰 다운받기</S.Title>
       <S.Subtitle>지금 다운받으세요!</S.Subtitle>
-      <S.CouponContainer>
+      <S.CouponContainer onClick={handleClick}>
         <S.Detail>
           {isDownLoaded ? (
             '이미 다운로드 된 쿠폰입니다.'
@@ -34,7 +34,7 @@ const CouponDownload = ({ coupon, isDownLoaded = true, handleClick }: CouponDown
           <S.Description>{coupon.description}</S.Description>
         </S.LeftContents>
         <S.RightContents>
-          <S.DownLoadButton onClick={handleClick}>{isDownLoaded ? '✔' : <DownloadIcon />}</S.DownLoadButton>
+          <S.DownLoadButton>{isDownLoaded ? '✔' : <DownloadIcon />}</S.DownLoadButton>
         </S.RightContents>
       </S.CouponContainer>
     </S.Container>

@@ -32,11 +32,12 @@ const Slider = ({ children }: React.PropsWithChildren) => {
     if (slideRef.current === null) return;
 
     if (currentSlide.current === sliceItems.length - 2) {
-      slideRef.current.style.transition = '';
       moveSlice(0);
 
+      slideRef.current.style.transition = '';
       setTimeout(() => {
         if (slideRef.current === null) return;
+
         slideRef.current.style.transition = 'all 500ms ease-in-out';
         moveSlice(1);
       }, 0);
@@ -51,7 +52,10 @@ const Slider = ({ children }: React.PropsWithChildren) => {
     if (!slideRef.current) return;
 
     currentSlide.current = postion;
-    slideRef.current.style.transform = `translateX(-${(postion * 100) / sliceItems.length}%)`;
+
+    for (let a = 0; a < 1; a++) {
+      slideRef.current.style.transform = `translateX(-${(postion * 100 * a * 1) / sliceItems.length}%)`;
+    }
   };
 
   useEffect(() => {
