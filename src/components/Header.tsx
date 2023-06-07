@@ -15,6 +15,8 @@ import useIsMobile from '../hooks/useIsMobile';
 import { Link } from 'react-router-dom';
 
 const Header = () => {
+  const orderListLink = '/order-list';
+  const memberLink = '/member';
   const { goHome, goCart } = useNavigatePage();
   const serverUrl = useRecoilValue(serverState);
   const setCart = useSetRecoilState(cartState);
@@ -33,10 +35,10 @@ const Header = () => {
         </S.TitleButton>
         <ServerDropdown />
         <CartRouteButton onClick={goCart} />
-        <Link to="order-list">
+        <Link to={orderListLink}>
           <S.OrderButton>주문 목록</S.OrderButton>
         </Link>
-        <Link to="member">
+        <Link to={memberLink}>
           <S.MemberButton>마이 정보</S.MemberButton>
         </Link>
       </S.Wrapper>
