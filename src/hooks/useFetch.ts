@@ -41,27 +41,25 @@ const useFetch = <T>({ url, method = 'GET', isNotAutomaticallyFetched = false }:
 
       setFetchState((prevState) => ({ ...prevState, status: 'loading', error: null }));
 
-      let response: Response | null = null;
+      fetch(urlWithParam, {
+        method,
+        body: body ? JSON.stringify(body) : null,
+        headers: { 'Content-Type': 'application/json', authorization: `Basic ${auth}` },
+      })
+        .then(async (response) => {
+          if (!response.ok) {
+            throw new Error(response.statusText);
+          }
 
-      try {
-        response = await fetch(urlWithParam, {
-          method,
-          body: body ? JSON.stringify(body) : null,
-          headers: { 'Content-Type': 'application/json', authorization: `Basic ${auth}` },
+          const responseData = await response.text();
+          const data: T = responseData ? JSON.parse(responseData) : null;
+
+          setFetchState({ status: 'success', data, error: null });
+        })
+        .catch((error) => {
+          setFetchState((prevState) => ({ ...prevState, status: 'fail', error: error as Error }));
+          navigate('/error', { state: { error: error as Error } });
         });
-
-        if (!response.ok) {
-          throw new Error(response.statusText);
-        }
-
-        const responseData = await response.text();
-        const data: T = responseData ? JSON.parse(responseData) : null;
-
-        setFetchState({ status: 'success', data, error: null });
-      } catch (error) {
-        setFetchState((prevState) => ({ ...prevState, status: 'fail', error: error as Error }));
-        navigate('/error', { state: { error: error as Error, statusCode: response?.status } });
-      }
     },
     [url, method, navigate, serverName]
   );
