@@ -26,7 +26,7 @@ const CartSelectList = () => {
 
       {cartList && cartList?.length > 0 && (
         <>
-          <Styled.CartQuantityText>배송 상품 ({cartList?.length})개</Styled.CartQuantityText>
+          <Styled.CartQuantityText>배송 상품 ({cartList.length})개</Styled.CartQuantityText>
           <Styled.CartQuantityDivider />
           <div>
             <div>
