@@ -15,7 +15,7 @@ interface OrderGroupProps {
 export const OrderGroup = ({
   orders,
   orderId,
-  isDetailPage,
+  isDetailPage = false,
   totalProductPrice,
   totalOrderLength,
 }: OrderGroupProps) => {
@@ -24,14 +24,14 @@ export const OrderGroup = ({
   return (
     <Style.Container>
       <Style.Header>
-        <Style.OrderNumber $isDetailPage={isDetailPage ?? false}>
+        <Style.OrderNumber $isDetailPage={isDetailPage}>
           주문 번호: {orderId}
         </Style.OrderNumber>
         <Style.ViewDetailButton
           onClick={() => {
             navigate('/orderDetail', { state: { orderId } });
           }}
-          $isDetailPage={isDetailPage ?? false}
+          $isDetailPage={isDetailPage}
         >
           상세보기
         </Style.ViewDetailButton>
