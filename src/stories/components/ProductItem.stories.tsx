@@ -1,5 +1,6 @@
 import { Meta } from '@storybook/react';
 import { useSetRecoilState } from 'recoil';
+import { styled } from 'styled-components';
 import ProductItemComponent from '../../components/main/ProductItem';
 import productList from '../../mock/productList.json';
 import { productListState } from '../../recoil';
@@ -9,6 +10,15 @@ const meta = {
   component: ProductItemComponent,
   title: 'Components/Main/ProductItem',
   tags: ['autodocs'],
+  decorators: [
+    (Story) => {
+      return (
+        <S.Wrapper>
+          <Story />
+        </S.Wrapper>
+      );
+    },
+  ],
   args: {
     id: 1,
     imageUrl: `${productList[0].imageUrl}`,
@@ -60,4 +70,11 @@ export const ProductItem = (args: Product) => {
   setProductList(productList);
 
   return <ProductItemComponent {...args} />;
+};
+
+const S = {
+  Wrapper: styled.div`
+    width: 300px;
+    margin: 0 auto;
+  `,
 };

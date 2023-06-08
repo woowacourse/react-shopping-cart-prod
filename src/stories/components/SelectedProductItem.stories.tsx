@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
+import { styled } from 'styled-components';
 import SelectedProductItemComponent from '../../components/cart/SelectedProductItem';
 import productList from '../../mock/productList.json';
 
@@ -8,9 +9,9 @@ const meta = {
   tags: ['autodocs'],
   decorators: [
     (Story) => (
-      <div style={{ pointerEvents: 'none' }}>
+      <S.Wrapper>
         <Story />
-      </div>
+      </S.Wrapper>
     ),
   ],
 } satisfies Meta<typeof SelectedProductItemComponent>;
@@ -71,4 +72,10 @@ export const SelectedProductItem: Story = {
       description: '상품의 수량을 바꿀 수 있습니다.<br> 수량을 변경하면 상품의 가격도 변경됩니다.',
     },
   },
+};
+
+const S = {
+  Wrapper: styled.div`
+    pointer-events: none;
+  `,
 };

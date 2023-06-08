@@ -52,7 +52,7 @@ const OrderDetailNavigator = ({ orderId, createdAt, orderStatus }: Props) => {
           onClick={() => goToPage(`${ROUTE_PATH.ORDER_LIST_PAGE}/${orderId}`)}
         >
           <span>상세보기</span>
-          <BsChevronRight style={{ marginLeft: '4px' }} />
+          <BsChevronRight />
         </Button>
       ) : (
         <S.OrderStatus>{orderStatus}</S.OrderStatus>
@@ -126,6 +126,7 @@ const buttonStyle = css`
 
   & > svg {
     padding-top: 2px;
+    margin-left: 4px;
   }
 
   @media (max-width: 420px) {

@@ -6,15 +6,6 @@ const meta = {
   component: OrderDetailNavigatorComponent,
   title: 'Components/OrderList/OrderDetailNavigator',
   tags: ['autodocs'],
-  decorators: [
-    (Story) => {
-      return (
-        <div style={{ width: 'calc(100vw - 32vw)' }}>
-          <Story />
-        </div>
-      );
-    },
-  ],
 } satisfies Meta<typeof OrderDetailNavigatorComponent>;
 
 export default meta;

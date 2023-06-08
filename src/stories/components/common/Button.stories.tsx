@@ -96,7 +96,7 @@ export const DetailButton = () => {
   return (
     <ButtonComponent css={detailButtonStyle}>
       상세보기
-      <BsChevronRight style={{ marginLeft: '4px' }} />
+      <BsChevronRight />
     </ButtonComponent>
   );
 };
@@ -184,5 +184,6 @@ const detailButtonStyle = css`
 
   & > svg {
     padding-top: 2px;
+    margin-left: 4px;
   }
 `;

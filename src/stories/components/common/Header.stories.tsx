@@ -5,15 +5,6 @@ const meta = {
   component: HeaderComponent,
   title: 'Components/Header',
   tags: ['autodocs'],
-  decorators: [
-    (Story) => {
-      return (
-        <div style={{ width: 'calc(100vw - 32vw)' }}>
-          <Story />
-        </div>
-      );
-    },
-  ],
   args: {
     title: 'STORE',
   },
@@ -26,10 +17,10 @@ const meta = {
 
 export default meta;
 
-interface CartProps {
+interface Props {
   title: string;
 }
 
-export const Header = (args: CartProps) => {
+export const Header = (args: Props) => {
   return <HeaderComponent title={args.title} />;
 };

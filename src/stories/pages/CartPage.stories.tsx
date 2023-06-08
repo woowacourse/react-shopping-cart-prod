@@ -1,6 +1,7 @@
 import { Meta } from '@storybook/react';
 import { useEffect } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { styled } from 'styled-components';
 import Header from '../../components/common/Header';
 import productList from '../../mock/productList.json';
 import CartPage from '../../pages/CartPage';
@@ -41,9 +42,31 @@ export const Cart = () => {
   const coupon = useRecoilValue(selectedCoupon);
 
   return (
-    <div style={{ width: '1270px', display: 'flex', justifyContent: 'space-between' }}>
+    <S.Wrapper>
       <ProductListInCart />
       <Order totalPrice={totalPrice} priceDiscount={coupon.priceDiscount} />
-    </div>
+    </S.Wrapper>
   );
+};
+
+const S = {
+  Wrapper: styled.div`
+    display: flex;
+    justify-content: space-between;
+    width: 1270px;
+    margin: 36px 30px 0 0;
+
+    @media (max-width: 1270px) {
+      flex-direction: column;
+      margin-right: 0;
+
+      & section {
+        max-width: 100%;
+      }
+
+      & section:last-child {
+        margin: 30px 0 80px;
+      }
+    }
+  `,
 };

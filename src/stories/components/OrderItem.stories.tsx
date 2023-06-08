@@ -7,20 +7,11 @@ const meta = {
   component: OrderItemComponent,
   title: 'Components/OrderList/OrderItem',
   tags: ['autodocs'],
-  decorators: [
-    (Story) => {
-      return (
-        <div style={{ width: 'calc(100vw - 32vw)' }}>
-          <Story />
-        </div>
-      );
-    },
-  ],
   args: {
     id: 1,
     imageUrl: `${productList[0].imageUrl}`,
     name: 'PET보틀-정사각(420ml)',
-    totalPrice: 43400,
+    totalPrice: 60000,
     quantity: 3,
     orderedProductCount: 3,
   },

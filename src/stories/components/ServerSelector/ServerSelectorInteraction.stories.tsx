@@ -24,7 +24,7 @@ export const SuccessInteraction: Story = {
 
     await step('Click Server Selector', async () => {
       await waitFor(() => {
-        const defaultServerSelector = canvas.getByText('준팍 서버');
+        const defaultServerSelector = canvas.getByText('도이 서버');
 
         userEvent.click(defaultServerSelector);
       });
@@ -32,17 +32,17 @@ export const SuccessInteraction: Story = {
 
     await pause();
 
-    const thirdServer = canvas.getByText('도이');
+    const firstServer = canvas.getByText('준팍');
 
     await step('Select Server', async () => {
       await waitFor(() => {
-        userEvent.click(thirdServer);
+        userEvent.click(firstServer);
       });
 
       await pause();
 
       await waitFor(() => {
-        const selectedServer = canvas.getByText('도이 서버');
+        const selectedServer = canvas.getByText('준팍 서버');
 
         expect(selectedServer).toBeVisible();
       });

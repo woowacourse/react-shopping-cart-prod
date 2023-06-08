@@ -7,15 +7,6 @@ const meta = {
   component: OrderDetailComponent,
   title: 'Components/OrderDetail',
   tags: ['autodocs'],
-  decorators: [
-    (Story) => {
-      return (
-        <div style={{ width: 'calc(100vw - 42vw)' }}>
-          <Story />
-        </div>
-      );
-    },
-  ],
   args: {
     totalPrice: 3000,
     deliveryFee: 3000,

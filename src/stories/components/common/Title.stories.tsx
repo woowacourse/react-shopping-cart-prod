@@ -5,15 +5,6 @@ const meta = {
   component: TitleComponent,
   title: 'Components/Title',
   tags: ['autodocs'],
-  decorators: [
-    (Story) => {
-      return (
-        <div style={{ width: 'calc(100vw - 32vw)' }}>
-          <Story />
-        </div>
-      );
-    },
-  ],
   args: {
     value: '타이틀',
   },
@@ -26,11 +17,11 @@ const meta = {
 
 export default meta;
 
-interface CartProps {
-  title: string;
+interface Props {
+  value: string;
 }
 
-export const Title = (args: CartProps) => <TitleComponent value={args.title} />;
+export const Title = (args: Props) => <TitleComponent value={args.value} />;
 
 export const CartTitle = () => <TitleComponent value='장바구니' />;
 

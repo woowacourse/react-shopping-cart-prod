@@ -1,5 +1,6 @@
 import React from 'react';
 import type { Preview } from '@storybook/react';
+import { styled } from 'styled-components';
 import { GlobalStyle } from '../src/GlobalStyle';
 import { initialize, mswDecorator } from 'msw-storybook-addon';
 import { RecoilRoot } from 'recoil';
@@ -16,6 +17,20 @@ if (location.hostname === 'feb-dain.github.io') {
 }
 
 initialize(options);
+
+const wrapper = (Story) => {
+  return (
+    <S.Wrapper>
+      <Story />
+    </S.Wrapper>
+  );
+};
+
+const S = {
+  Wrapper: styled.div`
+    width: calc(100vw - 38vw);
+  `,
+};
 
 const preview: Preview = {
   parameters: {
@@ -52,6 +67,7 @@ const preview: Preview = {
         </MemoryRouter>
       </RecoilRoot>
     ),
+    wrapper,
     mswDecorator,
   ],
 };
