@@ -67,7 +67,11 @@ export const handlers = [
     return res(ctx.status(200), ctx.json(deliveryPolicy));
   }),
 
-  rest.get('/api/cart-items/coupon?id=1,2,3', (req, res, ctx) => {
+  rest.get('/api/cart-items/coupon', (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(couponAppliedPrice));
+  }),
+
+  rest.get('/api/cart-items/coupon/:couponId', (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(couponAppliedPrice));
   }),
 
