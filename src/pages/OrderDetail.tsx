@@ -2,7 +2,7 @@ import { useLayoutEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { styled } from "styled-components";
 import { api } from "../api";
-import { Header, OrderHistory, Page } from "../components";
+import { ErrorBoundary, Header, OrderHistory, Page } from "../components";
 import { OrderDetailType } from "../types/domain";
 
 const OrderDetail = () => {
@@ -27,13 +27,13 @@ const OrderDetail = () => {
   }, []);
 
   return (
-    <>
+    <ErrorBoundary>
       <Header />
       <Page>
         <TitleBox>주문 내역 상세</TitleBox>
         <OrderHistory {...orderDetail} />
       </Page>
-    </>
+    </ErrorBoundary>
   );
 };
 

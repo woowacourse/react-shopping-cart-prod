@@ -7,13 +7,14 @@ import {
   CartProductList,
   TotalPriceTable,
   GuideBox,
+  ErrorBoundary,
 } from "../components";
 
 const Cart = () => {
   const cartNumber = useRecoilValue(cartNumberSelector);
 
   return (
-    <>
+    <ErrorBoundary>
       <Header />
       <Page>
         <TitleBox>장바구니</TitleBox>
@@ -30,7 +31,7 @@ const Cart = () => {
           />
         )}
       </Page>
-    </>
+    </ErrorBoundary>
   );
 };
 

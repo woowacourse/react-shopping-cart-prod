@@ -5,6 +5,7 @@ import { styled } from "styled-components";
 import { api } from "../api";
 import {
   CouponSelectBox,
+  ErrorBoundary,
   Header,
   OrderProductList,
   Page,
@@ -74,7 +75,7 @@ const Order = () => {
   };
 
   return (
-    <>
+    <ErrorBoundary>
       <Header />
       <Page>
         <TitleBox>주문서</TitleBox>
@@ -93,7 +94,7 @@ const Order = () => {
           </PriceContainer>
         </Container>
       </Page>
-    </>
+    </ErrorBoundary>
   );
 };
 

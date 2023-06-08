@@ -2,7 +2,13 @@ import { useLayoutEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { api } from "../api";
-import { Button, CouponSelectBox, Header, Page } from "../components";
+import {
+  Button,
+  CouponSelectBox,
+  ErrorBoundary,
+  Header,
+  Page,
+} from "../components";
 import { useRouter } from "../hooks/useRouter";
 import { useToast } from "../hooks/useToast";
 import { memberState } from "../recoil/atom";
@@ -48,7 +54,7 @@ const MyPage = () => {
   };
 
   return (
-    <>
+    <ErrorBoundary>
       <Header />
       <Page>
         <ProfileBox>
@@ -70,7 +76,7 @@ const MyPage = () => {
           </CouponOptionContainer>
         </OptionsContainer>
       </Page>
-    </>
+    </ErrorBoundary>
   );
 };
 

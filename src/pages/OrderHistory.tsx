@@ -1,7 +1,13 @@
 import { useLayoutEffect, useState } from "react";
 import { styled } from "styled-components";
 import { api } from "../api";
-import { GuideBox, Header, OrderHistoryList, Page } from "../components";
+import {
+  ErrorBoundary,
+  GuideBox,
+  Header,
+  OrderHistoryList,
+  Page,
+} from "../components";
 import { OrderType } from "../types/domain";
 
 const OrderHistory = () => {
@@ -21,7 +27,7 @@ const OrderHistory = () => {
   }, []);
 
   return (
-    <>
+    <ErrorBoundary>
       <Header />
       <Page>
         <TitleBox>주문 목록</TitleBox>
@@ -35,7 +41,7 @@ const OrderHistory = () => {
           />
         )}
       </Page>
-    </>
+    </ErrorBoundary>
   );
 };
 
