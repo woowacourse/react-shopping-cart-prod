@@ -51,7 +51,12 @@ const PaymentDetail = () => {
         <S.Text>총 주문 금액</S.Text>
         <S.Text>{formatPrice(calculateOrderPrice())}원</S.Text>
       </S.Wrapper>
-      <S.OrderButton onClick={onOrderButtonClick}>주문하기</S.OrderButton>
+      <S.OrderButton
+        onClick={onOrderButtonClick}
+        disabled={Boolean(!checkedItems.length)}
+      >
+        주문하기
+      </S.OrderButton>
     </S.Container>
   );
 };
