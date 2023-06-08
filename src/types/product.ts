@@ -11,7 +11,7 @@ export interface CartProduct {
   product: Product;
 }
 
-export type CouponType = 'percent' | 'amount';
+type CouponType = 'percent' | 'amount';
 export interface Coupon {
   id: number;
   type: CouponType;
