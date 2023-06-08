@@ -6,13 +6,9 @@ import {
   totalPriceSelector,
 } from "./cartAtoms";
 import { modalRepository } from "./modalAtoms";
-import { url } from "../api/url.ts";
 import { serverState } from "./serverAtom.ts";
-import { getSessionStorage } from "../utils/storage.ts";
-import { SESSION_STORAGE_KEY_BASE64 } from "../keys.ts";
 import { fetchCoupons, fetchOrder, fetchPoint } from "../api/api.ts";
 
-const base64 = getSessionStorage(SESSION_STORAGE_KEY_BASE64, "");
 
 export const deliveryFeeState = atom({
   key: "deliveryFeeState",
@@ -53,7 +49,7 @@ export const discountPriceByCouponSelector = selector<number>({
     const discount =
       selectedCoupons.length > 0
         ? (totalPrice * selectedCoupons[0]?.discountPercent) / 100 +
-          selectedCoupons[0]?.discountAmount
+        selectedCoupons[0]?.discountAmount
         : 0;
     return discount;
   },
@@ -63,11 +59,11 @@ export const isCouponSelectedSelector = selectorFamily<boolean, number>({
   key: "selectedCouponSelectedSelector",
   get:
     (couponId: number) =>
-    ({ get }) => {
-      const selectedCouponIds = get(selectedCouponIdSelector);
+      ({ get }) => {
+        const selectedCouponIds = get(selectedCouponIdSelector);
 
-      return selectedCouponIds.includes(couponId);
-    },
+        return selectedCouponIds.includes(couponId);
+      },
 });
 
 export const selectedPointState = atom({

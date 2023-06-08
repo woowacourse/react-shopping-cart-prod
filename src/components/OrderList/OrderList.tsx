@@ -4,10 +4,9 @@ import {
   OrderListWrapper,
 } from "./OrderList.style.ts";
 import OrderItem from "../OrderItem/OrderItem.tsx";
-import type { ResponseOrdered } from "../../types/types.ts";
 import { useEffect, useState } from "react";
 import { OrderedGroup } from "../../types/types.ts";
-import { fetchOrderedItem, fetchOrderedList } from "../../app/api/api.ts";
+import { fetchOrderedList } from "../../app/api/api.ts";
 import { useRecoilValue } from "recoil";
 import { serverState } from "../../app/recoil/serverAtom.ts";
 
