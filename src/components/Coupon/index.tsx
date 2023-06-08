@@ -50,7 +50,7 @@ function Coupon({
           <S.CouponName>{name}</S.CouponName>
           <S.CouponSubMessage>{subMessage}</S.CouponSubMessage>
         </S.CouponLayout>
-        <S.CouponButton isLoading={isLoading} onClick={IssuedOrUseCoupon}>
+        <S.CouponButton isLoading={isLoading} onClick={issuedOrUseCoupon}>
           {couponButton}
         </S.CouponButton>
       </S.Container>
