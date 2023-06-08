@@ -1,7 +1,7 @@
 import { styled } from 'styled-components';
 import { css } from 'styled-components';
 
-const List = styled.ol`
+const ListContainer = styled.ol`
   max-width: calc(100vw - 48px);
   width: 960px;
   margin-bottom: ${({ theme }) => theme.spacer.spacing6};
@@ -16,4 +16,4 @@ const headingStyle = css`
   border-bottom: 2px solid ${({ theme }) => theme.color.gray6};
 `;
 
-export { List, headingStyle };
+export { ListContainer, headingStyle };

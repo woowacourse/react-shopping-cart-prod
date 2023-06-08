@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-const List = styled.ol`
+const ListContainer = styled.ol`
   max-width: calc(100vw - 48px);
   width: 960px;
   display: flex;
@@ -35,4 +35,4 @@ const emptyMessageStyle = css`
   text-align: center;
 `;
 
-export { List, EmptyImage, emptyMessageStyle };
+export { ListContainer, EmptyImage, emptyMessageStyle };

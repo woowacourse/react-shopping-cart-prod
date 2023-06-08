@@ -4,11 +4,11 @@ import * as S from './ProductList.styles';
 
 const ProductListSkeleton = () => {
   return (
-    <S.List>
+    <S.ListContainer>
       {Array.from({ length: PRODUCT_LIST_SKELETON_ITEM_LENGTH }, (_, index) => (
         <ProductItemSkeleton key={index} />
       ))}
-    </S.List>
+    </S.ListContainer>
   );
 };
 

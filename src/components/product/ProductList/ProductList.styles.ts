@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const List = styled.ol`
+const ListContainer = styled.ol`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -8,4 +8,4 @@ const List = styled.ol`
   column-gap: 20px;
 `;
 
-export { List };
+export { ListContainer };

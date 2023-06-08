@@ -15,7 +15,7 @@ const OrderList = () => {
 
   if (orderList.length === 0) {
     return (
-      <S.List className="center">
+      <S.ListContainer className="center">
         <S.EmptyImage src={EmptyImage} alt="empty" />
         <Text css={S.emptyMessageStyle} size="large">
           주문내역이 없습니다.
@@ -23,16 +23,16 @@ const OrderList = () => {
         <Button variant="primary" onClick={() => navigate(PATH.ROOT)}>
           홈으로 이동하기
         </Button>
-      </S.List>
+      </S.ListContainer>
     );
   }
 
   return (
-    <S.List>
+    <S.ListContainer>
       {orderList.map((order) => (
         <OrderItem key={order.id} {...order} />
       ))}
-    </S.List>
+    </S.ListContainer>
   );
 };
 

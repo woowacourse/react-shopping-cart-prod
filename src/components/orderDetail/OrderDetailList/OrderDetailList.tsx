@@ -27,14 +27,14 @@ const OrderDetailList = ({ orderId }: OrderDetailListProps) => {
       <Heading css={S.headingStyle} size="xSmall">
         주문번호 {orderId}
       </Heading>
-      <S.List>
+      <S.ListContainer>
         {order.orderedItems.map((orderedItem, index) => (
           <Fragment key={index}>
             <OrderDetailItem {...orderedItem} />
             <Divider />
           </Fragment>
         ))}
-      </S.List>
+      </S.ListContainer>
     </>
   );
 };

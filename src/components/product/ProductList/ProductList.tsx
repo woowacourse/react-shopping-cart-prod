@@ -8,11 +8,11 @@ const ProductList = () => {
   const productList = useRecoilValue(productListState);
 
   return (
-    <S.List>
+    <S.ListContainer>
       {productList.map((productItem) => (
         <ProductItem key={productItem.id} {...productItem} />
       ))}
-    </S.List>
+    </S.ListContainer>
   );
 };
 
