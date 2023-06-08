@@ -10,7 +10,7 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Open Sans', 'Helvetica Neue', sans-serif;
-    color: ${theme.color.black}
+    color: ${theme.color.BLACK}
   }
 
   body:has([role="dialog"]) {
@@ -25,7 +25,7 @@ const GlobalStyle = createGlobalStyle`
   a {
     text-decoration: none;
     outline: none;
-    color: ${theme.color.black};
+    color: ${theme.color.BLACK};
   }
 
   a:hover, a:active, a:visited {

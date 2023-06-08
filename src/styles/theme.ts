@@ -1,30 +1,30 @@
 const color = {
   /* grayscale */
-  white: '#fff',
-  gray100: '#f8f8f8',
-  gray200: '#e9e9e9',
-  gray300: '#ddd',
-  gray350: '#ccc',
-  gray400: '#888',
-  gray500: '#525252',
-  gray600: '#363636',
-  black: '#333',
+  WHITE: '#fff',
+  GRAY_100: '#f8f8f8',
+  GRAY_200: '#e9e9e9',
+  GRAY_300: '#ddd',
+  GRAY_350: '#ccc',
+  GRAY_400: '#888',
+  GRAY_500: '#525252',
+  GRAY_600: '#363636',
+  BLACK: '#333',
 
   /* colors */
-  orange: '#ff6610',
+  ORANGE: '#ff6610',
 
-  primary: '#1a7cff',
-  primaryLight: 'rgba(26, 124, 255, 0.9)',
+  PRIMARY: '#1a7cff',
+  PRIMARY_LIGHT: 'rgba(26, 124, 255, 0.9)',
 
-  error: '#e53e53',
+  ERROR: '#e53e53',
 } as const;
 
 const zIndex = {
-  header: 1,
-  menu: 2,
-  modalBackdrop: 10,
-  modalContainer: 20,
-  toast: 30,
+  HEADER: 1,
+  MENU: 2,
+  MODAL_BACKDROP: 10,
+  MODAL_CONTAINER: 20,
+  TOAST: 30,
 };
 
 export const theme = {

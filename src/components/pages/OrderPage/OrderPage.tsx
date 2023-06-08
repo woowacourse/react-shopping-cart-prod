@@ -81,7 +81,7 @@ const Title = styled.h2`
   line-height: 37px;
   text-align: center;
   letter-spacing: 0.5px;
-  color: ${(props) => props.theme.color.black};
+  color: ${(props) => props.theme.color.BLACK};
 `;
 
 const OrderListContainer = styled.div`
@@ -111,5 +111,5 @@ const HomeButton = styled(ResetButton)`
   font-size: 16px;
   font-weight: 600;
   margin-top: 10px;
-  background-color: ${(props) => props.theme.color.primary};
+  background-color: ${(props) => props.theme.color.PRIMARY};
 `;

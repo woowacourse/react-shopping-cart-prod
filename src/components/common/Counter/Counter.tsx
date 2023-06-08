@@ -57,7 +57,7 @@ const Counter = ({
 const CounterContainer = styled.span<{ size: CounterSize }>`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(33%, auto));
-  border: 1px solid ${(props) => props.theme.color.gray300};
+  border: 1px solid ${(props) => props.theme.color.GRAY_300};
 
   ${({ size }) => {
     if (size === 'medium') {
@@ -79,14 +79,14 @@ const Input = styled.input`
   font-size: 22px;
   text-align: center;
   border: none;
-  color: ${(props) => props.theme.color.black};
+  color: ${(props) => props.theme.color.BLACK};
 `;
 
 const CounterButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${(props) => props.theme.color.white};
+  background-color: ${(props) => props.theme.color.WHITE};
   cursor: pointer;
 `;
 

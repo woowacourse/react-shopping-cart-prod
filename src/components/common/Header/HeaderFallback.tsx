@@ -27,7 +27,7 @@ const Container = styled.div`
   width: 100%;
   height: 80px;
   padding: 0 8%;
-  border-bottom: 1px solid ${(props) => props.theme.color.gray300};
+  border-bottom: 1px solid ${(props) => props.theme.color.GRAY_300};
 `;
 
 const Logo = styled.div`

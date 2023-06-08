@@ -78,12 +78,12 @@ const Detail = styled.dl`
   row-gap: 20px;
   width: 370px;
   padding: 20px 30px;
-  border: 1px solid ${(props) => props.theme.color.gray300};
+  border: 1px solid ${(props) => props.theme.color.GRAY_300};
   border-radius: 8px;
 
   & > div:not(:first-child) > dd {
     font-weight: 600;
-    color: ${(props) => props.theme.color.primary};
+    color: ${(props) => props.theme.color.PRIMARY};
   }
 `;
 
@@ -108,7 +108,7 @@ const PointWrapper = styled.div`
   & > dd {
     margin-left: auto;
     font-weight: 600;
-    color: ${(props) => props.theme.color.primary};
+    color: ${(props) => props.theme.color.PRIMARY};
   }
 `;
 
@@ -117,13 +117,13 @@ const LinkContainer = styled.div`
   column-gap: 10px;
 
   & > *:first-child {
-    background-color: ${(props) => props.theme.color.white};
-    color: ${(props) => props.theme.color.primary};
-    border: 1px solid ${(props) => props.theme.color.primary};
+    background-color: ${(props) => props.theme.color.WHITE};
+    color: ${(props) => props.theme.color.PRIMARY};
+    border: 1px solid ${(props) => props.theme.color.PRIMARY};
   }
 
   & > * {
-    background-color: ${(props) => props.theme.color.primary};
+    background-color: ${(props) => props.theme.color.PRIMARY};
   }
 `;
 
@@ -136,7 +136,7 @@ const StyledLink = styled(Link)`
   border-radius: 10px;
   font-size: 16px;
   font-weight: 500;
-  color: ${(props) => props.theme.color.white};
+  color: ${(props) => props.theme.color.WHITE};
 `;
 
 export default OrderCompletePage;

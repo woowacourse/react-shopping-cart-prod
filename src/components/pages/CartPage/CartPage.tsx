@@ -89,12 +89,12 @@ const Title = styled.h2`
   line-height: 37px;
   text-align: center;
   letter-spacing: 0.5px;
-  color: ${(props) => props.theme.black};
+  color: ${(props) => props.theme.BLACK};
 `;
 
 const CartListContainer = styled.div`
   & > li {
-    border-bottom: 1.5px solid ${(props) => props.theme.color.gray350};
+    border-bottom: 1.5px solid ${(props) => props.theme.color.GRAY_350};
   }
 
   & > li:last-child {
@@ -128,7 +128,7 @@ const AllCheckBoxContainer = styled.div`
   display: flex;
   align-items: center;
   height: 60px;
-  border-bottom: 1px solid ${(props) => props.theme.color.gray350};
+  border-bottom: 1px solid ${(props) => props.theme.color.GRAY_350};
 
   & > span {
     font-size: 18px;
@@ -150,7 +150,7 @@ const HomeButton = styled(ResetButton)`
   font-size: 16px;
   font-weight: 600;
   margin-top: 10px;
-  background-color: ${(props) => props.theme.color.primary};
+  background-color: ${(props) => props.theme.color.PRIMARY};
 `;
 
 const DeleteButton = styled.button`
@@ -161,13 +161,13 @@ const DeleteButton = styled.button`
   font-size: 16px;
   line-height: 21px;
   text-align: center;
-  color: ${(props) => props.theme.color.black};
-  border: 1px solid ${(props) => props.theme.color.gray350};
+  color: ${(props) => props.theme.color.BLACK};
+  border: 1px solid ${(props) => props.theme.color.GRAY_350};
   border-radius: 4px;
 
   &:disabled {
-    background-color: ${(props) => props.theme.color.gray100};
-    color: ${(props) => props.theme.color.gray350};
+    background-color: ${(props) => props.theme.color.GRAY_100};
+    color: ${(props) => props.theme.color.GRAY_350};
   }
 `;
 

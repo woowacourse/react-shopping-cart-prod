@@ -53,9 +53,9 @@ const HeaderContainer = styled.header`
   width: 100%;
   height: 80px;
   padding: 0 8%;
-  background-color: ${(props) => props.theme.color.white};
-  border-bottom: 1px solid ${(props) => props.theme.color.gray300};
-  z-index: ${(props) => props.theme.zIndex.header};
+  background-color: ${(props) => props.theme.color.WHITE};
+  border-bottom: 1px solid ${(props) => props.theme.color.GRAY_300};
+  z-index: ${(props) => props.theme.zIndex.HEADER};
 `;
 
 const Logo = styled(Link)`
@@ -113,8 +113,8 @@ const CartTotalQuantity = styled.span`
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background: ${(props) => props.theme.color.orange};
-  color: ${(props) => props.theme.color.white};
+  background: ${(props) => props.theme.color.ORANGE};
+  color: ${(props) => props.theme.color.WHITE};
   font-size: 12px;
 `;
 

@@ -103,10 +103,10 @@ const Container = styled.div<{ $isActive: boolean }>`
   position: absolute;
   left: -130px;
   min-width: 300px;
-  border: 1px solid ${(props) => props.theme.color.gray350};
+  border: 1px solid ${(props) => props.theme.color.GRAY_350};
   border-radius: 8px;
-  background-color: ${(props) => props.theme.color.white};
-  z-index: ${(props) => props.theme.zIndex.menu};
+  background-color: ${(props) => props.theme.color.WHITE};
+  z-index: ${(props) => props.theme.zIndex.MENU};
 
   ${({ $isActive }) =>
     $isActive
@@ -157,7 +157,7 @@ const Point = styled.div`
     display: flex;
     align-items: center;
     column-gap: 5px;
-    color: ${(props) => props.theme.color.primary};
+    color: ${(props) => props.theme.color.PRIMARY};
   }
 `;
 

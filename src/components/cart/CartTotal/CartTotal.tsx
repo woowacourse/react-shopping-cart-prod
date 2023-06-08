@@ -124,7 +124,7 @@ const Container = styled.div`
   width: 420px;
   height: 480px;
   padding-bottom: 16px;
-  border: 1px solid ${(props) => props.theme.color.gray300};
+  border: 1px solid ${(props) => props.theme.color.GRAY_300};
   border-radius: 8px;
 `;
 
@@ -132,7 +132,7 @@ const TitleWrapper = styled.div`
   display: flex;
   align-items: center;
   height: 81px;
-  border-bottom: 3px solid ${(props) => props.theme.color.gray300};
+  border-bottom: 3px solid ${(props) => props.theme.color.GRAY_300};
   padding: 0 30px;
 `;
 
@@ -150,7 +150,7 @@ const Detail = styled.dl`
   justify-content: space-between;
   row-gap: 19px;
   padding: 30px 0;
-  border-bottom: 1px solid ${(props) => props.theme.color.gray300};
+  border-bottom: 1px solid ${(props) => props.theme.color.GRAY_300};
 
   & > div > dt,
   & > div > dd {
@@ -178,7 +178,7 @@ const PointInputWrapper = styled.div`
   width: 140px;
   align-items: center;
   column-gap: 5px;
-  border-bottom: 1px solid ${(props) => props.theme.color.black};
+  border-bottom: 1px solid ${(props) => props.theme.color.BLACK};
 `;
 
 const PointInputInner = styled.div`
@@ -189,7 +189,7 @@ const PointInputInner = styled.div`
 
   & > input,
   & > span {
-    color: ${(props) => props.theme.color.primary};
+    color: ${(props) => props.theme.color.PRIMARY};
   }
 `;
 
@@ -208,18 +208,18 @@ const ClearPointButton = styled.button`
   align-items: center;
   justify-content: center;
   padding: 2px;
-  background-color: ${(props) => props.theme.color.gray400};
+  background-color: ${(props) => props.theme.color.GRAY_400};
   border-radius: 50%;
 `;
 
 const UseAllPointButton = styled.button`
   padding: 5px;
   font-size: 14px;
-  border: 1px solid ${(props) => props.theme.color.gray300};
+  border: 1px solid ${(props) => props.theme.color.GRAY_300};
   border-radius: 4px;
 
   &:disabled {
-    background-color: ${(props) => props.theme.color.gray300};
+    background-color: ${(props) => props.theme.color.GRAY_300};
   }
 `;
 
@@ -231,7 +231,7 @@ const Total = styled.span`
 const TotalPrice = styled.dd<{ $isHighlight: boolean }>`
   font-size: 20px;
   font-weight: 600;
-  color: ${(props) => props.$isHighlight && props.theme.color.primary};
+  color: ${(props) => props.$isHighlight && props.theme.color.PRIMARY};
 `;
 
 const OrderDetail = styled.div`
@@ -254,22 +254,22 @@ const OrderButton = styled.button`
   width: 388px;
   height: 73px;
   margin: 0 auto;
-  background: ${(props) => props.theme.color.primary};
+  background: ${(props) => props.theme.color.PRIMARY};
   font-family: 'Noto Sans KR';
   font-size: 20px;
   font-weight: 500;
   line-height: 21px;
   letter-spacing: 0.4px;
   text-align: center;
-  color: ${(props) => props.theme.color.white};
+  color: ${(props) => props.theme.color.WHITE};
   border-radius: 4px;
 
   &:disabled {
-    background-color: ${(props) => props.theme.color.gray400};
+    background-color: ${(props) => props.theme.color.GRAY_400};
   }
 
   &:not(:disabled):hover {
-    background-color: ${(props) => props.theme.color.primaryLight};
+    background-color: ${(props) => props.theme.color.PRIMARY_LIGHT};
   }
 `;
 

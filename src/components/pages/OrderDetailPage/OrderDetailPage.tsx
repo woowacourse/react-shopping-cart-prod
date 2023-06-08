@@ -86,7 +86,7 @@ const Title = styled.h2`
   line-height: 37px;
   text-align: center;
   letter-spacing: 0.5px;
-  color: ${(props) => props.theme.black};
+  color: ${(props) => props.theme.BLACK};
 `;
 
 const OrderTotal = styled.dl`
@@ -94,7 +94,7 @@ const OrderTotal = styled.dl`
   height: 200px;
   margin-left: auto;
   border-radius: 8px;
-  border: 1px solid ${(props) => props.theme.color.gray300};
+  border: 1px solid ${(props) => props.theme.color.GRAY_300};
 
   @media only screen and (max-width: 1200px) {
     margin: 0 auto;
@@ -110,9 +110,9 @@ const OrderTotalHeader = styled.p`
   align-items: center;
   padding: 20px 30px;
   height: 70px;
-  color: ${(props) => props.theme.color.black};
-  background-color: ${(props) => props.theme.color.white};
-  border-bottom: 2px solid ${(props) => props.theme.color.gray300};
+  color: ${(props) => props.theme.color.BLACK};
+  background-color: ${(props) => props.theme.color.WHITE};
+  border-bottom: 2px solid ${(props) => props.theme.color.GRAY_300};
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
   font-weight: 600;
@@ -133,7 +133,7 @@ const Detail = styled.div`
   font-size: 22px;
   line-height: 24px;
   letter-spacing: 0.5px;
-  color: ${(props) => props.theme.color.black};
+  color: ${(props) => props.theme.color.BLACK};
 
   & > div:last-child > * {
     font-size: 18px;
@@ -145,7 +145,7 @@ const DetailInner = styled.div`
   justify-content: space-between;
 
   & > dd {
-    color: ${(props) => props.theme.color.primary};
+    color: ${(props) => props.theme.color.PRIMARY};
   }
 `;
 

@@ -35,7 +35,7 @@ const BackDrop = styled.div`
   bottom: 0;
   left: 0;
   background: rgba(0, 0, 0, 0.15);
-  z-index: ${(props) => props.theme.zIndex.modalBackdrop};
+  z-index: ${(props) => props.theme.zIndex.MODAL_BACKDROP};
 `;
 
 const fadeInUp = keyframes`
@@ -55,9 +55,9 @@ const ModalContainer = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: ${(props) => props.theme.color.white};
+  background-color: ${(props) => props.theme.color.WHITE};
   border-radius: 8px;
-  z-index: ${(props) => props.theme.zIndex.modalContainer};
+  z-index: ${(props) => props.theme.zIndex.MODAL_CONTAINER};
   animation: ${fadeInUp} 0.3s ease-in-out;
 `;
 

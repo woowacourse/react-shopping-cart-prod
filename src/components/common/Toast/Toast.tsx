@@ -74,11 +74,11 @@ const Container = styled.div<{
 
   background-color: ${(props) => {
     if (props.status === 'success') {
-      return props.theme.color.primary;
+      return props.theme.color.PRIMARY;
     }
 
     if (props.status === 'error') {
-      return props.theme.color.error;
+      return props.theme.color.ERROR;
     }
   }};
 `;

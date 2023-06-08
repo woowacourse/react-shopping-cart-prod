@@ -47,7 +47,7 @@ const Label = styled.label`
   justify-content: center;
   width: 120px;
   height: 36px;
-  border: 1px solid ${(props) => props.theme.color.gray300};
+  border: 1px solid ${(props) => props.theme.color.GRAY_300};
   border-radius: 4px;
   padding-right: 10px;
 `;

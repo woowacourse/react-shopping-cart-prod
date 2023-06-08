@@ -120,7 +120,7 @@ const TitleWrapper = styled.div`
   display: flex;
   align-items: center;
   height: 70px;
-  border-bottom: 3px solid ${(props) => props.theme.color.gray300};
+  border-bottom: 3px solid ${(props) => props.theme.color.GRAY_300};
   padding: 0 30px;
 `;
 
@@ -134,7 +134,7 @@ const Title = styled.h2`
 
 const OrderSummaryContainer = styled.div`
   padding: 20px 30px;
-  border-bottom: 2px solid ${(props) => props.theme.color.gray300};
+  border-bottom: 2px solid ${(props) => props.theme.color.GRAY_300};
 `;
 
 const OrderSummary = styled.div`
@@ -164,7 +164,7 @@ const OrderItem = styled.li`
   padding: 5px 0;
 
   &:not(:last-child) {
-    border-bottom: 1px solid ${(props) => props.theme.color.gray300};
+    border-bottom: 1px solid ${(props) => props.theme.color.GRAY_300};
   }
 `;
 
@@ -202,11 +202,11 @@ const DetailInner = styled.div`
 `;
 
 const UsingPoint = styled.dl`
-  color: ${(props) => props.theme.color.error};
+  color: ${(props) => props.theme.color.ERROR};
 `;
 
 const Point = styled.dl`
-  color: ${(props) => props.theme.color.primary};
+  color: ${(props) => props.theme.color.PRIMARY};
 `;
 
 const ButtonContainer = styled.div`
@@ -224,17 +224,17 @@ const ButtonContainer = styled.div`
 `;
 
 const CancelButton = styled.button`
-  border-top: 1px solid ${(props) => props.theme.color.gray350};
+  border-top: 1px solid ${(props) => props.theme.color.GRAY_350};
   border-bottom-left-radius: 4px;
 `;
 
 const OrderButton = styled.button`
-  background-color: ${(props) => props.theme.color.primary};
-  color: ${(props) => props.theme.color.white};
+  background-color: ${(props) => props.theme.color.PRIMARY};
+  color: ${(props) => props.theme.color.WHITE};
   border-bottom-right-radius: 4px;
 
   &:hover {
-    background-color: ${(props) => props.theme.color.primaryLight};
+    background-color: ${(props) => props.theme.color.PRIMARY_LIGHT};
   }
 `;
 

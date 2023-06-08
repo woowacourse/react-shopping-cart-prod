@@ -60,8 +60,8 @@ const ListHeader = styled.div`
   justify-content: space-between;
   height: 70px;
   padding: 0 30px;
-  color: ${(props) => props.theme.color.white};
-  background-color: ${(props) => props.theme.color.primaryLight};
+  color: ${(props) => props.theme.color.WHITE};
+  background-color: ${(props) => props.theme.color.PRIMARY_LIGHT};
   border-top-left-radius: 8px;
   border-top-right-radius: 4px;
 
@@ -83,13 +83,13 @@ const ListHeader = styled.div`
 const ListWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  border: 1px solid ${(props) => props.theme.color.gray300};
+  border: 1px solid ${(props) => props.theme.color.GRAY_300};
   border-top: none;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
 
   & > li:not(:last-child) {
-    border-bottom: 1px solid ${(props) => props.theme.color.gray300};
+    border-bottom: 1px solid ${(props) => props.theme.color.GRAY_300};
   }
 `;
 
@@ -97,7 +97,7 @@ const DetailButton = styled(Link)`
   font-size: 18px;
   line-height: 24px;
   letter-spacing: 0.5px;
-  color: ${(props) => props.theme.color.white};
+  color: ${(props) => props.theme.color.WHITE};
 `;
 
 const ShowMoreButton = styled(Link)`

@@ -33,7 +33,7 @@ const StyledCheckbox = styled.input`
   cursor: pointer;
 
   &:not(:checked) {
-    border: 1px solid ${(props) => props.theme.color.gray350};
+    border: 1px solid ${(props) => props.theme.color.GRAY_350};
   }
 
   &:checked {
@@ -42,7 +42,7 @@ const StyledCheckbox = styled.input`
     background-size: 100% 100%;
     background-position: 50%;
     background-repeat: no-repeat;
-    background-color: ${(props) => props.theme.color.primary};
+    background-color: ${(props) => props.theme.color.PRIMARY};
   }
 `;
 
