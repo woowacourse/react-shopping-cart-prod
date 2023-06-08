@@ -1,17 +1,14 @@
 import { useEffect, useState } from 'react';
 
 interface State<T> {
-  loading: boolean;
   data?: T;
   error?: object;
 }
 
 export const useQuery = <T>(url: string, headers?: HeadersInit) => {
-  const [state, setState] = useState<State<T>>({
-    loading: false,
-  });
+  const [state, setState] = useState<State<T>>({});
 
-  const { loading, data, error } = state;
+  const { data, error } = state;
 
   useEffect(() => {
     fetchData();
@@ -20,8 +17,6 @@ export const useQuery = <T>(url: string, headers?: HeadersInit) => {
 
   const fetchData = async () => {
     try {
-      setState({ loading: true });
-
       const response = await fetch(url, {
         ...(headers && { headers }),
       });
@@ -35,10 +30,8 @@ export const useQuery = <T>(url: string, headers?: HeadersInit) => {
       }
     } catch {
       setState((prev) => ({ ...prev, error }));
-    } finally {
-      setState((prev) => ({ ...prev, loading: false }));
     }
   };
 
-  return { loading, data, error };
+  return { data, error };
 };
