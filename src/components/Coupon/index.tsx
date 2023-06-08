@@ -41,7 +41,7 @@ function Coupon({
     deleteMyCoupon(id);
   };
 
-  const couponButton = isUsed ? '✖︎' : type === 'issued' ? '⬇︎' : isSelected ? '✓' : '➡︎';
+  const couponButtonText = isUsed ? '✖︎' : type === 'issued' ? '⬇︎' : isSelected ? '✓' : '➡︎';
   return (
     <S.Wrapper>
       <S.Container isUsed={isUsed} isLoading={isLoading}>
@@ -51,7 +51,7 @@ function Coupon({
           <S.CouponSubMessage>{subMessage}</S.CouponSubMessage>
         </S.CouponLayout>
         <S.CouponButton isLoading={isLoading} onClick={issuedOrUseCoupon}>
-          {couponButton}
+          {couponButtonText}
         </S.CouponButton>
       </S.Container>
       {type === 'use' && isUsed && <S.DeleteButton onClick={handleDeleteMyCoupon}>쿠폰 삭제하기</S.DeleteButton>}
