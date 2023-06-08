@@ -1,10 +1,18 @@
 import { Meta } from '@storybook/react';
+import { styled } from 'styled-components';
 import TitleComponent from '../../../components/common/Title';
 
 const meta = {
   component: TitleComponent,
   title: 'Components/Title',
   tags: ['autodocs'],
+  decorators: [
+    (Story) => (
+      <S.Wrapper>
+        <Story />
+      </S.Wrapper>
+    ),
+  ],
   args: {
     value: '타이틀',
   },
@@ -28,3 +36,9 @@ export const CartTitle = () => <TitleComponent value='장바구니' />;
 export const OrderListTitle = () => <TitleComponent value='주문 목록' />;
 
 export const OrderDetailTitle = () => <TitleComponent value='주문 내역 상세' />;
+
+const S = {
+  Wrapper: styled.div`
+    width: calc(100vw - 38vw);
+  `,
+};

@@ -1,4 +1,5 @@
 import { Meta } from '@storybook/react';
+import { styled } from 'styled-components';
 import OrderDetailComponent from '../../components/orderDetail/OrderDetail';
 import { ORDER_STATUS } from '../../constants';
 import { CouponItem, OrderList } from '../../types';
@@ -7,6 +8,13 @@ const meta = {
   component: OrderDetailComponent,
   title: 'Components/OrderDetail',
   tags: ['autodocs'],
+  decorators: [
+    (Story) => (
+      <S.Wrapper>
+        <Story />
+      </S.Wrapper>
+    ),
+  ],
   args: {
     totalPrice: 3000,
     deliveryFee: 3000,
@@ -27,4 +35,10 @@ interface Props extends Pick<OrderList, 'orderStatus'> {
 
 export const OrderDetail = (args: Props) => {
   return <OrderDetailComponent {...args} />;
+};
+
+const S = {
+  Wrapper: styled.div`
+    width: calc(100vw - 38vw);
+  `,
 };

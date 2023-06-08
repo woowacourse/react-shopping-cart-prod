@@ -130,6 +130,7 @@ export const HeaderCart: Story = {
 
 const S = {
   Wrapper: styled.div`
+    width: calc(100vw - 38vw);
     background: #333;
   `,
 };
