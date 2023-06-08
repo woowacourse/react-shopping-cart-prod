@@ -26,13 +26,13 @@ const SelectedProductItem = ({
 
   const isChecked = checkedItemIdList.includes(cartItemId);
 
-  const handleCheckedItem = () => {
+  const handleCheckedItemToggle = () => {
     if (isChecked) return setCheckedItemIdList((prev) => prev.filter((id) => id !== cartItemId));
 
     setCheckedItemIdList((prev) => [...prev, cartItemId]);
   };
 
-  const handleTrashCanClick = () => {
+  const handleItemRemove = () => {
     setCheckedItemIdList((prev) => prev.filter((id) => id !== cartItemId));
     removeItemFromCart();
   };
@@ -45,14 +45,14 @@ const SelectedProductItem = ({
           id={`${cartItemId}-checkbox`}
           name='checkbox-in-cart'
           checked={isChecked}
-          onChange={handleCheckedItem}
+          onChange={handleCheckedItemToggle}
         />
         <S.Image src={`${imageUrl}`} alt={name} loading='lazy' />
         <S.Name htmlFor={`${cartItemId}-checkbox`} title={name}>
           {name}
         </S.Name>
         <S.Wrapper>
-          <Button onClick={handleTrashCanClick}>
+          <Button onClick={handleItemRemove}>
             <TrashCanIcon patternId={cartItemId} imageSize={{ width: '40', height: '40' }} />
           </Button>
           <QuantityButton productId={productId} quantity={quantity} />

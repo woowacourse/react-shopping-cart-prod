@@ -12,7 +12,7 @@ const Order = () => {
 
   const [coupon, setCoupon] = useRecoilState(selectedCoupon);
 
-  const handleOrderButtonClick = () => {
+  const handleProductOrder = () => {
     if (!totalPrice) return;
 
     orderProducts();
@@ -31,7 +31,7 @@ const Order = () => {
         <Price value={discount} tag='li' description='할인 쿠폰' />
         <Price value={totalPayment < 0 ? 0 : totalPayment} tag='li' description='총 주문금액' />
       </S.List>
-      <Button css={orderButtonStyle} onClick={handleOrderButtonClick}>
+      <Button css={orderButtonStyle} onClick={handleProductOrder}>
         주문하기
       </Button>
     </S.Wrapper>

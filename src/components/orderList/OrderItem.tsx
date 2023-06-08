@@ -31,7 +31,7 @@ const OrderItem = ({
       ? `${name} 외 ${orderedProductCount - 1}개의 상품`
       : name;
 
-  const handleCancelButtonClick = () => {
+  const handleOrderCancel = () => {
     api
       .patch(`${server}${ORDER_URL}/${orderId}`)
       .then(() => {
@@ -63,7 +63,7 @@ const OrderItem = ({
         </S.Detail>
       </section>
       {location === ROUTE_PATH.ORDER_LIST_PAGE && changedStatus === ORDER_STATUS.PAID && (
-        <Button onClick={handleCancelButtonClick} css={cancelButtonStyle}>
+        <Button onClick={handleOrderCancel} css={cancelButtonStyle}>
           {ORDER_STATUS.CANCEL}
         </Button>
       )}

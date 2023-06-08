@@ -25,7 +25,7 @@ const OrderDetailNavigator = ({ orderId, createdAt, orderStatus }: Props) => {
 
   const setOrderList = useSetRecoilState(orderListState);
 
-  const handleTrashCanClick = () => {
+  const handleOrderRemoveFromList = () => {
     api
       .delete(`${server}${ORDER_URL}/${orderId}`)
       .then(() => {
@@ -37,7 +37,7 @@ const OrderDetailNavigator = ({ orderId, createdAt, orderStatus }: Props) => {
   return (
     <S.Head tabIndex={0}>
       {location !== `${ROUTE_PATH.ORDER_LIST_PAGE}/${orderId}` && (
-        <Button onClick={handleTrashCanClick}>
+        <Button onClick={handleOrderRemoveFromList}>
           <TrashCanIcon patternId={orderId} imageSize={{ width: '40', height: '40' }} />
         </Button>
       )}

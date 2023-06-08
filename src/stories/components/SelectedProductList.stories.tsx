@@ -60,7 +60,7 @@ export const ProductListInCart = () => {
   const productCountInCart = cart.length;
   const isAllChecked = checkedItemIdList.length === productCountInCart && productCountInCart !== 0;
 
-  const handleAllItemsCheck = () => {
+  const handleAllCheckedItemToggle = () => {
     const initialCheckedItemIdList = cart.map((item) => item.id);
     const checkedAllItemIdList = isAllChecked ? [] : initialCheckedItemIdList;
 
@@ -96,7 +96,7 @@ export const ProductListInCart = () => {
             id='select-all'
             name='select-all-checkbox'
             checked={isAllChecked}
-            onChange={handleAllItemsCheck}
+            onChange={handleAllCheckedItemToggle}
           />
           <label htmlFor='select-all'>{`전체선택 (${checkedItemIdList.length}/${productCountInCart})`}</label>
           <Button css={deleteButtonStyle} onClick={handleCheckedItemRemove}>
