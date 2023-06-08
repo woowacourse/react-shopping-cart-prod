@@ -27,9 +27,18 @@ const zIndex = {
   TOAST: 30,
 } as const;
 
+const fontSize = {
+  X_SMALL: '12px',
+  SMALL: '14px',
+  MEDIUM: '16px',
+  LARGE: '18px',
+  X_LARGE: '20px',
+};
+
 export const theme = {
   color,
   zIndex,
+  fontSize,
 } as const;
 
 export type Theme = typeof theme;

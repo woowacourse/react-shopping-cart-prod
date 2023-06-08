@@ -129,7 +129,7 @@ const User = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 18px;
+  font-size: ${(props) => props.theme.fontSize.LARGE};
   font-weight: 600;
 `;
 
@@ -141,7 +141,7 @@ const UserInner = styled.div`
 
 const ChangeUserButton = styled.button`
   margin-left: auto;
-  font-size: 16px;
+  font-size: ${(props) => props.theme.fontSize.MEDIUM};
 `;
 
 const Point = styled.div`

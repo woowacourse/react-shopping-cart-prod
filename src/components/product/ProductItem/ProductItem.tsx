@@ -95,13 +95,13 @@ const Contents = styled.div`
 `;
 
 const Title = styled.p`
-  font-size: 16px;
+  font-size: ${(props) => props.theme.fontSize.MEDIUM};
   font-weight: 400;
 `;
 
 const Price = styled.p`
   margin-top: 3px;
-  font-size: 20px;
+  font-size: ${(props) => props.theme.fontSize.X_LARGE};
   font-weight: 400;
 `;
 

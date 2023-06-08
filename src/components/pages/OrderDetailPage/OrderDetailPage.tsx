@@ -116,7 +116,7 @@ const OrderTotalHeader = styled.p`
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
   font-weight: 600;
-  font-size: 20px;
+  font-size: ${(props) => props.theme.fontSize.X_LARGE};
   line-height: 28px;
   letter-spacing: 0.5px;
 `;
@@ -136,7 +136,7 @@ const Detail = styled.div`
   color: ${(props) => props.theme.color.BLACK};
 
   & > div:last-child > * {
-    font-size: 18px;
+    font-size: ${(props) => props.theme.fontSize.LARGE};
   }
 `;
 

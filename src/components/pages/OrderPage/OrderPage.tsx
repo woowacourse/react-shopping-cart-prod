@@ -98,7 +98,7 @@ const ImageContainer = styled.div`
   padding-top: 30px;
 
   & > span {
-    font-size: 18px;
+    font-size: ${(props) => props.theme.fontSize.LARGE};
     font-weight: 600;
   }
 `;
@@ -108,7 +108,7 @@ const Image = styled.img`
 `;
 
 const HomeButton = styled(ResetButton)`
-  font-size: 16px;
+  font-size: ${(props) => props.theme.fontSize.MEDIUM};
   font-weight: 600;
   margin-top: 10px;
   background-color: ${(props) => props.theme.color.PRIMARY};

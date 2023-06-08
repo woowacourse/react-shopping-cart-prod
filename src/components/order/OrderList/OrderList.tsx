@@ -67,7 +67,7 @@ const ListHeader = styled.div`
 
   & > * {
     font-family: 'Noto Sans KR';
-    font-size: 18px;
+    font-size: ${(props) => props.theme.fontSize.LARGE};
     font-weight: 600;
     line-height: 24px;
     letter-spacing: 0.5px;
@@ -94,7 +94,7 @@ const ListWrapper = styled.div`
 `;
 
 const DetailButton = styled(Link)`
-  font-size: 18px;
+  font-size: ${(props) => props.theme.fontSize.LARGE};
   line-height: 24px;
   letter-spacing: 0.5px;
   color: ${(props) => props.theme.color.WHITE};

@@ -93,7 +93,7 @@ const DetailInner = styled.div`
 
   & > * {
     font-family: 'Noto Sans KR';
-    font-size: 16px;
+    font-size: ${(props) => props.theme.fontSize.MEDIUM};
     line-height: 27px;
     letter-spacing: 0.5px;
     font-weight: 600;
@@ -134,7 +134,7 @@ const StyledLink = styled(Link)`
   width: 180px;
   height: 50px;
   border-radius: 10px;
-  font-size: 16px;
+  font-size: ${(props) => props.theme.fontSize.MEDIUM};
   font-weight: 500;
   color: ${(props) => props.theme.color.WHITE};
 `;

@@ -147,7 +147,7 @@ const OrderSummary = styled.div`
   }
 
   & > dt {
-    font-size: 18px;
+    font-size: ${(props) => props.theme.fontSize.LARGE};
   }
 `;
 
@@ -191,12 +191,12 @@ const DetailInner = styled.div`
   justify-content: space-between;
 
   & > dt {
-    font-size: 18px;
+    font-size: ${(props) => props.theme.fontSize.LARGE};
     font-weight: 600;
   }
 
   & > dl {
-    font-size: 16px;
+    font-size: ${(props) => props.theme.fontSize.MEDIUM};
     font-weight: 600;
   }
 `;
@@ -218,7 +218,7 @@ const ButtonContainer = styled.div`
   & > button {
     width: 50%;
     height: 50px;
-    font-size: 16px;
+    font-size: ${(props) => props.theme.fontSize.MEDIUM};
     font-weight: 600;
   }
 `;

@@ -115,7 +115,7 @@ const CartTotalQuantity = styled.span`
   border-radius: 50%;
   background: ${(props) => props.theme.color.ORANGE};
   color: ${(props) => props.theme.color.WHITE};
-  font-size: 12px;
+  font-size: ${(props) => props.theme.fontSize.X_SMALL};
 `;
 
 export default Header;

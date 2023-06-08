@@ -41,7 +41,7 @@ const Inner = styled.div`
 
 const Title = styled.span`
   font-family: 'Noto Sans KR';
-  font-size: 20px;
+  font-size: ${(props) => props.theme.fontSize.X_LARGE};
   line-height: 24px;
   letter-spacing: 0.5px;
   color: #333;
@@ -49,7 +49,7 @@ const Title = styled.span`
 
 const Detail = styled.span`
   font-family: 'Noto Sans KR';
-  font-size: 16px;
+  font-size: ${(props) => props.theme.fontSize.MEDIUM};
   line-height: 20px;
   letter-spacing: 0.5px;
   color: #888;

@@ -131,7 +131,7 @@ const AllCheckBoxContainer = styled.div`
   border-bottom: 1px solid ${(props) => props.theme.color.GRAY_350};
 
   & > span {
-    font-size: 18px;
+    font-size: ${(props) => props.theme.fontSize.LARGE};
   }
 `;
 
@@ -147,7 +147,7 @@ const Image = styled.img`
 `;
 
 const HomeButton = styled(ResetButton)`
-  font-size: 16px;
+  font-size: ${(props) => props.theme.fontSize.MEDIUM};
   font-weight: 600;
   margin-top: 10px;
   background-color: ${(props) => props.theme.color.PRIMARY};
@@ -158,7 +158,7 @@ const DeleteButton = styled.button`
   height: 35px;
   margin-left: auto;
   font-family: 'Noto Sans KR';
-  font-size: 16px;
+  font-size: ${(props) => props.theme.fontSize.MEDIUM};
   line-height: 21px;
   text-align: center;
   color: ${(props) => props.theme.color.BLACK};

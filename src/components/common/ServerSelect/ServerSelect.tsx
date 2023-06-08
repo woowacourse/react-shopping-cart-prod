@@ -55,7 +55,7 @@ const Label = styled.label`
 
 const Select = styled.select`
   width: 100%;
-  font-size: 16px;
+  font-size: ${(props) => props.theme.fontSize.MEDIUM};
   text-align: center;
   border: none;
   border-radius: 4px;

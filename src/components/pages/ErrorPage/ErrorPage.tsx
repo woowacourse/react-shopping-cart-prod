@@ -40,11 +40,11 @@ const DetailContainer = styled.div`
   flex-direction: column;
   align-items: center;
   row-gap: 5px;
-  font-size: 18px;
+  font-size: ${(props) => props.theme.fontSize.LARGE};
 `;
 
 const ReturnButton = styled(ResetButton)`
-  font-size: 16px;
+  font-size: ${(props) => props.theme.fontSize.MEDIUM};
 `;
 
 export default ErrorPage;

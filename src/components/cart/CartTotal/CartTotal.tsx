@@ -214,7 +214,7 @@ const ClearPointButton = styled.button`
 
 const UseAllPointButton = styled.button`
   padding: 5px;
-  font-size: 14px;
+  font-size: ${(props) => props.theme.fontSize.SMALL};
   border: 1px solid ${(props) => props.theme.color.GRAY_300};
   border-radius: 4px;
 
@@ -224,12 +224,12 @@ const UseAllPointButton = styled.button`
 `;
 
 const Total = styled.span`
-  font-size: 20px;
+  font-size: ${(props) => props.theme.fontSize.X_LARGE};
   font-weight: 700;
 `;
 
 const TotalPrice = styled.dd<{ $isHighlight: boolean }>`
-  font-size: 20px;
+  font-size: ${(props) => props.theme.fontSize.X_LARGE};
   font-weight: 600;
   color: ${(props) => props.$isHighlight && props.theme.color.PRIMARY};
 `;
@@ -244,7 +244,7 @@ const OrderDetail = styled.div`
   }
 
   & > dd > s {
-    font-size: 18px;
+    font-size: ${(props) => props.theme.fontSize.LARGE};
     line-height: 27px;
     letter-spacing: 0.5px;
   }
@@ -256,7 +256,7 @@ const OrderButton = styled.button`
   margin: 0 auto;
   background: ${(props) => props.theme.color.PRIMARY};
   font-family: 'Noto Sans KR';
-  font-size: 20px;
+  font-size: ${(props) => props.theme.fontSize.X_LARGE};
   font-weight: 500;
   line-height: 21px;
   letter-spacing: 0.4px;

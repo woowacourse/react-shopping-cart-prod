@@ -91,13 +91,13 @@ const Contents = styled.div`
 const Title = styled.p`
   margin-left: 20px;
   font-family: 'Noto Sans KR';
-  font-size: 20px;
+  font-size: ${(props) => props.theme.fontSize.X_LARGE};
   line-height: 24px;
   letter-spacing: 0.5px;
-  color: #333333;
+  color: ${(props) => props.theme.color.BLACK};
 
   @media only screen and (max-width: 600px) {
-    font-size: 16px;
+    font-size: ${(props) => props.theme.fontSize.MEDIUM};
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -131,10 +131,10 @@ const DeleteButton = styled.button`
 
 const Price = styled.p`
   font-family: 'Noto Sans KR';
-  font-size: 18px;
+  font-size: ${(props) => props.theme.fontSize.LARGE};
   line-height: 24px;
   letter-spacing: 0.5px;
-  color: #333333;
+  color: ${(props) => props.theme.color.BLACK};
 `;
 
 export default CartListItem;
