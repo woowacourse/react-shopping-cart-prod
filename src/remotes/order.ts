@@ -1,11 +1,9 @@
+import { httpRequestWithBase64 } from './http';
 import type { OrderPayload } from '../types/order';
 
 export const fetchOrder = async (url: string, base64: string) => {
-  const response = await fetch(url, {
-    headers: {
-      Authorization: `Basic ${base64}`,
-    },
-  });
+  const { _get } = httpRequestWithBase64(base64);
+  const response = await _get(url);
 
   if (!response.ok) {
     throw new Error('주문 상세 내역을 불러올 수 없습니다.');
@@ -17,11 +15,8 @@ export const fetchOrder = async (url: string, base64: string) => {
 };
 
 export const fetchOrders = async (url: string, base64: string) => {
-  const response = await fetch(url, {
-    headers: {
-      Authorization: `Basic ${base64}`,
-    },
-  });
+  const { _get } = httpRequestWithBase64(base64);
+  const response = await _get(url);
 
   if (!response.ok) {
     throw new Error('주문 상세 내역을 불러올 수 없습니다.');
@@ -37,14 +32,8 @@ export const postOrder = async (
   orderPayload: OrderPayload,
   base64: string,
 ) => {
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: {
-      Authorization: `Basic ${base64}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(orderPayload),
-  });
+  const { _post } = httpRequestWithBase64(base64, orderPayload);
+  const response = await _post(url);
 
   if (!response.ok) {
     throw new Error('주문에 실패했습니다.');
