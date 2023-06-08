@@ -4,7 +4,7 @@ import { styled } from 'styled-components';
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   bgColor: 'primary';
-  designType: 'square' | 'rectangle' | 'rectangle-mobile';
+  designType: 'square' | 'rectangle';
 }
 
 export const Button = ({ bgColor, designType, disabled, ...props }: Partial<Props>) => {
@@ -44,18 +44,19 @@ const Style = {
       color: ${(props) => props.bgColor ?? 'var(--grey-100)'};
 
       font-size: 24px;
-    }
 
-    &.rectangle-mobile {
-      width: 75px;
+      @media screen and (max-width: 501px) {
+        width: 75px;
+        height: 100%;
 
-      background-color: var(--primary-color);
-      color: var(--grey-100);
+        color: var(--grey-100);
 
-      font-weight: 600;
+        font-size: 14px;
+        font-weight: 600;
 
-      border: none;
-      border-radius: 10px;
+        border: none;
+        border-radius: 10px;
+      }
     }
 
     &:disabled {

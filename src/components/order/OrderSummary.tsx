@@ -169,7 +169,7 @@ const OrderSummary = () => {
             </Mobile.Price>
           </Mobile.Prices>
           <Button
-            designType="rectangle-mobile"
+            designType="rectangle"
             onClick={orderOnClick}
             disabled={Boolean(
               totalProductPrice < usePoint || (point?.usablePoint && point?.usablePoint < usePoint)
