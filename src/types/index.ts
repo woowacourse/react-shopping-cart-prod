@@ -1,3 +1,5 @@
+import { SERVERS } from 'constants/index';
+
 export interface Cart {
   id: CartId;
   quantity: number;
@@ -23,7 +25,7 @@ export interface OrderProduct
 export type CartId = number;
 export type ProductId = number;
 
-export type ServerName = '여우' | '루쿠' | '프론트';
+export type ServerName = keyof typeof SERVERS;
 
 export interface Order {
   id: number;
