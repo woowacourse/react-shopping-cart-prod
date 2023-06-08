@@ -42,7 +42,7 @@ const OrderDetailNavigator = ({ orderId, createdAt, orderStatus }: Props) => {
         </Button>
       )}
       <p>
-        <span>주문번호&nbsp;&nbsp;|&nbsp;</span>
+        <span>주문번호&nbsp; | </span>
         <S.OrderId>{orderId}</S.OrderId>
         <span>[ {createdAt} ]</span>
       </p>

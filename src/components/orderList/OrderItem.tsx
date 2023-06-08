@@ -51,7 +51,7 @@ const OrderItem = ({
               <Price value={totalPrice / quantity} css={textStyle} />
               <S.TotalDetail>
                 <Price value={totalPrice} css={textStyle} />
-                <span>&nbsp;/&nbsp;수량&nbsp;{quantity}개</span>
+                <span>&nbsp;/ 수량 {quantity}개</span>
               </S.TotalDetail>
             </>
           ) : (
