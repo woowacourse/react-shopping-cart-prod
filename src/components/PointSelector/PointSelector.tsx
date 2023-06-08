@@ -16,12 +16,14 @@ import {
   pointState,
   selectedPointState,
 } from "../../app/recoil/orderAtom";
+import { totalPriceSelector } from "../../app/recoil/cartAtoms";
 
 function PointSelector() {
   const point = useRecoilValue(pointState);
   const [selectedPoints, setSelectedPoints] =
     useRecoilState(selectedPointState);
   const resetSelectedPoints = useResetRecoilState(selectedPointState);
+  const totalPrice = useRecoilValue(totalPriceSelector);
   const { loadPoint } = useRecoilValue(orderRepository);
 
   useEffect(() => {
@@ -29,16 +31,18 @@ function PointSelector() {
     loadPoint();
   }, []);
 
+  const pointLimiter = (newPoint: number, totalPrice: number) => newPoint > totalPrice ? totalPrice : newPoint;
+
   const handlePointInput = (e: ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
     const inputNumber = parseInt(inputValue.length > 0 ? inputValue : "0");
     const newPoint =
       inputNumber > point.totalPoint ? point.totalPoint : inputNumber;
-    setSelectedPoints(newPoint);
+    setSelectedPoints(pointLimiter(newPoint, totalPrice));
   };
 
   const handlePointButton = () => {
-    setSelectedPoints(point.totalPoint);
+    setSelectedPoints(pointLimiter(point.totalPoint, totalPrice));
   };
 
   return (
