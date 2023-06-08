@@ -2,7 +2,7 @@ import type { CartItemType } from '../types/product';
 import type { HostNameType } from '../types/server';
 
 import { servers } from '../constants/server';
-import base64 from './auth';
+import credentials from './auth';
 
 export const api = async (hostName: HostNameType) => {
   const URL = `${servers[hostName]}/cart-items`;
@@ -11,7 +11,7 @@ export const api = async (hostName: HostNameType) => {
     const response = await fetch(URL, {
       method: 'GET',
       headers: {
-        Authorization: `Basic ${base64}`,
+        Authorization: `Basic ${credentials}`,
       },
     });
 
@@ -24,7 +24,7 @@ export const api = async (hostName: HostNameType) => {
     const response = await fetch(URL, {
       method: 'POST',
       headers: {
-        Authorization: `Basic ${base64}`,
+        Authorization: `Basic ${credentials}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ productId }),
@@ -51,7 +51,7 @@ export const api = async (hostName: HostNameType) => {
     const response = await fetch(`${URL}/${cartItemId}`, {
       method: 'PATCH',
       headers: {
-        Authorization: `Basic ${base64}`,
+        Authorization: `Basic ${credentials}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ quantity }),
@@ -67,7 +67,7 @@ export const api = async (hostName: HostNameType) => {
     await fetch(`${URL}/${cartItemId}`, {
       method: 'DELETE',
       headers: {
-        Authorization: `Basic ${base64}`,
+        Authorization: `Basic ${credentials}`,
         'Content-Type': 'application/json',
       },
     });

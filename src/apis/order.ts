@@ -3,7 +3,7 @@ import type { HostNameType } from '../types/server';
 import type { PointType } from '../types/point';
 
 import { servers } from '../constants/server';
-import base64 from './auth';
+import credentials from './auth';
 
 export const api = async (hostName: HostNameType) => {
   const ORDER_URL = `${servers[hostName]}/orders`;
@@ -12,7 +12,7 @@ export const api = async (hostName: HostNameType) => {
     const response = await fetch(ORDER_URL, {
       method: 'GET',
       headers: {
-        Authorization: `Basic ${base64}`,
+        Authorization: `Basic ${credentials}`,
       },
     });
 
@@ -25,7 +25,7 @@ export const api = async (hostName: HostNameType) => {
     const response = await fetch(`${ORDER_URL}/${orderId}`, {
       method: 'GET',
       headers: {
-        Authorization: `Basic ${base64}`,
+        Authorization: `Basic ${credentials}`,
         'Content-Type': 'application/json',
       },
     });
@@ -43,7 +43,7 @@ export const api = async (hostName: HostNameType) => {
     const response = await fetch(ORDER_URL, {
       method: 'POST',
       headers: {
-        Authorization: `Basic ${base64}`,
+        Authorization: `Basic ${credentials}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ ...order }),
@@ -67,7 +67,7 @@ export const api = async (hostName: HostNameType) => {
     const response = await fetch(POINT_URL, {
       method: 'GET',
       headers: {
-        Authorization: `Basic ${base64}`,
+        Authorization: `Basic ${credentials}`,
       },
     });
 
