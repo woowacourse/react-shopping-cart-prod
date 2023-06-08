@@ -1,18 +1,11 @@
 import useCouponMessage from '@views/Payment/hooks/useCouponMessage';
-
-import { styled } from 'styled-components';
+import * as S from './CouponMessage.style'
 
 function CouponMessage() {
   const message = useCouponMessage();
 
-  return <Message>{message}</Message>;
+  return <S.Message>{message}</S.Message>;
 }
 
 export default CouponMessage;
 
-const Message = styled.span`
-  padding-left: 1rem;
-  font-size: 1.6rem;
-  font-weight: 800;
-  line-height: 20px;
-`;

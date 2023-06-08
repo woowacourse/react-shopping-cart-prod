@@ -55,3 +55,10 @@ export const ProductInfo = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
 `;
+
+export const CartStepperWrapper = styled.div`
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+`;
+

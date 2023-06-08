@@ -31,3 +31,8 @@ export const CheckAllSpan = styled.span`
   font-size: 1.6rem;
   width: 12rem;
 `;
+
+export const CartImage = styled.img`
+  width: 150px;
+  margin: auto;
+`

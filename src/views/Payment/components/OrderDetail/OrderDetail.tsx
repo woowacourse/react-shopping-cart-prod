@@ -1,7 +1,7 @@
 import { useOrderItem } from '@views/Payment/recoil/orderItemState';
 import { OrderItem } from '../Order';
 import { styled } from 'styled-components';
-
+import * as S from './OrderDetail.style'
 function OrderDetail({ orderId }: { orderId: number }) {
   const order = useOrderItem(orderId);
 
@@ -10,33 +10,19 @@ function OrderDetail({ orderId }: { orderId: number }) {
   return (
     <>
       <OrderItem order={order} />
-      <OrderWrapper>
-        <CouponText info={discountPrice > 0}>할인 금액</CouponText>
-        <CouponText info={discountPrice > 0}>{Number(discountPrice)}</CouponText>
-        <CouponText>배송비</CouponText>
-        <CouponText>{Number(deliveryFee)}</CouponText>
-        <ContentText>최종 결제 금액</ContentText>
-        <ContentText>
+      <S.OrderWrapper>
+        <S.CouponText info={discountPrice > 0}>할인 금액</S.CouponText>
+        <S.CouponText info={discountPrice > 0}>{Number(discountPrice)}</S.CouponText>
+        <S.CouponText>배송비</S.CouponText>
+        <S.CouponText>{Number(deliveryFee)}</S.CouponText>
+        <S.ContentText>최종 결제 금액</S.ContentText>
+        <S.ContentText>
           {Number(totalItemsPrice) - Number(discountPrice) + Number(deliveryFee)}
-        </ContentText>
-      </OrderWrapper>
+        </S.ContentText>
+      </S.OrderWrapper>
     </>
   );
 }
 
 export default OrderDetail;
 
-const OrderWrapper = styled.div`
-  text-align: right;
-`;
-
-export const ContentText = styled.span`
-  font-size: 1.6rem;
-  font-weight: 600;
-  margin: 0.5rem;
-`;
-
-export const CouponText = styled(ContentText)<{ info?: boolean }>`
-  color: ${({ theme, info }) => (info ? theme.infoColor : theme.secondaryColor)};
-  font-weight: ${({ info }) => (info ? 800 : 400)};
-`;

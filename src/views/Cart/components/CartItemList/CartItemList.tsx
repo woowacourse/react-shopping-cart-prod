@@ -4,6 +4,7 @@ import { CheckBox } from '@common/CheckBox';
 
 import empty from '@assets/empty.png';
 import { useCart } from '@views/Cart/hooks/useCart';
+import {CartImage} from "./CartItemList.style";
 
 function CartItemList() {
   const { cart, isAllChecked, checkedCartCount, toggleAllCartItem, deleteCheckedItems } = useCart();
@@ -13,7 +14,7 @@ function CartItemList() {
   if (cartLength === 0) {
     return (
       <S.CartWrapper>
-        <img src={empty} style={{ margin: 'auto' }} width={'150px'} />
+        <S.CartImage src={empty} />
       </S.CartWrapper>
     );
   }
@@ -31,9 +32,7 @@ function CartItemList() {
         <CheckBox
           type="checkbox"
           checked={isAllChecked}
-          onChange={() => {
-            toggleAllCartItem();
-          }}
+          onChange={toggleAllCartItem}
         />
         <S.CheckAllSpan>{`전체 선택 (${checkedCartCount} / ${cartLength})`}</S.CheckAllSpan>
         <S.DeleteCheckBox onClick={deleteCheckedItems}>선택삭제</S.DeleteCheckBox>

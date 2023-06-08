@@ -14,9 +14,9 @@ function ProductItem({ product }: ProductItemProps) {
     <S.ProductItemBox>
       <S.ProductItemImageBox>
         <S.ProductItemImage src={imageUrl} />
-        <CartStepperWrapper>
+        <S.CartStepperWrapper>
           <CartStepper product={product} />
-        </CartStepperWrapper>
+        </S.CartStepperWrapper>
       </S.ProductItemImageBox>
       <S.ProductDetails>
         <S.ProductInfo>
@@ -29,8 +29,3 @@ function ProductItem({ product }: ProductItemProps) {
 }
 export default ProductItem;
 
-const CartStepperWrapper = styled.div`
-  position: absolute;
-  bottom: 1rem;
-  right: 1rem;
-`;

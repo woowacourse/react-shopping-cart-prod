@@ -8,12 +8,13 @@ import { CouponItem } from '../CouponItem';
 import { Button } from '@common/Button';
 import { useState } from 'react';
 import useCouponList from '@views/Payment/hooks/useCouponList';
+import * as S from './CouponModal.style'
 
 interface CouponModalProps {
   isOpen: boolean;
   closeModal: () => void;
 }
-
+// TODO: utils 분리
 const couponCondition = (minimumPrice: number) => {
   if (!minimumPrice) {
     return '금액 상관없이 적용';
@@ -52,12 +53,13 @@ function CouponModal({ isOpen, closeModal }: CouponModalProps) {
     return totalPrice < minimumPrice;
   };
 
+  // TODO: handler 분리 
   return isOpen ? (
     <Modal isOpen={isOpen} closeModal={closeModal}>
-      <CouponContainerTitle>쿠폰함</CouponContainerTitle>
-      <ModalContentWrapper>
+      <S.CouponContainerTitle>쿠폰함</S.CouponContainerTitle>
+      <S.ModalContentWrapper>
         {
-          <CouponListWrapper>
+          <S.CouponListWrapper>
             {couponList.map((coupon) => {
               return (
                 <CouponItem
@@ -73,10 +75,10 @@ function CouponModal({ isOpen, closeModal }: CouponModalProps) {
                 />
               );
             })}
-          </CouponListWrapper>
+          </S.CouponListWrapper>
         }
-      </ModalContentWrapper>
-      <ButtonWrapper>
+      </S.ModalContentWrapper>
+      <S.ButtonWrapper>
         <Button
           size="l"
           onClick={() => {
@@ -98,58 +100,10 @@ function CouponModal({ isOpen, closeModal }: CouponModalProps) {
         >
           선택완료
         </Button>
-      </ButtonWrapper>
+      </S.ButtonWrapper>
     </Modal>
   ) : null;
 }
 
 export default CouponModal;
 
-const ButtonWrapper = styled.div`
-  display: flex;
-  position: fixed;
-  width: 80%;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-`;
-
-const ModalContentWrapper = styled.div`
-  display: 'flex';
-  justify-content: 'center';
-  align-items: 'center';
-  flex-direction: 'column';
-  width: 100%;
-  max-height: 60vh;
-  overflow-y: auto;
-`;
-
-const CouponListWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: start;
-  align-items: center;
-  margin: 0 auto;
-
-  max-width: 320px;
-
-  @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    max-width: 640px;
-  }
-
-  @media screen and (min-width: ${({ theme }) => theme.breakpoints.xl}) {
-    width: 960px;
-  }
-`;
-
-const CouponContainerTitle = styled.div`
-  font-size: 2rem;
-  text-align: left;
-  font-weight: 600;
-  padding-left: 2rem;
-  padding-bottom: 0.6rem;
-  margin-bottom: 2rem;
-
-  border-bottom: 2px solid ${({ theme }) => theme.primaryColor};
-  color: ${({ theme }) => theme.primaryColor};
-`;
