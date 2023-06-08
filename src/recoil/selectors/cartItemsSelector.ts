@@ -31,10 +31,9 @@ export const checkBoxSelector = selector({
     const apiEndPoint = get(APIAtom);
     const cartItems = get(cartItemsState(apiEndPoint));
     const selectedCartIdList = get(selectedCartIdListState(apiEndPoint));
-    const isAllCheckBoxChecked =
-      cartItems.filter((cartItem) => !selectedCartIdList.includes(cartItem.id))
-        .length === 0;
-
+    const isAllCheckBoxChecked = cartItems.every(
+      (cartItem) => !selectedCartIdList.includes(cartItem.id)
+    );
     return { isAllCheckBoxChecked };
   },
 });
