@@ -26,7 +26,7 @@ const request = async (path: string, init?: RequestInit) => {
     },
   });
 
-  if (response.ok) throw new Error(response.status.toString());
+  if (!response.ok) throw new Error(response.status.toString());
   return response;
 };
 
