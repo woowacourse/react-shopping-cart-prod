@@ -1,7 +1,9 @@
+import { AddCartRequestBody, OrdersRequestBody, UpdateQuantityRequestBody } from 'src/types';
+
 interface OptionalProps {
   method: string;
   headers: HeadersInit;
-  body: object;
+  body: OrdersRequestBody | AddCartRequestBody | UpdateQuantityRequestBody;
 }
 
 export const fetchAPI = async (url: string, optionalProps?: Partial<OptionalProps>) => {

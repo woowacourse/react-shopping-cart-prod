@@ -38,6 +38,16 @@ export interface OrderDetail {
   orderDetails: OrderSummary[];
 }
 
+export interface UsablePoint {
+  useablePoint: number;
+}
+
+export interface ErrorResponse {
+  payload: {
+    errorMessage: string;
+  };
+}
+
 export interface OrdersRequestBody {
   totalProductsPrice: number;
   shippingFee: number;
@@ -48,12 +58,10 @@ export interface OrdersRequestBody {
   }[];
 }
 
-export interface UsablePoint {
-  useablePoint: number;
+export interface AddCartRequestBody {
+  productId: number;
 }
 
-export interface ErrorResponse {
-  payload: {
-    errorMessage: string;
-  };
+export interface UpdateQuantityRequestBody {
+  quantity: number;
 }
