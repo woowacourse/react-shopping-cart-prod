@@ -1,5 +1,5 @@
 const PATH = Object.freeze({
-  OTHERS: '/*',
+  OTHERS: '/:notExist',
   HOME: '/',
   CART: '/shopping-cart',
   ORDER: '/order-list',
