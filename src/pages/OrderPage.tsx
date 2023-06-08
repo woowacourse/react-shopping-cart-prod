@@ -26,7 +26,7 @@ const OrderPage = () => {
       });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [server]);
+  }, [server, setOrderList]);
 
   if (isLoading) return <Spinner />;
 

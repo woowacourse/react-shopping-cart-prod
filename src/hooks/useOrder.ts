@@ -1,5 +1,5 @@
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { DELIVERY_FEE } from '../constants';
+import { DELIVERY_FEE, ROUTE_PATH } from '../constants';
 import { ORDER_URL } from '../constants/url';
 import {
   cartState,
@@ -9,14 +9,18 @@ import {
   totalPriceSelector,
 } from '../recoil';
 import { useFetchData } from './useFetchData';
+import { useGoToAnotherPage } from './useGoToAnotherPage';
 
 export const useOrder = () => {
-  const [cart, setCart] = useRecoilState(cartState);
-  const checkedItemIdList = useRecoilValue<number[]>(checkedItemList);
-  const totalPrice = useRecoilValue(totalPriceSelector);
   const server = useRecoilValue(serverState);
   const { api } = useFetchData();
+
+  const checkedItemIdList = useRecoilValue<number[]>(checkedItemList);
+  const totalPrice = useRecoilValue(totalPriceSelector);
   const couponId = useRecoilValue(selectedCoupon).id;
+  const [cart, setCart] = useRecoilState(cartState);
+
+  const goToPage = useGoToAnotherPage();
 
   const orderProducts = () => {
     api
@@ -28,6 +32,8 @@ export const useOrder = () => {
       })
       .then(() => {
         setCart(cart.filter((cartItem) => !checkedItemIdList.includes(cartItem.id)));
+
+        goToPage(ROUTE_PATH.ORDER_LIST_PAGE);
       })
       .catch((error) => alert(error.message));
   };
