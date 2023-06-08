@@ -8,8 +8,7 @@ const GotLost = () => {
       <h2>🐾 길을 잃으셨나요?</h2>
       <S.Link to={ROUTE_PATH.MAIN_PAGE}>
         여기를 클릭하시면
-        <br />
-        메인 페이지로 이동합니다.
+        <span>메인 페이지로 이동합니다.</span>
       </S.Link>
     </S.Section>
   );
@@ -41,6 +40,10 @@ const S = {
 
     &:hover {
       background: #9b7ec8;
+    }
+
+    & > span {
+      display: block;
     }
   `,
 };
