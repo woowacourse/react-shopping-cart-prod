@@ -9,29 +9,29 @@ import ServerSelector from './ServerSelector';
 const Layout = () => {
   const goToPage = useGoToAnotherPage();
 
-  const location = useLocation().pathname;
+  const { pathname } = useLocation();
 
   return (
     <>
       <Header title='STORE' />
       <Outlet />
       <ServerSelector />
-      <Button css={buttonStyle(location)} onClick={() => goToPage(ROUTE_PATH.ORDER_LIST_PAGE)}>
+      <Button css={buttonStyle(pathname)} onClick={() => goToPage(ROUTE_PATH.ORDER_LIST_PAGE)}>
         주문 목록
       </Button>
     </>
   );
 };
 
-const buttonStyle = (location: keyof typeof ROUTE_PATH) => css`
+const buttonStyle = (pathname: keyof typeof ROUTE_PATH) => css`
   position: fixed;
   top: 108px;
   right: 0;
   z-index: 99;
   padding: 12px 16px 12px 20px;
   font-size: 14px;
-  color: ${location === ROUTE_PATH.ORDER_LIST_PAGE ? 'var(--white-color)' : 'var(--text-color)'};
-  background: ${location === ROUTE_PATH.ORDER_LIST_PAGE
+  color: ${pathname === ROUTE_PATH.ORDER_LIST_PAGE ? 'var(--white-color)' : 'var(--text-color)'};
+  background: ${pathname === ROUTE_PATH.ORDER_LIST_PAGE
     ? 'var(--text-color)'
     : 'var(--white-color)'};
   border: 1px solid var(--gray-color-200);

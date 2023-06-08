@@ -13,7 +13,7 @@ const OrderItemList = ({ tag, orderList }: Props) => {
   const orderId = useParams().id;
 
   const { products, createdAt, totalPayments, orderStatus } = orderList;
-  const thumbnail = products[0];
+  const [thumbnail] = products;
 
   const listTag = tag || 'li';
 

@@ -25,10 +25,10 @@ const Coupon = ({ id, priceDiscount, name }: CouponItem) => {
           <S.Circle aria-hidden='true' />
         </S.Coupon>
         <S.CouponName>{name}</S.CouponName>
-        <S.dottedLine aria-hidden='true' className='dotted-line'>
+        <S.DottedLine aria-hidden='true' className='dotted-line'>
           <S.SmallCircle />
           <S.SmallCircle />
-        </S.dottedLine>
+        </S.DottedLine>
         <BsChevronRight aria-hidden='true' />
       </S.Wrapper>
       <input
@@ -120,7 +120,7 @@ const S = {
     }
   `,
 
-  dottedLine: styled.div`
+  DottedLine: styled.div`
     position: relative;
     right: 0;
     height: 66.33px;
