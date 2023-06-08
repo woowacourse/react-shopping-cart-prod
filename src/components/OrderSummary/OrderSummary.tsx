@@ -94,7 +94,7 @@ export const OrderSummary = ({ fetchCartItems }: OrderSummaryProps) => {
           </styled.Content>
         </styled.OrderSummary>
       </>
-      <>
+      <styled.MobileOrderSummary>
         <styled.OrderSummaryM>
           <styled.OrderButtonM onClick={onClickOrderButton}>
             <styled.SelectedProductLength>{checkedCartItems.length}</styled.SelectedProductLength>
@@ -104,7 +104,7 @@ export const OrderSummary = ({ fetchCartItems }: OrderSummaryProps) => {
             </styled.TotalPriceM>
           </styled.OrderButtonM>
         </styled.OrderSummaryM>
-      </>
+      </styled.MobileOrderSummary>
     </>
   );
 };

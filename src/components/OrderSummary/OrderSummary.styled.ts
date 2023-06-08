@@ -129,6 +129,8 @@ export const ShippingPolicy = styled.p`
   font-size: 11px;
 `;
 
+export const MobileOrderSummary = styled.div``;
+
 export const OrderSummaryM = styled.div`
   position: fixed;
   bottom: 0;
