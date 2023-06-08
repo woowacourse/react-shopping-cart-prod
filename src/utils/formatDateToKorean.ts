@@ -1,4 +1,10 @@
+const isIsoDate = (isoDateString: string) => /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z/.test(isoDateString);
+
 const formatDateToKorean = (isoDateString: string) => {
+  if (!isIsoDate) {
+    return '날짜 정보를 확인할 수 없습니다.';
+  }
+
   const date = new Date(isoDateString);
 
   const year = date.getFullYear();
