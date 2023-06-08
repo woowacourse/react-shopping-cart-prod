@@ -7,8 +7,8 @@ import { servers } from '../constants/server';
 import fetchWithHeaders from '.';
 
 export const api = async (hostName: HostNameType) => {
-  const ORDER_URL = `${servers[hostName]}/orders`;
-  const POINT_URL = `${servers[hostName]}/points`;
+  const ORDER_URL = `${servers[hostName]}/${process.env.REACT_APP_ORDER_URL}`;
+  const POINT_URL = `${servers[hostName]}/${process.env.REACT_APP_POINT_URL}`;
 
   const getOrders = async () => {
     const response = await fetchWithHeaders(ORDER_URL, 'GET');

@@ -2,10 +2,10 @@ import type { CartItemType } from '../types/product';
 import type { HostNameType } from '../types/server';
 
 import { servers } from '../constants/server';
-import fetchWithHeaders from '.';
+import fetchWithHeaders, { credentials } from '.';
 
 export const api = async (hostName: HostNameType) => {
-  const URL = `${servers[hostName]}/cart-items`;
+  const URL = `${servers[hostName]}/${process.env.REACT_APP_CART_URL}`;
 
   const getCartItems = async () => {
     const response = await fetchWithHeaders(URL, 'GET');
@@ -40,7 +40,13 @@ export const api = async (hostName: HostNameType) => {
   };
 
   const deleteCartProduct = async (cartItemId: number) => {
-    await fetchWithHeaders(`${URL}/${cartItemId}`, 'DELETE');
+    await fetch(`${URL}/${cartItemId}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Basic ${credentials}`,
+        'Content-Type': 'application/json',
+      },
+    });
   };
 
   return {
