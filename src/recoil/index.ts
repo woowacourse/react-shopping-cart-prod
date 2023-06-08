@@ -1,7 +1,7 @@
 import { atom, selector, selectorFamily } from 'recoil';
 import { DEFAULT_SERVER, INITIAL_COUPON_STATE, KEY_SERVER, QUANTITY } from '../constants';
 import { SERVERS } from '../constants/url';
-import { CartItem, CouponState, OrderList, Product } from '../types';
+import { CartItem, CouponItem, OrderList, Product } from '../types';
 
 export const productListState = atom<Product[]>({
   key: 'productListState',
@@ -73,7 +73,7 @@ export const serverState = atom({
   default: localStorage.getItem(KEY_SERVER) ?? `${SERVERS[DEFAULT_SERVER]}`,
 });
 
-export const selectedCoupon = atom<CouponState>({
+export const selectedCoupon = atom<CouponItem>({
   key: 'selectedCoupon',
   default: INITIAL_COUPON_STATE,
 });

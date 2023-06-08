@@ -3,9 +3,9 @@ import { BsChevronRight } from 'react-icons/bs';
 import { useRecoilState } from 'recoil';
 import { styled } from 'styled-components';
 import { selectedCoupon } from '../../recoil';
-import { CouponState } from '../../types';
+import { CouponItem } from '../../types';
 
-const Coupon = ({ id, priceDiscount, name }: CouponState) => {
+const Coupon = ({ id, priceDiscount, name }: CouponItem) => {
   const [coupon, setCoupon] = useRecoilState(selectedCoupon);
 
   const isSelected = coupon.id === id;

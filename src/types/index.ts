@@ -44,10 +44,10 @@ export interface OrderListItem extends Order, Pick<OrderList, 'totalPayments' | 
 
 export interface OrderItemDetail extends OrderList, Pick<Order, 'totalPrice'> {
   deliveryFee: number;
-  coupon: CouponState | null;
+  coupon: CouponItem | null;
 }
 
-export interface CouponState {
+export interface CouponItem {
   id: number;
   name: string;
   priceDiscount: number;

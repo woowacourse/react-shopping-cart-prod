@@ -4,13 +4,13 @@ import { styled } from 'styled-components';
 import { COUPON_URL } from '../../constants/url';
 import { useFetchData } from '../../hooks/useFetchData';
 import { serverState } from '../../recoil';
-import { CouponState } from '../../types';
+import { CouponItem } from '../../types';
 import Coupon from './Coupon';
 
 const CouponList = () => {
   const server = useRecoilValue(serverState);
   const { api } = useFetchData();
-  const [coupons, setCoupons] = useState<CouponState[]>([]);
+  const [coupons, setCoupons] = useState<CouponItem[]>([]);
 
   useEffect(() => {
     api

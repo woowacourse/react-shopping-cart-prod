@@ -1,13 +1,13 @@
 import { BsCreditCardFill, BsFillCartDashFill } from 'react-icons/bs';
 import { css, styled } from 'styled-components';
 import { ORDER_STATUS } from '../../constants';
-import { CouponState, OrderList } from '../../types';
+import { CouponItem, OrderList } from '../../types';
 import Price from '../Price';
 
 interface Props extends Pick<OrderList, 'orderStatus'> {
   totalPrice: number;
   deliveryFee: number;
-  coupon: CouponState | null;
+  coupon: CouponItem | null;
   totalPayments: number;
 }
 

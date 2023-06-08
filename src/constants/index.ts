@@ -1,4 +1,4 @@
-import { CouponState, OrderStatus } from '../types';
+import { CouponItem, OrderStatus } from '../types';
 
 export const DEFAULT_SERVER = '도이';
 
@@ -37,7 +37,7 @@ export const MAX_NUMBER_LENGTH = 2;
 
 export const DELIVERY_FEE = 3000;
 
-export const INITIAL_COUPON_STATE: Readonly<CouponState> = {
+export const INITIAL_COUPON_STATE: Readonly<CouponItem> = {
   id: 0,
   priceDiscount: 0,
   name: '',

@@ -1,7 +1,7 @@
 import { Meta } from '@storybook/react';
 import OrderDetailComponent from '../../components/orderDetail/OrderDetail';
 import { ORDER_STATUS } from '../../constants';
-import { CouponState, OrderList } from '../../types';
+import { CouponItem, OrderList } from '../../types';
 
 const meta = {
   component: OrderDetailComponent,
@@ -30,7 +30,7 @@ export default meta;
 interface Props extends Pick<OrderList, 'orderStatus'> {
   totalPrice: number;
   deliveryFee: number;
-  coupon: CouponState;
+  coupon: CouponItem;
   totalPayments: number;
 }
 
