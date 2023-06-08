@@ -7,7 +7,7 @@ import * as S from './OrderedItem.styles';
 
 type OrderedItemProps = OrderData;
 
-export const OrderedItem = ({ ...information }: OrderedItemProps) => {
+export const OrderedItem = (information: OrderedItemProps) => {
   const { id, orderedItems, orderedAt, totalPrice } = information;
   const navigate = useNavigate();
   const orderedItem = orderedItems[0];

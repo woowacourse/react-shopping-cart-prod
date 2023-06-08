@@ -4,9 +4,7 @@ import * as S from './OrderedItemDetailInformation.styles';
 
 type OrderedItemDetailInformationProps = OrderData;
 
-export const OrderedItemDetailInformation = ({
-  ...orderedItem
-}: OrderedItemDetailInformationProps) => {
+export const OrderedItemDetailInformation = (orderedItem: OrderedItemDetailInformationProps) => {
   const {
     id,
     orderedItems,
