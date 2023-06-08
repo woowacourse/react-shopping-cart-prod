@@ -34,40 +34,14 @@ export const App = () => {
   return (
     <RecoilRoot>
       <BrowserRouter basename={process.env.PUBLIC_URL}>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <Suspense fallback={<LoadingPage />}>
-                <Main />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/cart"
-            element={
-              <Suspense fallback={<LoadingPage />}>
-                <Cart />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/order"
-            element={
-              <Suspense fallback={<LoadingPage />}>
-                <OrderList />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/orderDetail"
-            element={
-              <Suspense fallback={<LoadingPage />}>
-                <OrderDetail />
-              </Suspense>
-            }
-          />
-        </Routes>
+        <Suspense fallback={<LoadingPage />}>
+          <Routes>
+            <Route path="/" element={<Main />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/order" element={<OrderList />} />
+            <Route path="/orderDetail" element={<OrderDetail />} />
+          </Routes>
+        </Suspense>
       </BrowserRouter>
     </RecoilRoot>
   );
