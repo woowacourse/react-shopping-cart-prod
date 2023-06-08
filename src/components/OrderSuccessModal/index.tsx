@@ -35,7 +35,7 @@ function OrderSuccessModal({
   return (
     <Modal isModalOpen={isModalOpen} closeModal={closeModal} direction="center" useBackDropClose={false}>
       <div className={styles.modal}>
-        <img className={styles['success-image']} src="/payments-success.png" alt="결제 성공" />
+        <img className={styles['success-image']} src="/payments-success.png" alt="결제 성공" loading="lazy" />
         <tbody className={styles['payments-information']}>
           <tr>
             <th>주문 상품</th>{' '}

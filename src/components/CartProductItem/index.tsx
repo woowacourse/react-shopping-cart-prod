@@ -29,7 +29,7 @@ function CartProductItem({ cartItem, toggleCheck, checked, mutateQuantity, delet
   return (
     <div className={styles['cart-item']}>
       <input type="checkbox" className={styles['check-box']} onChange={toggleCheck} checked={checked} />
-      <img src={imageUrl} alt={name} className={styles.image} />
+      <img src={imageUrl} alt={name} className={styles.image} loading="lazy" />
       <div className={styles['item-info']}>
         <div>
           <div className={styles['product-title']}>{name}</div>

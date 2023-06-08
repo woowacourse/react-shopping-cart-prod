@@ -87,7 +87,7 @@ function OrderCheckout() {
             <li className={styles['checkout-product-list']}>
               {checkedCartList?.map(({ id, quantity, product }) => (
                 <ul key={id} className={styles['checkout-product']}>
-                  <img src={product.imageUrl} alt="제품" />
+                  <img src={product.imageUrl} alt="제품" loading="lazy" />
                   <div>{product.name}</div>
                   <div>
                     {(product.price * quantity).toLocaleString()}원 | {quantity}개

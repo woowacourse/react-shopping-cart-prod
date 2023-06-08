@@ -12,7 +12,7 @@ function ProductItem({ product }: ProductItemProps) {
   return (
     <div className={styles.container}>
       <div className={styles['image-wrap']}>
-        <img src={imageUrl} alt={name} className={styles.image} />
+        <img src={imageUrl} alt={name} className={styles.image} loading="lazy" />
       </div>
       <div className={styles['item-info']}>
         <div>
