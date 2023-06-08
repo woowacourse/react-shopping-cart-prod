@@ -2,6 +2,7 @@ import BASE_URL from 'constants/apiBaseURL';
 import { USER_1 } from 'constants/basicKey';
 import { SERVER_OWNER } from 'constants/storeKey';
 import type { ServerOwner } from 'types/serverOwner';
+import ExtendedError from 'utils/ExtendError';
 import getBasicKey from 'utils/getBasicKey';
 
 export type ErrorResponse = {
@@ -37,7 +38,7 @@ class API {
       const response = await fetch(`${this.baseUrl}${url}`, options);
 
       if (response.status >= 500) {
-        throw new Error(`서버문제로 HTTP 통신에 실패했습니다. 상태 코드:${response.status}`);
+        throw new ExtendedError(`서버문제로 HTTP 통신에 실패했습니다. 상태 코드:${response.status}`, response.status);
       }
 
       if (!response.ok) {
@@ -51,7 +52,7 @@ class API {
           };
         }
 
-        throw errorResponse;
+        throw new ExtendedError(errorResponse.message, response.status);
       }
 
       let data = null;
@@ -69,15 +70,16 @@ class API {
             message: '서버 응답 형식이 json 형식이 아닙니다.',
           };
 
-          throw errorResponse;
+          throw new ExtendedError(errorResponse.message, response.status);
         }
       }
 
       return { data: data as T, headers };
     } catch (error) {
+
       if (error instanceof TypeError && error.message === 'Failed to fetch') {
         // CORS 에러 처리
-        throw new Error('CORS Error: Unable to make the request due to CORS restrictions.');
+        throw new ExtendedError(`CORS Error: Unable to make the request due to CORS restrictions.`, 403);
       }
 
       throw error;
