@@ -37,11 +37,11 @@ export const Order = (args: { totalPrice: number; priceDiscount: number }) => {
     <S.Wrapper>
       <S.Title>결제예상금액</S.Title>
       <S.List>
-        <Price price={args.totalPrice} tag='li' description='총 상품가격' />
-        <Price price={DELIVERY_FEE} tag='li' description='총 배송비' />
-        <Price price={args.priceDiscount} tag='li' description='할인 쿠폰' />
+        <Price value={args.totalPrice} tag='li' description='총 상품가격' />
+        <Price value={DELIVERY_FEE} tag='li' description='총 배송비' />
+        <Price value={args.priceDiscount} tag='li' description='할인 쿠폰' />
         <Price
-          price={args.totalPrice + DELIVERY_FEE - args.priceDiscount}
+          value={args.totalPrice + DELIVERY_FEE - args.priceDiscount}
           tag='li'
           description='총 주문금액'
         />

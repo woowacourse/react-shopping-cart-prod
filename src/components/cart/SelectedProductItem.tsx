@@ -56,7 +56,7 @@ const SelectedProductItem = ({
             <TrashCanIcon patternId={cartItemId} imageSize={{ width: '40', height: '40' }} />
           </Button>
           <QuantityButton productId={productId} quantity={quantity} />
-          <Price price={price * quantity} />
+          <Price value={price * quantity} />
         </S.Wrapper>
       </S.Fieldset>
     </div>

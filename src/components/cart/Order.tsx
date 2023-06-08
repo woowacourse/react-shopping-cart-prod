@@ -28,10 +28,10 @@ const Order = () => {
     <S.Wrapper>
       <S.Title>결제예상금액</S.Title>
       <S.List>
-        <Price price={totalPrice} tag='li' description='총 상품가격' />
-        <Price price={DELIVERY_FEE} tag='li' description='총 배송비' />
-        <Price price={discount} tag='li' description='할인 쿠폰' />
-        <Price price={totalPayment < 0 ? 0 : totalPayment} tag='li' description='총 주문금액' />
+        <Price value={totalPrice} tag='li' description='총 상품가격' />
+        <Price value={DELIVERY_FEE} tag='li' description='총 배송비' />
+        <Price value={discount} tag='li' description='할인 쿠폰' />
+        <Price value={totalPayment < 0 ? 0 : totalPayment} tag='li' description='총 주문금액' />
       </S.List>
       <Button css={orderButtonStyle} onClick={handleOrderButtonClick}>
         주문하기

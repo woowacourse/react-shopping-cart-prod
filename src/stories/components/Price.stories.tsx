@@ -13,13 +13,13 @@ type Story = StoryObj<typeof PriceComponent>;
 
 export const Price: Story = {
   args: {
-    price: 10000,
+    value: 10000,
     description: '상품 가격: ',
     tag: 'p',
   },
 
   argTypes: {
-    price: {
+    value: {
       description: '가격을 변경할 수 있습니다.<br> 세자리 단위로 `콤마(,)`가 찍힙니다.',
     },
 

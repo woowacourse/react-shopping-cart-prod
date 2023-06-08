@@ -1,19 +1,19 @@
 import { CSSProp, styled } from 'styled-components';
 
 interface Props {
-  price: number;
+  value: number;
   tag?: string;
   description?: string;
   css?: CSSProp;
 }
 
-const Price = ({ price, tag, description, css }: Props) => {
+const Price = ({ value, tag, description, css }: Props) => {
   const priceTag = tag || 'p';
 
   return (
     <S.Price as={priceTag} css={css}>
       {description}
-      <span>{price.toLocaleString()}원</span>
+      <span>{value.toLocaleString()}원</span>
     </S.Price>
   );
 };

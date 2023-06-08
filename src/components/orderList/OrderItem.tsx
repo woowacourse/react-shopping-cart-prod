@@ -48,15 +48,15 @@ const OrderItem = ({
         <S.Detail>
           {location !== ROUTE_PATH.ORDER_LIST_PAGE ? (
             <>
-              <Price price={totalPrice / quantity} css={textStyle} />
+              <Price value={totalPrice / quantity} css={textStyle} />
               <S.TotalDetail>
-                <Price price={totalPrice} css={textStyle} />
+                <Price value={totalPrice} css={textStyle} />
                 <span>&nbsp;/&nbsp;수량&nbsp;{quantity}개</span>
               </S.TotalDetail>
             </>
           ) : (
             <>
-              <Price price={totalPayments} css={totalPaymentStyle} />
+              <Price value={totalPayments} css={totalPaymentStyle} />
               <S.OrderStatus>{changedStatus}</S.OrderStatus>
             </>
           )}

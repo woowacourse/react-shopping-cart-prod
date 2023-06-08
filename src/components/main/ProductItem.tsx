@@ -22,7 +22,7 @@ const ProductItem = ({ id, imageUrl, name, price }: Product) => {
           <S.Name htmlFor={name} title={name}>
             {name}
           </S.Name>
-          <Price price={price} css={priceStyle} />
+          <Price value={price} css={priceStyle} />
         </div>
         {quantity > 0 ? (
           <QuantityButton isEnabledAtMin productId={id} quantity={quantity} />

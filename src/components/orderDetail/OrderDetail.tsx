@@ -20,17 +20,17 @@ const OrderDetail = ({ totalPrice, deliveryFee, coupon, totalPayments, orderStat
           결제 정보
         </S.Title>
         <li>
-          총 상품금액 <Price price={totalPrice} />
+          총 상품금액 <Price value={totalPrice} />
         </li>
         <li>
-          배송비 <Price price={deliveryFee} />
+          배송비 <Price value={deliveryFee} />
         </li>
         <S.Coupon coupon={coupon?.name}>
           할인쿠폰
-          <Price price={coupon && coupon.priceDiscount ? -coupon.priceDiscount : 0} />
+          <Price value={coupon && coupon.priceDiscount ? -coupon.priceDiscount : 0} />
         </S.Coupon>
         <li>
-          총 결제금액 <Price price={totalPayments} />
+          총 결제금액 <Price value={totalPayments} />
         </li>
       </S.List>
       {orderStatus === ORDER_STATUS.CANCEL && (
@@ -40,7 +40,7 @@ const OrderDetail = ({ totalPrice, deliveryFee, coupon, totalPayments, orderStat
             환불 금액
           </S.Title>
           <li>
-            총 환불금 <Price price={totalPayments} css={returnStyle} />
+            총 환불금 <Price value={totalPayments} css={returnStyle} />
           </li>
         </S.Return>
       )}
