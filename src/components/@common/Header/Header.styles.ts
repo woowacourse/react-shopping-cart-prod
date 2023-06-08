@@ -69,3 +69,9 @@ export const CartCounter = styled.div`
   border-radius: 50%;
   font: normal 500 16px/12px BM-HANNA;
 `;
+
+export const OrderRouteButton = styled.button`
+  font: ${(props) => props.theme.font.small};
+  color: ${(props) => props.theme.color.primary};
+  cursor: pointer;
+`;

@@ -18,6 +18,10 @@ const Header = () => {
     navigate(ROUTES.CART_LIST);
   };
 
+  const onNavigateToOrder = () => {
+    navigate(ROUTES.ORDER_LIST);
+  };
+
   return (
     <S.HeaderContainer>
       <S.HeaderContentContainer>
@@ -34,6 +38,9 @@ const Header = () => {
             <Svg type="cart-icon" width={25} height={22} />
           </S.CartRouteButton>
           <S.CartCounter>{cartCount}</S.CartCounter>
+          <S.OrderRouteButton onClick={onNavigateToOrder}>
+            주문목록
+          </S.OrderRouteButton>
         </S.HeaderWrapper>
       </S.HeaderContentContainer>
     </S.HeaderContainer>
