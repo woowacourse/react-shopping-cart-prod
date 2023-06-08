@@ -46,13 +46,15 @@ jobs:
         run: |
           npm run build
           cp ./build/index.html ./build/404.html
+          
 
-       - run: npm run build
+      - run: npm run build
         env:
           REACT_APP_API_DEFAULT: ${{ secrets.REACT_APP_API_DEFAULT }}
           REACT_APP_API_IRINAE: ${{ secrets.REACT_APP_API_IRINAE }}
           REACT_APP_API_CHACHA: ${{ secrets.REACT_APP_API_CHACHA }}
           REACT_APP_API_CREDENTIAL: ${{ secrets.REACT_APP_API_CREDENTIAL }}
+
 
       - name: Build storybook
         run: |
