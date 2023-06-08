@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 import ContentListSkeleton from '../components/Common/ContentListSkeleton';
 import OrderItemList from '../components/Order/OrderItemList';
-import Message from '../components/Common/Message';
+import ActionMessage from '../components/Common/ActionMessage';
 import { orderwithIdState } from '../recoil/orderData';
 
 const OrderItemDetailPage = () => {
@@ -23,7 +23,7 @@ const OrderItemDetailPage = () => {
               <OrderItemList order={order} isDetailed={true} />
             </Suspense>
           ) : (
-            <Message type='notFound' />
+            <ActionMessage type='notFound' />
           )}
         </OrderProductInfo>
       </OrderProductContent>

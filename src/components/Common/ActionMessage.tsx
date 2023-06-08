@@ -5,12 +5,12 @@ import styled from 'styled-components';
 
 import { message } from '../../constants/errorMessage';
 
-interface MessageProps {
+interface ActionMessageProps {
   type: MessageType;
   link?: string;
 }
 
-const Message = ({ type, link = '' }: MessageProps) => {
+const ActionMessage = ({ type, link = '' }: ActionMessageProps) => {
   return (
     <MessageSection>
       <img
@@ -60,4 +60,4 @@ const HomeLink = styled(Link)`
   border-radius: 4px;
 `;
 
-export default Message;
+export default ActionMessage;

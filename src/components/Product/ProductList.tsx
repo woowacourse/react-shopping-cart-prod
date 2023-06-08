@@ -3,12 +3,12 @@ import { useRecoilValue } from 'recoil';
 import { getProductsSelector } from '../../recoil/productData';
 
 import Product from './Product';
-import Message from '../Common/Message';
+import ActionMessage from '../Common/ActionMessage';
 
 const ProductList = () => {
   const products = useRecoilValue(getProductsSelector);
 
-  if (products.length === 0) return <Message type='empty' />;
+  if (products.length === 0) return <ActionMessage type='empty' />;
 
   return (
     <ProductListContainer>

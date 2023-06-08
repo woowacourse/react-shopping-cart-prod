@@ -1,9 +1,9 @@
-import Message from '../components/Common/Message';
+import ActionMessage from '../components/Common/ActionMessage';
 
 const NotFoundPage = () => {
   return (
     <main>
-      <Message type='notFound' link='/' />
+      <ActionMessage type='notFound' link='/' />
     </main>
   );
 };

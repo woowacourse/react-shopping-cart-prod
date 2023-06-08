@@ -2,14 +2,14 @@ import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import styled from 'styled-components';
 
-import Message from '../components/Common/Message';
+import ActionMessage from '../components/Common/ActionMessage';
 import ContentListSkeleton from '../components/Common/ContentListSkeleton';
 import ProductList from '../components/Product/ProductList';
 
 const ProductsListPage = () => {
   return (
     <Main>
-      <ErrorBoundary fallback={<Message type='error' />}>
+      <ErrorBoundary fallback={<ActionMessage type='error' />}>
         <Suspense fallback={<ContentListSkeleton content='product' />}>
           <ProductList />
         </Suspense>

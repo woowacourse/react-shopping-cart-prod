@@ -3,7 +3,7 @@ import { useRecoilValue } from 'recoil';
 
 import CartItem from './CartItem';
 import { cartAtom } from '../../recoil/cartItemData';
-import Message from '../Common/Message';
+import ActionMessage from '../Common/ActionMessage';
 
 const CartItemList = () => {
   const cart = useRecoilValue(cartAtom);
@@ -11,7 +11,7 @@ const CartItemList = () => {
   return (
     <CartItemListContainer>
       {cart.length === 0 ? (
-        <Message type='empty_cart' link='/' />
+        <ActionMessage type='empty_cart' link='/' />
       ) : (
         cart.map((cartProduct) => (
           <li key={cartProduct.cartItemId}>
