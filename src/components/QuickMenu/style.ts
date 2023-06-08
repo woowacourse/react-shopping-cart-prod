@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 import { QuickMenuAppear, QuickMenuDisAppear } from '@Animations/index';
 
+import { Z_INDEX } from '@Constants/index';
+
 import ServersIcon from '@Asset/servers.png';
 
 export const Container = styled.div`
@@ -24,7 +26,7 @@ export const Button = styled.div`
   width: 70px;
   height: 70px;
 
-  z-index: 5;
+  z-index: ${Z_INDEX.above};
 
   &:hover {
     height: 270px;

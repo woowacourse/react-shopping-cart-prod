@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 
+import { Z_INDEX } from '@Constants/index';
+
 export const Container = styled.div`
-  z-index: 5;
+  z-index: ${Z_INDEX.above};
   position: fixed;
   background-color: #333333;
   padding: 10px 0;

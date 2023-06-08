@@ -1,6 +1,8 @@
 import { TextSkeletonStyle } from '@Styles/common/skeleton';
 import styled from 'styled-components';
 
+import { Z_INDEX } from '@Constants/index';
+
 export const Container = styled.div`
   display: grid;
   grid-template-columns: auto 1fr;
@@ -39,7 +41,7 @@ export const QuestionMark = styled.div`
 `;
 
 export const HelperMessage = styled.span`
-  z-index: 1;
+  z-index: ${Z_INDEX.above};
   user-select: none;
   position: absolute;
   text-align: center;
