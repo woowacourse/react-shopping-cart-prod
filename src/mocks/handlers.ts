@@ -170,7 +170,6 @@ const requestPostOrders = ({
     serverUserCouponIds.includes(id),
   );
   if (!isValidCouponIds) return -1;
-  console.log('쿠폰 검증 통과');
 
   // 장바구니 검증
   const orderingProducts: CartProduct[] = [];
@@ -183,10 +182,8 @@ const requestPostOrders = ({
 
     orderingProducts.push(serverCartProduct);
   });
-  console.log(orderingProducts);
 
   if (orderingProducts.length !== userCart.length) return -1;
-  console.log('장바구니 검증 통과');
 
   const originalPrice = orderingProducts.reduce(
     (prev, { quantity, product: { price } }) => prev + quantity * price,
