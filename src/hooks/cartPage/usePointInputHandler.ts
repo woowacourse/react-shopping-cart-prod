@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 export const usePointInputHandler = (canUsingUserPoint: number) => {
-  const [usingPoint, setUsingPoint] = useState<number>(0);
+  const [usingPoint, setUsingPoint] = useState(0);
 
   if (usingPoint !== undefined && usingPoint > canUsingUserPoint)
     setUsingPoint(canUsingUserPoint);
