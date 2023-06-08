@@ -13,7 +13,7 @@ export const Counter = ({ quantity, onQuantityChange }: CounterProps) => {
   };
 
   const handleDecrease = () => {
-    onQuantityChange(quantity ? quantity - 1 : quantity);
+    onQuantityChange(quantity - 1);
   };
 
   const handleChangeInput: React.ChangeEventHandler<HTMLInputElement> = (e) => {
