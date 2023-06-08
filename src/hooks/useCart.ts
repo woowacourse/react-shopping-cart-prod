@@ -1,5 +1,4 @@
 import { useCallback, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useRecoilCallback, useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { getCartAPI } from '../api/cartAPI';
@@ -22,6 +21,7 @@ import type { CartItemData } from '../types/cart';
 import type { OrderCartItemsData } from '../types/order';
 import type { ProductItemData } from '../types/product';
 import { useLoadWithSetFetchData } from './common/useLoadWithSetFetchData';
+import { useNavigateSearchParams } from './common/useNavigateSearchParams';
 import { useToast } from './common/useToast';
 
 const useCart = () => {
@@ -29,7 +29,7 @@ const useCart = () => {
   const cartAPI = useMemo(() => getCartAPI(currentServer), [currentServer]);
   const setErrorModalMessage = useSetRecoilState(errorModalMessageState);
   const { isToastAdded, setIsToastAdded } = useToast();
-  const navigate = useNavigate();
+  const navigate = useNavigateSearchParams();
 
   const refreshCart = useRecoilCallback(
     ({ set, reset }) =>
@@ -159,7 +159,7 @@ const useCart = () => {
       onSuccess: useRecoilCallback(
         ({ refresh }) =>
           async (orderId) => {
-            navigate(`${PATH.ORDER_SUCCESS}?orderId=${orderId}`);
+            navigate(PATH.ORDER_SUCCESS, { orderId });
             await refreshCart();
             refresh(currentMemberInformationState);
             refresh(orderListState);
