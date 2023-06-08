@@ -51,9 +51,7 @@ export const findCartItemByProductIdSelector = selectorFamily<CartItem | undefin
     (productId) =>
     ({ get }) => {
       const cartItems = get(cartState);
-      const targetItem = cartItems.find((item) => item.product.id === productId);
-
-      return targetItem;
+      return cartItems.find((item) => item.product.id === productId);
     },
 });
 
