@@ -17,3 +17,5 @@ export const ONE_ITEM_IN_CART = 1;
 export const MAX_NUMBER_LENGTH = 2;
 
 export const DELIVERY_FEE = 3000;
+
+export const COUPON_NULL = 0;

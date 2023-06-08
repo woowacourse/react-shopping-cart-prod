@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { css, styled } from 'styled-components';
-import { DELIVERY_FEE, ROUTE_PATH } from '../../constants';
+import { COUPON_NULL, DELIVERY_FEE, ROUTE_PATH } from '../../constants';
 import { COUPON_URL, ORDER_URL } from '../../constants/url';
 import useFetchData from '../../hooks/useFetchData';
 import { useGoToAnotherPage } from '../../hooks/useGoToAnotherPage';
@@ -19,7 +19,7 @@ const OrderSheet = () => {
   const { api, isLoading } = useFetchData();
   const [coupons, setCoupons] = useState<Coupon[]>([]);
 
-  const [checkedCoupon, setCheckedCoupon] = useState(0);
+  const [checkedCoupon, setCheckedCoupon] = useState(COUPON_NULL);
   const handleChangeCoupon: React.ChangeEventHandler<HTMLInputElement> = ({ target: { id } }) => {
     setCheckedCoupon(Number(id));
   };
@@ -36,7 +36,7 @@ const OrderSheet = () => {
           cartItemIdList: selectedItems,
           totalPrice,
           deliveryFee: DELIVERY_FEE,
-          couponId: checkedCoupon > 0 ? checkedCoupon : null,
+          couponId: checkedCoupon !== COUPON_NULL ? checkedCoupon : null,
         })
         .then(() => {
           alert('주문이 완료되었습니다!');
@@ -68,13 +68,13 @@ const OrderSheet = () => {
         <div>
           <RadioInput
             type="radio"
-            id="0"
+            id={String(COUPON_NULL)}
             name="쿠폰 적용 안함"
             value="쿠폰 적용 안함"
-            checked={checkedCoupon === 0}
+            checked={checkedCoupon === COUPON_NULL}
             onChange={handleChangeCoupon}
           />
-          <StyledLabel htmlFor="0">쿠폰 적용 안함</StyledLabel>
+          <StyledLabel htmlFor={String(COUPON_NULL)}>쿠폰 적용 안함</StyledLabel>
         </div>
         {coupons.map(({ name, id }) => (
           <div>
