@@ -7,7 +7,6 @@ import { formatPrice } from '../../../utils/formatPrice';
 import useMenu from './useMenu';
 import { userState } from '../../../recoil/atoms/auth';
 import { DEFAULT_USER_NAME, PAIR_USER_NAME } from '../../../constants/auth';
-import useOrder from '../../../hooks/useOrder';
 import useCart from '../../../hooks/useCart';
 
 const UserMenu = ({ isActive }: { isActive: boolean }) => {
@@ -16,7 +15,6 @@ const UserMenu = ({ isActive }: { isActive: boolean }) => {
   const { point, updatePoint } = usePoint();
   const { closeMenu } = useMenu();
   const { updateCart } = useCart();
-  const { updateOrders } = useOrder();
 
   const handleChangeUserButtonClick: MouseEventHandler = (e) => {
     e.stopPropagation();
@@ -34,7 +32,6 @@ const UserMenu = ({ isActive }: { isActive: boolean }) => {
 
     updatePoint();
     updateCart();
-    updateOrders();
   };
 
   useEffect(() => {

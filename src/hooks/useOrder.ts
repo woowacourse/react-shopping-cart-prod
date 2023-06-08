@@ -1,32 +1,34 @@
-import { useRecoilCallback, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import { ORDERS_BASE_URL } from '../constants/api';
 import { fetchOrders, postOrder } from '../remotes/order';
 import { serverOriginState } from '../recoil/atoms/common';
-import { ordersState } from '../recoil/atoms/orders';
 import { getBase64 } from '../constants/auth';
 import { userState } from '../recoil/atoms/auth';
-import type { OrderPayload } from '../types/order';
+import { useEffect, useState } from 'react';
+import useToast from '../components/common/Toast/useToast';
+import type { Order, OrderPayload } from '../types/order';
 
 const useOrder = () => {
-  const orders = useRecoilValue(ordersState);
+  const [orders, setOrders] = useState<Order[]>([]);
   const navigate = useNavigate();
   const serverOrigin = useRecoilValue(serverOriginState);
   const user = useRecoilValue(userState);
+  const { showToast } = useToast();
 
-  const updateOrders = useRecoilCallback(
-    ({ set, snapshot }) =>
-      async () => {
-        const newUser = await snapshot.getPromise(userState);
-        const newOrders = await fetchOrders(
-          `${serverOrigin}${ORDERS_BASE_URL}`,
-          getBase64(newUser),
-        );
-
-        set(ordersState, newOrders);
-      },
-    [serverOrigin, user],
-  );
+  const updateOrders = async () => {
+    try {
+      const orders = await fetchOrders(
+        `${serverOrigin}${ORDERS_BASE_URL}`,
+        getBase64(user),
+      );
+      setOrders(orders);
+    } catch (e) {
+      if (e instanceof Error) {
+        showToast('error', e.message);
+      }
+    }
+  };
 
   const sendOrder = async (orderPayload: OrderPayload) => {
     try {
@@ -37,13 +39,14 @@ const useOrder = () => {
       );
       const orderId = getOrderIdFromHeaders(Array.from(response.headers));
 
-      updateOrders();
       navigate(`${ORDERS_BASE_URL}/complete/${orderId}`);
     } catch (e) {
       if (e instanceof Error) {
         throw e;
       }
     }
+
+    updateOrders();
   };
 
   const getOrderIdFromHeaders = (headers: Array<[string, string]>) => {
@@ -57,7 +60,11 @@ const useOrder = () => {
     return orderId;
   };
 
-  return { orders, updateOrders, sendOrder };
+  useEffect(() => {
+    updateOrders();
+  }, [serverOrigin, user]);
+
+  return { orders, sendOrder };
 };
 
 export default useOrder;
