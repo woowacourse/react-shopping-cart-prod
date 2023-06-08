@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import { api } from "../api";
 import {
@@ -13,7 +13,7 @@ import { OrderType } from "../types/domain";
 const OrderHistory = () => {
   const [orders, setOrders] = useState<OrderType[]>([]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const fetchOrders = async () => {
       try {
         const data = await api.get("/orders");

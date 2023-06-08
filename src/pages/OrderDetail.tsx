@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { styled } from "styled-components";
 import { api } from "../api";
@@ -13,7 +13,7 @@ const OrderDetail = () => {
     totalProductPrice: 0,
   });
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const fetchOrderDetail = async () => {
       try {
         const orderDetail = await api.get(`/orders/${orderId}`);

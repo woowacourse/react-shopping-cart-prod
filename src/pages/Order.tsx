@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { styled } from "styled-components";
@@ -26,7 +26,7 @@ const Order = () => {
   const [selectedCouponIndex, setSelectedCouponIndex] = useState<number>(-1);
   const selectedProducts = useRecoilValue(selectedProductsState);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const fetchMyCoupons = async () => {
       try {
         const cartItemIdsQuery = selectedProducts

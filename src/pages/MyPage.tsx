@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { api } from "../api";
@@ -22,7 +22,7 @@ const MyPage = () => {
   const [coupons, setCoupons] = useState<MyCouponType[]>([]);
   const [selectedCouponIndex, setSelectedCouponIndex] = useState<number>(-1);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const fetchCoupons = async () => {
       try {
         const data = await api.get("/coupons");
