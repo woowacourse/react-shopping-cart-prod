@@ -1,19 +1,26 @@
 import styled from 'styled-components';
-
 import CartProductItem from './CartProductItem';
 import { useRecoilValue } from 'recoil';
 import { cartProductAtom } from '../../recoil/cartProductData';
+import { LG } from '../../constants/screenSizes';
 
 const CartProductList = () => {
   const cartProducts = useRecoilValue(cartProductAtom);
 
   if (cartProducts.length === 0)
-    return <EmptyCart>장바구니가 비었어요</EmptyCart>;
+    return (
+      <EmptyCart>
+        <EmptyImage
+          src={`${process.env.PUBLIC_URL}/images/텅.png`}
+          alt='빈 장바구니 이미지'
+        />
+      </EmptyCart>
+    );
 
   return (
     <CartProductListContainer>
       {cartProducts.map((cartProduct) => (
-        <li key={cartProduct.id}>
+        <li key={cartProduct.cartItemId}>
           <CartProductItem cartProduct={cartProduct} />
         </li>
       ))}
@@ -29,13 +36,17 @@ const CartProductListContainer = styled.ul`
     border-top: 1px solid ${({ theme }) => theme.colors.gray200};
   }
 
-  @media (max-width: 1100px) {
+  @media (max-width: ${LG}) {
     width: 100%;
   }
 `;
 
-const EmptyCart = styled.p`
-  margin: 40px 0;
+const EmptyCart = styled.div`
+  text-align: center;
+`;
+
+const EmptyImage = styled.img`
+  height: 300px;
 `;
 
 export default CartProductList;

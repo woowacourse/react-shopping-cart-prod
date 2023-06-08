@@ -1,41 +1,36 @@
 import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-
 import { cartProductAtom } from '../recoil/cartProductData';
-import { findTargetProduct } from '../domain/cartProductHandler';
-import { api } from '../apis/cartProducts';
+import { deleteProduct, findTargetProduct } from '../domain/cartProductHandler';
 import useProductQuantity from './useProductQuantity';
-import { hostNameAtom } from '../recoil/hostData';
+import { cartApiAtom } from '../recoil/hostData';
 import type { Product } from '../types/product';
 
 const useCartProducts = (product: Product) => {
-  const { id } = product;
-  const hostName = useRecoilValue(hostNameAtom);
+  const { productId } = product;
+  const cartApiInstance = useRecoilValue(cartApiAtom);
   const [cartProducts, setCartProducts] = useRecoilState(cartProductAtom);
-  const { addCount, subtractCount } = useProductQuantity(id);
-  const target = findTargetProduct(cartProducts, id);
+  const { addCount, subtractCount } = useProductQuantity(
+    productId,
+    product.stock
+  );
+  const target = findTargetProduct(cartProducts, productId);
 
   const addProduct = async () => {
-    const cartItemId = await api(hostName).then((apiInstance) => {
-      return apiInstance.postCartProduct(product.id);
-    });
+    const cartItemId = await cartApiInstance.postCartProduct(product.productId);
 
     if (cartItemId)
       setCartProducts([
         ...cartProducts,
-        { id: Number(cartItemId), quantity: 1, product },
+        { cartItemId: Number(cartItemId), quantity: 1, product },
       ]);
   };
 
   const removeProduct = () => {
     if (target) {
-      api(hostName).then((apiInstance) => {
-        return apiInstance.deleteCartProduct(target.id);
-      });
+      cartApiInstance.deleteCartProduct(target.cartItemId);
 
-      setCartProducts(
-        cartProducts.filter((cartProduct) => cartProduct.id !== target.id)
-      );
+      setCartProducts(deleteProduct(cartProducts, target.cartItemId));
     }
   };
 
@@ -45,7 +40,7 @@ const useCartProducts = (product: Product) => {
     if (target.quantity === 0) {
       removeProduct();
     }
-  }, [id, setCartProducts, target]);
+  }, [productId, setCartProducts, target]);
 
   return { target, addProduct, removeProduct, addCount, subtractCount };
 };

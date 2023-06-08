@@ -1,10 +1,10 @@
 import Header from './components/Common/Header';
 
-interface Props {
+interface LayoutProps {
   children: JSX.Element;
 }
 
-const Layout = ({ children }: Props) => {
+const Layout = ({ children }: LayoutProps) => {
   return (
     <div>
       <Header />

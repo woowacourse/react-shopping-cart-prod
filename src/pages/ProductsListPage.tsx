@@ -1,10 +1,10 @@
+import { Suspense } from 'react';
 import styled from 'styled-components';
 import { ErrorBoundary } from 'react-error-boundary';
-
-import Message from '../components/Common/Message';
+import Message from '../components/Common/InformativeMessage';
 import ContentListSkeleton from '../components/Common/ContentListSkeleton';
 import ProductList from '../components/Product/ProductList';
-import { Suspense } from 'react';
+import { XL } from '../constants/screenSizes';
 
 const ProductsListPage = () => {
   return (
@@ -21,7 +21,7 @@ const ProductsListPage = () => {
 };
 
 const Main = styled.main`
-  max-width: 1300px;
+  max-width: ${XL};
   margin: 60px auto 0;
   padding: 0 0 100px 0;
 `;

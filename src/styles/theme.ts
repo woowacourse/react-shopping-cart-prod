@@ -6,6 +6,7 @@ const colors = {
   gray400: '#aaa',
   black: '#333',
   white: '#ffffff',
+  red: '#ec2f1b',
 } as const;
 
 export type ColorKeys = keyof typeof colors;

@@ -1,9 +1,9 @@
-import Message from '../components/Common/Message';
+import Message from '../components/Common/InformativeMessage';
 
 const NotFoundPage = () => {
   return (
     <main>
-      <Message type='notFound' link />
+      <Message type='notFound' homeLink />
     </main>
   );
 };

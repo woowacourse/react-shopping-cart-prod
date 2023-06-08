@@ -1,12 +1,17 @@
 import styled from 'styled-components';
-
 import { Link } from 'react-router-dom';
 import CartIcon from '../../assets/CartIcon';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { totalCartProductSelect } from '../../recoil/cartProductData';
-import { servers } from '../../constants/server';
 import { hostNameAtom } from '../../recoil/hostData';
-import { HostNameType } from '../../types/server';
+import { servers } from '../../constants/server';
+import { SM, XL, XS } from '../../constants/screenSizes';
+import {
+  CART_PRODUCTS_ROUTES,
+  HOME_ROUTES,
+  ORDERS_PRODUCTS_ROUTES,
+} from '../../constants/routes';
+import type { HostNameType } from '../../types/server';
 
 const Header = () => {
   const totalCartProduct = useRecoilValue(totalCartProductSelect);
@@ -19,7 +24,7 @@ const Header = () => {
   return (
     <HeaderContainer>
       <HeaderContent>
-        <Link to='/'>
+        <Link to={HOME_ROUTES}>
           <LogoContainer>
             <CartIcon width={51} height={44} color='white' />
             <Logo>SHOP</Logo>
@@ -27,15 +32,22 @@ const Header = () => {
         </Link>
         <ControlContainer>
           <SelectBox value={hostName} onChange={handleSelect}>
-            {Object.keys(servers).map((server) => (
-              <option>{server}</option>
+            {Object.keys(servers).map((server, index) => (
+              <option key={`server-${index}`}>{server}</option>
             ))}
           </SelectBox>
-          <Link to='/cart'>
+          <Link to={CART_PRODUCTS_ROUTES}>
             <MoveCartPageBtn>
-              장바구니
+              <DesktopLabel>장바구니</DesktopLabel>
+              <MobileLabel>🛒</MobileLabel>
               <ProductCountAlert>{totalCartProduct}</ProductCountAlert>
             </MoveCartPageBtn>
+          </Link>
+          <Link to={ORDERS_PRODUCTS_ROUTES}>
+            <MoveOrderListPageBtn>
+              <DesktopLabel>주문목록</DesktopLabel>
+              <MobileLabel>📝</MobileLabel>
+            </MoveOrderListPageBtn>
           </Link>
         </ControlContainer>
       </HeaderContent>
@@ -50,7 +62,7 @@ const HeaderContainer = styled.header`
 `;
 
 const HeaderContent = styled.div`
-  max-width: 1250px;
+  max-width: ${XL};
   height: 100%;
   margin: 0 auto;
   padding: 0 30px;
@@ -75,15 +87,18 @@ const Logo = styled.h1`
   letter-spacing: 0.1em;
   padding: 10px 0 0;
 
-  @media (max-width: 420px) {
+  @media (max-width: ${XS}) {
     display: none;
   }
 `;
 
 const ControlContainer = styled.div`
   display: flex;
-  justify-content: end;
-  gap: 40px;
+  gap: 30px;
+
+  @media (max-width: ${SM}) {
+    gap: 15px;
+  }
 `;
 
 const SelectBox = styled.select`
@@ -95,6 +110,28 @@ const MoveCartPageBtn = styled.button`
   color: ${({ theme }) => theme.colors.white};
   font-size: 24px;
   font-weight: 500;
+`;
+
+const MoveOrderListPageBtn = styled.button`
+  color: ${({ theme }) => theme.colors.white};
+  font-size: 24px;
+  font-weight: 500;
+`;
+
+const DesktopLabel = styled.span`
+  display: inline;
+
+  @media (max-width: ${SM}) {
+    display: none;
+  }
+`;
+
+const MobileLabel = styled.span`
+  display: none;
+
+  @media (max-width: ${SM}) {
+    display: inline;
+  }
 `;
 
 const ProductCountAlert = styled.p`

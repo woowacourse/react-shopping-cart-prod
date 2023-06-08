@@ -1,8 +1,7 @@
 import { atom, selector } from 'recoil';
+import { cartProductAtom } from './cartProductData';
 
-import type { CartProduct } from '../types/product';
-
-export const checkedItemAtom = atom<CartProduct[]>({
+export const checkedItemAtom = atom<number[]>({
   key: 'checkedItemState',
   default: [],
 });
@@ -19,11 +18,22 @@ export const checkedListSelector = selector<number>({
 export const totalPriceSelector = selector<number>({
   key: 'totalPriceState',
   get: ({ get }) => {
-    const checkedCartProducts = get(checkedItemAtom);
-    const totalPrice = checkedCartProducts.reduce((total, cartProduct) => {
-      return total + cartProduct.quantity * cartProduct.product.price;
-    }, 0);
+    const checkedCartProductIds = get(checkedItemAtom);
+    const cartProducts = get(cartProductAtom);
 
+    const totalPrice = checkedCartProductIds.reduce((total, cartProductId) => {
+      const checkedCartProduct = cartProducts.find(
+        (product) => product.cartItemId === cartProductId
+      );
+
+      if (!checkedCartProduct) {
+        return total;
+      }
+
+      return (
+        total + checkedCartProduct.quantity * checkedCartProduct.product.price
+      );
+    }, 0);
     return totalPrice;
   },
 });

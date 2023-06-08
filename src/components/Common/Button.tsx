@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
 
 import { ButtonHTMLAttributes } from 'react';
+import { XS } from '../../constants/screenSizes';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   designType: 'delete' | 'order';
@@ -25,15 +26,15 @@ const buttonStyles = {
   `,
   order: css`
     width: 388px;
-    height: 73px;
-    font-size: 24px;
+    height: 63px;
+    font-size: 20px;
     background-color: ${({ theme }) => theme.colors.black};
     color: ${({ theme }) => theme.colors.white};
 
-    @media (max-width: 420px) {
+    @media (max-width: ${XS}) {
       width: 270px;
       height: 50px;
-      font-size: 20px;
+      font-size: 18px;
     }
   `,
 };

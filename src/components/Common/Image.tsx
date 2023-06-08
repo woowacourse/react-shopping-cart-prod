@@ -1,6 +1,6 @@
-import styled, { css } from 'styled-components';
-
 import { ImgHTMLAttributes } from 'react';
+import styled, { css } from 'styled-components';
+import { XS } from '../../constants/screenSizes';
 
 type ImageType = 'small' | 'medium';
 
@@ -8,8 +8,14 @@ interface ImageProps extends ImgHTMLAttributes<HTMLImageElement> {
   size: ImageType;
 }
 
+const defaultImage = `${process.env.PUBLIC_URL}/images/error.png`;
+
 const Image = ({ size, ...props }: ImageProps) => {
-  return <ImageBox size={size} {...props} />;
+  const handleError: React.ReactEventHandler<HTMLImageElement> = (e) => {
+    e.currentTarget.src = defaultImage;
+  };
+
+  return <ImageBox size={size} onError={handleError} {...props} />;
 };
 
 const ImageStyled = {
@@ -17,7 +23,7 @@ const ImageStyled = {
     width: 144px;
     height: 144px;
 
-    @media (max-width: 420px) {
+    @media (max-width: ${XS}) {
       width: 80px;
       height: 80px;
       font-size: 20px;
@@ -31,6 +37,7 @@ const ImageStyled = {
 
 const ImageBox = styled.img<ImageProps>`
   ${({ size }) => ImageStyled[size]}
+  background-color: ${({ theme }) => theme.colors.white};
 `;
 
 export default Image;

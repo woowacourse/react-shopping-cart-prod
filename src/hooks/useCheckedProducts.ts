@@ -1,61 +1,61 @@
 import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-
-import { hostNameAtom } from '../recoil/hostData';
+import { cartApiAtom } from '../recoil/hostData';
 import { cartProductAtom } from '../recoil/cartProductData';
 import { checkedItemAtom } from '../recoil/checkedProductData';
-import { api } from '../apis/cartProducts';
-import type { CartProduct } from '../types/product';
 
 const useCheckedProducts = () => {
-  const hostName = useRecoilValue(hostNameAtom);
+  const cartApiInstance = useRecoilValue(cartApiAtom);
   const [cartProducts, setCartProducts] = useRecoilState(cartProductAtom);
   const [checkedProducts, setCheckedProducts] = useRecoilState(checkedItemAtom);
 
   const removeCheckedProducts = () => {
-    const selectedProducts = checkedProducts.map((product) => product.id);
+    const selectedProducts = checkedProducts.map((product) => product);
 
     setCartProducts(
-      cartProducts.filter((product) => !selectedProducts.includes(product.id))
-    );
-    setCheckedProducts(
-      checkedProducts.filter(
-        (product) => !selectedProducts.includes(product.id)
+      cartProducts.filter(
+        (product) => !selectedProducts.includes(product.cartItemId)
       )
     );
 
+    setCheckedProducts(
+      checkedProducts.filter((product) => !selectedProducts.includes(product))
+    );
+
     selectedProducts.forEach((productId) => {
-      api(hostName).then((apiInstance) => {
-        return apiInstance.deleteCartProduct(productId);
-      });
+      cartApiInstance.deleteCartProduct(productId);
     });
   };
 
-  const handleCheckBoxChange = (cartProduct: CartProduct) => {
-    const updatedCheckedItems = checkedProducts.includes(cartProduct)
-      ? checkedProducts.filter((item) => item !== cartProduct)
-      : [...checkedProducts, cartProduct];
+  const handleCheckBoxChange = (cartProductId: number) => {
+    const updatedCheckedItems = checkedProducts.includes(cartProductId)
+      ? checkedProducts.filter((id) => id !== cartProductId)
+      : [...checkedProducts, cartProductId];
 
     setCheckedProducts(updatedCheckedItems);
   };
 
   const handleAllCheckedProducts = () => {
-    if (cartProducts.length === checkedProducts.length) {
+    const cartProductIds = cartProducts.map((product) => product.cartItemId);
+
+    if (cartProductIds.length === checkedProducts.length) {
       setCheckedProducts([]);
       return;
     }
-    setCheckedProducts(cartProducts);
+
+    setCheckedProducts(cartProductIds);
   };
 
-  const isCheckedProduct = (cartProduct: CartProduct) => {
-    return checkedProducts.includes(cartProduct);
+  const isCheckedProduct = (cartProductId: number) => {
+    return checkedProducts.includes(cartProductId);
   };
 
   useEffect(() => {
     if (cartProducts.length > 0) {
-      setCheckedProducts(cartProducts);
+      const cartProductIds = cartProducts.map((product) => product.cartItemId);
+      setCheckedProducts(cartProductIds);
     }
-  }, [cartProducts]);
+  }, []);
 
   return {
     removeCheckedProducts,

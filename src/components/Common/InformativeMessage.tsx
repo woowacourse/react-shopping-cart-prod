@@ -1,11 +1,24 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import {
+  CART_PRODUCTS_ROUTES,
+  HOME_ROUTES,
+  ORDERS_PRODUCTS_ROUTES,
+} from '../../constants/routes';
 
-type MessageType = 'error' | 'empty' | 'notFound' | 'loading';
+type InformativeMessageType =
+  | 'error'
+  | 'empty'
+  | 'notFound'
+  | 'loading'
+  | 'orderCompleted'
+  | 'orderFailed';
 
-interface MessageProps {
-  type: MessageType;
-  link?: boolean;
+interface InformativeMessageProps {
+  type: InformativeMessageType;
+  homeLink?: boolean;
+  orderLink?: boolean;
+  cartLink?: boolean;
 }
 
 const message = {
@@ -29,20 +42,40 @@ const message = {
     description: '잠시만 기다려주세요.',
     imageSrc: 'images/loading.png',
   },
+  orderCompleted: {
+    title: '결제가 완료되었습니다. ',
+    description:
+      "해당 주문에 대한 정보는 '주문목록' 페이지에서 확인하실 수 있습니다.",
+    imageSrc: 'images/배달.jpg',
+  },
+  orderFailed: {
+    title: '결제가 실패하였습니다.',
+    description: '다시 결제를 시도해주세요.',
+    imageSrc: 'images/error.png',
+  },
 };
 
-const Message = ({ type, link = false }: MessageProps) => {
+const InformativeMessage = ({
+  type,
+  homeLink = false,
+  orderLink = false,
+  cartLink = false,
+}: InformativeMessageProps) => {
   return (
     <MessageSection>
       <img
-        width={160}
-        height={160}
-        src={message[type].imageSrc}
+        width={170}
+        height={170}
+        src={`${process.env.PUBLIC_URL}/${message[type].imageSrc}`}
         alt='오류 발생 이미지'
       />
       <MessageTitle>{message[type].title}</MessageTitle>
       <MessageDesc>{message[type].description}</MessageDesc>
-      {link && <HomeLink to='/'>홈으로 가기</HomeLink>}
+      <LinkBtnWrapper>
+        {homeLink && <LinkBtn to={HOME_ROUTES}>홈으로 가기</LinkBtn>}
+        {orderLink && <LinkBtn to={ORDERS_PRODUCTS_ROUTES}>주문목록</LinkBtn>}
+        {cartLink && <LinkBtn to={CART_PRODUCTS_ROUTES}>장바구니</LinkBtn>}
+      </LinkBtnWrapper>
     </MessageSection>
   );
 };
@@ -60,17 +93,22 @@ const MessageSection = styled.section`
 `;
 
 const MessageTitle = styled.h2`
-  margin: 16px 0 0 0;
+  margin: 25px 0 0 0;
   font-size: 20px;
   line-height: 28px;
   font-weight: 600;
 `;
 
 const MessageDesc = styled.p`
-  margin: 8px 0 0 0;
+  margin: 15px 0 0 0;
 `;
 
-const HomeLink = styled(Link)`
+const LinkBtnWrapper = styled.div`
+  display: flex;
+  gap: 30px;
+`;
+
+const LinkBtn = styled(Link)`
   width: 100px;
   height: 40px;
   margin: 36px 0 0 0;
@@ -81,4 +119,4 @@ const HomeLink = styled(Link)`
   border-radius: 4px;
 `;
 
-export default Message;
+export default InformativeMessage;
