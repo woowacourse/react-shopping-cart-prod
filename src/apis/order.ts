@@ -3,57 +3,31 @@ import type { HostNameType } from '../types/server';
 import type { PointType } from '../types/point';
 
 import { servers } from '../constants/server';
-import credentials from './auth';
+
+import fetchWithHeaders from '.';
 
 export const api = async (hostName: HostNameType) => {
   const ORDER_URL = `${servers[hostName]}/orders`;
   const POINT_URL = `${servers[hostName]}/points`;
-  const getOrders = async () => {
-    const response = await fetch(ORDER_URL, {
-      method: 'GET',
-      headers: {
-        Authorization: `Basic ${credentials}`,
-      },
-    });
 
+  const getOrders = async () => {
+    const response = await fetchWithHeaders(ORDER_URL, 'GET');
     const data: OrderType[] = await response.json();
 
     return data;
   };
 
   const getOrderDetail = async (orderId: number) => {
-    const response = await fetch(`${ORDER_URL}/${orderId}`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Basic ${credentials}`,
-        'Content-Type': 'application/json',
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error(response.status.toString());
-    }
-
+    const response = await fetchWithHeaders(`${ORDER_URL}/${orderId}`, 'GET');
     const data: OrderType = await response.json();
 
     return data;
   };
 
   const createOrder = async (order: ScheduledOrderType) => {
-    const response = await fetch(ORDER_URL, {
-      method: 'POST',
-      headers: {
-        Authorization: `Basic ${credentials}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ ...order }),
-    });
-
-    if (!response.ok) {
-      throw new Error(response.status.toString());
-    }
-
+    const response = await fetchWithHeaders(ORDER_URL, 'POST', { ...order });
     const location = response.headers.get('location');
+
     if (location !== null) {
       const lastSlashIndex = location.lastIndexOf('/');
       const orderId = location.slice(lastSlashIndex + 1);
@@ -64,18 +38,9 @@ export const api = async (hostName: HostNameType) => {
   };
 
   const getPoints = async () => {
-    const response = await fetch(POINT_URL, {
-      method: 'GET',
-      headers: {
-        Authorization: `Basic ${credentials}`,
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error(response.status.toString());
-    }
-
+    const response = await fetchWithHeaders(POINT_URL, 'GET');
     const data: PointType = await response.json();
+
     return data;
   };
 

@@ -2,39 +2,23 @@ import type { CartItemType } from '../types/product';
 import type { HostNameType } from '../types/server';
 
 import { servers } from '../constants/server';
-import credentials from './auth';
+import fetchWithHeaders from '.';
 
 export const api = async (hostName: HostNameType) => {
   const URL = `${servers[hostName]}/cart-items`;
 
   const getCartItems = async () => {
-    const response = await fetch(URL, {
-      method: 'GET',
-      headers: {
-        Authorization: `Basic ${credentials}`,
-      },
-    });
-
+    const response = await fetchWithHeaders(URL, 'GET');
     const data: CartItemType[] = await response.json();
 
     return data;
   };
 
   const createCartProduct = async (productId: number) => {
-    const response = await fetch(URL, {
-      method: 'POST',
-      headers: {
-        Authorization: `Basic ${credentials}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ productId }),
-    });
-
-    if (!response.ok) {
-      throw new Error(response.status.toString());
-    }
+    const response = await fetchWithHeaders(URL, 'POST', { productId });
 
     const location = response.headers.get('location');
+
     if (location !== null) {
       const lastSlashIndex = location.lastIndexOf('/');
       const cartItemId = location.slice(lastSlashIndex + 1);
@@ -48,29 +32,15 @@ export const api = async (hostName: HostNameType) => {
     cartItemId: number,
     quantity: number
   ) => {
-    const response = await fetch(`${URL}/${cartItemId}`, {
-      method: 'PATCH',
-      headers: {
-        Authorization: `Basic ${credentials}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ quantity }),
+    const response = await fetchWithHeaders(`${URL}/${cartItemId}`, 'PATCH', {
+      quantity,
     });
 
-    if (!response.ok) {
-      throw new Error(response.status.toString());
-    }
     return response;
   };
 
   const deleteCartProduct = async (cartItemId: number) => {
-    await fetch(`${URL}/${cartItemId}`, {
-      method: 'DELETE',
-      headers: {
-        Authorization: `Basic ${credentials}`,
-        'Content-Type': 'application/json',
-      },
-    });
+    await fetchWithHeaders(`${URL}/${cartItemId}`, 'DELETE');
   };
 
   return {
