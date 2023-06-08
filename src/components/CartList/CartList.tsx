@@ -37,7 +37,10 @@ function CartList() {
         <CartListCheckCounter onClick={() => switchAllCheckboxes()}>
           전체선택 ({checkedCartListCount}/{cartCount})
         </CartListCheckCounter>
-        <CartsDeleteButton onClick={() => removeCheckedCartItems()}>
+        <CartsDeleteButton
+          onClick={() => removeCheckedCartItems()}
+          disabled={checkedCartListCount === 0}
+        >
           선택삭제
         </CartsDeleteButton>
       </CartListController>
