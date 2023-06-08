@@ -8,11 +8,7 @@ const totalProductsPriceSelector = selector({
   get: ({ get }) => {
     const checkedCartItems = get(checkedCartItemsSelector);
 
-    const totalProductsPrice = checkedCartItems.reduce((totalPrice, item) => {
-      return totalPrice + item.quantity * item.product.price;
-    }, 0);
-
-    return totalProductsPrice;
+    return checkedCartItems.reduce((totalPrice, { quantity, product }) => totalPrice + quantity * product.price, 0);
   },
 });
 
