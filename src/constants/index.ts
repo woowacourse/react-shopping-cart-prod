@@ -1,5 +1,13 @@
 import { CouponState, OrderStatus } from '../types';
 
+export const DEFAULT_SERVER = '도이';
+
+export const SERVER_IMAGE_LIST: ReadonlyArray<string> = [
+  'https://avatars.githubusercontent.com/u/112045553?v=4',
+  'https://avatars.githubusercontent.com/u/62413589?v=4',
+  'https://avatars.githubusercontent.com/u/97426362?v=4',
+];
+
 export const IMAGE_PATH: Readonly<Record<string, string>> = {
   EMPTY_CART: `${process.env.PUBLIC_URL}/assets/nothing.png`,
   EMPTY_ORDER_LIST: `${process.env.PUBLIC_URL}/assets/empty.png`,

@@ -1,5 +1,5 @@
 import { atom, selector, selectorFamily } from 'recoil';
-import { INITIAL_COUPON_STATE, KEY_SERVER, QUANTITY } from '../constants';
+import { DEFAULT_SERVER, INITIAL_COUPON_STATE, KEY_SERVER, QUANTITY } from '../constants';
 import { SERVERS } from '../constants/url';
 import { CartItem, CouponState, OrderList, Product } from '../types';
 
@@ -70,7 +70,7 @@ export const totalPriceSelector = selector<number>({
 
 export const serverState = atom({
   key: 'serverState',
-  default: localStorage.getItem(KEY_SERVER) ?? `${SERVERS.도이}`,
+  default: localStorage.getItem(KEY_SERVER) ?? `${SERVERS[DEFAULT_SERVER]}`,
 });
 
 export const selectedCoupon = atom<CouponState>({

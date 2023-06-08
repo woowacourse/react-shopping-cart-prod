@@ -1,7 +1,7 @@
 import { Fragment, ChangeEvent, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { css, styled } from 'styled-components';
-import { KEY_SERVER } from '../constants';
+import { DEFAULT_SERVER, KEY_SERVER, SERVER_IMAGE_LIST } from '../constants';
 import { SERVERS } from '../constants/url';
 import { serverState } from '../recoil';
 import Button from './common/Button';
@@ -16,13 +16,8 @@ const ServerSelector = () => {
     setIsClicked(false);
   };
 
-  const serverImageList = [
-    'https://avatars.githubusercontent.com/u/112045553?v=4',
-    'https://avatars.githubusercontent.com/u/62413589?v=4',
-    'https://avatars.githubusercontent.com/u/97426362?v=4',
-  ];
-
-  const currentServer = Object.entries(SERVERS).find(([_, value]) => value === server);
+  const serverList = Object.entries(SERVERS);
+  const currentServer = serverList.find(([_, value]) => value === server);
 
   return (
     <S.Aside onBlur={() => setIsClicked(false)} onMouseLeave={() => setIsClicked(false)}>
@@ -30,10 +25,10 @@ const ServerSelector = () => {
         <S.Fieldset>
           <legend>서버</legend>
           <S.Wrapper>
-            {Object.keys(SERVERS).map((key, index) => (
+            {serverList.map(([key], index) => (
               <Fragment key={key}>
                 <label htmlFor={key}>
-                  <img src={serverImageList[index]} alt={key} />
+                  <img src={SERVER_IMAGE_LIST[index]} alt={key} />
                   <span>{key}</span>
                 </label>
                 <input type='radio' id={key} name='서버' value={key} onChange={handleSeverChange} />
@@ -43,7 +38,7 @@ const ServerSelector = () => {
         </S.Fieldset>
       ) : (
         <Button css={buttonStyle} onClick={() => setIsClicked(true)}>
-          {currentServer ? currentServer[0] : '준팍'} 서버
+          {currentServer ? currentServer[0] : DEFAULT_SERVER} 서버
         </Button>
       )}
     </S.Aside>
