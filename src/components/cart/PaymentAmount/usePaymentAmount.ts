@@ -12,7 +12,15 @@ const usePaymentAmount = () => {
       0,
     );
 
-  const deliveryFee = checkedCartIdList.length ? 3000 : 0;
+  const getDeliveryFee = () => {
+    if (!checkedCartIdList.length) {
+      return 0;
+    }
+
+    return 3000;
+  };
+
+  const deliveryFee = getDeliveryFee();
 
   return { paymentAmount, deliveryFee };
 };
