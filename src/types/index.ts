@@ -12,11 +12,6 @@ export interface CartItem {
   checked: boolean;
 }
 
-export interface CheckedCartItems {
-  [key: number]: boolean;
-  all: boolean;
-}
-
 export interface OrderPolicy {
   freeShippingThreshold: number;
   shippingFee: number;
