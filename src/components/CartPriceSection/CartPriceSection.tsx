@@ -37,7 +37,7 @@ const CartPriceSection = () => {
         <CartTotalPrice>{cartTotalPriceText}</CartTotalPrice>
       </Container>
       <StyledLink to={ROUTE_PATH.orderSheet}>
-        <OrderConfirmButton isActive={isCheckedProductsExist}>{orderConfirmButtonText}</OrderConfirmButton>
+        <OrderConfirmButton disabled={!isCheckedProductsExist}>{orderConfirmButtonText}</OrderConfirmButton>
       </StyledLink>
     </PriceSection>
   );
@@ -107,17 +107,16 @@ const StyledLink = styled(Link)`
   width: 100%;
 `;
 
-const OrderConfirmButton = styled.button<{ isActive: boolean }>`
+const OrderConfirmButton = styled.button<{ disabled: boolean }>`
   width: 100%;
   height: 50px;
   margin-top: 20px;
   border: none;
-  color: ${({ isActive }) => (isActive ? '#fff' : '#b1b3b5')};
+  color: ${({ disabled }) => (disabled ? '#b1b3b5' : '#fff')};
   font-size: 18px;
   font-weight: 700;
-  background-color: ${({ isActive }) => (isActive ? '#2ac1bc' : '#0000000d')};
-  cursor: pointer;
-  pointer-events: ${({ isActive }) => (isActive ? 'initial' : 'none')};
+  background-color: ${({ disabled }) => (disabled ? '#0000000d' : '#2ac1bc')};
+  cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
 
   @media (max-width: 430px) {
     margin: 0;

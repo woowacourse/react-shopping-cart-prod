@@ -70,7 +70,7 @@ const OrderDate = styled.div`
   font-size: 10px;
 `;
 
-const Button = styled.div`
+const Button = styled.button`
   cursor: pointer;
 `;
 

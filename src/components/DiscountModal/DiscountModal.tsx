@@ -66,7 +66,7 @@ const DiscountModal = ({ userPoint, isOpen, closeModal }: PropsWithChildren<Conf
 
         <ModalBody>
           <ModalSubTitle>보유 포인트 : {userPoint} p</ModalSubTitle>
-          <SelectSection onSubmit={handleFormSubmit}>
+          <SelectForm onSubmit={handleFormSubmit}>
             {options.map((option) => (
               <Option
                 key={option.value}
@@ -80,7 +80,7 @@ const DiscountModal = ({ userPoint, isOpen, closeModal }: PropsWithChildren<Conf
               />
             ))}
             <Button type="submit">포인트 적용하기</Button>
-          </SelectSection>
+          </SelectForm>
         </ModalBody>
       </Container>
     </Modal>
@@ -141,6 +141,6 @@ const Button = styled.button`
   color: white;
 `;
 
-const SelectSection = styled.form`
+const SelectForm = styled.form`
   padding: 16px;
 `;
