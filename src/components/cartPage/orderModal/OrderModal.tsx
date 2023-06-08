@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components';
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
 import { priceSummaryState } from '../../../recoil/selectors/priceSummarySelector';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useOrderFetch } from '../../../hooks/fetch/useOrderFetch';
@@ -74,7 +74,7 @@ export const OrderModal = ({ closeModal }: OrderModalProps) => {
   };
 
   return (
-    <Fragment>
+    <>
       <Style.BackDrop onClick={closeModal} />
       <Style.Content>
         <Style.HeaderContainer>
@@ -137,7 +137,7 @@ export const OrderModal = ({ closeModal }: OrderModalProps) => {
           {isLoading ? <Loading theme="light" /> : '주문하기'}
         </Style.OrderButton>
       </Style.Content>
-    </Fragment>
+    </>
   );
 };
 

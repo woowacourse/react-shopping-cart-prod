@@ -10,7 +10,7 @@ export const OrderContent = () => {
   const orderList = useRecoilValue(orderListState(apiEndPoint));
 
   return (
-    <Fragment>
+    <>
       {orderList.length > 0 ? (
         <Style.ContentContainer>
           {orderList.map((order) => {
@@ -40,7 +40,7 @@ export const OrderContent = () => {
           주문 목록이 비어있습니다!
         </Style.EmptyCartContainer>
       )}
-    </Fragment>
+    </>
   );
 };
 
