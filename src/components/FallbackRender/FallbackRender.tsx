@@ -12,7 +12,7 @@ export const FallbackRender = ({ error, resetErrorBoundary }: FallbackRenderProp
     <styled.FallbackRender>
       <styled.ErrorMessage>{error.message}</styled.ErrorMessage>
       <styled.RetryWrapper>
-        <button onClick={() => resetErrorBoundary()}>Retry</button>
+        <button onClick={resetErrorBoundary}>Retry</button>
       </styled.RetryWrapper>
     </styled.FallbackRender>
   );
