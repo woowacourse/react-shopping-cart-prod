@@ -10,9 +10,9 @@ const Coupon = ({ id, priceDiscount, name }: CouponItem) => {
 
   const isSelected = coupon.id === id;
 
-  const handleCouponSelect = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
+  const handleCouponSelect = ({ target: { valueAsNumber } }: ChangeEvent<HTMLInputElement>) => {
     setCoupon(() => {
-      return { id: Number(value), priceDiscount, name };
+      return { id: valueAsNumber, priceDiscount, name };
     });
   };
 
