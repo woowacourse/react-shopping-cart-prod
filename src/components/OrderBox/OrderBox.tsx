@@ -12,9 +12,11 @@ interface OrderBoxProps {
 export const OrderBox = ({ orderInfo }: OrderBoxProps) => {
   const { orderId, orderDate, orderDetails } = orderInfo;
 
+  const [orderDateValue] = orderDate.split('.');
+
   return (
     <styled.OrderBox>
-      <OrderBoxHeader orderId={orderId} orderDate={orderDate} />
+      <OrderBoxHeader orderId={orderId} orderDate={orderDateValue} />
       {orderDetails.map((detail: OrderSummary) => (
         <OrderItem key={detail.product.id} detailData={detail} />
       ))}

@@ -13,7 +13,7 @@ export const OrderBoxHeader = ({ orderId, orderDate }: OrderBoxHeaderProps) => {
     <styled.OrderBoxHeader>
       <div>
         <span>주문번호 : {orderId}</span>
-        <styled.OrderDate>주문날짜 : {orderDate.split('.')[0]}</styled.OrderDate>
+        <styled.OrderDate>주문날짜 : {orderDate}</styled.OrderDate>
       </div>
       {pathname === '/orders' && <Link to={`/orders/${orderId}`}>상세보기{' >'}</Link>}
     </styled.OrderBoxHeader>

@@ -4,7 +4,7 @@ interface OptionalProps {
   body: object;
 }
 
-export const fetchAPI = async (url: string, optionalProps?: Partial<Props>) => {
+export const fetchAPI = async (url: string, optionalProps?: Partial<OptionalProps>) => {
   const options: RequestInit & { Authorization?: string } = {
     method: optionalProps?.method,
     headers: optionalProps?.headers,
