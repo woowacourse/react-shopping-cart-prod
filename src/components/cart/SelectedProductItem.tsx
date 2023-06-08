@@ -33,7 +33,6 @@ const SelectedProductItem = ({
   };
 
   const handleTrashCanClick = () => {
-    setCheckedItems([cartItemId]);
     removeItemFromCart();
   };
 

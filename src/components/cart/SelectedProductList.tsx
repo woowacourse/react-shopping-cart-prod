@@ -33,12 +33,13 @@ const SelectedProductList = () => {
   const isAllChecked = checkedItems.length === productCountInCart && productCountInCart !== 0;
 
   const handleAllItemsCheck = () => {
-    setCheckedItems(cart.map(({ id }) => id));
+    setCheckedItems(
+      isAllChecked ? cart.map(({ id }) => id) : cart.filter(({ isSelected }) => !isSelected).map(({ id }) => id),
+    );
   };
 
   const handleCheckedItemRemove = () => {
     removeCheckedItemsFromCart();
-    setCheckedItems([]);
   };
 
   if (isLoading) return <Spinner />;
