@@ -90,15 +90,15 @@ class API {
     return await this.fetcher<T>(url, 'GET');
   }
 
-  async post<T>(url: string, body: unknown): Promise<FetchedData<T>> {
+  async post<T>(url: string, body: T): Promise<FetchedData<T>> {
     return await this.fetcher<T>(url, 'POST', body);
   }
 
-  async remove<T>(url: string, body: unknown): Promise<FetchedData<T>> {
+  async remove<T>(url: string, body: T): Promise<FetchedData<T>> {
     return await this.fetcher<T>(url, 'DELETE', body);
   }
 
-  async patch<T>(url: string, body: unknown): Promise<FetchedData<T>> {
+  async patch<T>(url: string, body: T): Promise<FetchedData<T>> {
     return await this.fetcher<T>(url, 'PATCH', body);
   }
 
