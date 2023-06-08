@@ -27,7 +27,7 @@ function Coupon({
 
   const setSelectedCouponId = useSetRecoilState(selectedCouponIdState);
 
-  const IssuedOrUseCoupon = () => {
+  const issuedOrUseCoupon = () => {
     if (!id) return;
     if (type === 'issued') return issuedCoupon(id);
     if (isUsed) return alert('이미 사용한 쿠폰입니다.');
