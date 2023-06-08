@@ -50,7 +50,7 @@ const CartList = ({ cart, isLoading }: Props) => {
       <Title>장바구니</Title>
       <S.Wrapper>
         <TotalCheckbox
-          cartLength={cart.length}
+          totalCount={cart.length}
           checkedItemsCount={checkedItems.length}
           handleCheckAllItems={handleCheckAllItems}
           clickRemoveButton={handleRemoveCheckedItem}
