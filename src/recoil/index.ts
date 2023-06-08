@@ -1,4 +1,4 @@
-import { DefaultValue, atom, selector, selectorFamily } from 'recoil';
+import { atom, selector, selectorFamily } from 'recoil';
 import { INITIAL_COUPON_STATE, KEY_SERVER, QUANTITY } from '../constants';
 import { SERVERS } from '../constants/url';
 import { CartItem, CouponState, OrderList, Product } from '../types';
@@ -35,21 +35,6 @@ export const quantitySelector = selectorFamily({
 
       if (!selectedCartItem) return QUANTITY.NONE;
       return selectedCartItem.quantity;
-    },
-
-  set:
-    (id) =>
-    ({ get, set }, newQuantity) => {
-      const cart = get(cartState);
-      const selectedCartItem = cart.find((item) => item.product.id === id);
-
-      const quantity = newQuantity instanceof DefaultValue ? QUANTITY.INITIAL : newQuantity;
-
-      const newCart = cart.map((cartItem) =>
-        cartItem === selectedCartItem ? { ...cartItem, quantity } : cartItem
-      );
-
-      set(cartState, newCart);
     },
 });
 

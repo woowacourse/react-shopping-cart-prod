@@ -12,8 +12,6 @@ const ProductItem = ({ id, imageUrl, name, price }: Product) => {
   const quantity = useRecoilValue(quantitySelector(id));
   const { addToCart } = useCart(id);
 
-  const handleCartClick = () => addToCart();
-
   return (
     <div>
       <S.ImageWrapper>
@@ -29,7 +27,7 @@ const ProductItem = ({ id, imageUrl, name, price }: Product) => {
         {quantity > 0 ? (
           <QuantityButton isEnabledAtMin productId={id} quantity={quantity} />
         ) : (
-          <Button css={buttonStyle} onClick={handleCartClick}>
+          <Button css={buttonStyle} onClick={() => addToCart()}>
             <CartIcon css={svgStyle} />
           </Button>
         )}

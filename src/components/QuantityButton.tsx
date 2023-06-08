@@ -1,9 +1,7 @@
 import { BsPlus, BsDash } from 'react-icons/bs';
-import { useSetRecoilState } from 'recoil';
 import { css, styled } from 'styled-components';
 import { QUANTITY } from '../constants';
 import { useCart } from '../hooks/useCart';
-import { quantitySelector } from '../recoil';
 import Button from './common/Button';
 
 const { MAX, MIN, STEP, NONE } = QUANTITY;
@@ -15,7 +13,6 @@ interface Props {
 }
 
 const QuantityButton = ({ isEnabledAtMin, productId, quantity }: Props) => {
-  const setQuantity = useSetRecoilState(quantitySelector(productId));
   const { updateCart, removeItemFromCart } = useCart(productId);
 
   const handleQuantityStepUp = () => {
@@ -23,7 +20,6 @@ const QuantityButton = ({ isEnabledAtMin, productId, quantity }: Props) => {
 
     const updatedQuantity = quantity + STEP;
 
-    setQuantity(updatedQuantity);
     updateCart(updatedQuantity);
   };
 
@@ -32,9 +28,8 @@ const QuantityButton = ({ isEnabledAtMin, productId, quantity }: Props) => {
 
     const updatedQuantity = quantity - STEP;
 
-    if (isEnabledAtMin && updatedQuantity === NONE) return removeItemFromCart();
+    if (isEnabledAtMin && updatedQuantity === NONE) removeItemFromCart();
 
-    setQuantity(updatedQuantity);
     updateCart(updatedQuantity);
   };
 
