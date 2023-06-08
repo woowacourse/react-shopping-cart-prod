@@ -44,10 +44,10 @@ export const OrderSummary = ({ fetchCartItems }: OrderSummaryProps) => {
       })),
     });
 
-    response.then(async ({ orderId }) => {
-      await fetchCartItems();
-      navigate(`/orders/${orderId}`);
-    });
+    await fetchCartItems();
+
+    const { orderId } = await response;
+    navigate(`/orders/${orderId}`);
   };
 
   return (
