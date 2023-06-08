@@ -29,6 +29,9 @@ const CartTotal = ({
   } = useCartTotal(totalProductPrice);
   const { isModalOpen, openModal } = useModal();
   const isFreeShipping = totalProductPrice >= FREE_SHIPPING_PRICE;
+  const isDisabled =
+    Number(removeComma(usingPoint)) >= point ||
+    totalOrderPrice <= Number(removeComma(usingPoint));
 
   return (
     <>
@@ -67,6 +70,7 @@ const CartTotal = ({
                 <PointInputInner>
                   <PointInput
                     type="text"
+                    disabled={isDisabled}
                     value={usingPoint}
                     onChange={updateUsingPoint}
                   />
@@ -80,10 +84,7 @@ const CartTotal = ({
               </PointInputWrapper>
               <UseAllPointButton
                 type="button"
-                disabled={
-                  Number(removeComma(usingPoint)) >= point ||
-                  totalOrderPrice <= Number(removeComma(usingPoint))
-                }
+                disabled={isDisabled}
                 onClick={useAllPoint}
               >
                 전액사용
@@ -190,6 +191,11 @@ const PointInputInner = styled.div`
   & > input,
   & > span {
     color: ${(props) => props.theme.color.PRIMARY};
+  }
+
+  & > input:disabled,
+  & > input:disabled + span {
+    color: ${(props) => props.theme.color.GRAY_400};
   }
 `;
 

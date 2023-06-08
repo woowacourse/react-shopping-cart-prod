@@ -32,6 +32,11 @@ const GlobalStyle = createGlobalStyle`
     text-decoration: none;
   }
 
+  input:disabled {
+    background: none;
+    cursor: not-allowed;
+  }
+
   button {
     background: none;
     border: 0;
