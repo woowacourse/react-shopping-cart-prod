@@ -207,7 +207,6 @@ export const fetchOrderedList = async (server: string) => {
       throw new Error();
     }
   } catch (error) {
-    console.error(error);
     throw new Error();
   }
 };

@@ -13,15 +13,25 @@ import { serverState } from "../../app/recoil/serverAtom.ts";
 function OrderList() {
   const server = useRecoilValue(serverState);
   const [orderList, setOrderList] = useState<OrderedGroup[]>([]);
+  const [isError, setError] = useState(false);
 
   const loadOrderedList = async () => {
-    const data = await fetchOrderedList(server);
-    setOrderList(data.orderResponses);
+    try {
+      const data = await fetchOrderedList(server);
+      setOrderList(data.orderResponses);
+    } catch (error) {
+      setError(true);
+      throw new Error();
+    }
   };
 
   useEffect(() => {
     loadOrderedList();
   }, []);
+
+  if (isError) {
+    throw new Error();
+  }
 
   return (
     <OrderListWrapper>
