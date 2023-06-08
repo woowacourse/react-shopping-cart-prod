@@ -11,13 +11,14 @@ const updateCartProductQuantity = async (
   hostName: HostNameType,
   targetProduct: CartItemType,
   delta: number
-) =>
-  await api(hostName).then((apiInstance) => {
-    return apiInstance.editCartProductQuantity(
-      targetProduct.cartItemId,
-      targetProduct.quantity + delta
-    );
-  });
+) => {
+  await (
+    await api(hostName)
+  ).editCartProductQuantity(
+    targetProduct.cartItemId,
+    targetProduct.quantity + delta
+  );
+};
 
 const useProductQuantity = (productId: number) => {
   const hostName = useRecoilValue(hostNameAtom);

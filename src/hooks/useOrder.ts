@@ -19,14 +19,11 @@ const useOrder = () => {
   const hostName = useRecoilValue(hostNameAtom);
 
   const addOrder = async (newOrder: ScheduledOrderType) => {
-    const orderId = await api(hostName).then((apiInstance) => {
-      return apiInstance.createOrder(newOrder);
-    });
+    const orderId = await (await api(hostName)).createOrder(newOrder);
 
     if (orderId) {
-      const updatedOrders = await api(hostName).then((apiInstance) => {
-        return apiInstance.getOrders();
-      });
+      const updatedOrders = await (await api(hostName)).getOrders();
+
       setOrder([...updatedOrders]);
 
       const updatedCartProducts = cart.filter(
@@ -34,9 +31,7 @@ const useOrder = () => {
       );
       setCart([...updatedCartProducts]);
 
-      const updatedPoints = await api(hostName).then((apiInstance) => {
-        return apiInstance.getPoints();
-      });
+      const updatedPoints = await (await api(hostName)).getPoints();
       setPoint({ ...updatedPoints });
 
       setCheckedCartItemIds([]);

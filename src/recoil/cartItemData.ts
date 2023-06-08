@@ -10,9 +10,7 @@ export const cartAtom = atom<CartItemType[]>({
     key: 'cartProductState/Default',
     get: async ({ get }) => {
       const hostName = get(hostNameAtom);
-      const response = api(hostName).then((apiInstance) => {
-        return apiInstance.getCartItems();
-      });
+      const response = await (await api(hostName)).getCartItems();
       return response;
     },
   }),

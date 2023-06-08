@@ -28,10 +28,8 @@ const useCheckedCart = () => {
       )
     );
 
-    checkedCartItemIds.forEach((cartItemId) => {
-      api(hostName).then((apiInstance) => {
-        return apiInstance.deleteCartProduct(cartItemId);
-      });
+    checkedCartItemIds.forEach(async (cartItemId) => {
+      await (await api(hostName)).deleteCartProduct(cartItemId);
     });
   };
 

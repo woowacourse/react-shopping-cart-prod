@@ -20,9 +20,7 @@ const useCart = (product: ProductType) => {
   const target = findTargetProduct(cart, productId);
 
   const addProduct = async () => {
-    const cartItemId = await api(hostName).then((apiInstance) => {
-      return apiInstance.createCartProduct(productId);
-    });
+    const cartItemId = await (await api(hostName)).createCartProduct(productId);
 
     if (cartItemId) {
       const updatedCartProducts = [
@@ -36,9 +34,7 @@ const useCart = (product: ProductType) => {
 
   const removeProduct = async () => {
     if (target) {
-      await api(hostName).then((apiInstance) => {
-        return apiInstance.deleteCartProduct(target.cartItemId);
-      });
+      await (await api(hostName)).deleteCartProduct(target.cartItemId);
 
       const updatedCartProducts = cart.filter(
         (cartProduct) => cartProduct.cartItemId !== target.cartItemId

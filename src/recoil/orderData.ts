@@ -10,9 +10,8 @@ export const orderAtom = atom<OrderType[]>({
     key: 'orderState/Default',
     get: async ({ get }) => {
       const hostName = get(hostNameAtom);
-      const response = api(hostName).then((apiInstance) => {
-        return apiInstance.getOrders();
-      });
+      const response = await (await api(hostName)).getOrders();
+
       return response;
     },
   }),
@@ -22,16 +21,18 @@ export const orderwithIdState = selectorFamily({
   key: 'orderwithIdState',
   get:
     (orderId) =>
-    ({ get }) => {
+    async ({ get }) => {
       const isOrderExist = get(orderAtom).find(
         (order) => order.orderId === Number(orderId)
       );
 
       if (isOrderExist) {
         const hostName = get(hostNameAtom);
-        const response = api(hostName).then((apiInstance) => {
-          return apiInstance.getOrderDetail(Number(orderId));
-        });
+
+        const response = await (
+          await api(hostName)
+        ).getOrderDetail(Number(orderId));
+
         return response;
       }
     },

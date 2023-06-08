@@ -10,9 +10,8 @@ export const userPointAtom = atom<PointType>({
     key: 'userPointState/Default',
     get: async ({ get }) => {
       const hostName = get(hostNameAtom);
-      const response = api(hostName).then((apiInstance) => {
-        return apiInstance.getPoints();
-      });
+      const response = await (await api(hostName)).getPoints();
+
       return response;
     },
   }),
