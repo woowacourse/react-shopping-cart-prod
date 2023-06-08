@@ -80,37 +80,35 @@ export const discountPrice = selector({
     const selectedCoupons = get(selectedCouponsState);
     const totalPrice = get(totalPriceSelector);
 
-    let totalDiscountPrice = 0;
-
     if (allCoupons.some((coupon) => selectedCoupons.includes(coupon.id))) {
       const applyCoupon = allCoupons.find(
         (coupon) => coupon.id === selectedCoupons[0]
       );
-      if (!applyCoupon) return totalDiscountPrice;
+      if (!applyCoupon) return 0;
 
-      totalDiscountPrice += getDiscountPrice(applyCoupon, totalPrice);
-      return totalDiscountPrice;
+      return getDiscountPrice(applyCoupon, totalPrice);
     }
 
-    selectedCoupons.forEach((couponId) => {
+    return selectedCoupons.reduce((acc, couponId) => {
       const applyCoupon = specificCoupons.find(
         (coupon) => coupon.id === couponId
       );
 
-      if (!applyCoupon) return totalDiscountPrice;
+      if (!applyCoupon) return acc;
 
       const applyCartItem = cart.find(
         (item) => item.product.id === applyCoupon.targetProductId
       );
 
-      if (!applyCartItem) return totalDiscountPrice;
+      if (!applyCartItem) return acc;
 
-      totalDiscountPrice += getDiscountPrice(
-        applyCoupon,
-        applyCartItem.product.price * applyCartItem.quantity
+      return (
+        acc +
+        getDiscountPrice(
+          applyCoupon,
+          applyCartItem.product.price * applyCartItem.quantity
+        )
       );
-    });
-
-    return totalDiscountPrice;
+    }, 0);
   },
 });
