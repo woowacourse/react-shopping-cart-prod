@@ -8,10 +8,15 @@
 ## 🚀 Getting Started
 
 ✔️ 백엔드 개발자와 협업하기 위한 커뮤니케이션을 경험한다.
+
 ✔️ API를 모킹하고 갈아끼울 수 있는 형태로 대비한다.
+
 ✔️ 백엔드 크루들과 API 설계 논의부터 협업하여 서버와 연동이 되는 주문 기능을 구현한다.
 
 <br>
+
+### [장바구니 배포 사이트](https://woo-jk.github.io/react-shopping-cart-prod/)
+
 <br>
 
 ---
