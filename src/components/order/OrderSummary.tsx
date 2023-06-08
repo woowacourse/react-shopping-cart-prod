@@ -14,6 +14,7 @@ import { useQuery } from '../../hooks/useQuery';
 import { Discount, Point } from '../../types';
 import { useState } from 'react';
 import { localeString } from '../../utils/localeString';
+import { ToastMessage } from '../common/ToastMessage';
 
 const OrderSummary = () => {
   const cart = useCartStateValue();
@@ -32,6 +33,8 @@ const OrderSummary = () => {
 
   const setCart = useSetCartState();
   const setChecked = useSetCheckedState();
+
+  const [toast, setToast] = useState(false);
 
   const totalProductPrice = useTotalProductPrice();
 
@@ -52,7 +55,9 @@ const OrderSummary = () => {
     setCart([]);
     setChecked({ all: true });
 
-    navigate(PATH.ORDER);
+    setToast(true)
+
+    // navigate(PATH.ORDER);
   };
 
   const pointChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,6 +68,7 @@ const OrderSummary = () => {
     <>
       <>
         <Style.OrderSummary>
+        {toast && <ToastMessage setToast={setToast}>{"주문 등록이 완료되었습니다."}</ToastMessage>}
           <Style.OrderSummaryHeader>결제예상금액</Style.OrderSummaryHeader>
           <Style.Content>
             <Style.Prices>
@@ -119,6 +125,7 @@ const OrderSummary = () => {
       </>
       <>
         <Mobile.OrderSummary>
+        {toast && <ToastMessage setToast={setToast}>{"주문 등록이 완료되었습니다."}</ToastMessage>}
           <Mobile.Prices>
             <Mobile.Price>
               <div>총 상품가격</div>
