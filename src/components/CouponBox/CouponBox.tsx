@@ -17,8 +17,10 @@ function CouponBox({ coupon }: { coupon: Coupon }) {
   const { updateSelectedCoupon } = useRecoilValue(orderRepository);
   const totalPrice = useRecoilValue(totalPriceSelector);
 
+  const isValid = totalPrice >= coupon.minAmount;
+
   const handleClickCoupon = (coupon: Coupon) => {
-    if (totalPrice >= coupon.minAmount) {
+    if (isValid) {
       updateSelectedCoupon(coupon);
     } else {
       alert("쿠폰을 사용하기 위한 결제 금액이 부족합니다.");
@@ -26,7 +28,7 @@ function CouponBox({ coupon }: { coupon: Coupon }) {
   };
 
   return (
-    <CouponWrapper onClick={() => handleClickCoupon(coupon)}>
+    <CouponWrapper onClick={() => handleClickCoupon(coupon)} disabled={!isValid}>
       <input type="checkbox" checked={isCouponSelected} readOnly />
       <CouponInfo>
         <CouponTitle>{coupon.couponName}</CouponTitle>

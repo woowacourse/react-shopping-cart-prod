@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
-export const CouponWrapper = styled.div`
+interface CouponWrapperProps {
+  disabled?: boolean;
+}
+
+export const CouponWrapper = styled.div<CouponWrapperProps>`
   border-radius: 10px;
   border: cornflowerblue solid 1px;
 
@@ -15,6 +19,11 @@ export const CouponWrapper = styled.div`
   &:hover {
     background-color: gainsboro;
   }
+
+  ${({ disabled }) => disabled && `
+      opacity: 0.5;
+      pointer-events: none;
+    `}
 `;
 
 export const CouponInfo = styled.div``;
