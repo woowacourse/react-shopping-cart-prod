@@ -28,7 +28,7 @@ const ProductItem = ({ id, imageUrl, name, price }: Product) => {
           <QuantityButton productId={id} min={QUANTITY.NONE} max={QUANTITY.MAX} />
         ) : (
           <StyledButton type="button" onClick={addToCart}>
-            <CartIcon css={svgStyle} />
+            <CartIcon css={svgStyle} aria-label="장바구니 추가" />
           </StyledButton>
         )}
       </StyledFieldset>
