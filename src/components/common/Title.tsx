@@ -5,11 +5,11 @@ interface Props {
 }
 
 const Title = ({ value }: Props) => {
-  return <S.Head>{value}</S.Head>;
+  return <S.Subtitle>{value}</S.Subtitle>;
 };
 
 const S = {
-  Head: styled.h2`
+  Subtitle: styled.h2`
     width: 100%;
     margin-bottom: 28px;
     padding-bottom: 30px;
