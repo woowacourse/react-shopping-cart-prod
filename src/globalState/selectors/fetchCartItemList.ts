@@ -22,10 +22,6 @@ const fetchCartItemList = selector<CartProduct[]>({
     const cartItemList = await response.json();
     return cartItemList;
   },
-
-  cachePolicy_UNSTABLE: {
-    eviction: 'most-recent',
-  },
 });
 
 export default fetchCartItemList;
