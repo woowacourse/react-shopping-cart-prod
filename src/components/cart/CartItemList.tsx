@@ -11,6 +11,8 @@ import { GarbageIcon } from '../../assets/svg';
 import { Stepper } from '../Stepper';
 
 import { CartItemType } from '../../types';
+import { localeString } from '../../utils/localeString';
+import { LOCALE } from '../../constants';
 
 export const CartItemList = () => {
   const cart = useCartStateValue();
@@ -74,7 +76,7 @@ export const CartItemList = () => {
               <GarbageIcon />
             </Button>
             <Stepper cartId={id} quantity={quantity} />
-            <Style.ProductPrice>{product.price.toLocaleString('ko-KR')}원</Style.ProductPrice>
+            <Style.ProductPrice>{localeString(product.price, LOCALE.KOREA)}원</Style.ProductPrice>
           </Style.RightInfo>
         </Style.CartItem>
       ))}

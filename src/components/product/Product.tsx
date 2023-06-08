@@ -6,10 +6,11 @@ import { useCartItemValue, useSetCartState } from '../../recoils/recoilCart';
 import { Stepper } from '../Stepper';
 import { ProductType } from '../../types';
 import { useMutation } from '../../hooks/useMutation';
-import { FETCH_METHOD, FETCH_URL } from '../../constants';
+import { FETCH_METHOD, FETCH_URL, LOCALE } from '../../constants';
 import { useApiBaseUrlValue } from '../../recoils/recoilApiBaseUrl';
 import { useEffect } from 'react';
 import { useSetCheckedState } from '../../recoils/recoilChecked';
+import { localeString } from '../../utils/localeString';
 
 interface Props {
   item: ProductType;
@@ -60,7 +61,7 @@ export const Product = ({ item }: Props) => {
       <Style.ProductInfo>
         <div>
           <Style.ProductName>{item.name}</Style.ProductName>
-          <Style.ProductPrice>{item.price.toLocaleString('ko-KR')}원</Style.ProductPrice>
+          <Style.ProductPrice>{localeString(item.price, LOCALE.KOREA)}원</Style.ProductPrice>
         </div>
         {cartItem ? (
           <Style.StepperWrapper>

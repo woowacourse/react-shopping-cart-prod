@@ -4,7 +4,7 @@ import { useTotalProductPrice } from '../../recoils/recoilTotalPrice';
 
 import { Button } from '../common/Button';
 
-import { DELIVERY_CHARGE, FETCH_METHOD } from '../../constants';
+import { DELIVERY_CHARGE, FETCH_METHOD, LOCALE } from '../../constants';
 import { useNavigate } from 'react-router-dom';
 import { useCartStateValue, useSetCartState } from '../../recoils/recoilCart';
 import { useApiBaseUrlValue } from '../../recoils/recoilApiBaseUrl';
@@ -13,6 +13,7 @@ import { useSetCheckedState } from '../../recoils/recoilChecked';
 import { useQuery } from '../../hooks/useQuery';
 import { Discount, Point } from '../../types';
 import { useState } from 'react';
+import { localeString } from '../../utils/localeString';
 
 const OrderSummary = () => {
   const cart = useCartStateValue();
@@ -67,20 +68,20 @@ const OrderSummary = () => {
             <Style.Prices>
               <Style.Price>
                 <span>총 상품가격</span>
-                <span>{totalProductPrice.toLocaleString('ko-kr')}원</span>
+                <span>{localeString(totalProductPrice, LOCALE.KOREA)}원</span>
               </Style.Price>
               <Style.Price>
                 <span>총 배송비</span>
                 <span>
                   {totalProductPrice >= discount.freeShippingThreshold
                     ? 0
-                    : DELIVERY_CHARGE.toLocaleString('ko-kr')}
+                    : localeString(DELIVERY_CHARGE, LOCALE.KOREA)}
                   원
                 </span>
               </Style.Price>
               <Style.Price>
                 <span>보유 포인트</span>
-                <span>{point ? point.usablePoint.toLocaleString('ko-kr') + '원' : '0원'}</span>
+                <span>{point ? localeString(point.usablePoint, LOCALE.KOREA) + '원' : '0원'}</span>
               </Style.Price>
               <Style.Price>
                 <span>사용할 포인트</span>
@@ -97,8 +98,8 @@ const OrderSummary = () => {
                 <span>총 주문금액</span>
                 <span>
                   {totalProductPrice >= discount.freeShippingThreshold
-                    ? (totalProductPrice - usePoint).toLocaleString('ko-kr')
-                    : (totalProductPrice + DELIVERY_CHARGE - usePoint).toLocaleString('ko-kr')}
+                    ? localeString((totalProductPrice - usePoint), LOCALE.KOREA)
+                    : localeString((totalProductPrice + DELIVERY_CHARGE - usePoint), LOCALE.KOREA)}
                   원
                 </span>
               </Style.Price>
@@ -121,7 +122,7 @@ const OrderSummary = () => {
           <Mobile.Prices>
             <Mobile.Price>
               <div>총 상품가격</div>
-              <div>{totalProductPrice.toLocaleString('ko-kr')}원</div>
+              <div>{localeString(totalProductPrice, LOCALE.KOREA)}원</div>
             </Mobile.Price>
             <Mobile.Price>
               <div>배송비</div>
@@ -129,20 +130,20 @@ const OrderSummary = () => {
                 {' '}
                 {totalProductPrice >= discount.freeShippingThreshold
                   ? 0
-                  : DELIVERY_CHARGE.toLocaleString('ko-kr')}
+                  : localeString(DELIVERY_CHARGE, LOCALE.KOREA)}
                 원
               </div>
             </Mobile.Price>
             <Mobile.Price>
               <div>보유 포인트</div>
-              <div>{point ? point.usablePoint.toLocaleString('ko-kr') + '원' : '0원'}</div>
+              <div>{point ? localeString(point.usablePoint, LOCALE.KOREA) + '원' : '0원'}</div>
             </Mobile.Price>
             <Mobile.Price>
               <div>총 주문금액</div>
               <div>
                 {totalProductPrice >= discount.freeShippingThreshold
-                  ? (totalProductPrice - usePoint).toLocaleString('ko-kr')
-                  : (totalProductPrice + DELIVERY_CHARGE - usePoint).toLocaleString('ko-kr')}
+                  ? localeString((totalProductPrice - usePoint), LOCALE.KOREA)
+                  : localeString((totalProductPrice + DELIVERY_CHARGE - usePoint), LOCALE.KOREA)}
                 원
               </div>
             </Mobile.Price>

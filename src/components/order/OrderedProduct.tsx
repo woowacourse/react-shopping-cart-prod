@@ -1,5 +1,7 @@
 import { styled } from 'styled-components';
+import { LOCALE } from '../../constants';
 import { OrderDetailsType } from '../../types';
+import { localeString } from '../../utils/localeString';
 
 interface OrderedProductProps {
   orderDetail: OrderDetailsType;
@@ -12,7 +14,7 @@ export const OrderedProduct = ({ orderDetail }: OrderedProductProps) => {
       <Style.ProductInformation>
         <Style.ProductName>{orderDetail.product.name}</Style.ProductName>
         <Style.ProductPriceAndQuantity>
-          {orderDetail.product.price.toLocaleString('ko-KR')}원 / 수량 : {orderDetail.quantity}개
+          {localeString(orderDetail.product.price, LOCALE.KOREA)}원 / 수량 : {orderDetail.quantity}개
         </Style.ProductPriceAndQuantity>
       </Style.ProductInformation>
     </Style.Product>

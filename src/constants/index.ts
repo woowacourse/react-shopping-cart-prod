@@ -15,6 +15,10 @@ const DELIVERY_CHARGE = 3000;
 
 const SKELETON_LENGTH = 12;
 
+const LOCALE = Object.freeze({
+  KOREA: 'ko-KR'
+})
+
 const FETCH_METHOD = Object.freeze({
   POST: 'POST',
   PATCH: 'PATCH',
@@ -52,4 +56,5 @@ export {
   FETCH_URL,
   RECOIL_KEY,
   LOCAL_STORAGE_KEY,
+  LOCALE
 };

@@ -1,4 +1,6 @@
 import { styled } from 'styled-components';
+import { LOCALE } from '../../constants';
+import { localeString } from '../../utils/localeString';
 
 interface OrderedProductTotalPriceProps {
   totalPrice: number;
@@ -17,15 +19,15 @@ export const OrderedProductTotalPrice = ({
       <Style.TotalPriceInformations>
         <Style.Information>
           <span>총 결제금액</span>
-          <span>{(totalPrice - usedPoint + shippingFee).toLocaleString('ko-KR')}원</span>
+          <span>{localeString((totalPrice - usedPoint + shippingFee), LOCALE.KOREA)}원</span>
         </Style.Information>
         <Style.Information>
           <span>배송비</span>
-          <span>{shippingFee.toLocaleString('ko-KR')}원</span>
+          <span>{localeString(shippingFee, LOCALE.KOREA)}원</span>
         </Style.Information>
         <Style.Information>
           <span>사용한 포인트</span>
-          <span>{usedPoint.toLocaleString('ko-KR')}원</span>
+          <span>{localeString(usedPoint, LOCALE.KOREA)}원</span>
         </Style.Information>
       </Style.TotalPriceInformations>
     </>
