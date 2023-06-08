@@ -5,13 +5,11 @@ import { useFetchOrderDetail } from '@recoils/ordersAtoms';
 
 import { OrderBox } from '@components/OrderBox/OrderBox';
 
-import type { OrderDetail, OrderInfo } from '../../../types';
-
 export const OrderDetailPage = () => {
   const { id } = useParams();
 
-  const { orderId, orderDate, orderDetails, ...fee }: OrderDetail = useFetchOrderDetail(Number(id));
-  const orderInfo: OrderInfo = { orderId, orderDate, orderDetails };
+  const { orderId, orderDate, orderDetails, ...fee } = useFetchOrderDetail(Number(id));
+  const orderInfo = { orderId, orderDate, orderDetails };
 
   const paidPrice = fee.totalProductsPrice + fee.shippingFee - fee.usedPoint;
 
