@@ -1,5 +1,6 @@
 import { useRecoilValue } from 'recoil';
 import { css, styled } from 'styled-components';
+import { QUANTITY } from '../../constants';
 import { useSetCart } from '../../hooks/useCart';
 import { quantitySelector } from '../../recoil';
 import { Product } from '../../types';
@@ -23,8 +24,8 @@ const ProductItem = ({ id, imageUrl, name, price }: Product) => {
           </Label>
           <Price price={price} css={priceStyle} />
         </NamePriceWrapper>
-        {quantity > 0 ? (
-          <QuantityButton productId={id} min={0} max={10} />
+        {quantity > QUANTITY.NONE ? (
+          <QuantityButton productId={id} min={QUANTITY.NONE} max={QUANTITY.MAX} />
         ) : (
           <StyledButton type="button" onClick={addToCart}>
             <CartIcon css={svgStyle} />

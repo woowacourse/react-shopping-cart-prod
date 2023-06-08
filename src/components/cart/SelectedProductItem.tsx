@@ -1,5 +1,6 @@
 import { useRecoilState } from 'recoil';
 import { css, styled } from 'styled-components';
+import { QUANTITY } from '../../constants';
 import { useSetCart } from '../../hooks/useCart';
 import { selectedCartItems } from '../../recoil';
 import { Product } from '../../types';
@@ -54,7 +55,7 @@ const SelectedProductItem = ({
           <Button css={trashCanButtonStyle} onClick={handleTrashCanClick}>
             <TrashCanIcon patternId={cartItemId} imageSize={{ width: '40', height: '40' }} />
           </Button>
-          <QuantityButton productId={productId} min={1} max={10} />
+          <QuantityButton productId={productId} min={QUANTITY.MIN} max={QUANTITY.MAX} />
           <Price price={price * quantity} />
         </S.Wrapper>
       </Fieldset>

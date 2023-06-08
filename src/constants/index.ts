@@ -8,7 +8,7 @@ export const QUANTITY = {
   INITIAL: 1,
   NONE: 0,
   STEP: 1,
-  MAX: 99,
+  MAX: 10,
   MIN: 1,
 } as const;
 
