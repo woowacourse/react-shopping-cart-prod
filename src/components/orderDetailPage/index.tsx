@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { getCommaAddedNumber } from '../../utils/number';
 import { Loading } from '../common/Loading';
 import { OrderGroup } from '../orderPage/OrderGroup';
-import { Fragment } from 'react';
 import { Style as OrderStyle } from '../orderPage';
 import { useLocation } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
@@ -17,7 +16,7 @@ export const OrderDetailContent = () => {
   return (
     <>
       {orderDetail ? (
-        <Fragment>
+        <>
           <OrderGroup
             orderId={orderDetail.orderId}
             orders={orderDetail?.orderInfos}
@@ -56,7 +55,7 @@ export const OrderDetailContent = () => {
               </Style.PriceSummaryContentContainer>
             </Style.PriceSummaryContainer>
           </Style.Container>
-        </Fragment>
+        </>
       ) : (
         <Loading />
       )}
