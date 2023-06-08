@@ -7,13 +7,23 @@ import baseURL from '../../config.ts';
 
 type FetchStatus = 'idle' | 'loading' | 'fail' | 'success';
 
+export type FetchMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
+
 export type FetchState<T> = {
   status: FetchStatus;
   data: T | null;
   error: Error | null;
 };
 
-const useFetch = <T>(url: string, method = 'GET'): [FetchState<T>, (body?: any, param?: number | string) => Promise<void>] => {
+type UseFetchParams = {
+  url: string;
+  method?: FetchMethod;
+  isNotAutomaticallyFetched?: boolean;
+};
+
+type UseFetchReturn<T> = [FetchState<T>, (body?: any, param?: number | string) => Promise<void>];
+
+const useFetch = <T>({ url, method = 'GET', isNotAutomaticallyFetched = false }: UseFetchParams): UseFetchReturn<T> => {
   const [fetchState, setFetchState] = useState<FetchState<T>>({
     status: 'idle',
     data: null,
@@ -31,34 +41,34 @@ const useFetch = <T>(url: string, method = 'GET'): [FetchState<T>, (body?: any, 
 
       setFetchState((prevState) => ({ ...prevState, status: 'loading', error: null }));
 
-      try {
-        const response: Response = await fetch(urlWithParam, {
-          method,
-          body: body ? JSON.stringify(body) : null,
-          headers: { 'Content-Type': 'application/json', authorization: `Basic ${auth}` },
+      fetch(urlWithParam, {
+        method,
+        body: body ? JSON.stringify(body) : null,
+        headers: { 'Content-Type': 'application/json', authorization: `Basic ${auth}` },
+      })
+        .then(async (response) => {
+          if (!response.ok) {
+            throw new Error(response.statusText);
+          }
+
+          const responseData = await response.text();
+          const data: T = responseData ? JSON.parse(responseData) : null;
+
+          setFetchState({ status: 'success', data, error: null });
+        })
+        .catch((error) => {
+          setFetchState((prevState) => ({ ...prevState, status: 'fail', error: error as Error }));
+          navigate('/error', { state: { error: error instanceof Error } });
         });
-
-        if (!response.ok) {
-          throw new Error(response.statusText);
-        }
-
-        const responseData = await response.text();
-        const data: T = responseData ? JSON.parse(responseData) : null;
-
-        setFetchState({ status: 'success', data, error: null });
-      } catch (error) {
-        setFetchState((prevState) => ({ ...prevState, status: 'fail', error: error as Error }));
-        // navigate('/error', { state: { error: error as Error } });
-      }
     },
     [url, method, navigate, serverName]
   );
 
   useEffect(() => {
-    if (method.toLowerCase() === 'get') {
+    if (method.toLowerCase() === 'get' && !isNotAutomaticallyFetched) {
       fetchData({});
     }
-  }, [fetchData, method]);
+  }, [fetchData, method, isNotAutomaticallyFetched]);
 
   return [fetchState, fetchData];
 };

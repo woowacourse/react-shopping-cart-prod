@@ -1,7 +1,8 @@
 import styled from 'styled-components';
+import { ButtonWithHoverScalingEffect } from '../../styles/CommonStyles.tsx';
 
 export const ProductItemWrapper = styled.div`
-  width: 400px;
+  width: 300px;
   padding: 47px;
 `;
 
@@ -34,7 +35,7 @@ export const ImageContainer = styled.div`
 
 export const ProductItemImage = styled.img`
   width: 100%;
-  height: 100%;
+  height: 259px;
   object-fit: cover;
 `;
 
@@ -57,14 +58,7 @@ export const ProductItemInfoUpperBoundary = styled.div`
   height: 56px;
 `;
 
-export const CartButton = styled.button`
+export const CartButton = styled(ButtonWithHoverScalingEffect)`
   border: none;
   background: transparent;
-  cursor: pointer;
-
-  transition: scale 0.5s ease-in-out;
-
-  &:hover {
-    transform: scale(1.1); 
-  }
 `;

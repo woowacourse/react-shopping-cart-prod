@@ -1,12 +1,12 @@
 import * as Styled from './CartItem.styles.tsx';
-import StepperInput from '../../StepperInput/StepperInput.tsx';
+import StepperInput from '../../../@common/StepperInput/StepperInput.tsx';
 import { Item } from '../../../../types/CartList.ts';
 import useCart from '../../../../hooks/useCart.ts';
 import useDeleteCartItem from '../../../../hooks/requests/useDeleteCartItem.ts';
 import StyledCheckBox from '../../../@common/CheckBox/StyledCheckBox.tsx';
 import { useRecoilValue } from 'recoil';
 import { isSelectedSelector } from '../../../../stores/cartListStore.ts';
-import toastMessages from '../../../../constants/toastMessages.ts';
+import TOAST_MESSAGES from '../../../../constants/TOAST_MESSAGES.ts';
 import { useToast } from '../../../../hooks/useToast.ts';
 
 type CartItemProps = {
@@ -25,7 +25,7 @@ const CartItem = ({ cart, refetchCartList }: CartItemProps) => {
     await deleteCartItem({ param: cart.id });
     await refetchCartList({});
     updateCart({ id: cart.id, isSelected: false, quantity: 0, product: cart.product });
-    showToast(toastMessages.deleted);
+    showToast(TOAST_MESSAGES.DELETED);
   };
 
   const handleCheckBox = () => {
@@ -48,7 +48,7 @@ const CartItem = ({ cart, refetchCartList }: CartItemProps) => {
             <Styled.DeleteButton onClick={handleDeleteButton}>
               <Styled.TrashLogo />
             </Styled.DeleteButton>
-            <StepperInput initialValue={cart.quantity} cartItem={cart} refetchCartList={refetchCartList} />
+            <StepperInput initialValue={cart.quantity} cartItem={cart} refetchCartList={refetchCartList} width={88} />
             <span>{product.price.toLocaleString()}원</span>
           </Styled.itemFunctionWrapper>
         </Styled.CartItem>

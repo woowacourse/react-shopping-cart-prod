@@ -21,6 +21,12 @@ const ResetStyle = createGlobalStyle`
   dd {
     margin: 0;
   }
+
+  /* Set properties for all headings */
+  h1, h2, h3, h4, h5, h6 {
+    font-size: 16px; 
+    font-weight: normal;
+  }
   
   ul {
     padding: 0;
@@ -62,6 +68,16 @@ const ResetStyle = createGlobalStyle`
   textarea,
   select {
     font: inherit;
+  }
+  
+  /* make cursor pointer */
+  button, select {
+    cursor: pointer;
+  }
+
+  /* Add rules for li tag */
+  li {
+    list-style-type: none;
   }
 
   /* Remove all animations, transitions and smooth scroll for people that prefer not to see them */

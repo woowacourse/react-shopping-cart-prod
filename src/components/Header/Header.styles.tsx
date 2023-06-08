@@ -1,5 +1,6 @@
 import styled, { keyframes } from 'styled-components';
-import viewports from '../../constants/viewports.ts';
+import VIEWPORTS from '../../constants/VIEWPORTS.ts';
+import { ButtonWithHoverScalingEffect } from '../../styles/CommonStyles.tsx';
 
 const slideDown = keyframes`
   0% {
@@ -29,7 +30,7 @@ export const HeaderContainer = styled.div`
     padding: 0 80px;
   }
 
-  @media screen and (max-width: ${viewports.md}) {
+  @media screen and (max-width: ${VIEWPORTS.md}) {
     padding: 0 16px;
   }
 `;
@@ -42,17 +43,12 @@ export const HeaderWrapper = styled.div`
   align-items: center;
 `;
 
-export const LogoButton = styled.button`
+export const LogoButton = styled(ButtonWithHoverScalingEffect)`
   background: transparent;
   border: none;
   display: flex;
   align-items: center;
   cursor: pointer;
-  transition: transform 0.3s;
-
-  &:hover {
-    transform: scale(1.02);
-  }
 `;
 
 export const LogoImage = styled.img`
@@ -60,9 +56,31 @@ export const LogoImage = styled.img`
   height: 91px;
   margin: 0 16px 14px 0;
 
-  @media screen and (max-width: ${viewports.md}) {
+  @media screen and (max-width: ${VIEWPORTS.md}) {
     width: 150px;
     height: 50px;
+  }
+
+  @media screen and (max-width: ${VIEWPORTS.sm}) {
+    display: none;
+  }
+`;
+
+export const OrderListButton = styled.button`
+  border: none;
+  background: inherit;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 12px;
+  color: var(--color-brownish-red);
+  transition: 0.3s;
+
+  &:hover {
+    transform: rotate(3deg);
+  }
+
+  @media screen and (max-width: ${VIEWPORTS.md}) {
+    font-size: 16px;
   }
 `;
 
@@ -71,11 +89,10 @@ export const ShoppingCartButton = styled.button`
   background: transparent;
   border: none;
   align-items: center;
-  cursor: pointer;
   transition: 0.3s;
 
   &:hover {
-    transform: rotate(5deg);
+    transform: rotate(3deg);
   }
 `;
 export const ShoppingCartButtonText = styled.span`
@@ -85,7 +102,7 @@ export const ShoppingCartButtonText = styled.span`
   color: var(--color-brownish-red);
   margin-right: 6px;
 
-  @media screen and (max-width: ${viewports.md}) {
+  @media screen and (max-width: ${VIEWPORTS.md}) {
     font-size: 16px;
   }
 `;

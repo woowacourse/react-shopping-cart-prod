@@ -1,8 +1,8 @@
 import * as Styled from './ProductItem.styles.tsx';
 import ShoppingCartLogo from '../@common/ShoppingCartLogo/ShoppingCartLogo';
 import { Item } from '../../types/CartList.ts';
+import useCartItemOperations from '../../hooks/cartItemOperations/useCartItemOperations.ts';
 import StepperInput from '../@common/StepperInput/StepperInput.tsx';
-import useCartItemOperations from '../../hooks/useCartItemOperations.ts';
 
 export type ProductItemProps = {
   cartItem?: Item;
@@ -11,10 +11,11 @@ export type ProductItemProps = {
   price: number;
   imageUrl: string;
   refetchCartList: ({}) => void;
+  onImageLoad: () => void;
 };
 
-const ProductItem = ({ cartItem: cartItemProp, id, name, price, imageUrl, refetchCartList }: ProductItemProps) => {
-  const { handleAddToCartButton, handleStepperInputChange } = useCartItemOperations({
+const ProductItem = ({ cartItem: cartItemProp, id, name, price, imageUrl, refetchCartList, onImageLoad }: ProductItemProps) => {
+  const { handleAddToCartButton } = useCartItemOperations({
     cartItemNumber: cartItemProp?.id,
     id,
     name,
@@ -35,13 +36,13 @@ const ProductItem = ({ cartItem: cartItemProp, id, name, price, imageUrl, refetc
     <Styled.ProductItemWrapper data-cy='productItem'>
       <Styled.ImageOverflowContainer>
         <Styled.ImageContainer>
-          <Styled.ProductItemImage src={imageUrl} />
+          <Styled.ProductItemImage src={imageUrl} onLoad={onImageLoad} />
         </Styled.ImageContainer>
       </Styled.ImageOverflowContainer>
       <Styled.ProductItemInfo>
         <Styled.ProductItemInfoUpperBoundary>
           <Styled.ProductItemTitle>{name}</Styled.ProductItemTitle>
-          {cartItemProp?.quantity ? <StepperInput value={cartItemProp?.quantity || 0} onChange={handleStepperInputChange} /> : <CartButton />}
+          {cartItemProp?.quantity ? <StepperInput initialValue={cartItemProp?.quantity || 0} cartItem={cartItemProp} refetchCartList={refetchCartList} width={44} /> : <CartButton />}
         </Styled.ProductItemInfoUpperBoundary>
         <Styled.ProductItemPrice>{price.toLocaleString()}원</Styled.ProductItemPrice>
       </Styled.ProductItemInfo>

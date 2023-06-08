@@ -3,11 +3,11 @@ import GlobalStyle from './styles/GlobalStyle.tsx';
 import Header from './components/Header/Header.tsx';
 import Layout from './components/@common/Layout/Layout.tsx';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import ListPage from './pages/ListPage/ListPage.tsx';
 import { RecoilRoot } from 'recoil';
-import CartPage from './pages/CartPage/CartPage.tsx';
-import ErrorPage from './pages/ErrorPage/ErrorPage.tsx';
 import ToastProvider from './providers/toast/ToastProvider.tsx';
+import Modal from './components/@common/Modal/Modal.tsx';
+import ROUTES from './constants/ROUTES.ts';
+import { ListPage, CartPage, ErrorPage, OrderDetailPage, OrderListPage, LoginPage, NotFoundPage } from './pages';
 
 const App = () => {
   return (
@@ -19,11 +19,16 @@ const App = () => {
           <Header />
           <Layout>
             <Routes>
-              <Route path='/' element={<ListPage />} />
-              <Route path='/cart' element={<CartPage />} />
-              <Route path='/error' element={<ErrorPage />} />
+              <Route path={ROUTES.LIST} element={<ListPage />} />
+              <Route path={ROUTES.LOGIN} element={<LoginPage />} />
+              <Route path={ROUTES.CART} element={<CartPage />} />
+              <Route path={ROUTES.ORDER} element={<OrderListPage />} />
+              <Route path={`${ROUTES.ORDER}/:orderId`} element={<OrderDetailPage />} />
+              <Route path={ROUTES.ERROR} element={<ErrorPage />} />
+              <Route path='*' element={<NotFoundPage />} />
             </Routes>
           </Layout>
+          <Modal />
         </BrowserRouter>
       </ToastProvider>
     </RecoilRoot>

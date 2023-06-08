@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import { ImageContainer, ImageOverflowContainer, ProductItemImage } from '../../../ProductItem/ProductItem.styles.tsx';
 import TrashIcon from '../../../@common/TrashIcon/TrashIcon.tsx';
-import viewports from '../../../../constants/viewports.ts';
+import VIEWPORTS from '../../../../constants/VIEWPORTS.ts';
+import { ButtonWithHoverScalingEffect } from '../../../../styles/CommonStyles.tsx';
 
 export const CartItem = styled.li`
   display: flex;
@@ -37,7 +38,7 @@ export const ItemTitle = styled.span`
   white-space: nowrap;
   overflow: hidden;
 
-  @media screen and (max-width: ${viewports.md}) {
+  @media screen and (max-width: ${VIEWPORTS.md}) {
     width: 30%;
   }
 `;
@@ -53,15 +54,9 @@ export const itemFunctionWrapper = styled.div`
   right: 0;
 `;
 
-export const DeleteButton = styled.button`
+export const DeleteButton = styled(ButtonWithHoverScalingEffect)`
   border: none;
   background-color: transparent;
-  transition: transform 0.2s ease-in-out;
-  cursor: pointer;
-
-  &:hover {
-    transform: scale(1.1);
-  }
 `;
 
 export const TrashLogo = styled(TrashIcon)`
