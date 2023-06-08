@@ -7,6 +7,7 @@ const mock = {
   name: '깜짝 놀란 춘식이',
   imageUrl:
     'https://pbs.twimg.com/profile_images/1641252178450083841/Cn2MUfHG_400x400.jpg',
+  price: 10000,
   totalPrice: 30000,
   totalDiscountPrice: 10000,
 };
