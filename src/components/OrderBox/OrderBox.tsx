@@ -3,7 +3,7 @@ import * as styled from './OrderBox.styled';
 import { OrderItem } from '@components/OrderItem/OrderItem';
 import { OrderBoxHeader } from '@components/OrderBoxHeader/OrderBoxHeader';
 
-import type { OrderInfo, OrderSummary } from '../../types';
+import type { OrderInfo, OrderSummary } from 'src/types';
 
 interface OrderBoxProps {
   orderInfo: OrderInfo;

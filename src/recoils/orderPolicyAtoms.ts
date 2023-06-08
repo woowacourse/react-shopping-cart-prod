@@ -4,7 +4,7 @@ import { fetchAPI } from '@api/fetchAPI';
 import { baseApiUrlSelector } from './baseApiUrlAtoms';
 
 import { FETCH_URL, RECOIL_KEY } from '@constants/index';
-import type { OrderPolicy } from '../types';
+import type { OrderPolicy } from 'src/types';
 
 export const orderPolicySelector = selector<OrderPolicy>({
   key: RECOIL_KEY.ORDER_POLICY_SELECTOR,

@@ -4,7 +4,7 @@ import { fetchAPI } from '@api/fetchAPI';
 import { baseApiUrlSelector } from './baseApiUrlAtoms';
 
 import { FETCH_METHOD, FETCH_URL, RECOIL_KEY } from '@constants/index';
-import type { OrderDetail, OrderInfo, OrdersRequestBody } from '../types';
+import type { OrderDetail, OrderInfo, OrdersRequestBody } from 'src/types';
 
 export const orderListSelector = selector<OrderInfo[]>({
   key: RECOIL_KEY.ORDER_LIST_SELECTOR,

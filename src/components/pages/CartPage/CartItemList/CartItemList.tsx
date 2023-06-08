@@ -9,7 +9,7 @@ import { useCartRepository, useCartItems } from '@recoils/cartAtoms';
 
 import { DeleteIcon } from '@assets/svg';
 
-import type { CartItem } from '../../../../types';
+import type { CartItem } from 'src/types';
 
 export const CartItemList = () => {
   const cartItems = useCartItems();

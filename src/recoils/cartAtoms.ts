@@ -6,7 +6,7 @@ import { localStorageEffect } from './localStorageEffect';
 import { baseApiUrlSelector } from './baseApiUrlAtoms';
 
 import { FETCH_METHOD, FETCH_URL, LOCAL_STORAGE_KEY, RECOIL_KEY } from '@constants/index';
-import type { CartItem } from '../types';
+import type { CartItem } from 'src/types';
 
 export const cartState = atom<CartItem[]>({
   key: RECOIL_KEY.CART_STATE,

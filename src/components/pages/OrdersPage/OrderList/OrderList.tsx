@@ -2,7 +2,7 @@ import { OrderBox } from '@components/OrderBox/OrderBox';
 
 import { useFetchOrderList } from '@recoils/ordersAtoms';
 
-import type { OrderInfo } from '../../../../types';
+import type { OrderInfo } from 'src/types';
 
 export const OrderList = () => {
   const orderList = useFetchOrderList();

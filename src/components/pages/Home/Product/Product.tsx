@@ -8,7 +8,7 @@ import { useCartRepository, useFindCartItemByProductId } from '@recoils/cartAtom
 
 import { CartAddIcon } from '@assets/svg';
 
-import type { Product as ProductType } from '../../../../types';
+import type { Product as ProductType } from 'src/types';
 
 interface ProductProps {
   item: ProductType;
