@@ -41,7 +41,7 @@ const CartPage = () => {
     <>
       <MainLayout>
         <>
-          <Title title='장바구니' />
+          <Title value='장바구니' />
           <S.Wrapper>
             <SelectedProductList productCountInCart={productCountInCart} />
             <Order />

@@ -1,11 +1,11 @@
 import { styled } from 'styled-components';
 
 interface Props {
-  title: string;
+  value: string;
 }
 
-const Title = ({ title }: Props) => {
-  return <S.Head>{title}</S.Head>;
+const Title = ({ value }: Props) => {
+  return <S.Head>{value}</S.Head>;
 };
 
 const S = {

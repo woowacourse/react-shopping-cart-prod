@@ -37,7 +37,7 @@ const OrderDetailPage = () => {
   return (
     <MainLayout>
       <>
-        <Title title='주문 내역 상세' />
+        <Title value='주문 내역 상세' />
         <S.Wrapper>
           <OrderItemList orderList={orderItemDetail} tag='div' />
           <OrderDetail

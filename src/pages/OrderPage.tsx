@@ -33,7 +33,7 @@ const OrderPage = () => {
   return (
     <MainLayout>
       <>
-        <Title title='주문 목록' />
+        <Title value='주문 목록' />
         {orderList.length ? (
           <ul>
             {orderList.map((list) => (

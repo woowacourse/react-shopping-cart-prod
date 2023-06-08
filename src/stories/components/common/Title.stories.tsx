@@ -15,10 +15,10 @@ const meta = {
     },
   ],
   args: {
-    title: '타이틀',
+    value: '타이틀',
   },
   argTypes: {
-    title: {
+    value: {
       description: '타이틀을 변경할 수  있습니다.',
     },
   },
@@ -30,10 +30,10 @@ interface CartProps {
   title: string;
 }
 
-export const Title = (args: CartProps) => <TitleComponent title={args.title} />;
+export const Title = (args: CartProps) => <TitleComponent value={args.title} />;
 
-export const CartTitle = () => <TitleComponent title='장바구니' />;
+export const CartTitle = () => <TitleComponent value='장바구니' />;
 
-export const OrderListTitle = () => <TitleComponent title='주문 목록' />;
+export const OrderListTitle = () => <TitleComponent value='주문 목록' />;
 
-export const OrderDetailTitle = () => <TitleComponent title='주문 내역 상세' />;
+export const OrderDetailTitle = () => <TitleComponent value='주문 내역 상세' />;
