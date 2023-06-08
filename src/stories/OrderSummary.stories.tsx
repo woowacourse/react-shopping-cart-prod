@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import OrderSummary from '../components//order/OrderSummary';
+import OrderSummary from '../components/order/OrderSummary';
 import { customViewPorts } from '../../.storybook/preview';
 
 const meta = {

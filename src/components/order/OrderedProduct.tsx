@@ -7,17 +7,15 @@ interface OrderedProductProps {
 
 export const OrderedProduct = ({ orderDetail }: OrderedProductProps) => {
   return (
-    <>
-      <Style.Product>
-        <Style.ProductImage path={orderDetail.product.imageUrl} />
-        <Style.ProductInformation>
-          <Style.ProductName>{orderDetail.product.name}</Style.ProductName>
-          <Style.ProductPriceAndQuantity>
-            {orderDetail.product.price.toLocaleString('ko-KR')}원 / 수량 : {orderDetail.quantity}개
-          </Style.ProductPriceAndQuantity>
-        </Style.ProductInformation>
-      </Style.Product>
-    </>
+    <Style.Product>
+      <Style.ProductImage path={orderDetail.product.imageUrl} />
+      <Style.ProductInformation>
+        <Style.ProductName>{orderDetail.product.name}</Style.ProductName>
+        <Style.ProductPriceAndQuantity>
+          {orderDetail.product.price.toLocaleString('ko-KR')}원 / 수량 : {orderDetail.quantity}개
+        </Style.ProductPriceAndQuantity>
+      </Style.ProductInformation>
+    </Style.Product>
   );
 };
 

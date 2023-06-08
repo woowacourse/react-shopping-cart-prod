@@ -40,8 +40,6 @@ const OrderSummary = () => {
 
   const navigate = useNavigate();
 
-  const DeliveryCharge = DELIVERY_CHARGE;
-
   if (!point || !discount) return <></>;
 
   const postCart = {
@@ -80,7 +78,7 @@ const OrderSummary = () => {
                 <span>
                   {totalProductPrice >= discount.freeShippingThreshold
                     ? 0
-                    : DeliveryCharge.toLocaleString('ko-kr')}
+                    : DELIVERY_CHARGE.toLocaleString('ko-kr')}
                   원
                 </span>
               </Style.Price>
@@ -95,7 +93,7 @@ const OrderSummary = () => {
                     type="number"
                     value={usePoint === 0 ? '' : usePoint}
                     onChange={pointChange}
-                  ></Style.PointInput>
+                  />
                   <span>{point?.usablePoint >= usePoint ? '' : '포인트가 부족합니다.'}</span>
                 </Style.PointWrapper>
               </Style.Price>
@@ -104,7 +102,7 @@ const OrderSummary = () => {
                 <span>
                   {totalProductPrice >= discount.freeShippingThreshold
                     ? (totalProductPrice - usePoint).toLocaleString('ko-kr')
-                    : (totalProductPrice + DeliveryCharge - usePoint).toLocaleString('ko-kr')}
+                    : (totalProductPrice + DELIVERY_CHARGE - usePoint).toLocaleString('ko-kr')}
                   원
                 </span>
               </Style.Price>
@@ -135,7 +133,7 @@ const OrderSummary = () => {
                 {' '}
                 {totalProductPrice >= discount.freeShippingThreshold
                   ? 0
-                  : DeliveryCharge.toLocaleString('ko-kr')}
+                  : DELIVERY_CHARGE.toLocaleString('ko-kr')}
                 원
               </div>
             </Mobile.Price>
@@ -148,7 +146,7 @@ const OrderSummary = () => {
               <div>
                 {totalProductPrice >= discount.freeShippingThreshold
                   ? (totalProductPrice - usePoint).toLocaleString('ko-kr')
-                  : (totalProductPrice + DeliveryCharge - usePoint).toLocaleString('ko-kr')}
+                  : (totalProductPrice + DELIVERY_CHARGE - usePoint).toLocaleString('ko-kr')}
                 원
               </div>
             </Mobile.Price>
@@ -164,7 +162,7 @@ const OrderSummary = () => {
             </Mobile.Price>
             <Mobile.Price>
               <Mobile.PointWrapper>
-                <div>{point?.usablePoint >= usePoint ? '' : '포인트 초괴'}</div>
+                <div>{point?.usablePoint >= usePoint ? '' : '포인트 초과'}</div>
               </Mobile.PointWrapper>
             </Mobile.Price>
           </Mobile.Prices>
