@@ -40,11 +40,13 @@ const CartPage = () => {
   return (
     <>
       <MainLayout>
-        <Title title='장바구니' />
-        <S.Wrapper>
-          <SelectedProductList productCountInCart={productCountInCart} />
-          <Order />
-        </S.Wrapper>
+        <>
+          <Title title='장바구니' />
+          <S.Wrapper>
+            <SelectedProductList productCountInCart={productCountInCart} />
+            <Order />
+          </S.Wrapper>
+        </>
       </MainLayout>
     </>
   );

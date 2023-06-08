@@ -32,16 +32,18 @@ const OrderPage = () => {
 
   return (
     <MainLayout>
-      <Title title='주문 목록' />
-      {orderList.length ? (
-        <ul>
-          {orderList.map((list) => (
-            <OrderItemList key={list.orderId} orderList={list} />
-          ))}
-        </ul>
-      ) : (
-        <Nothing src={IMAGE_PATH.EMPTY_ORDER_LIST} alt='주문 목록이 없습니다' />
-      )}
+      <>
+        <Title title='주문 목록' />
+        {orderList.length ? (
+          <ul>
+            {orderList.map((list) => (
+              <OrderItemList key={list.orderId} orderList={list} />
+            ))}
+          </ul>
+        ) : (
+          <Nothing src={IMAGE_PATH.EMPTY_ORDER_LIST} alt='주문 목록이 없습니다' />
+        )}
+      </>
     </MainLayout>
   );
 };

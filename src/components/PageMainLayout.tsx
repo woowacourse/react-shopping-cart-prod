@@ -1,8 +1,8 @@
-import { ReactNode } from 'react';
+import { JSX } from 'react';
 import { styled } from 'styled-components';
 
 interface Props {
-  children: ReactNode;
+  children: JSX.Element;
 }
 
 const MainLayout = ({ children }: Props) => {

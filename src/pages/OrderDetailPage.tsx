@@ -36,17 +36,19 @@ const OrderDetailPage = () => {
 
   return (
     <MainLayout>
-      <Title title='주문 내역 상세' />
-      <S.Wrapper>
-        <OrderItemList orderList={orderItemDetail} tag='div' />
-        <OrderDetail
-          totalPrice={totalPrice}
-          deliveryFee={deliveryFee}
-          coupon={coupon}
-          totalPayments={totalPayments}
-          orderStatus={orderStatus}
-        />
-      </S.Wrapper>
+      <>
+        <Title title='주문 내역 상세' />
+        <S.Wrapper>
+          <OrderItemList orderList={orderItemDetail} tag='div' />
+          <OrderDetail
+            totalPrice={totalPrice}
+            deliveryFee={deliveryFee}
+            coupon={coupon}
+            totalPayments={totalPayments}
+            orderStatus={orderStatus}
+          />
+        </S.Wrapper>
+      </>
     </MainLayout>
   );
 };
