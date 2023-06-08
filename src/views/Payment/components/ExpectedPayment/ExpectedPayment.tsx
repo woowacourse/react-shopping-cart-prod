@@ -34,11 +34,11 @@ function ExpectedPayment() {
   };
 
   const handlePay = async () => {
-    const requestBody = couponSelected
-      ? { orderItemIds: getCheckedItemIds(), couponId: couponSelected.id }
-      : {
-          orderItemIds: getCheckedItemIds(),
-        };
+    const requestBody = {
+      orderItemIds: getCheckedItemIds()
+    }
+
+    if (couponSelected) requestBody.couponId = couponSelected;
 
     const response = await fetchOrders.postOrder(requestBody);
     const orderId = response.headers.get('Location')?.split('/').pop();
