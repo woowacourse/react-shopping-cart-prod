@@ -26,7 +26,6 @@ export const postCartItems = rest.post('/cart-items', async (req, res, ctx) => {
 
   if (!product) return res(ctx.status(404), ctx.json({}));
 
-  // generate new Cart Item
   if (targetItemIndex === -1) {
     const newCartItem = {
       id: getUUID(),
@@ -108,7 +107,6 @@ export const postOrder = rest.post('/orders', async (req, res, ctx) => {
     );
   }
 
-  // 장바구니와 선택된 id를 비교해 선택된 물품들을 가져온다.
   const selectedCart = cart.filter((cartItem) =>
     cartItemIds.find((selectId: number) => selectId === cartItem.id)
   );
@@ -118,7 +116,7 @@ export const postOrder = rest.post('/orders', async (req, res, ctx) => {
       orderItemId: cartItem.product.id,
       name: cartItem.product.name,
       price: cartItem.product.price,
-      orderedPrice: cartItem.product.price - 1, // 할인 금액임을 나타내기 위해 1을 감소함.
+      orderedPrice: cartItem.product.price - 1,
       imageUrl: cartItem.product.imageUrl,
       quantity: cartItem.quantity,
     };
