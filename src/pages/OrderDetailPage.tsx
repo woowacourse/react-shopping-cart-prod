@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
@@ -29,7 +30,6 @@ const OrderDetailPage = () => {
       .then((data) => {
         setOrderItemDetail(data);
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [server]);
 
   if (!orderItemDetail) {

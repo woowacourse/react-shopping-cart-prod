@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { Modal } from 'simple-yummy-modal';
@@ -31,8 +32,6 @@ const SelectedProductList = ({ productCountInCart }: { productCountInCart: numbe
         setCart(data);
         setCheckedItemIdList(data.map((item: CartItem) => item.id));
       });
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [server]);
 
   const isAllChecked = checkedItemIdList.length === productCountInCart && productCountInCart !== 0;

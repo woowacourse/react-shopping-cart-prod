@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { styled } from 'styled-components';
@@ -27,8 +28,6 @@ const ProductList = () => {
       .then((data) => {
         setCart(data);
       });
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [server]);
 
   if (isLoading) return <Spinner />;

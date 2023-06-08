@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Meta } from '@storybook/react';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
@@ -53,8 +54,6 @@ export const ProductListInCart = () => {
         },
       },
     ]);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const productCountInCart = cart.length;

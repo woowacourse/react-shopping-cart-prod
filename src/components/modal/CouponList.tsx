@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
@@ -21,8 +22,6 @@ const CouponList = () => {
       .then((data) => {
         setCoupons(data);
       });
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [server]);
 
   return (

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import Nothing from '../components/common/Nothing';
@@ -24,8 +25,6 @@ const OrderPage = () => {
       .then((data) => {
         setOrderList(data);
       });
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [server, setOrderList]);
 
   if (isLoading) return <Spinner />;

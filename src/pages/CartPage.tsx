@@ -28,8 +28,6 @@ const CartPage = () => {
       .then((data) => {
         setCart(data);
       });
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [server]);
 
   if (isLoading) return <Spinner />;
