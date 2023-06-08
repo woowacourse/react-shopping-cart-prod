@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useCheckedCartListValue } from '../../../provider/CheckedListProvider';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import serverNameState from '../../../globalState/atoms/serverName';
-import ServerUtil from '../../../utils/ServerUrl';
+import urlConfig from '../../../utils/urlConfig';
 import type { Coupon } from '../../../types/product';
 import { USER_AUTH_TOKEN } from '../../../constant/user';
 import cartState from '../../../globalState/atoms/cartState';
@@ -12,7 +12,7 @@ import { ORDER_PAGE_PATH_NAME } from '../../../constant/route';
 const useOrderSheet = () => {
   const navigate = useNavigate();
   const serverName = useRecoilValue(serverNameState);
-  const OrdersUrl = ServerUtil.getOrdersUrl(serverName);
+  const OrdersUrl = urlConfig.getOrdersUrl(serverName);
 
   const { checkedCartIdList, getCheckedItemList } = useCheckedCartListValue();
   const checkedCartList = getCheckedItemList();

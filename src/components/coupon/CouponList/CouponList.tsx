@@ -1,6 +1,6 @@
 import { useRecoilValue } from 'recoil';
 import serverNameState from '../../../globalState/atoms/serverName';
-import ServerUtil from '../../../utils/ServerUrl';
+import UrlConfig from '../../../utils/urlConfig';
 import useFetch from '../../../hooks/api/useFetch';
 import CouponItem from '../CouponItem/CouponItem';
 import { FetchCouponsResponse } from '../../../types/api';
@@ -8,7 +8,7 @@ import { styled } from 'styled-components';
 
 const CouponList = () => {
   const serverName = useRecoilValue(serverNameState);
-  const couponsUrl = ServerUtil.getCouponsUrl(serverName);
+  const couponsUrl = UrlConfig.getCouponsUrl(serverName);
 
   const { getData, error } = useFetch<FetchCouponsResponse>(couponsUrl);
 

@@ -1,6 +1,6 @@
 import { selector } from 'recoil';
 import { CartProduct } from '../../types/product';
-import ServerUtil from '../../utils/ServerUrl';
+import urlConfig from '../../utils/urlConfig';
 import { USER_AUTH_TOKEN } from '../../constant/user';
 import serverNameState from '../atoms/serverName';
 
@@ -9,7 +9,7 @@ const fetchCartItemList = selector<CartProduct[]>({
 
   get: async ({ get }) => {
     const serverName = get(serverNameState);
-    const cartItemsUrl = ServerUtil.getCartItemsUrl(serverName);
+    const cartItemsUrl = urlConfig.getCartItemsUrl(serverName);
 
     const response = await fetch(cartItemsUrl, {
       headers: { Authorization: `Basic ${USER_AUTH_TOKEN}` },

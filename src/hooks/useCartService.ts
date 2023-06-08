@@ -2,14 +2,14 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import cartState from '../globalState/atoms/cartState';
 import type { Product } from '../types/product';
 import serverNameState from '../globalState/atoms/serverName';
-import ServerUtil from '../utils/ServerUrl';
+import urlConfig from '../utils/urlConfig';
 import { USER_AUTH_TOKEN } from '../constant/user';
 
 const useCartService = () => {
   const [cartList, setCartList] = useRecoilState(cartState);
 
   const serverName = useRecoilValue(serverNameState);
-  const cartItemsUrl = ServerUtil.getCartItemsUrl(serverName);
+  const cartItemsUrl = urlConfig.getCartItemsUrl(serverName);
 
   const fetchCartItem = async () => {
     const response = await fetch(cartItemsUrl, {

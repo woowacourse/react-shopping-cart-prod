@@ -1,6 +1,6 @@
 import { useRecoilValue } from 'recoil';
 import serverNameState from '../../../globalState/atoms/serverName';
-import ServerUtil from '../../../utils/ServerUrl';
+import urlConfig from '../../../utils/urlConfig';
 import useFetch from '../../../hooks/api/useFetch';
 import { USER_AUTH_TOKEN } from '../../../constant/user';
 import { FetchOrdersResponse } from '../../../types/api';
@@ -9,7 +9,7 @@ import OrderItem from '../OrderItem/OrderItem';
 
 const OrderList = () => {
   const serverName = useRecoilValue(serverNameState);
-  const ordersUrl = ServerUtil.getOrdersUrl(serverName);
+  const ordersUrl = urlConfig.getOrdersUrl(serverName);
 
   const { getData, error } = useFetch<FetchOrdersResponse>(ordersUrl, {
     headers: {

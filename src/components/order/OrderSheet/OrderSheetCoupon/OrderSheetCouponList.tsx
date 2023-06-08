@@ -1,7 +1,7 @@
 import { useRecoilValue } from 'recoil';
 import OrderSheetCouponItem from './OrderSheetCouponItem';
 import serverNameState from '../../../../globalState/atoms/serverName';
-import ServerUtil from '../../../../utils/ServerUrl';
+import urlConfig from '../../../../utils/urlConfig';
 import useFetch from '../../../../hooks/api/useFetch';
 import { FetchCouponsResponse } from '../../../../types/api';
 import { USER_AUTH_TOKEN } from '../../../../constant/user';
@@ -16,7 +16,7 @@ const OrderSheetCouponList = ({
   onChangeCoupon,
 }: OrderSheetCouponListProps) => {
   const serverName = useRecoilValue(serverNameState);
-  const couponsUrl = ServerUtil.getUsersCouponUrl(serverName);
+  const couponsUrl = urlConfig.getUsersCouponUrl(serverName);
 
   const { getData: getMyCouponData, error } = useFetch<FetchCouponsResponse>(
     couponsUrl,
