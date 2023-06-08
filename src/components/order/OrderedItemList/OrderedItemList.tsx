@@ -10,8 +10,8 @@ export const OrderedItemList = () => {
   return (
     <S.OrderListContainer>
       {orderList.map((orderItem) => (
-        <S.OrderedItemWrapper>
-          <OrderedItem key={orderItem.id} {...orderItem} />
+        <S.OrderedItemWrapper key={orderItem.id}>
+          <OrderedItem {...orderItem} />
         </S.OrderedItemWrapper>
       ))}
     </S.OrderListContainer>
