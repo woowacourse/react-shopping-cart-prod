@@ -4,7 +4,7 @@ import { useTotalProductPrice } from '../../recoils/recoilTotalPrice';
 
 import { Button } from '../common/Button';
 
-import { DELIVERY_CHARGE, FETCH_METHOD, LOCALE } from '../../constants';
+import { DELIVERY_CHARGE, FETCH_METHOD, LOCALE, PATH, ZERO } from '../../constants';
 import { useNavigate } from 'react-router-dom';
 import { useCartStateValue, useSetCartState } from '../../recoils/recoilCart';
 import { useApiBaseUrlValue } from '../../recoils/recoilApiBaseUrl';
@@ -41,7 +41,7 @@ const OrderSummary = () => {
 
   const postCart = {
     totalProductsPrice: totalProductPrice,
-    shippingFee: totalProductPrice >= discount.freeShippingThreshold ? 0 : 3000,
+    shippingFee: totalProductPrice >= discount.freeShippingThreshold ? ZERO : DELIVERY_CHARGE,
     usedPoint: usePoint,
     order: cartOrder,
   };
@@ -52,7 +52,7 @@ const OrderSummary = () => {
     setCart([]);
     setChecked({ all: true });
 
-    navigate('/order-list');
+    navigate(PATH.ORDER);
   };
 
   const pointChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -74,7 +74,7 @@ const OrderSummary = () => {
                 <span>총 배송비</span>
                 <span>
                   {totalProductPrice >= discount.freeShippingThreshold
-                    ? 0
+                    ? ZERO
                     : localeString(DELIVERY_CHARGE, LOCALE.KOREA)}
                   원
                 </span>
@@ -88,7 +88,7 @@ const OrderSummary = () => {
                 <Style.PointWrapper>
                   <Style.PointInput
                     type="number"
-                    value={usePoint === 0 ? '' : usePoint}
+                    value={usePoint === ZERO ? '' : usePoint}
                     onChange={pointChange}
                   />
                   <span>{point?.usablePoint >= usePoint ? '' : '포인트가 부족합니다.'}</span>
@@ -129,7 +129,7 @@ const OrderSummary = () => {
               <div>
                 {' '}
                 {totalProductPrice >= discount.freeShippingThreshold
-                  ? 0
+                  ? ZERO
                   : localeString(DELIVERY_CHARGE, LOCALE.KOREA)}
                 원
               </div>
@@ -152,7 +152,7 @@ const OrderSummary = () => {
               <Mobile.PointWrapper>
                 <Mobile.PointInput
                   type="number"
-                  value={usePoint === 0 ? '' : usePoint}
+                  value={usePoint === ZERO ? '' : usePoint}
                   onChange={pointChange}
                 ></Mobile.PointInput>
               </Mobile.PointWrapper>

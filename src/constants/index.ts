@@ -11,6 +11,8 @@ const QUANTITY = Object.freeze({
   MIN: 1,
 });
 
+const ZERO = 0
+
 const DELIVERY_CHARGE = 3000;
 
 const SKELETON_LENGTH = 12;
@@ -56,5 +58,6 @@ export {
   FETCH_URL,
   RECOIL_KEY,
   LOCAL_STORAGE_KEY,
-  LOCALE
+  LOCALE,
+  ZERO
 };
