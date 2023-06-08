@@ -15,6 +15,7 @@ const OrderItemList = ({ order }: { order: Order }) => {
     <S.OrderListWrapper>
       <S.OrderListHeader>
         <p>주문번호 : {order.id}</p>
+        <p>주문날짜 : {order.orderedTime}</p>
         <button onClick={onDetailButtonClick}>상세보기 {'>'} </button>
       </S.OrderListHeader>
       {order.orderedItems.map((item) => (
