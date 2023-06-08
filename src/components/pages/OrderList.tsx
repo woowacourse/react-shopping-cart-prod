@@ -25,7 +25,7 @@ const OrderList = () => {
             ))
           ) : (
             <Style.NoExistItemsMessage>
-              <p>장바구니에 등록된 상품이 존재하지 않아요🥲</p>
+              <p>주문 목록에 등록된 상품이 존재하지 않아요🥲</p>
               <Link to={PATH.HOME}>상품 보러가기🚀</Link>
             </Style.NoExistItemsMessage>
           )}
