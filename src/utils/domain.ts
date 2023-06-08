@@ -4,16 +4,8 @@ import { CartItemType, LocalProductType, ProductType } from "../types/domain";
 
 export const makeLocalProducts = async (): Promise<LocalProductType[]> => {
   try {
-    const productsResponse = await api.get("/products");
-    const cartItemsresponse = await api.get("/cart-items", true);
-
-    if (!productsResponse.ok)
-      throw new Error(productsResponse.status.toString());
-    if (!cartItemsresponse.ok)
-      throw new Error(cartItemsresponse.status.toString());
-
-    const products = await productsResponse.json();
-    const cartItems = await cartItemsresponse.json();
+    const products = await api.get("/products");
+    const cartItems = await api.get("/cart-items");
 
     return products.map((product: ProductType) => {
       const cartItem = cartItems.find(
@@ -26,19 +18,14 @@ export const makeLocalProducts = async (): Promise<LocalProductType[]> => {
       };
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return [];
   }
 };
 
 export const makeProducts = async (): Promise<LocalProductType[]> => {
   try {
-    const productsResponse = await api.get("/products");
-
-    if (!productsResponse.ok)
-      throw new Error(productsResponse.status.toString());
-
-    const products = await productsResponse.json();
+    const products = await api.get("/products");
 
     return products.map((product: ProductType) => {
       return {
@@ -48,7 +35,7 @@ export const makeProducts = async (): Promise<LocalProductType[]> => {
       };
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return [];
   }
 };

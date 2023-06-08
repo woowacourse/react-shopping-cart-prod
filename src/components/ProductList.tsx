@@ -4,11 +4,9 @@ import { localProductsState, loginState } from "../recoil/atom";
 import type { LocalProductType } from "../types/domain";
 import { CartGrayIcon } from "../assets";
 import { Counter } from "./Counter";
-import { ERROR_MESSAGE, MIN_QUANTITY } from "../constants";
+import { MIN_QUANTITY } from "../constants";
 import { api } from "../api";
-import { useState } from "react";
 import { useToast } from "../hooks/useToast";
-import { ErrorBox } from "../components";
 import { useLocalProducts } from "../hooks/useLocalProducts";
 
 export const ProductList = () => {
@@ -16,40 +14,29 @@ export const ProductList = () => {
   const { updateLocalProducts } = useLocalProducts();
   const isLogined = useRecoilValue(loginState);
   const localProducts = useRecoilValue(localProductsState);
-  const [errorStatus, setErrorStatus] = useState<
-    keyof typeof ERROR_MESSAGE | null
-  >(null);
 
   const handleCartClicked = (productId: number) => async () => {
     if (!isLogined) {
       showToast("error", "로그인이 필요한 서비스입니다. 😊");
       return;
     }
-
     try {
-      const response = await api.post("/cart-items", { productId: productId });
-      if (!response.ok) throw new Error(response.status.toString());
-
+      await api.post("/cart-items", { productId: productId });
       updateLocalProducts();
-    } catch (error: any) {
-      setErrorStatus(error.message);
-      console.log(error);
+    } catch (error) {
+      console.error(error);
     }
   };
 
   return (
     <Wrapper>
-      {errorStatus ? (
-        <ErrorBox status={errorStatus} />
-      ) : (
-        localProducts.map((product: LocalProductType) => (
-          <Product
-            key={product.id}
-            {...product}
-            handleCartClicked={handleCartClicked(product.id)}
-          />
-        ))
-      )}
+      {localProducts.map((product: LocalProductType) => (
+        <Product
+          key={product.id}
+          {...product}
+          handleCartClicked={handleCartClicked(product.id)}
+        />
+      ))}
     </Wrapper>
   );
 };

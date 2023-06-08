@@ -10,13 +10,10 @@ const OrderHistory = () => {
   useLayoutEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await api.get("/orders", true);
-        if (!response.ok) throw new Error(response.status.toString());
-        const data = await response.json();
-
+        const data = await api.get("/orders");
         setOrders(data.orders);
-      } catch (error: any) {
-        console.log(error);
+      } catch (error) {
+        console.error(error);
       }
     };
 

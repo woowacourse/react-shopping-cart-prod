@@ -19,12 +19,10 @@ const MyPage = () => {
   useLayoutEffect(() => {
     const fetchCoupons = async () => {
       try {
-        const response = await api.get("/coupons", true);
-        if (!response.ok) throw new Error(response.status.toString());
-        const data = await response.json();
+        const data = await api.get("/coupons");
         setCoupons(data.coupons);
-      } catch (error: any) {
-        console.log(error);
+      } catch (error) {
+        console.error(error);
       }
     };
 
@@ -40,15 +38,12 @@ const MyPage = () => {
     expiredDate.setMonth(expiredDate.getMonth() + 1);
 
     try {
-      const response = await api.post(
-        `/coupons/${coupons[selectedCouponIndex].id}`,
-        { expiredAt: expiredDate }
-      );
-      if (!response.ok) throw new Error(response.status.toString());
-
+      await api.post(`/coupons/${coupons[selectedCouponIndex].id}`, {
+        expiredAt: expiredDate,
+      });
       showToast("success", "쿠폰이 발급되었습니다!");
-    } catch (error: any) {
-      console.log(error);
+    } catch (error) {
+      console.error(error);
     }
   };
 

@@ -36,16 +36,13 @@ export const useLoginForm = () => {
     try {
       const base64 = btoa(username + ":" + password);
       setLocalStorage(KEY_LOCALSTORAGE_LOGIN_TOKEN, base64);
-      const response = await api.post("/auth/login");
-      if (!response.ok) {
-        throw new Error(response.status.toString());
-      }
+      await api.post("/auth/login");
       setIsLogined(true);
       await updateLocalProducts();
       navigate(ROUTER_PATH.Main);
-    } catch (error: any) {
+    } catch (error) {
       localStorage.clear();
-      console.log(error);
+      console.error(error);
     }
   };
 

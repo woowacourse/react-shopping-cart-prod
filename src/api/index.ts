@@ -7,104 +7,44 @@ import {
   SERVERS,
 } from "../constants";
 
+const request = async (path: string, init?: RequestInit) => {
+  const baseServerUrl =
+    SERVERS[
+      getLocalStorage(KEY_LOCALSTORAGE_SERVER_OWNER, DEFAULT_VALUE_SERVER_OWNER)
+    ];
+  const response = await fetch([baseServerUrl, path].join(""), {
+    ...init,
+    headers: {
+      Authorization: `Basic ${getLocalStorage(
+        KEY_LOCALSTORAGE_LOGIN_TOKEN,
+        DEFAULT_VALUE_LOGIN_TOKEN
+      )}`,
+      "Content-Type": "application/json",
+      ...init?.headers,
+    },
+  });
+
+  if (!response.ok) throw new Error(response.status.toString());
+  return response;
+};
+
 export const api = {
-  get: (path: string, isAuthRequired?: boolean) => {
-    return isAuthRequired
-      ? fetch(
-          `${
-            SERVERS[
-              getLocalStorage(
-                KEY_LOCALSTORAGE_SERVER_OWNER,
-                DEFAULT_VALUE_SERVER_OWNER
-              )
-            ]
-          }${path}`,
-          isAuthRequired && {
-            headers: {
-              Authorization: `Basic ${getLocalStorage(
-                KEY_LOCALSTORAGE_LOGIN_TOKEN,
-                DEFAULT_VALUE_LOGIN_TOKEN
-              )}`,
-            },
-          }
-        )
-      : fetch(
-          `${
-            SERVERS[
-              getLocalStorage(
-                KEY_LOCALSTORAGE_SERVER_OWNER,
-                DEFAULT_VALUE_SERVER_OWNER
-              )
-            ]
-          }${path}`
-        );
-  },
+  get: (path: string) => request(path).then((response) => response.json()),
 
   patch: <T>(path: string, payload?: T) =>
-    fetch(
-      `${
-        SERVERS[
-          getLocalStorage(
-            KEY_LOCALSTORAGE_SERVER_OWNER,
-            DEFAULT_VALUE_SERVER_OWNER
-          )
-        ]
-      }${path}`,
-      {
-        headers: {
-          Authorization: `Basic ${getLocalStorage(
-            KEY_LOCALSTORAGE_LOGIN_TOKEN,
-            DEFAULT_VALUE_LOGIN_TOKEN
-          )}`,
-          "Content-Type": "application/json",
-        },
-        method: "PATCH",
-        body: JSON.stringify(payload),
-      }
-    ),
+    request(path, {
+      method: "PATCH",
+      body: JSON.stringify(payload),
+    }),
 
-  post: <T>(path: string, payload?: T) => {
-    return fetch(
-      `${
-        SERVERS[
-          getLocalStorage(
-            KEY_LOCALSTORAGE_SERVER_OWNER,
-            DEFAULT_VALUE_SERVER_OWNER
-          )
-        ]
-      }${path}`,
-      {
-        headers: {
-          Authorization: `Basic ${getLocalStorage(
-            KEY_LOCALSTORAGE_LOGIN_TOKEN,
-            DEFAULT_VALUE_LOGIN_TOKEN
-          )}`,
-          "Content-Type": "application/json",
-        },
-        method: "POST",
-        body: JSON.stringify(payload),
-      }
-    );
-  },
+  post: <T>(path: string, payload?: T) =>
+    request(path, {
+      method: "POST",
+      body: JSON.stringify(payload),
+    }),
 
   delete: (path: string) =>
-    fetch(
-      `${
-        SERVERS[
-          getLocalStorage(
-            KEY_LOCALSTORAGE_SERVER_OWNER,
-            DEFAULT_VALUE_SERVER_OWNER
-          )
-        ]
-      }${path}`,
-      {
-        headers: {
-          Authorization: `Basic ${getLocalStorage(
-            KEY_LOCALSTORAGE_LOGIN_TOKEN,
-            DEFAULT_VALUE_LOGIN_TOKEN
-          )}`,
-        },
-        method: "DELETE",
-      }
-    ),
+    request(path, {
+      method: "DELETE",
+    }),
 };

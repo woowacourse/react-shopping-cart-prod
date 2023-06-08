@@ -8,7 +8,6 @@ import { useLocalProducts } from "./useLocalProducts";
 
 export const useQuantity = (productId: number) => {
   const { updateLocalProducts } = useLocalProducts();
-  const [errorStatus, setErrorStatus] = useState<string>("");
   const localProducts = useRecoilValue(localProductsState);
   const [quantity, setQuantity] = useState<string | undefined>("0");
   const currentLocalProduct = localProducts.find(
@@ -25,25 +24,16 @@ export const useQuantity = (productId: number) => {
 
     try {
       if (newQuantity === 0) {
-        const response = await api.delete(
-          `/cart-items/${currentLocalProduct.cartItemId}`
-        );
-        if (!response.ok) {
-          throw new Error(response.status.toString());
-        }
+        await api.delete(`/cart-items/${currentLocalProduct.cartItemId}`);
       } else {
-        const response = await api.patch(
-          `/cart-items/${currentLocalProduct.cartItemId}`,
-          { quantity: Number(newQuantity) }
-        );
-        if (!response.ok) {
-          throw new Error(response.status.toString());
-        }
+        await api.patch(`/cart-items/${currentLocalProduct.cartItemId}`, {
+          quantity: Number(newQuantity),
+        });
       }
       setQuantity(newQuantity.toString());
       await updateLocalProducts();
-    } catch (error: any) {
-      setErrorStatus(error.message);
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -64,7 +54,6 @@ export const useQuantity = (productId: number) => {
   };
 
   return {
-    errorStatus,
     quantity,
     setNewQuantity,
     handleQuantityChanged,

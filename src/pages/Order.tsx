@@ -32,15 +32,10 @@ const Order = () => {
           .map((product) => "cartItemId=" + product.cartItemId.toString())
           .join("&");
 
-        const response = await api.get(
-          `/orders/coupons?${cartItemIdsQuery}`,
-          true
-        );
-        if (!response.ok) throw new Error(response.status.toString());
-        const data = await response.json();
+        const data = await api.get(`/orders/coupons?${cartItemIdsQuery}`);
         setCoupons(data.coupons);
-      } catch (error: any) {
-        console.log(error);
+      } catch (error) {
+        console.error(error);
       }
     };
 
@@ -73,8 +68,8 @@ const Order = () => {
       navigate(ROUTER_PATH.Main);
       showToast("success", "결제가 완료되었습니다 👍🏻");
       updateLocalProducts();
-    } catch (error: any) {
-      console.log(error);
+    } catch (error) {
+      console.error(error);
     }
   };
 

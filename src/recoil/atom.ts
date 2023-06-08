@@ -18,10 +18,8 @@ export const productsState = atom<ProductType[]>({
   key: "products",
   default: selector<ProductType[]>({
     key: "initialProducts/default",
-    get: async () => {
-      const response = await api.get("/products");
-      if (!response.ok) throw new Error(response.status.toString());
-      return await response.json();
+    get: () => {
+      return api.get("/products");
     },
   }),
 });
@@ -64,9 +62,7 @@ export const memberState = atom<MemberType>({
     key: "memberState/default",
     get: async ({ get }) => {
       if (get(loginState)) {
-        const response = await api.get("/members/profile", true);
-        if (!response.ok) throw new Error(response.status.toString());
-        return await response.json();
+        return await api.get("/members/profile");
       }
     },
   }),

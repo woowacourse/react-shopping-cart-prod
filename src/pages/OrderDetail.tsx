@@ -14,19 +14,16 @@ const OrderDetail = () => {
   });
 
   useLayoutEffect(() => {
-    const fetchCoupons = async () => {
+    const fetchOrderDetail = async () => {
       try {
-        const response = await api.get(`/orders/${orderId}`, true);
-        if (!response.ok) throw new Error(response.status.toString());
-        const data = await response.json();
-
-        setOrderDetail(data);
-      } catch (error: any) {
-        console.log(error);
+        const orderDetail = await api.get(`/orders/${orderId}`);
+        setOrderDetail(orderDetail);
+      } catch (error) {
+        console.error(error);
       }
     };
 
-    fetchCoupons();
+    fetchOrderDetail();
   }, []);
 
   return (

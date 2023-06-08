@@ -47,7 +47,7 @@ export const CartProductList = () => {
 
   return (
     <Wrapper>
-      <TitleBox>든든배송 상품 ({cartProducts.length}개)</TitleBox>
+      <TitleBox>우주배송 상품 ({cartProducts.length}개)</TitleBox>
       <CartProductsContainer>
         {cartProducts.map((product, index) => (
           <CartProduct
