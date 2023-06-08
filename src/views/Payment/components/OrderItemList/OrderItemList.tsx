@@ -6,7 +6,7 @@ function OrderItemList({ orderItems }: { orderItems: OrderItemType[] }) {
   return (
     <>
       {orderItems.map((item) => (
-        <S.WrapperContent>
+        <S.WrapperContent key={item.orderItemId}>
           <S.ItemImage src={item.imageUrl} />
           <S.ItemInfoWrapper>
             <S.ItemTitle>{item.name}</S.ItemTitle>

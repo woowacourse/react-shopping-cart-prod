@@ -22,21 +22,14 @@ function Header() {
 
   const resetCart = useResetCart();
 
-  const handleChangeServer = (event: ChangeEvent<HTMLSelectElement>) => {
-    const { value: serverName } = event.currentTarget;
-
+  const handleChangeServer = ({currentTarget: value}) => {
     resetCart();
-
-    if (isCrewNameType(serverName)) {
-      setServerUrlBy(serverName);
-    }
+    if (isCrewNameType(serverName)) setServerUrlBy(value);
   };
 
-  const handleChangeUser = (event: ChangeEvent<HTMLSelectElement>) => {
-    const { value: userId } = event.currentTarget;
-
+  const handleChangeUser = ({currentTarget: value}) => {
     resetCart();
-    setCredentialBy(Number(userId));
+    setCredentialBy(Number(value));
     navigate('/');
   };
 

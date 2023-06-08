@@ -11,7 +11,7 @@ function OrderList() {
   return (
     <S.WrapperPage>
       {[...orderList].reverse().map((order) => (
-        <OrderItem order={order} hasDetail />
+        <OrderItem key={order.id} order={order} hasDetail />
       ))}
     </S.WrapperPage>
   );
