@@ -2,7 +2,7 @@ import { generatePath, useNavigate } from 'react-router-dom';
 
 import { PATH } from '../../../constants/path';
 import { OrderData } from '../../../types';
-import { HHMMFormatter, YYYYMMDDFormatter, priceFormatter } from '../../../utils/formatter';
+import { dateFormatter, priceFormatter } from '../../../utils/formatter';
 import * as S from './OrderedItem.styles';
 
 type OrderedItemProps = OrderData;
@@ -16,7 +16,7 @@ export const OrderedItem = ({ ...information }: OrderedItemProps) => {
     <S.Container>
       <S.OrderIdWrapper>
         <S.OrderId>
-          {YYYYMMDDFormatter(orderedAt)} ({HHMMFormatter(orderedAt)})
+          {dateFormatter(orderedAt, 'YYYYMMDD')} ({dateFormatter(orderedAt, 'HHMMSS')})
         </S.OrderId>
         <S.ShowDetail
           onClick={() => navigate(generatePath(PATH.ORDERS_OrderId, { orderId: String(id) }))}
