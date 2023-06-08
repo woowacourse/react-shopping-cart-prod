@@ -22,18 +22,18 @@ const SelectedProductItem = ({
   quantity,
 }: Props) => {
   const { removeItemFromCart } = useCart(productId);
-  const [checkedItemIdList, setCheckedItemIdList] = useRecoilState<number[]>(checkedItemList);
+  const [checkedItemIdList, setCheckedItemIdList] = useRecoilState(checkedItemList);
 
   const isChecked = checkedItemIdList.includes(cartItemId);
 
   const handleCheckedItem = () => {
-    isChecked
-      ? setCheckedItemIdList((prev) => prev.filter((itemId) => itemId !== cartItemId))
-      : setCheckedItemIdList((prev) => [...prev, cartItemId]);
+    if (isChecked) return setCheckedItemIdList((prev) => prev.filter((id) => id !== cartItemId));
+
+    setCheckedItemIdList((prev) => [...prev, cartItemId]);
   };
 
   const handleTrashCanClick = () => {
-    setCheckedItemIdList((prev) => prev.filter((itemId) => itemId !== cartItemId));
+    setCheckedItemIdList((prev) => prev.filter((id) => id !== cartItemId));
     removeItemFromCart();
   };
 

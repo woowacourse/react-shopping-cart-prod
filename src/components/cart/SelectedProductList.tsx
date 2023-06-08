@@ -21,8 +21,6 @@ const SelectedProductList = ({ productCountInCart }: { productCountInCart: numbe
   const { removeItemFromCart } = useCart();
   const { handleModalOpen, isModalOpen, setIsModalOpen, initialState, coupon } = useModal();
 
-  const initialCheckedItemIdList = cart.map((item) => item.id);
-
   useEffect(() => {
     api
       .get(`${server}${CART_URL}`, {
@@ -40,7 +38,10 @@ const SelectedProductList = ({ productCountInCart }: { productCountInCart: numbe
   const isAllChecked = checkedItemIdList.length === productCountInCart && productCountInCart !== 0;
 
   const handleAllItemsCheck = () => {
-    isAllChecked ? setCheckedItemIdList([]) : setCheckedItemIdList(initialCheckedItemIdList);
+    const initialCheckedItemIdList = cart.map((item) => item.id);
+    const checkedAllItemIdList = isAllChecked ? [] : initialCheckedItemIdList;
+
+    setCheckedItemIdList(checkedAllItemIdList);
   };
 
   const handleCheckedItemRemove = () => {

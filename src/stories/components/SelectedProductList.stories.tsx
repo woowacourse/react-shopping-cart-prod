@@ -60,10 +60,11 @@ export const ProductListInCart = () => {
   const productCountInCart = cart.length;
   const isAllChecked = checkedItemIdList.length === productCountInCart && productCountInCart !== 0;
 
-  const initialCheckedItemIdList = cart.map((item) => item.id);
-
   const handleAllItemsCheck = () => {
-    isAllChecked ? setCheckedItemIdList([]) : setCheckedItemIdList(initialCheckedItemIdList);
+    const initialCheckedItemIdList = cart.map((item) => item.id);
+    const checkedAllItemIdList = isAllChecked ? [] : initialCheckedItemIdList;
+
+    setCheckedItemIdList(checkedAllItemIdList);
   };
 
   const handleCheckedItemRemove = () => {
