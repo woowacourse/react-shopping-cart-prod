@@ -8,6 +8,10 @@ const Slider = ({ children }: React.PropsWithChildren) => {
 
   const currentSlide = useRef(0);
   const slideRef = useRef<HTMLUListElement>(null);
+  const timer = useRef<NodeJS.Timer>();
+
+  const mouseDownX = useRef(0);
+  const mouseUpX = useRef(0);
 
   const moveSliceLeft = () => {
     if (slideRef.current === null) return;
@@ -56,20 +60,44 @@ const Slider = ({ children }: React.PropsWithChildren) => {
     slideRef.current.style.transform = `translateX(-${(postion * 100) / sliceItems.length}%)`;
   };
 
+  const stopTimer = () => {
+    clearInterval(timer.current);
+    timer.current = undefined;
+  };
+
+  const startTimer = () => {
+    if (timer.current !== undefined) return;
+
+    timer.current = setInterval(() => {
+      moveSliceRight();
+    }, 3000);
+  };
+
   useEffect(() => {
     if (slideRef.current) slideRef.current.style.transition = 'all 500ms ease-in-out';
 
-    const setTimer = setInterval(() => {
-      moveSliceRight();
-    }, 3000);
-
+    startTimer();
     return () => {
-      clearInterval(setTimer);
+      stopTimer();
     };
   }, []);
 
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    stopTimer();
+    mouseDownX.current = e.clientX;
+  };
+
+  const handleMouseUp = (e: React.MouseEvent<HTMLDivElement>) => {
+    startTimer();
+
+    const moveX = mouseDownX.current - e.clientX;
+
+    if (moveX > 100) moveSliceRight();
+    if (moveX < -100) moveSliceLeft();
+  };
+
   return (
-    <S.Container>
+    <S.Container onMouseDown={handleMouseDown} onMouseLeave={handleMouseUp}>
       <S.LeftButton onClick={moveSliceLeft}>{'<'}</S.LeftButton>
       <S.RightButton onClick={moveSliceRight}>{'>'}</S.RightButton>
       <S.Contents ref={slideRef} listLength={sliceItems.length}>
