@@ -11,7 +11,6 @@ function OrderList() {
   const server = useRecoilValue(serverState);
   const { data: response, isLoading, error } = useFetch<ResponseOrdered>('GET', `${url[server]}/orders`);
 
-  console.log(response, isLoading, error);
 
   if (isLoading) {
     return <BigAlert title="⌛" message="로딩중..." />;

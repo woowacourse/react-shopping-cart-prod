@@ -20,7 +20,6 @@ function Login() {
 
   const loadMembers = async () => {
     const data = await fetchMembers(server);
-    console.log(data);
     setMembers(data);
   };
 

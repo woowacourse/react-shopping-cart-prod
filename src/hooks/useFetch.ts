@@ -27,7 +27,6 @@ const useFetch = <T, Body = unknown>(method: Method, url: string, body?: Body): 
           "Content-Type": "application/json",
         },
       });
-      console.log(JSON.stringify(response));
       if (!response.ok) {
         throw new Error('잘못 된 요청입니다.');
       }
@@ -41,7 +40,6 @@ const useFetch = <T, Body = unknown>(method: Method, url: string, body?: Body): 
   };
 
   useEffect(() => {
-    console.log(url);
     fetchData();
   }, [url]);
 

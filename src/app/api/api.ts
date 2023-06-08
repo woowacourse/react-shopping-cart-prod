@@ -26,7 +26,6 @@ export const fetchAddCart = async (server: string, id: number) => {
       "Content-Type": "application/json",
     },
   });
-  console.log(response.ok);
 };
 
 export const fetchDeleteCart = async (server: string, id: number) => {
@@ -37,7 +36,6 @@ export const fetchDeleteCart = async (server: string, id: number) => {
       Authorization: `Basic ${base64}`,
     },
   });
-  console.log(response);
 };
 
 export const fetchUpdateCart = async (
@@ -56,7 +54,6 @@ export const fetchUpdateCart = async (
       "Content-Type": "application/json",
     },
   });
-  console.log(response.ok);
 };
 
 export const fetchCartList = async (server: string) => {
@@ -68,8 +65,6 @@ export const fetchCartList = async (server: string) => {
       },
     });
     const data: ResponseCartItem = await response.json();
-    console.log("cart-list");
-    console.log(data);
     const checkedCartItems: CartItem[] = data.cartItems.map(
       (cartItem: OriginalCartItem) => ({
         ...cartItem,
@@ -78,7 +73,6 @@ export const fetchCartList = async (server: string) => {
     );
     return checkedCartItems;
   } catch (error) {
-    console.error(error);
     throw new Error();
   }
 };
@@ -87,11 +81,8 @@ export const fetchProductList = async (server: string) => {
   try {
     const response = await fetch(`${url[server]}/products`);
     const data: ProductItem[] = await response.json();
-    console.log("product-list");
-    console.log(data);
     return data;
   } catch (error) {
-    console.error(error);
     throw new Error();
   }
 };
@@ -107,7 +98,6 @@ export const fetchMembers = async (server: string) => {
       return [];
     }
   } catch (error) {
-    console.error(error);
     throw new Error();
   }
 };
@@ -128,7 +118,6 @@ export const fetchCoupons = async (server: string) => {
       return [];
     }
   } catch (error) {
-    console.error(error);
     throw new Error();
   }
 };
@@ -148,7 +137,6 @@ export const fetchPoint = async (server: string) => {
       throw new Error();
     }
   } catch (error) {
-    console.error(error);
     throw new Error();
   }
 };
@@ -167,7 +155,6 @@ export const fetchOrder = async (server: string, newOrder: NewOrder) => {
 
     return response.ok;
   } catch (error) {
-    console.error(error);
     throw new Error();
   }
 };
@@ -187,7 +174,6 @@ export const fetchOrderedItem = async (server: string, orderId: string) => {
       throw new Error();
     }
   } catch (error) {
-    console.error(error);
     throw new Error();
   }
 };
