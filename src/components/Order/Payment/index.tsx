@@ -5,7 +5,7 @@ import * as S from './Payment.styles';
 const Payment = ({ order }: { order: OrderDetailType }) => {
   const calculateTotalPrice = () => {
     const orderedItems = order.orderedItems;
-    return orderedItems.reduce((acc, cur) => acc + cur.totalPrice, 0);
+    return orderedItems.reduce((acc, cur) => acc + cur.price * cur.quantity, 0);
   };
 
   const calculateTotalDiscountPrice = () => {

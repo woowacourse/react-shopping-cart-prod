@@ -15,8 +15,7 @@ export interface Product {
   salePrice: number;
 }
 
-export interface OrderProduct
-  extends Omit<Product, 'price' | 'isOnSale' | 'salePrice'> {
+export interface OrderProduct extends Omit<Product, 'isOnSale' | 'salePrice'> {
   quantity: number;
   totalPrice: number;
   totalDiscountPrice: number;
