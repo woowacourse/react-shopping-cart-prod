@@ -5,13 +5,13 @@ type WrapperProps = {
 };
 
 export const Wrapper = styled.div<WrapperProps>`
-  position: ${(props) => props.isFixScrollPosition && 'fixed'};
+  position: ${(props) => (props.isFixScrollPosition ? 'fixed' : 'static')};
   min-width: 360px;
   max-width: 360px;
   display: grid;
   row-gap: 20px;
 
-  top: ${(props) => props.isFixScrollPosition && '90'}px;
+  top: ${(props) => (props.isFixScrollPosition ? 90 : 0)}px;
 
   @media only screen and (max-width: 1200px) {
     // 테블릿

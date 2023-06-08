@@ -19,7 +19,7 @@ export const Container = styled.div<ContainerProps>`
   color: ${(props) => (props.isLoading ? 'transparent' : '#333333')};
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   background-color: ${(props) => (props.isUsed ? '#d8d8d8' : '#fcfcfc')};
-  opacity: ${(props) => props.isUsed && '0.3'};
+  opacity: ${(props) => (props.isUsed ? 0.3 : 1)};
 
   ${(props) => props.isLoading && TextSkeletonStyle}
 `;
@@ -47,7 +47,7 @@ type CouponButtonProps = {
 };
 
 export const CouponButton = styled.button<CouponButtonProps>`
-  opacity: ${(props) => props.isLoading && '0'};
+  opacity: ${(props) => (props.isLoading ? 0 : 1)};
   align-self: center;
   border: none;
   background-color: #06c09e;

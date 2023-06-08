@@ -67,7 +67,7 @@ export const ServerLabel = styled.label<ServerLabelProps>`
   font-size: 12px;
 
   opacity: ${(props) => (props.isSelected ? 1 : 0.6)};
-  font-weight: ${(props) => props.isSelected && 600};
+  font-weight: ${(props) => (props.isSelected ? 600 : 400)};
 `;
 
 export const OrderListLayout = styled.div`

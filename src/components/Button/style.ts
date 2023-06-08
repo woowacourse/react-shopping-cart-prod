@@ -14,7 +14,7 @@ export const Button = styled.button<ButtonProps>`
   padding: 20px 0px;
   font-size: 20px;
   font-weight: 400;
-  cursor: ${(props) => !props.disable && 'pointer'};
-  opacity: ${(props) => props.disable && 0.4};
+  cursor: ${(props) => (!props.disable ? 'pointer' : 'auto')};
+  opacity: ${(props) => (props.disable ? 0.4 : 1)};
   transition: opacity 0.2s ease;
 `;
