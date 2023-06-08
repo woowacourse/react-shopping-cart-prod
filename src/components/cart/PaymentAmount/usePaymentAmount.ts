@@ -20,9 +20,7 @@ const usePaymentAmount = () => {
     return 3000;
   };
 
-  const deliveryFee = getDeliveryFee();
-
-  return { paymentAmount, deliveryFee };
+  return { paymentAmount, getDeliveryFee };
 };
 
 export default usePaymentAmount;
