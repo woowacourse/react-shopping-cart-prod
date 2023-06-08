@@ -16,13 +16,3 @@ export const USERS_COUPON_PATH_NAME = `/coupons/me`;
 export const ORDERS_PATH_NAME = `/orders`;
 
 export const CART_LIST_KEY = 'cart_list';
-
-const TEMP_ID = 'a@a.com';
-const TEMP_PW = '1234';
-
-export const USER_AUTH_TOKEN = btoa(`${TEMP_ID}:${TEMP_PW}`);
-
-export const COUPON_TYPE_UNIT = {
-  percent: '%',
-  amount: '원',
-};

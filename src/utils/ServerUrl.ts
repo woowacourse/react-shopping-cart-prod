@@ -5,7 +5,7 @@ import {
   ORDERS_PATH_NAME,
   PRODUCTS_PATH_NAME,
   USERS_COUPON_PATH_NAME,
-} from '../constant';
+} from '../constant/server';
 import { ServerName } from '../types/server';
 
 const ServerUtil = {

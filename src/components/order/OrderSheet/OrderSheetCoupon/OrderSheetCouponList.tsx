@@ -4,7 +4,7 @@ import serverNameState from '../../../../globalState/atoms/serverName';
 import ServerUtil from '../../../../utils/ServerUrl';
 import useFetch from '../../../../hooks/api/useFetch';
 import { FetchCouponsResponse } from '../../../../types/api';
-import { USER_AUTH_TOKEN } from '../../../../constant';
+import { USER_AUTH_TOKEN } from '../../../../constant/user';
 import { Coupon } from '../../../../types/product';
 import { styled } from 'styled-components';
 

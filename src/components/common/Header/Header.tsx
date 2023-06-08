@@ -1,15 +1,19 @@
+import { Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import CartIcon from '../../../assets/icons/CartIcon';
-import { BASE_URL } from '../../../constant';
+import { BASE_URL } from '../../../constant/server';
 import serverNameState from '../../../globalState/atoms/serverName';
 import { isProperServerName } from '../../../types/server';
 import cartState from '../../../globalState/atoms/cartState';
-import { Suspense } from 'react';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import Modal from '../Modal/Modal';
 import CouponList from '../../coupon/CouponList/CouponList';
+import {
+  CART_PAGE_PATH_NAME,
+  ORDER_PAGE_PATH_NAME,
+} from '../../../constant/route';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -30,11 +34,11 @@ const Header = () => {
   };
 
   const handleCartButtonClick = () => {
-    navigate('/cart');
+    navigate(CART_PAGE_PATH_NAME);
   };
 
   const handleOrderListButtonClick = () => {
-    navigate('/order');
+    navigate(ORDER_PAGE_PATH_NAME);
   };
 
   return (

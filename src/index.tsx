@@ -8,6 +8,11 @@ import ProductListPage from './pages/ProductListPage';
 import CartPage from './pages/CartPage';
 import { worker } from './mocks/browser';
 import OrderPage from './pages/OrderPage';
+import {
+  CART_PAGE_PATH_NAME,
+  LANDING_PAGE_PATH_NAME,
+  ORDER_PAGE_PATH_NAME,
+} from './constant/route';
 
 const main = async () => {
   if (window.location.pathname === '/react-shopping-cart-prod') {
@@ -30,7 +35,7 @@ if (process.env.NODE_ENV === 'development') {
 
 const router = createHashRouter([
   {
-    path: '/',
+    path: LANDING_PAGE_PATH_NAME,
     element: <App />,
     children: [
       {
@@ -38,11 +43,11 @@ const router = createHashRouter([
         element: <ProductListPage />,
       },
       {
-        path: 'cart',
+        path: CART_PAGE_PATH_NAME,
         element: <CartPage />,
       },
       {
-        path: 'order',
+        path: ORDER_PAGE_PATH_NAME,
         element: <OrderPage />,
       },
     ],

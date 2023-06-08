@@ -5,7 +5,9 @@ import Modal from '../../common/Modal/Modal';
 import OrderSheet from '../../order/OrderSheet/OrderSheet';
 
 const PaymentAmount = () => {
-  const { paymentAmount, deliveryFee } = usePaymentAmount();
+  const { paymentAmount, getDeliveryFee } = usePaymentAmount();
+
+  const deliveryFee = getDeliveryFee();
 
   return (
     <PaymentAmountContainer>

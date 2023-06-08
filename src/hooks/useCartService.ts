@@ -3,7 +3,7 @@ import cartState from '../globalState/atoms/cartState';
 import type { Product } from '../types/product';
 import serverNameState from '../globalState/atoms/serverName';
 import ServerUtil from '../utils/ServerUrl';
-import { USER_AUTH_TOKEN } from '../constant';
+import { USER_AUTH_TOKEN } from '../constant/user';
 
 const useCartService = () => {
   const [cartList, setCartList] = useRecoilState(cartState);

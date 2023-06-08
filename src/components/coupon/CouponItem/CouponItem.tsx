@@ -1,7 +1,7 @@
 import { styled } from 'styled-components';
 import { Coupon } from '../../../types/product';
 import { AiOutlineDownload } from 'react-icons/ai';
-import { COUPON_TYPE_UNIT } from '../../../constant';
+import { COUPON_TYPE_UNIT } from '../../../constant/common';
 import useRequestGetCoupon from '../../../hooks/useCouponService';
 import LoadingSpinner from '../../common/LoadingSpinner/LoadingSpinner';
 

@@ -5,8 +5,9 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import serverNameState from '../../../globalState/atoms/serverName';
 import ServerUtil from '../../../utils/ServerUrl';
 import type { Coupon } from '../../../types/product';
-import { USER_AUTH_TOKEN } from '../../../constant';
+import { USER_AUTH_TOKEN } from '../../../constant/user';
 import cartState from '../../../globalState/atoms/cartState';
+import { ORDER_PAGE_PATH_NAME } from '../../../constant/route';
 
 const useOrderSheet = () => {
   const navigate = useNavigate();
@@ -77,7 +78,7 @@ const useOrderSheet = () => {
       return restOfCartList;
     });
 
-    navigate('/order');
+    navigate(ORDER_PAGE_PATH_NAME);
   };
 
   return {

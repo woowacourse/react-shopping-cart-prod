@@ -2,7 +2,7 @@ import { useRecoilValue } from 'recoil';
 import serverNameState from '../../../globalState/atoms/serverName';
 import ServerUtil from '../../../utils/ServerUrl';
 import useFetch from '../../../hooks/api/useFetch';
-import { USER_AUTH_TOKEN } from '../../../constant';
+import { USER_AUTH_TOKEN } from '../../../constant/user';
 import { FetchOrdersResponse } from '../../../types/api';
 import useResetCartWhenServerChange from '../../../hooks/useResetCartWhenServerChange';
 import OrderItem from '../OrderItem/OrderItem';

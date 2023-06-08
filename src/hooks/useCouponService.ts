@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { USERS_COUPON_PATH_NAME, USER_AUTH_TOKEN } from '../constant';
+import { USERS_COUPON_PATH_NAME } from '../constant/server';
+import { USER_AUTH_TOKEN } from '../constant/user';
 
 const useRequestGetCoupon = (couponId: number) => {
   const [isLoading, setIsLoading] = useState(false);

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { COUPON_TYPE_UNIT } from '../../../../constant';
+import { COUPON_TYPE_UNIT } from '../../../../constant/common';
 import type { Coupon } from '../../../../types/product';
 
 interface OrderSheetCouponItemProps {
