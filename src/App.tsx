@@ -1,4 +1,5 @@
 import LoadingHeader from '@Components/Header/LoadingHeader';
+import EmptyQuickMenu from '@Components/QuickMenu/empty';
 import { Suspense, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
@@ -32,8 +33,10 @@ function App() {
             <Outlet />
           </ErrorBoundary>
           <Suspense>
-            <QuickMenu />
-            <QuickMenuMobile />
+            <ErrorBoundary fallback={EmptyQuickMenu}>
+              <QuickMenu />
+              <QuickMenuMobile />
+            </ErrorBoundary>
           </Suspense>
         </CommonPageStyle>
       </ThemeProvider>
