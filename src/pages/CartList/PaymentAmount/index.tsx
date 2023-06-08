@@ -3,19 +3,11 @@ import Button from '@Components/Button';
 import useOrderProducts from '@Hooks/useOrderProducts';
 
 import * as S from './style';
+import TotalPrice from '../TotalPrice';
 
 function PaymentAmount() {
-  const {
-    cartAmount,
-    priceText,
-    priceDisCount,
-    priceDiscountText,
-    usingCoupon,
-    couponDiscointText,
-    deliveryFeeText,
-    totalOrderPriceText,
-    orderProducts,
-  } = useOrderProducts();
+  const { price, cartAmount, priceDisCount, usingCoupon, deliveryFeeText, totalOrderPriceText, orderProducts } =
+    useOrderProducts();
 
   if (cartAmount === 0) return null;
 
@@ -31,24 +23,7 @@ function PaymentAmount() {
         </S.DetailPriceButton>
       </S.TitleWrapper>
       <S.ExpectedAmountLayout>
-        <S.AmountContainer>
-          <S.AmountWrapper aria-label="총 상품가격">
-            <S.AmountCategory>총 상품가격</S.AmountCategory>
-            <S.Amount>{priceText}</S.Amount>
-          </S.AmountWrapper>
-          {priceDisCount !== 0 && (
-            <S.DiscountWrapper aria-label="상품 할인">
-              <S.DiscountCategory>상품 할인</S.DiscountCategory>
-              <S.Discount>{`-${priceDiscountText}`}</S.Discount>
-            </S.DiscountWrapper>
-          )}
-          {usingCoupon.discountAmount !== 0 && (
-            <S.DiscountWrapper aria-label="쿠폰 할인">
-              <S.DiscountCategory>쿠폰 할인</S.DiscountCategory>
-              <S.Discount>{`-${couponDiscointText}`}</S.Discount>
-            </S.DiscountWrapper>
-          )}
-        </S.AmountContainer>
+        <TotalPrice price={price} priceDiscount={priceDisCount} couponDiscount={usingCoupon.discountAmount} />
         <S.AmountContainer>
           <S.AmountWrapper aria-label="총 배송비">
             <S.AmountCategory>총 배송비</S.AmountCategory>

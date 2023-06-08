@@ -31,9 +31,6 @@ const useOrderProducts = () => {
   const deliveryFee = !allPrice ? 0 : DELIVERY_FEE;
   const selectedCartItemIds = cartItems.filter((item) => item.isSelected).map((item) => item.id);
 
-  const priceText = `${price.toLocaleString()} 원`;
-  const priceDiscountText = `${priceDisCount.toLocaleString()} 원`;
-  const couponDiscointText = `${usingCoupon.discountAmount.toLocaleString()} 원`;
   const deliveryFeeText = `${deliveryFee.toLocaleString()} 원`;
   const totalOrderPriceText = `${Math.max(allPrice - usingCoupon.discountAmount + deliveryFee, 0).toLocaleString()} 원`;
 
@@ -87,12 +84,10 @@ const useOrderProducts = () => {
   };
 
   return {
-    cartAmount,
-    priceText,
-    priceDisCount,
-    priceDiscountText,
+    price,
     usingCoupon,
-    couponDiscointText,
+    priceDisCount,
+    cartAmount,
     deliveryFeeText,
     totalOrderPriceText,
     orderProducts,
