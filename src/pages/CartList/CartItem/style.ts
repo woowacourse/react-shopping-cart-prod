@@ -33,7 +33,7 @@ export const ShoppingItemImage = styled.img<LoadingProps>`
   ${ImageSkeletonStyle};
 `;
 
-export const ShoppingItemName = styled.div<LoadingProps>`
+export const ShoppingItemName = styled.span<LoadingProps>`
   color: #333333;
   font-size: 18px;
   font-weight: 400;
@@ -53,7 +53,7 @@ export const DeleteButton = styled.img`
   cursor: pointer;
 `;
 
-export const ShoppingItemPrice = styled.div<LoadingProps>`
+export const ShoppingItemPrice = styled.span<LoadingProps>`
   align-self: flex-end;
   color: #333333;
   font-weight: 400;

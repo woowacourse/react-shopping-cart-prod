@@ -10,7 +10,7 @@ export const Container = styled.div`
   border-bottom: 1px solid #dddddd;
 `;
 
-export const OrderSheetItems = styled.div`
+export const OrderSheetItems = styled.ul`
   display: grid;
   row-gap: 40px;
 `;

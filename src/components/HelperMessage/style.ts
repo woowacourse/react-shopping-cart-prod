@@ -12,7 +12,7 @@ type HelperTitleProps = {
   isLoading: boolean;
 };
 
-export const HelperTitle = styled.div<HelperTitleProps>`
+export const HelperTitle = styled.h3<HelperTitleProps>`
   ${(props) => props.isLoading && TextSkeletonStyle}
 `;
 
@@ -38,7 +38,7 @@ export const QuestionMark = styled.div`
   user-select: none;
 `;
 
-export const HelperMessage = styled.div`
+export const HelperMessage = styled.span`
   z-index: 1;
   user-select: none;
   position: absolute;

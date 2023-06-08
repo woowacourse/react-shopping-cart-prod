@@ -29,16 +29,16 @@ export const CouponLayout = styled.div`
   row-gap: 10px;
 `;
 
-export const CouponDescription = styled.div`
+export const CouponDescription = styled.span`
   font-size: 18px;
 `;
 
-export const CouponName = styled.div`
+export const CouponName = styled.p`
   font-size: 30px;
   font-weight: 700;
 `;
 
-export const CouponSubMessage = styled.div`
+export const CouponSubMessage = styled.span`
   color: #4f4f4f;
 `;
 

@@ -17,7 +17,7 @@ export const ShoppingCartContentsLayout = styled.div`
   }
 `;
 
-export const CartList = styled.div`
+export const CartList = styled.ul`
   margin-bottom: 60px;
 
   @media only screen and (max-width: 768px) {

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
+export const Container = styled.li`
   border: 1px solid #aaaaaa;
   color: #333333;
 `;
@@ -15,7 +15,7 @@ export const OrderInfo = styled.div`
   border-bottom: 2px solid #aaaaaa;
 `;
 
-export const OrderDate = styled.div``;
+export const OrderDate = styled.span``;
 
 export const MoveDetailPage = styled.div`
   cursor: pointer;

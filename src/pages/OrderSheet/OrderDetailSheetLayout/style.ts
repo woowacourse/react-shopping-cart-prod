@@ -6,7 +6,7 @@ export const OrderSheetHeader = styled.div`
   font-size: 20px;
 `;
 
-export const OrderSheetAmount = styled.div`
+export const OrderSheetAmount = styled.span`
   font-weight: 700;
 `;
 

@@ -14,7 +14,7 @@ export const Image = styled.img`
   width: 260px;
 `;
 
-export const GuideMessage = styled.div`
+export const GuideMessage = styled.span`
   font-size: 20px;
   font-weight: 600;
 `;

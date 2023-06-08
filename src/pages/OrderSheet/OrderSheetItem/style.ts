@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
+export const Container = styled.li`
   display: grid;
   background-color: #cccccc;
   row-gap: 1px;
@@ -22,7 +22,7 @@ export const DeliveryInfo = styled.div`
   border-top-left-radius: 10px;
 `;
 
-export const ExpectArrive = styled.div``;
+export const ExpectArrive = styled.span``;
 
 export const DeliveryType = styled.div`
   background-color: #ffffff;
@@ -54,14 +54,14 @@ export const ProductWrapper = styled.div`
   row-gap: 10px;
 `;
 
-export const ProductName = styled.div`
+export const ProductName = styled.span`
   font-weight: 600;
 `;
 
-export const ProductQuantity = styled.div`
+export const ProductQuantity = styled.span`
   color: #7f8082;
 `;
 
-export const ProductPrice = styled.div`
+export const ProductPrice = styled.span`
   font-weight: 600;
 `;

@@ -12,7 +12,7 @@ export const Image = styled.img`
   width: 400px;
 `;
 
-export const Explanation = styled.div`
+export const Explanation = styled.p`
   margin-top: 40px;
   color: #333333;
   font-size: 20px;

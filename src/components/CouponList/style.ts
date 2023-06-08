@@ -17,12 +17,12 @@ export const NoExistCouponContainer = styled.div`
 
 export const NoExistCouponImage = styled.img``;
 
-export const NoExistCouponText = styled.div`
+export const NoExistCouponText = styled.span`
   font-size: 20px;
   font-weight: 700;
 `;
 
-export const NoExistCouponSubText = styled.div`
+export const NoExistCouponSubText = styled.span`
   font-size: 18px;
   color: #999999;
 `;

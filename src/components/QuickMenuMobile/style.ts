@@ -61,7 +61,7 @@ type ServerLabelProps = {
   isSelected: boolean;
 };
 
-export const ServerLabel = styled.div<ServerLabelProps>`
+export const ServerLabel = styled.label<ServerLabelProps>`
   margin-top: 10px;
 
   font-size: 12px;
@@ -91,7 +91,7 @@ export const OrderListIcon = styled.div`
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 `;
 
-export const OrderListLabel = styled.div`
+export const OrderListLabel = styled.label`
   margin-top: 10px;
 
   font-size: 12px;

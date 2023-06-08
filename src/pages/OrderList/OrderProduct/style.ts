@@ -19,13 +19,13 @@ export const OrderInfo = styled.div`
   flex-direction: column;
 `;
 
-export const ProductName = styled.div`
+export const ProductName = styled.span`
   font-size: 18px;
   margin-bottom: 20px;
   color: #333333;
   line-height: 160%;
 `;
 
-export const ProductAmount = styled.div`
+export const ProductAmount = styled.span`
   color: #888888;
 `;

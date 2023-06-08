@@ -18,17 +18,17 @@ type LoadingProps = {
   isLoading?: boolean;
 };
 
-export const UserName = styled.div<LoadingProps>`
+export const UserName = styled.span<LoadingProps>`
   font-weight: 700;
 
   ${(props) => props.isLoading && TextSkeletonStyle}
 `;
 
-export const UserAddress = styled.div<LoadingProps>`
+export const UserAddress = styled.span<LoadingProps>`
   ${(props) => props.isLoading && TextSkeletonStyle}
 `;
 
-export const UserContact = styled.div<LoadingProps>`
+export const UserContact = styled.span<LoadingProps>`
   color: #c7c8c9;
 
   ${(props) => props.isLoading && TextSkeletonStyle}
@@ -57,4 +57,4 @@ export const CheckBoxLayout = styled.div`
   font-size: 14px;
 `;
 
-export const CheckBoxText = styled.div``;
+export const CheckBoxText = styled.span``;

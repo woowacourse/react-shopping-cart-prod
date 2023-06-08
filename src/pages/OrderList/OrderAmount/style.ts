@@ -16,7 +16,7 @@ export const Layout = styled.div`
   }
 `;
 
-export const OrderAmountTitle = styled.div`
+export const OrderAmountTitle = styled.h3`
   font-size: 20px;
   font-weight: 600;
   padding: 25px 20px;
@@ -25,7 +25,7 @@ export const OrderAmountTitle = styled.div`
   border-bottom: 2px solid #aaaaaa;
 `;
 
-export const OrderAmount = styled.div`
+export const OrderAmount = styled.span`
   padding: 30px 20px;
   font-size: 18px;
   font-weight: 600;

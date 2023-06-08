@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
+export const Container = styled.ul`
   margin-top: 20px;
   display: grid;
   row-gap: 40px;

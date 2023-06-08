@@ -11,11 +11,11 @@ type isLoadingProps = {
   isLoading?: boolean;
 };
 
-export const Text = styled.div<isLoadingProps>`
+export const Text = styled.span<isLoadingProps>`
   ${(props) => props.isLoading && TextSkeletonStyle}
 `;
 
-export const Amount = styled.div<isLoadingProps>`
+export const Amount = styled.span<isLoadingProps>`
   ${(props) => props.isLoading && TextSkeletonStyle}
 `;
 

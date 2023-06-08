@@ -8,7 +8,7 @@ export const Container = styled.div`
   cursor: pointer;
 `;
 
-export const Username = styled.div`
+export const Username = styled.span`
   margin-right: 5px;
   color: #ffffff;
 `;
@@ -17,7 +17,7 @@ type QuantityProps = {
   isEmpty: boolean;
 };
 
-export const CartItemsAmount = styled.div<QuantityProps>`
+export const CartItemsAmount = styled.span<QuantityProps>`
   background-color: #06c09e;
   color: #ffffff;
 
