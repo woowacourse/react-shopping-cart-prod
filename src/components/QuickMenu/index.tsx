@@ -12,7 +12,7 @@ import { SERVERS, SERVERS_NAMES } from '@Constants/servers';
 import * as S from './style';
 
 function QuickMenu() {
-  const { toggleServer } = useServer();
+  const { changeServer } = useServer();
   const [server, setServer] = useRecoilState(serverState);
 
   const [isHover, setIsHover] = useState(false);
@@ -22,7 +22,7 @@ function QuickMenu() {
     if (value === server) return;
 
     setServer(value);
-    toggleServer(value);
+    changeServer(value);
   };
 
   return (

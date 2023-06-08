@@ -15,7 +15,7 @@ const useServer = () => {
   const setOrderItems = useSetRecoilState(orderItemsState);
   const setMyCoupons = useSetRecoilState(myCouponState);
 
-  const toggleServer = async (server: Servers) => {
+  const changeServer = async (server: Servers) => {
     const cartItems = await fetchData<CartItemType[]>({ url: FETCH_URL.cartItems, method: FETCH_METHOD.GET, server });
     setCartItems(cartItems);
 
@@ -31,7 +31,7 @@ const useServer = () => {
     });
   };
 
-  return { toggleServer };
+  return { changeServer };
 };
 
 export default useServer;

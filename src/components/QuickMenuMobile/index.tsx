@@ -15,7 +15,7 @@ import * as S from './style';
 
 function QuickMenuMobile() {
   const navigate = useNavigate();
-  const { toggleServer } = useServer();
+  const { changeServer } = useServer();
   const [server, setServer] = useRecoilState(serverState);
   const { isModalOpen } = useModal();
 
@@ -23,7 +23,7 @@ function QuickMenuMobile() {
     if (value === server) return;
 
     setServer(value);
-    toggleServer(value);
+    changeServer(value);
   };
 
   const moveOrderList = () => navigate(ROUTES.orderList);
