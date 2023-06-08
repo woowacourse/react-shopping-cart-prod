@@ -4,7 +4,7 @@ import { couponsSelector, selectedCouponsState } from '../atoms/coupons';
 import { selectedCartItemIdsState } from '../atoms/cart';
 
 const useAllCouponSelect = () => {
-  const couponsState = useRecoilValue(couponsSelector);
+  const { allCoupons } = useRecoilValue(couponsSelector);
   const [selectedCoupons, setSelectedCoupons] =
     useRecoilState(selectedCouponsState);
   const selectedCartIds = useRecoilValue(selectedCartItemIdsState);
@@ -25,7 +25,7 @@ const useAllCouponSelect = () => {
     setSelectedCoupons([couponId]);
   };
 
-  return { couponsState, selectedCoupons, onSelectedCouponsChange };
+  return { allCoupons, selectedCoupons, onSelectedCouponsChange };
 };
 
 export default useAllCouponSelect;
