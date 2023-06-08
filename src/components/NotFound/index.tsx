@@ -6,7 +6,7 @@ import { PATH } from '../../constants';
 const NotFound = () => {
   return (
     <Style.NotFoundWrapper>
-      <Style.ImgWrapper />
+      <Style.ImgWrapper src={patrick} alt='404페이지'/>
       <Style.NoExistItemsMessage>
         <p>잘못된 페이지를 요청했거나 에러가 발생했습니다 🥲</p>
         <Link to={PATH.HOME}>돌아가기🚀</Link>
@@ -24,10 +24,7 @@ const Style = {
     align-items: center;
   `,
 
-  ImgWrapper: styled.img.attrs({
-    src: patrick,
-    alt: '404페이지', // 대체 텍스트
-  })`
+  ImgWrapper: styled.img`
     width: 245px;
     height: 430px;
 
