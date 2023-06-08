@@ -1,33 +1,38 @@
-import { useRecoilCallback, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { fetchPoint } from '../remotes/point';
 import { serverOriginState } from '../recoil/atoms/common';
-import { pointState } from '../recoil/atoms/point';
 import { POINT_BASE_URL } from '../constants/api';
 import { userState } from '../recoil/atoms/auth';
 import { getBase64 } from '../constants/auth';
+import useToast from '../components/common/Toast/useToast';
+import { useEffect, useState } from 'react';
 
 const usePoint = () => {
-  const point = useRecoilValue(pointState);
+  const [point, setPoint] = useState(0);
   const serverOrigin = useRecoilValue(serverOriginState);
   const user = useRecoilValue(userState);
+  const { showToast } = useToast();
 
-  const updatePoint = useRecoilCallback(
-    ({ set, snapshot }) =>
-      async () => {
-        const newUser = await snapshot.getPromise(userState);
-        const newPoint = await fetchPoint(
-          `${serverOrigin}${POINT_BASE_URL}`,
-          getBase64(newUser),
-        );
+  const updatePoint = async () => {
+    try {
+      const point = await fetchPoint(
+        `${serverOrigin}${POINT_BASE_URL}`,
+        getBase64(user),
+      );
+      setPoint(point);
+    } catch (e) {
+      if (e instanceof Error) {
+        showToast('error', e.message);
+      }
+    }
+  };
 
-        set(pointState, newPoint);
-      },
-    [serverOrigin, user],
-  );
+  useEffect(() => {
+    updatePoint();
+  }, [serverOrigin, user]);
 
   return {
     point,
-    updatePoint,
   };
 };
 

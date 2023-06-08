@@ -23,7 +23,6 @@ const OrderConfirmModal = (props: OrderConfirmModalProps) => {
   const orderItems = useRecoilValue(selectedCartItems(selectedCartItemIds));
   const { sendOrder } = useOrder();
   const { updateCart } = useCart();
-  const { updatePoint } = usePoint();
   const { closeModal } = useModal();
   const { showToast } = useToast();
 
@@ -36,7 +35,6 @@ const OrderConfirmModal = (props: OrderConfirmModalProps) => {
         usePoint: usingPoint,
       });
       updateCart();
-      updatePoint();
       closeModal();
     } catch (e) {
       if (e instanceof Error) {

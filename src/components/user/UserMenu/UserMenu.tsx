@@ -12,7 +12,7 @@ import useCart from '../../../hooks/useCart';
 const UserMenu = ({ isActive }: { isActive: boolean }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [user, setUser] = useRecoilState(userState);
-  const { point, updatePoint } = usePoint();
+  const { point } = usePoint();
   const { closeMenu } = useMenu();
   const { updateCart } = useCart();
 
@@ -30,7 +30,6 @@ const UserMenu = ({ isActive }: { isActive: boolean }) => {
       setUser(DEFAULT_USER_NAME);
     }
 
-    updatePoint();
     updateCart();
   };
 

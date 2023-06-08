@@ -2,8 +2,8 @@ import { selector, selectorFamily } from 'recoil';
 import { fetchOrder, fetchOrders } from '../../remotes/order';
 import { ORDERS_BASE_URL } from '../../constants/api';
 import { serverOriginState } from '../atoms/common';
-import type { Order } from '../../types/order';
 import { base64 } from './auth';
+import type { Order } from '../../types/order';
 
 export const orderQuery = selectorFamily<Order, Order['id']>({
   key: 'order',

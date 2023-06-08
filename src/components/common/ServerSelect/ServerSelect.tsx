@@ -4,14 +4,12 @@ import styled from 'styled-components';
 import { BASE_URLS, SERVER_NAMES } from '../../../constants/api';
 import { isKeyOf } from '../../../types/typeGuards';
 import useCart from '../../../hooks/useCart';
-import usePoint from '../../../hooks/usePoint';
 import { serverOriginState } from '../../../recoil/atoms/common';
 
 const ServerSelect = () => {
   const [value, setValue] = useState('mock');
   const [serverOrigin, setServerOrigin] = useRecoilState(serverOriginState);
   const { updateCart } = useCart();
-  const { updatePoint } = usePoint();
 
   const changeServer: ChangeEventHandler<HTMLSelectElement> = (e) => {
     const value = e.target.value;
@@ -24,7 +22,6 @@ const ServerSelect = () => {
 
   useEffect(() => {
     updateCart();
-    updatePoint();
   }, [serverOrigin]);
 
   return (
