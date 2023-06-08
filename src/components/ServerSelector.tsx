@@ -31,7 +31,7 @@ const ServerSelector = () => {
                   <img src={SERVER_IMAGE_LIST[index]} alt={key} />
                   <span>{key}</span>
                 </label>
-                <input type='radio' id={key} name='서버' value={key} onChange={handleSeverChange} />
+                <input type='radio' id={key} name='server' value={key} onChange={handleSeverChange} />
               </Fragment>
             ))}
           </S.Wrapper>

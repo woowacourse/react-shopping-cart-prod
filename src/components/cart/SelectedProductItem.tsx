@@ -43,7 +43,7 @@ const SelectedProductItem = ({
         <Checkbox
           type='checkbox'
           id={`${cartItemId}-checkbox`}
-          name={name}
+          name='checkbox-in-cart'
           checked={isChecked}
           onChange={handleCheckedItem}
         />

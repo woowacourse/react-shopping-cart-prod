@@ -94,7 +94,7 @@ export const ProductListInCart = () => {
           <Checkbox
             type='checkbox'
             id='select-all'
-            name='select-all'
+            name='select-all-checkbox'
             checked={isAllChecked}
             onChange={handleAllItemsCheck}
           />

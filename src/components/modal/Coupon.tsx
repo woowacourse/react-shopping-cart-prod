@@ -18,7 +18,7 @@ const Coupon = ({ id, priceDiscount, name }: CouponItem) => {
 
   return (
     <>
-      <S.Wrapper htmlFor={`${id}`}>
+      <S.Wrapper htmlFor={`${id}-coupon`}>
         <S.Coupon>
           <p>{priceDiscount}</p>
           <S.Circle aria-hidden='true' />
@@ -33,8 +33,8 @@ const Coupon = ({ id, priceDiscount, name }: CouponItem) => {
       </S.Wrapper>
       <input
         type='radio'
-        id={`${id}`}
-        name='쿠폰'
+        id={`${id}-coupon`}
+        name='coupon'
         value={id}
         onChange={handleCouponSelect}
         checked={isSelected}
