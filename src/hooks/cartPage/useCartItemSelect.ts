@@ -28,8 +28,11 @@ export const useCartItemSelect = () => {
   const toggleAllCheckBoxChecked: React.ChangeEventHandler<HTMLInputElement> = (
     e
   ) => {
-    if (e.target.checked)
-      return setSelectedCartIdList(() => getAllCartIdList());
+    if (e.target.checked) {
+      setSelectedCartIdList(() => getAllCartIdList());
+      return;
+    }
+
     setSelectedCartIdList(() => []);
   };
 
