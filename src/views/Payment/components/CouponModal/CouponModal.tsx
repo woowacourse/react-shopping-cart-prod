@@ -49,10 +49,6 @@ function CouponModal({ isOpen, closeModal }: CouponModalProps) {
 
   const totalPrice = useTotalPrice();
 
-  const isValidCoupon = (totalPrice: number, minimumPrice: number) => {
-    return totalPrice < minimumPrice;
-  };
-
   // TODO: handler 분리 
   return isOpen ? (
     <Modal isOpen={isOpen} closeModal={closeModal}>
@@ -67,7 +63,7 @@ function CouponModal({ isOpen, closeModal }: CouponModalProps) {
                   onClick={() => {
                     setCheckedCouponId(coupon.id);
                   }}
-                  disabled={isValidCoupon(totalPrice, coupon.minimumPrice)}
+                  disabled={totalPrice < coupon.minimumPrice}
                   benefit={couponBenefitText(coupon.type, coupon.value)}
                   condition={couponCondition(coupon.minimumPrice)}
                   name={coupon.name}

@@ -84,9 +84,7 @@ function ExpectedPayment() {
         <Button
           size="l"
           primary
-          onClick={() => {
-            handlePay();
-          }}
+          onClick={handlePay}
           disabled={totalPrice === 0}
         >
           결제하기
