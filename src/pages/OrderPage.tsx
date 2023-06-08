@@ -41,7 +41,11 @@ const OrderPage = () => {
             ))}
           </ul>
         ) : (
-          <Nothing src={IMAGE_PATH.EMPTY_ORDER_LIST} alt='주문 목록이 없습니다' />
+          <Nothing
+            src={IMAGE_PATH.EMPTY_ORDER_LIST}
+            alt='주문 목록이 없습니다'
+            description='주문 목록이 없습니다'
+          />
         )}
       </>
     </MainLayout>

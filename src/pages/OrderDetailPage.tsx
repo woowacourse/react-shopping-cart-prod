@@ -2,10 +2,12 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
+import Nothing from '../components/common/Nothing';
 import Title from '../components/common/Title';
 import OrderDetail from '../components/orderDetail/OrderDetail';
 import OrderItemList from '../components/orderList/OrderItemList';
 import MainLayout from '../components/PageMainLayout';
+import { IMAGE_PATH } from '../constants';
 import { ORDER_URL } from '../constants/url';
 import { useFetchData } from '../hooks/useFetchData';
 import { serverState } from '../recoil';
@@ -30,7 +32,15 @@ const OrderDetailPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [server]);
 
-  if (!orderItemDetail) return <></>;
+  if (!orderItemDetail) {
+    return (
+      <Nothing
+        src={IMAGE_PATH.EMPTY_ORDER_LIST}
+        alt='해당 주문 번호의 주문 상세 내역이 존재하지 않습니다'
+        description='해당 주문 번호의 주문 상세 내역이 존재하지 않습니다'
+      />
+    );
+  }
 
   const { totalPrice, deliveryFee, coupon, totalPayments, orderStatus } = orderItemDetail;
 
