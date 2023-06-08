@@ -7,7 +7,6 @@ import { APIAtom } from '../../recoil/atoms/serverAtom';
 import { Suspense } from 'react';
 import { Style as CartAmountStyle } from './CartListLengthViewer';
 import { ErrorBoundary } from 'react-error-boundary';
-import { setServerName } from '../../utils/localStorage';
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -20,8 +19,6 @@ export const Header = () => {
 
     const currentUrl = window.location.href;
     window.location.replace(currentUrl);
-
-    setServerName(e.target.value);
   };
 
   return (
