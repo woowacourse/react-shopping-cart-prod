@@ -10,9 +10,14 @@ const ProductItemList = () => {
 
   const fetchedProductList =
     data &&
-    data.map((product) => (
-      <ProductItem key={product.id} cartList={cartList} product={product} />
-    ));
+    data.map((product) => {
+      const cartItem = cartList.find(
+        (cartItem) => cartItem.product.id === product.id
+      );
+      return (
+        <ProductItem key={product.id} cartItem={cartItem} product={product} />
+      );
+    });
 
   return <S.ProductListWrapper>{fetchedProductList}</S.ProductListWrapper>;
 };

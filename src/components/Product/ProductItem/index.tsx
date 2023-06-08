@@ -6,16 +6,12 @@ import { Cart, Product } from 'types';
 import { calculateSalePercentage, formatPrice } from 'utils';
 
 interface ProductItemProps {
-  cartList: Cart[];
+  cartItem?: Cart;
   product: Product;
 }
 
-const ProductItem = ({ cartList, product }: ProductItemProps) => {
+const ProductItem = ({ cartItem, product }: ProductItemProps) => {
   const { decreaseItemQuantity, addItem, increaseItemQuantity } = useCart();
-
-  const cartItem = cartList.find(
-    (cartItem) => cartItem.product.id === product.id
-  );
 
   const increase = () => {
     if (!cartItem) return;
