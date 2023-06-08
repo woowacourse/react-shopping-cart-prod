@@ -47,6 +47,8 @@ function PaymentAmount() {
   const isFixScrollPosition = pathname === ROUTES.cartList ? scrollPosition > 160 : scrollPosition > 120;
 
   const updateScrollYPosition = () => {
+    if (isFixScrollPosition) return;
+
     const scrollPosition = window.scrollY;
     setScrollPosition(scrollPosition);
   };
