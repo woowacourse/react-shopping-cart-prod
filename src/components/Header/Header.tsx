@@ -1,7 +1,7 @@
 import * as styled from './Header.styled';
 import { CartSize } from './CartSize/CartSize';
 
-import { ApiSelector } from './ApiSelector/ApiSelector';
+import { ApiSelectBox } from './ApiSelectbox/ApiSelectBox';
 
 import { CartLinkIcon, CartLogo, UserIcon } from '@assets/svg';
 
@@ -15,7 +15,7 @@ export const Header = () => {
           <span>카트</span>
         </styled.Title>
         <styled.RightWrapper>
-          <ApiSelector />
+          <ApiSelectBox />
           <styled.CartPageLink to="/shopping-cart">
             <CartLinkIcon />
             <span>장바구니</span>

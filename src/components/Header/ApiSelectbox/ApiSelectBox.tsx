@@ -1,5 +1,5 @@
 import { ChangeEvent } from 'react';
-import * as styled from './ApiSelector.styled';
+import * as styled from './ApiSelectBox.styled';
 
 import { useBaseApiUrlState } from '@recoils/baseApiUrlAtoms';
 
@@ -9,7 +9,7 @@ const apiOptions = [
   { value: '채채', label: '채채' },
 ];
 
-export const ApiSelector = () => {
+export const ApiSelectBox = () => {
   const [apiBaseUrlKey, setApiBaseUrlKey] = useBaseApiUrlState();
 
   const onChange = ({ target: { value } }: ChangeEvent<HTMLSelectElement>) => {
@@ -17,10 +17,12 @@ export const ApiSelector = () => {
   };
 
   return (
-    <styled.Selector onChange={onChange} value={apiBaseUrlKey}>
-      <option value="MSW">MSW</option>
-      <option value="이리내">이리내</option>
-      <option value="채채">채채</option>
-    </styled.Selector>
+    <styled.SelectBox onChange={onChange} value={apiBaseUrlKey}>
+      {apiOptions.map((option) => (
+        <option key={option.value} value={option.value}>
+          {option.label}
+        </option>
+      ))}
+    </styled.SelectBox>
   );
 };

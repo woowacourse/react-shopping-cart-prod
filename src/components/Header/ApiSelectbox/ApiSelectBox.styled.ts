@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 
-export const Selector = styled.select`
+export const SelectBox = styled.select`
   height: 42px;
   width: 102px;
 
