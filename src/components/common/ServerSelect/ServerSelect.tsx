@@ -1,7 +1,7 @@
 import { ChangeEventHandler, useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { BASE_URLS } from '../../../constants/api';
+import { BASE_URLS, SERVER_NAMES } from '../../../constants/api';
 import { isKeyOf } from '../../../types/typeGuards';
 import useCart from '../../../hooks/useCart';
 import useOrder from '../../../hooks/useOrder';
@@ -33,10 +33,11 @@ const ServerSelect = () => {
   return (
     <Label>
       <Select value={value} onChange={changeServer}>
-        <option value="mock">MSW</option>
-        <option value="baron">바론</option>
-        <option value="blackCat">블랙캣</option>
-        <option value="kkero">케로</option>
+        {Object.entries(SERVER_NAMES).map(([key, value]) => (
+          <option key={key} value={key}>
+            {value}
+          </option>
+        ))}
       </Select>
     </Label>
   );
