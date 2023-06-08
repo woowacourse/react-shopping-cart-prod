@@ -1,10 +1,9 @@
-import { getCouponApplied, postPayments } from 'api/requests';
-import { useGet } from 'hooks/useGet';
-import { useMutate } from 'hooks/useMutate';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { cartListAtom, checkedItemsAtom, couponIdAtom } from 'recoil/cartList';
-import { CouponAppliedPriceResponse } from 'types/api';
+import { checkedItemsAtom, couponIdAtom } from 'recoil/cartList';
+import { postPayments } from 'api/requests';
+import { useMutate } from 'hooks/useMutate';
+import { useCalculatePrice } from '../hooks/useCalculatePrice';
 import { formatPrice } from 'utils';
 import { ROUTES } from 'constants/index';
 import * as S from './PaymentDetail.styles';
@@ -12,66 +11,25 @@ import * as S from './PaymentDetail.styles';
 const PaymentDetail = () => {
   const couponIds = useRecoilValue(couponIdAtom);
   const checkedItems = useRecoilValue(checkedItemsAtom);
-  const cartList = useRecoilValue(cartListAtom);
-
   const { request } = useMutate();
-
-  const { data } = useGet<CouponAppliedPriceResponse>(
-    getCouponApplied(couponIds),
-    couponIds
-  );
-
   const navigate = useNavigate();
+
+  const {
+    calculateDeliveryPrice,
+    calculateOriginalPrice,
+    calculateTotalDiscountPrice,
+    calculateOrderPrice,
+  } = useCalculatePrice();
 
   const onOrderButtonClick = () => {
     navigate(ROUTES.ORDER_LIST);
-    request(
-      postPayments({
-        cartItemIds: checkedItems,
-        isDeliveryFree: calculateDeliveryPrice() === 0,
-        totalPaymentPrice: calculateOrderPrice(),
-        couponIds: couponIds,
-      })
-    );
-  };
-
-  const calculateDeliveryPrice = () => {
-    if (!data) return 0;
-    return data.deliveryPrice.originalPrice - data.deliveryPrice.discountPrice;
-  };
-
-  const calculateTotalPrice = () => {
-    if (!data) return 0;
-
-    return data.cartItemsPrice.reduce((acc, cur) => {
-      if (!checkedItems.includes(cur.cartItemId)) return acc;
-      const quantity =
-        cartList.find((item) => item.id === cur.cartItemId)?.quantity ?? 0;
-      return acc + cur.originalPrice * quantity;
-    }, 0);
-  };
-
-  const calculateTotalDiscountPrice = () => {
-    if (!data) return 0;
-
-    const discountPrice = data.cartItemsPrice.reduce((acc, cur) => {
-      if (!checkedItems.includes(cur.cartItemId)) return acc;
-      const quantity =
-        cartList.find((item) => item.id === cur.cartItemId)?.quantity ?? 0;
-      return acc + cur.discountPrice * quantity;
-    }, 0);
-
-    const couponDiscountPrice = data.discountFromTotalPrice.discountPrice;
-    return discountPrice + couponDiscountPrice;
-  };
-
-  const calculateOrderPrice = () => {
-    if (!data) return 0;
-    return (
-      calculateDeliveryPrice() +
-      calculateTotalPrice() -
-      calculateTotalDiscountPrice()
-    );
+    const payload = {
+      cartItemIds: checkedItems,
+      isDeliveryFree: calculateDeliveryPrice() === 0,
+      totalPaymentPrice: calculateOrderPrice(),
+      couponIds: couponIds,
+    };
+    request(postPayments(payload));
   };
 
   return (
@@ -79,7 +37,7 @@ const PaymentDetail = () => {
       <S.Title>결제 예상 금액</S.Title>
       <S.Wrapper>
         <S.Text>총 상품 가격</S.Text>
-        <S.Text>{formatPrice(calculateTotalPrice())}원</S.Text>
+        <S.Text>{formatPrice(calculateOriginalPrice())}원</S.Text>
       </S.Wrapper>
       <S.Wrapper>
         <S.Text>총 배송비</S.Text>
