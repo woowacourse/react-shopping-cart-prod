@@ -73,7 +73,7 @@ const orderAmountState = selector({
       deliveryFee,
       cartListPrice,
       finalOrderPrice,
-      discountAmount: isDiscounted ? `- ${convert.toLocalPriceFromNumber(discountAmount)}` : `0 원`,
+      discountAmount: isDiscounted ? `- ${convert.toLocalPriceFromNumber(discountAmount)}` : null,
       allDiscountAmount: convert.toLocalPriceFromNumber(allDiscountAmount),
       couponDiscountAmount: couponDiscountAmount ? `- ${convert.toLocalPriceFromNumber(couponDiscountAmount)}` : null,
     };

@@ -14,6 +14,7 @@ import orderAmountState from '@Selector/orderAmountState';
 import ROUTES from '@Constants/routes';
 
 import * as S from './style';
+import DiscountPrice from '../DIscountPrice';
 import IssuedCoupon from '../IssuedCoupon';
 
 function PaymentAmount() {
@@ -24,7 +25,8 @@ function PaymentAmount() {
 
   const { cartItemsAmount } = useCartItems();
 
-  const { orderAmount, deliveryFee, cartListPrice, finalOrderPrice } = useRecoilValue(orderAmountState);
+  const { orderAmount, deliveryFee, cartListPrice, finalOrderPrice, discountAmount, couponDiscountAmount } =
+    useRecoilValue(orderAmountState);
   const setSelectedCouponId = useSetRecoilState(selectedCouponIdState);
 
   const { orderCartItems } = useOrderItems();
@@ -44,12 +46,22 @@ function PaymentAmount() {
 
   const displayButtonText = pathname === ROUTES.cartList ? '주문하기' : '결제하기';
   const displayTotalOrderPrice = pathname === ROUTES.cartList ? cartListPrice : finalOrderPrice;
-  const isFixScrollPosition = pathname === ROUTES.cartList ? scrollPosition > 160 : scrollPosition > 120;
+  const calculateIsFixScrollPosition = (scrollPosition: number) => {
+    return pathname === ROUTES.cartList ? scrollPosition >= 160 : scrollPosition >= 120;
+  };
 
   const updateScrollYPosition = () => {
-    if (isFixScrollPosition) return;
-
     const scrollPosition = window.scrollY;
+
+    if (calculateIsFixScrollPosition(scrollPosition)) {
+      const newScrollPosition = ROUTES.cartList ? 160 : 120;
+
+      if (newScrollPosition < scrollPosition) return;
+
+      setScrollPosition(newScrollPosition);
+      return;
+    }
+
     setScrollPosition(scrollPosition);
   };
 
@@ -64,7 +76,7 @@ function PaymentAmount() {
   if (cartItemsAmount === '0') return <></>;
 
   return (
-    <S.Wrapper isFixScrollPosition={isFixScrollPosition}>
+    <S.Wrapper isFixScrollPosition={calculateIsFixScrollPosition(scrollPosition)}>
       {pathname === ROUTES.orderSheet && <IssuedCoupon />}
       <S.Container>
         <S.Title>결제 예상 금액</S.Title>
@@ -73,6 +85,9 @@ function PaymentAmount() {
             <S.AmountCategory>총 상품가격</S.AmountCategory>
             <S.Amount>{orderAmount}</S.Amount>
           </S.AmountWrapper>
+          {pathname === ROUTES.orderSheet && (
+            <DiscountPrice discountAmount={discountAmount} couponDiscountAmount={couponDiscountAmount} />
+          )}
           <S.AmountWrapper>
             <S.AmountCategory>총 배송비</S.AmountCategory>
             <S.Amount>{deliveryFee}</S.Amount>
