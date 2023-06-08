@@ -4,8 +4,7 @@ import { useTotalProductPrice } from '../../recoils/recoilTotalPrice';
 
 import { Button } from '../common/Button';
 
-import { DELIVERY_CHARGE, FETCH_METHOD, LOCALE, PATH, ZERO } from '../../constants';
-import { useNavigate } from 'react-router-dom';
+import { DELIVERY_CHARGE, FETCH_METHOD, LOCALE, ZERO } from '../../constants';
 import { useCartStateValue, useSetCartState } from '../../recoils/recoilCart';
 import { useApiBaseUrlValue } from '../../recoils/recoilApiBaseUrl';
 import { useMutation } from '../../hooks/useMutation';
@@ -38,8 +37,6 @@ const OrderSummary = () => {
 
   const totalProductPrice = useTotalProductPrice();
 
-  const navigate = useNavigate();
-
   if (!point || !discount) return <></>;
 
   const postCart = {
@@ -55,9 +52,7 @@ const OrderSummary = () => {
     setCart([]);
     setChecked({ all: true });
 
-    setToast(true)
-
-    // navigate(PATH.ORDER);
+    setToast(true);
   };
 
   const pointChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,7 +63,9 @@ const OrderSummary = () => {
     <>
       <>
         <Style.OrderSummary>
-        {toast && <ToastMessage setToast={setToast}>{"주문 등록이 완료되었습니다."}</ToastMessage>}
+          {toast && (
+            <ToastMessage setToast={setToast}>{'주문 등록이 완료되었습니다.'}</ToastMessage>
+          )}
           <Style.OrderSummaryHeader>결제예상금액</Style.OrderSummaryHeader>
           <Style.Content>
             <Style.Prices>
@@ -104,8 +101,8 @@ const OrderSummary = () => {
                 <span>총 주문금액</span>
                 <span>
                   {totalProductPrice >= discount.freeShippingThreshold
-                    ? localeString((totalProductPrice - usePoint), LOCALE.KOREA)
-                    : localeString((totalProductPrice + DELIVERY_CHARGE - usePoint), LOCALE.KOREA)}
+                    ? localeString(totalProductPrice - usePoint, LOCALE.KOREA)
+                    : localeString(totalProductPrice + DELIVERY_CHARGE - usePoint, LOCALE.KOREA)}
                   원
                 </span>
               </Style.Price>
@@ -125,7 +122,9 @@ const OrderSummary = () => {
       </>
       <>
         <Mobile.OrderSummary>
-        {toast && <ToastMessage setToast={setToast}>{"주문 등록이 완료되었습니다."}</ToastMessage>}
+          {toast && (
+            <ToastMessage setToast={setToast}>{'주문 등록이 완료되었습니다.'}</ToastMessage>
+          )}
           <Mobile.Prices>
             <Mobile.Price>
               <div>총 상품가격</div>
@@ -149,8 +148,8 @@ const OrderSummary = () => {
               <div>총 주문금액</div>
               <div>
                 {totalProductPrice >= discount.freeShippingThreshold
-                  ? localeString((totalProductPrice - usePoint), LOCALE.KOREA)
-                  : localeString((totalProductPrice + DELIVERY_CHARGE - usePoint), LOCALE.KOREA)}
+                  ? localeString(totalProductPrice - usePoint, LOCALE.KOREA)
+                  : localeString(totalProductPrice + DELIVERY_CHARGE - usePoint, LOCALE.KOREA)}
                 원
               </div>
             </Mobile.Price>
