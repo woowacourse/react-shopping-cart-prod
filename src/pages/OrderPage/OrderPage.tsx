@@ -1,12 +1,17 @@
-import { Suspense } from 'react';
+import AsyncBoundary from '../../components/AsyncBoundary/AsyncBoundary';
 import OrderList from '../../components/OrderPage/OrderList';
+import Loading from '../../components/common/Loading/Loading';
+import ErrorPage from '../ErrorPage/ErrorPage';
 
 const OrderPage = () => {
   return (
     <main>
-      <Suspense>
+      <AsyncBoundary
+        loadingFallback={<Loading />}
+        errorFallback={<ErrorPage />}
+      >
         <OrderList />
-      </Suspense>
+      </AsyncBoundary>
     </main>
   );
 };
