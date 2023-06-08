@@ -15,7 +15,7 @@ import { worker } from './msw/worker';
     return;
   }
 
-  if (window.location.pathname === '/react-shopping-cart') {
+  if (window.location.pathname === '/react-shopping-cart-prod') {
     window.location.pathname += '/';
     return;
   }
