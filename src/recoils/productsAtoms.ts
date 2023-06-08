@@ -1,14 +1,16 @@
 import { selector, useRecoilValue } from 'recoil';
 import { fetchAPI } from '@api/fetchAPI';
 
-import type { Product } from '../types';
 import { baseApiUrlSelector } from './baseApiUrlAtoms';
 
+import { FETCH_URL, RECOIL_KEY } from '@constants/index';
+import type { Product } from '../types';
+
 export const productsSelector = selector<Product[]>({
-  key: 'productsRepository',
+  key: RECOIL_KEY.PRODUCTS_SELECTOR,
   get: async ({ get }) => {
     const baseApiUrl = get(baseApiUrlSelector);
-    const products = await fetchAPI(`${baseApiUrl}/products`);
+    const products = await fetchAPI(baseApiUrl + FETCH_URL.PRODUCTS);
 
     return products;
   },

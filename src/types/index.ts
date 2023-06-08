@@ -38,6 +38,16 @@ export interface OrderDetail {
   orderDetails: OrderSummary[];
 }
 
+export interface OrdersRequestBody {
+  totalProductsPrice: number;
+  shippingFee: number;
+  usedPoint: number;
+  order: {
+    cartItemId: number;
+    quantity: number;
+  }[];
+}
+
 export interface UsablePoint {
   useablePoint: number;
 }

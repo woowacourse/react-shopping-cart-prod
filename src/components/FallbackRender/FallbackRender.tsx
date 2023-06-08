@@ -4,7 +4,7 @@ interface FallbackRenderProps {
   error: {
     message: string;
   };
-  resetErrorBoundary: any;
+  resetErrorBoundary: () => void;
 }
 
 export const FallbackRender = ({ error, resetErrorBoundary }: FallbackRenderProps) => {

@@ -10,7 +10,11 @@ import { useFetchOrderPolicy } from '@recoils/orderPolicyAtoms';
 
 import { usePoint } from '@hooks/usePoint';
 
-export const OrderSummary = ({ fetchCartItems }: any) => {
+interface OrderSummaryProps {
+  fetchCartItems: (cartItemId?: number) => Promise<void>;
+}
+
+export const OrderSummary = ({ fetchCartItems }: OrderSummaryProps) => {
   const navigate = useNavigate();
 
   const { fetchOrder } = useOrdersRepository();
