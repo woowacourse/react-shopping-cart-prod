@@ -32,7 +32,8 @@ const RECOIL_KEY = Object.freeze({
 
   TOTAL_PRODUCT_PRICE_VALUE: 'totalProductPriceValue',
 
-  API_BASE_URL_STATE: 'apiBaseUrlState',
+  API_BASE_URL_STATE: 'baseApiUrlState',
+  API_BASE_URL_SELECTOR: 'baseApiUrlSelector',
 });
 
 const LOCAL_STORAGE_KEY = Object.freeze({
