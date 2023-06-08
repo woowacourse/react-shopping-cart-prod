@@ -41,6 +41,8 @@ const useOrder = () => {
 
       setCheckedCartItemIds([]);
     }
+
+    return orderId;
   };
 
   return { addOrder };

@@ -20,36 +20,35 @@ const EstimatedPaymentBox = () => {
   const { userPoint, minUsagePoint } = useRecoilValue(userPointAtom);
 
   const { addOrder } = useOrder();
-  const [pointInput, setPointInput] = useState('0');
+  const [pointInput, setPointInput] = useState(0);
 
   const totalDeliveryFee = totalProductPrice < 50000 ? 3000 : 0;
   const totalPrice =
-    totalProductPrice > 0 && !isNaN(Number(pointInput))
-      ? totalProductPrice + totalDeliveryFee - Number(pointInput)
+    totalProductPrice > 0 && !isNaN(pointInput)
+      ? totalProductPrice + totalDeliveryFee - pointInput
       : 0;
 
   const handlePointChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     const onlyNumbersRegex = /^[0-9\b]+$/;
 
-    if (
-      value === '' ||
-      (onlyNumbersRegex.test(value) && Number(value) <= userPoint)
-    ) {
-      setPointInput(value);
+    if (value === '' || !onlyNumbersRegex.test(value)) {
+      setPointInput(0);
       return;
     }
-    setPointInput('0');
+
+    setPointInput(Number(value));
+    return;
   };
 
   const handlePointButton = () => {
-    setPointInput(String(userPoint));
+    setPointInput(userPoint);
   };
 
-  const handleClickOrderButton = () => {
-    if (Number(pointInput) < minUsagePoint && Number(pointInput) > 0) {
+  const handleClickOrderButton = async () => {
+    if (pointInput < minUsagePoint && pointInput > 0) {
       alert(`포인트는 ${minUsagePoint}원 이상으로 입력해주세요!`);
-      setPointInput('0');
+      setPointInput(0);
       return;
     }
 
@@ -58,12 +57,13 @@ const EstimatedPaymentBox = () => {
         cartItems: checkedCartItems,
         totalProductPrice,
         totalDeliveryFee,
-        usePoint: Number(pointInput),
+        usePoint: pointInput,
         totalPrice,
       };
-      addOrder(newOrder);
+      const orderId = await addOrder(newOrder);
 
-      navigate('/order');
+      if (orderId) navigate('/order');
+      else alert('주문에 실패했습니다. 새로고침 후 시도해주세요.');
     }
   };
 
@@ -97,7 +97,7 @@ const EstimatedPaymentBox = () => {
         <EstimatedPaymentInfo>
           <dt>포인트 사용</dt>
           <dd style={{ color: 'red' }}>
-            {pointInput === '0' ? pointInput : -pointInput}원
+            {pointInput === 0 ? pointInput : -pointInput}원
           </dd>
         </EstimatedPaymentInfo>
         <EstimatedPaymentInfo>
