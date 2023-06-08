@@ -47,7 +47,7 @@ const S = {
   Wrapper: styled.label`
     position: relative;
     display: flex;
-    border: 1px solid #888;
+    border: 1px solid var(--gray-color-400);
     border-radius: 4px;
     box-shadow: 3px 4px 5px #e0e0e0;
     cursor: pointer;
@@ -56,7 +56,7 @@ const S = {
       position: absolute;
       right: 16px;
       align-self: center;
-      fill: #767676;
+      fill: var(--gray-color-400);
 
       @media (max-width: 420px) {
         display: none;
@@ -78,7 +78,7 @@ const S = {
     font-size: 12px;
     text-align: center;
     letter-spacing: 1px;
-    color: #fff;
+    color: var(--white-color);
     background: var(--highlight-color);
 
     & > p {
@@ -86,7 +86,7 @@ const S = {
       margin: 0;
       padding: 7px 14px;
       line-height: 120%;
-      border: 1px dotted #fff;
+      border: 1px dotted var(--white-color);
     }
   `,
 
