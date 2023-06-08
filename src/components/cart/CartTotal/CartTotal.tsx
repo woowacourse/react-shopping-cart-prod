@@ -8,6 +8,7 @@ import useCartTotal from './useCartTotal';
 import { FREE_SHIPPING_PRICE, SHIPPING_FEE } from '../../../constants/cart';
 import useModal from '../../common/Modal/useModal';
 import type { CartItem } from '../../../types/cart';
+import useCloseModalOnUnmount from '../../common/Modal/useCloseModalOnUnmount';
 
 interface CartTotalProps {
   selectedCartItemIds: Set<CartItem['id']>;
@@ -28,6 +29,7 @@ const CartTotal = ({
     totalPaymentPrice,
   } = useCartTotal(totalProductPrice);
   const { isModalOpen, openModal } = useModal();
+  useCloseModalOnUnmount();
   const isFreeShipping = totalProductPrice >= FREE_SHIPPING_PRICE;
 
   return (

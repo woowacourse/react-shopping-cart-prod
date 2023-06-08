@@ -28,7 +28,6 @@ const useCartTotal = (totalProductPrice: Product['price']) => {
   const [usingPoint, setUsingPoint] = useState('');
   const usingPointRef = useRef('');
   const { point } = usePoint();
-  const { isModalOpen, closeModal } = useModal();
   const totalOrderPrice = calcTotalOrderPrice(totalProductPrice);
   const isPointMoreThanOrderPrice = point > totalOrderPrice;
   const maxPoint = isPointMoreThanOrderPrice ? totalOrderPrice : point;
@@ -62,14 +61,6 @@ const useCartTotal = (totalProductPrice: Product['price']) => {
       setUsingPoint(maxPoint.toLocaleString('ko-KR'));
     }
   };
-
-  useEffect(() => {
-    return () => {
-      if (isModalOpen) {
-        closeModal();
-      }
-    };
-  }, []);
 
   useEffect(() => {
     if (isPointMoreThanOrderPrice && usingPoint !== '0') {
