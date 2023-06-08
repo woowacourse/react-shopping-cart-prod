@@ -3,10 +3,7 @@ import { APIAtom } from '../atoms/serverAtom';
 import { base64 } from '../../constants/user';
 import { OrderDetailType } from '../../pages/OrderDetail';
 
-export const orderDetailSelector = selectorFamily<
-  OrderDetailType,
-  { orderId: number }
->({
+export const orderDetailSelector = selectorFamily<OrderDetailType, number>({
   key: 'orderDetailSelector',
   get:
     (orderId) =>

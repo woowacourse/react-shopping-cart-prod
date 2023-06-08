@@ -7,8 +7,14 @@ import { useLocation } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { orderDetailSelector } from '../../recoil/selectors/orderDetailSelector';
 
+interface RouteState {
+  state: {
+    orderId: number;
+  };
+}
+
 export const OrderDetailContent = () => {
-  const { state } = useLocation();
+  const { state } = useLocation() as RouteState;
   const { orderId } = state;
 
   const orderDetail = useRecoilValue(orderDetailSelector(orderId));
