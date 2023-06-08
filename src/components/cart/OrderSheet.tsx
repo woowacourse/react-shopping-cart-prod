@@ -19,7 +19,7 @@ const OrderSheet = () => {
   const { api, isLoading } = useFetchData();
   const [coupons, setCoupons] = useState<Coupon[]>([]);
 
-  const [checkedCoupon, setCheckedCoupon] = useState<number>(0);
+  const [checkedCoupon, setCheckedCoupon] = useState(0);
   const handleChangeCoupon: React.ChangeEventHandler<HTMLInputElement> = ({ target: { id } }) => {
     setCheckedCoupon(Number(id));
   };
@@ -63,8 +63,8 @@ const OrderSheet = () => {
 
   return (
     <div>
-      <StyledFieldset>
-        <StyledLegend>쿠폰 선택하기</StyledLegend>
+      <StyledFieldset role="radiogroup" aria-labelledby="rg-label">
+        <StyledLegend id="rg-label">쿠폰 선택하기</StyledLegend>
         <div>
           <RadioInput
             type="radio"
@@ -89,7 +89,6 @@ const OrderSheet = () => {
             <StyledLabel htmlFor={String(id)}>{name}</StyledLabel>
           </div>
         ))}
-        <div></div>
       </StyledFieldset>
       <S.Wrapper>
         <S.Title>결제 금액</S.Title>
