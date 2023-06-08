@@ -1,5 +1,5 @@
 import type { ScheduledOrderType } from '../types/product';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { api } from '../apis/order';
 import { hostNameAtom } from '../recoil/hostData';
@@ -13,8 +13,8 @@ const useOrder = () => {
   const [checkedCartItemIds, setCheckedCartItemIds] = useRecoilState(
     checkedCartItemIdsAtom
   );
-  const [order, setOrder] = useRecoilState(orderAtom);
-  const [point, setPoint] = useRecoilState(userPointAtom);
+  const setOrder = useSetRecoilState(orderAtom);
+  const setPoint = useSetRecoilState(userPointAtom);
 
   const hostName = useRecoilValue(hostNameAtom);
 
