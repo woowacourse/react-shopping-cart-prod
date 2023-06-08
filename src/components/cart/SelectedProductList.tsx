@@ -1,33 +1,15 @@
-import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { css, styled } from 'styled-components';
-import { CART_URL } from '../../constants/url';
-import useFetchData from '../../hooks/useFetchData';
 import { useRemoveCheckedItemsFromCart } from '../../hooks/useRemoveCheckedItemsFromCart';
-import { cartState, selectedCartItems, serverState } from '../../recoil';
-import { CartItem } from '../../types';
+import { cartState, selectedCartItems } from '../../recoil';
 import Button from '../common/Button';
 import { Checkbox } from '../common/CheckboxStyle';
-import Spinner from '../Spinner';
 import SelectedProductItem from './SelectedProductItem';
 
 const SelectedProductList = () => {
-  const [cart, setCart] = useRecoilState(cartState);
   const [checkedItems, setCheckedItems] = useRecoilState(selectedCartItems);
   const removeCheckedItemsFromCart = useRemoveCheckedItemsFromCart(checkedItems);
-  const server = useRecoilValue(serverState);
-  const { api, isLoading } = useFetchData();
-
-  useEffect(() => {
-    api
-      .get(`${server}${CART_URL}`)
-      .then((data) => {
-        setCart(data.map((item: CartItem) => ({ ...item, isSelected: true })));
-      })
-      .catch((error) => alert(error));
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [server]);
+  const cart = useRecoilValue(cartState);
 
   const productCountInCart = cart.length;
   const isAllChecked = checkedItems.length === productCountInCart && productCountInCart !== 0;
@@ -42,28 +24,23 @@ const SelectedProductList = () => {
     removeCheckedItemsFromCart();
   };
 
-  if (isLoading) return <Spinner />;
-
   return (
     <S.Wrapper>
       <S.Title>{`든든배송 상품 (${productCountInCart}개)`}</S.Title>
-      {productCountInCart === 0 ? (
-        <S.Nothing src={`${process.env.PUBLIC_URL}/assets/nothing.png`} alt="장바구니가 텅 비었어요" />
-      ) : (
-        <div>
-          {cart.map((item) => (
-            <SelectedProductItem
-              key={item.product.id}
-              id={item.id}
-              productId={item.product.id}
-              name={item.product.name}
-              price={item.product.price}
-              imageUrl={item.product.imageUrl}
-              quantity={item.quantity}
-            />
-          ))}
-        </div>
-      )}
+
+      <div>
+        {cart.map((item) => (
+          <SelectedProductItem
+            key={item.product.id}
+            id={item.id}
+            productId={item.product.id}
+            name={item.product.name}
+            price={item.product.price}
+            imageUrl={item.product.imageUrl}
+            quantity={item.quantity}
+          />
+        ))}
+      </div>
 
       <S.Fieldset>
         <Checkbox
@@ -121,16 +98,6 @@ const S = {
       @media (max-width: 420px) {
         padding: 0 10px;
       }
-    }
-  `,
-
-  Nothing: styled.img`
-    display: block;
-    width: 50%;
-    margin: 0 auto;
-
-    @media (max-width: 768px) {
-      width: 100%;
     }
   `,
 
