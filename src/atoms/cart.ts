@@ -13,7 +13,6 @@ export const cartSelector = selector({
   },
 });
 
-// TODO: 아래 두 selector, atom 중복됨
 export const selectedCartItemIdsState = atom({
   key: 'selectedCartItemIdsState',
   default: selector({
@@ -27,25 +26,6 @@ export const selectedCartItemIdsState = atom({
       );
     },
   }),
-});
-
-export const selectedCartItemIdsSelector = selector({
-  key: 'selectedCartItemIdsSelector',
-  get: ({ get }) => {
-    const cart = get(cartSelector);
-    const selectedItems = get(selectedCartItemIdsState);
-
-    return cart.reduce<Set<CartItem['id']>>(
-      (newSelectedItems, item) =>
-        selectedItems.has(item.id)
-          ? newSelectedItems.add(item.id)
-          : newSelectedItems,
-      new Set()
-    );
-  },
-  set: ({ set }, newValue) => {
-    set(selectedCartItemIdsState, newValue);
-  },
 });
 
 export const isSelectedCartId = selectorFamily({
@@ -62,7 +42,7 @@ export const totalPriceSelector = selector({
   key: 'totalPriceSelector',
   get: ({ get }) => {
     const cart = get(cartSelector);
-    const selectedItems = get(selectedCartItemIdsSelector);
+    const selectedItems = get(selectedCartItemIdsState);
 
     return cart.reduce(
       (totalPrice, { id, quantity, product: { price } }) =>

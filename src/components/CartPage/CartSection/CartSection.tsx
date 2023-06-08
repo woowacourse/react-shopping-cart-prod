@@ -1,4 +1,4 @@
-import { selectedCartItemIdsSelector } from '../../../atoms/cart';
+import { selectedCartItemIdsState } from '../../../atoms/cart';
 import { useRefreshableRecoilValue } from '../../../hooks/common/useRefreshableAtom';
 import CartItemController from '../CartItemController/CartItemController';
 import CartItemList from '../CartItemList/CartItemList';
@@ -6,9 +6,7 @@ import AllCouponSelectContainer from '../CouponSelect/AllCouponSelectContainer';
 import * as S from './CartSection.styles';
 
 const CartSection = () => {
-  const selectedItemIds = useRefreshableRecoilValue(
-    selectedCartItemIdsSelector
-  );
+  const selectedItemIds = useRefreshableRecoilValue(selectedCartItemIdsState);
 
   return (
     <S.Root>
