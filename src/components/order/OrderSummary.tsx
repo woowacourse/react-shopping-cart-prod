@@ -154,7 +154,7 @@ const OrderSummary = () => {
                   type="number"
                   value={usePoint === ZERO ? '' : usePoint}
                   onChange={pointChange}
-                ></Mobile.PointInput>
+                />
               </Mobile.PointWrapper>
             </Mobile.Price>
             <Mobile.Price>
