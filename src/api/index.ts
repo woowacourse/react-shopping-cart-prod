@@ -1,71 +1,35 @@
-import type { CartType, ProductType, ServerNameType } from '../types';
+import type { ServerNameType, ProductType, CouponType } from '../types';
 
-import { BASE_URL_MAP, USER_ID, USER_PASSWORD } from '../constants';
+import { postJoin, postLogin } from './auth';
+import {
+  deleteCartItem,
+  deleteCartItems,
+  getCart,
+  patchCartItemQuantity,
+  postCartItem,
+} from './cart';
+import { getOrder, getOrders, postOrder } from './order';
+import fetcher from '../utils/fetcher';
 
-const Authorization = `Basic ${btoa(`${USER_ID}:${USER_PASSWORD}`)}`;
+export const getProducts = async (serverName: ServerNameType): Promise<ProductType[]> =>
+  fetcher(serverName)('GET', 'products');
 
-const get =
-  <T>(path: string) =>
-  async (serverName: ServerNameType) => {
-    const response = await fetch(`${BASE_URL_MAP[serverName]}/${path}`, {
-      headers: {
-        Authorization,
-      },
-    });
-    if (!response.ok) throw new Error(`${path} GET error`);
-
-    const data: T = await response.json();
-
-    return data;
-  };
-
-export const getProducts = get<ProductType[]>('products');
-
-export const getCart = get<CartType>('cart-items');
-
-export const postCartItem = async (serverName: ServerNameType, productId: number) => {
-  const url = `${BASE_URL_MAP[serverName]}/cart-items`;
-  const body = { productId };
-
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: { Authorization, 'content-Type': 'application/json' },
-    body: JSON.stringify(body),
-  });
-
-  if (!response.ok) throw new Error(`${url} POST Error`);
-};
-
-export const patchCartItemQuantity = async (
+export const getCoupons = async (
   serverName: ServerNameType,
-  cartItemId: number,
-  quantity: number
-) => {
-  const url = `${BASE_URL_MAP[serverName]}/cart-items/${cartItemId}`;
-  const body = { quantity };
+  token: string
+): Promise<CouponType[]> => fetcher(serverName, token)('GET', 'users/me/coupons');
 
-  const response = await fetch(url, {
-    method: 'PATCH',
-    headers: { Authorization, 'content-Type': 'application/json' },
-    body: JSON.stringify(body),
-  });
-
-  if (!response.ok) throw new Error(`${url} PATCH Error`);
-};
-
-export const deleteCartItem = async (serverName: ServerNameType, cartItemId: number) => {
-  const url = `${BASE_URL_MAP[serverName]}/cart-items/${cartItemId}`;
-
-  const response = await fetch(url, { method: 'DELETE', headers: { Authorization } });
-
-  if (!response.ok) throw new Error(`${url} FETCH Error`);
-};
-
-export const deleteCartItems = async (serverName: ServerNameType, cartItemIdList: number[]) => {
-  const ids = cartItemIdList.map(String).join(',');
-  const url = `${BASE_URL_MAP[serverName]}/cart-items?ids=${ids}`;
-
-  const response = await fetch(url, { method: 'DELETE', headers: { Authorization } });
-
-  if (!response.ok) throw new Error(`${url} FETCH Error`);
+export default {
+  postJoin,
+  postLogin,
+  getProducts,
+  getCoupons,
+  getCart,
+  postCartItem,
+  patchCartItemQuantity,
+  deleteCartItem,
+  deleteCartItems,
+  getOrders,
+  getOrder,
+  postOrder,
 };

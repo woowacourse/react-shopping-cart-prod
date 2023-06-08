@@ -1,17 +1,17 @@
-import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 import CartItem from './CartItem';
 import CheckBox from '../common/CheckBox';
 
-import * as api from '../../api';
+import api from '../../api';
 import useToast from '../../hooks/useToast';
-import { cartState, checkedListState, serverNameState } from '../../recoil/state';
+import { cartState, checkedListState, serverNameState, tokenState } from '../../recoil/state';
 import { API_ERROR_MESSAGE } from '../../constants';
 
 export default function CartItemList() {
   const serverName = useRecoilValue(serverNameState);
+  const token = useRecoilValue(tokenState);
   const [cart, setCart] = useRecoilState(cartState);
   const [checkedList, setCheckedList] = useRecoilState(checkedListState);
   const { showToast } = useToast();
@@ -36,18 +36,20 @@ export default function CartItemList() {
   };
 
   const removeCheckedCartItem = async () => {
+    if (token === null) return;
+
     const cartItemIdList = cart
       .filter((_, index) => checkedList[index])
       .map((cartItem) => cartItem.id);
 
     try {
-      await api.deleteCartItems(serverName, cartItemIdList);
+      await api.deleteCartItems(serverName, token, cartItemIdList);
     } catch {
       showToast('error', API_ERROR_MESSAGE.deleteCartItem);
     }
 
     try {
-      const cart = await api.getCart(serverName);
+      const cart = await api.getCart(serverName, token);
       setCart(cart);
       setCheckedList(Array(cart.length).fill(false));
     } catch {
@@ -102,7 +104,7 @@ const CountMessage = styled.p`
 
 const List = styled.div`
   min-height: 128px;
-  max-height: 612px;
+  max-height: 484px;
   border-top: 4px solid #aaaaaa;
 
   overflow: scroll;

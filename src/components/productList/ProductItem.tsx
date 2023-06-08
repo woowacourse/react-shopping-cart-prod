@@ -2,54 +2,65 @@ import type { ProductType } from '../../types';
 
 import { useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
+import Image from '../common/Image';
 import QuantityInput from '../common/QuantityInput';
 
-import * as api from '../../api';
 import useToast from '../../hooks/useToast';
-import { cartState, serverNameState } from '../../recoil/state';
-import { API_ERROR_MESSAGE, API_SUCCESS_MESSAGE, MAX_QUANTITY } from '../../constants';
+import { tokenState, cartState, serverNameState } from '../../recoil/state';
+import api from '../../api';
+import { API_ERROR_MESSAGE, API_INFO_MESSAGE, MAX_QUANTITY } from '../../constants';
 
 interface Props extends ProductType {}
 
-export default function Product({ id, name, price, imageUrl }: Props) {
-  const [cart, setCart] = useRecoilState(cartState);
-  const [addLoading, setAddLoading] = useState(false);
+export default function ProductItem({ id, name, price, imageUrl }: Props) {
   const serverName = useRecoilValue(serverNameState);
+  const token = useRecoilValue(tokenState);
+  const [cart, setCart] = useRecoilState(cartState);
+
+  const [addLoading, setAddLoading] = useState(false);
   const { showToast } = useToast();
 
   const cartItem = cart.find((cartItem) => cartItem.product.id === id);
 
   const addCartItem = async () => {
-    setAddLoading(true);
+    if (token === null) {
+      showToast('info', '로그인 하면 장바구니를 이용할 수 있어요!');
+      return;
+    }
 
+    setAddLoading(true);
+    await portCartItem(token);
+    await getCart(token);
+    setAddLoading(false);
+  };
+
+  const portCartItem = async (token: string) => {
     try {
-      await api.postCartItem(serverName, id);
-      showToast('info', API_SUCCESS_MESSAGE.postCartItem);
+      await api.postCartItem(serverName, token, id);
+      showToast('info', API_INFO_MESSAGE.postCartItem);
     } catch {
       showToast('error', API_ERROR_MESSAGE.postCartItem);
       setAddLoading(false);
       return;
     }
+  };
 
+  const getCart = async (token: string) => {
     try {
-      await api.getCart(serverName).then(setCart);
+      await api.getCart(serverName, token).then(setCart);
     } catch {
       showToast('error', API_ERROR_MESSAGE.getCart);
     }
-
-    setAddLoading(false);
-  };
-
-  const setAltSrc = (e: React.SyntheticEvent<HTMLImageElement>) => {
-    e.currentTarget.src = './emptyProduct.svg';
   };
 
   return (
     <>
       <Wrapper>
-        <Image src={imageUrl} onError={setAltSrc} />
+        <ImageBox>
+          <Image src={imageUrl} />
+        </ImageBox>
         <InfoBox>
           <LabelBox>
             <Name>{name}</Name>
@@ -60,7 +71,7 @@ export default function Product({ id, name, price, imageUrl }: Props) {
               <QuantityInput cartItemId={cartItem.id} min={0} max={MAX_QUANTITY} />
             ) : (
               <CartItemAddButton onClick={addCartItem} disabled={addLoading}>
-                <img src="./cart.svg" />
+                <img src="/cart.svg" />
               </CartItemAddButton>
             )}
           </ControlBox>
@@ -77,8 +88,8 @@ const Wrapper = styled.div`
   color: #333333;
 `;
 
-const Image = styled.img`
-  width: 100%;
+const ImageBox = styled.div`
+  width: 282px;
   height: 282px;
 `;
 
@@ -133,6 +144,7 @@ const CartItemAddButton = styled.button`
   &:disabled {
     cursor: wait;
   }
+
   &:disabled > img {
     visibility: hidden;
   }

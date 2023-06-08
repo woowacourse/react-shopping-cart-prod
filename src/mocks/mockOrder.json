@@ -1,0 +1,32 @@
+{
+  "orderId": 1,
+  "items": [
+    {
+      "product": {
+        "id": 96,
+        "name": "SONY 컨트롤러",
+        "price": 104000,
+        "imageUrl": "https://picsum.photos/id/96/300"
+      },
+      "quantity": 20
+    },
+    {
+      "product": {
+        "id": 493,
+        "name": "빙그레 딸기 요거트",
+        "price": 4200,
+        "imageUrl": "https://picsum.photos/id/493/300"
+      },
+      "quantity": 20
+    }
+  ],
+  "coupon": {
+    "name": "쿠폰 이름임",
+    "discountRate": 10
+  },
+  "totalPrice": 40000,
+  "couponDiscountPrice": 4000,
+  "discountedTotalPrice": 36000,
+  "deliveryPrice": 3000,
+  "orderedAt": "2023-05-30T15:30:44"
+}

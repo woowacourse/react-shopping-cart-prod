@@ -3,77 +3,71 @@ import { Link } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
+import SubPageTemplate from '../common/SubPageTemplate';
 import CartItemList from '../cart/CartItemList';
 import CartBill from '../cart/CartBill';
 
-import { cartCountState, cartState, checkedListState, serverNameState } from '../../recoil/state';
-import * as api from '../../api';
 import useToast from '../../hooks/useToast';
+import {
+  cartCountState,
+  cartState,
+  checkedListState,
+  serverNameState,
+  tokenState,
+} from '../../recoil/state';
+import api from '../../api';
 import { API_ERROR_MESSAGE } from '../../constants';
 
 export default function CartPage() {
   const serverName = useRecoilValue(serverNameState);
+  const token = useRecoilValue(tokenState);
   const cartCount = useRecoilValue(cartCountState);
   const setCart = useSetRecoilState(cartState);
   const setCheckedList = useSetRecoilState(checkedListState);
+
   const { showToast } = useToast();
 
   useEffect(() => {
+    if (token === null) return;
+
     try {
-      api.getCart(serverName).then((cart) => {
+      api.getCart(serverName, token).then((cart) => {
         setCart(cart);
         setCheckedList(Array(cart.length).fill(true));
       });
     } catch {
       showToast('error', API_ERROR_MESSAGE.getCart);
     }
-  }, [serverName]);
+  }, [serverName, token]);
 
   return (
-    <>
-      <CartHeader>
-        <h2>장바구니</h2>
-      </CartHeader>
+    <SubPageTemplate title="장바구니">
       {cartCount !== 0 ? (
-        <CartMain>
+        <Main>
           <CartItemList />
           <CartBillBox>
             <CartBill />
           </CartBillBox>
-        </CartMain>
+        </Main>
       ) : (
         <EmptyCartMain>
-          <Image src="./shoppingBag.svg" />
+          <Image src="/shoppingBag.svg" />
           <Message>장바구니에 상품이 없습니다.</Message>
           <Message>상품을 추가해보세요.</Message>
           <StyledLink to="/">상품 담으러 가기</StyledLink>
         </EmptyCartMain>
       )}
-    </>
+    </SubPageTemplate>
   );
 }
 
-const CartHeader = styled.div`
-  width: 100%;
-  border-bottom: 4px solid #333333;
-  padding-bottom: 28px;
-
-  line-height: 37px;
-  letter-spacing: 0.5px;
-  font-size: 32px;
-  font-weight: 700;
-  text-align: center;
-
-  color: #333333;
-`;
-
-const CartMain = styled.div`
+const Main = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 
   width: 100%;
 
-  @media (max-width: 1184px) {
+  @media (max-width: 1480px) {
     flex-direction: column;
     align-items: center;
   }
@@ -117,7 +111,7 @@ const StyledLink = styled(Link)`
   margin: 64px 0;
   border-radius: 8px;
 
-  background-color: #04c09e;
+  background: #04c09e;
 
   font-size: 20px;
   font-weight: 600;

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 export default function ErrorPage() {
   return (
     <Wrapper>
-      <Image src="./404.svg" />
+      <Image src="/404.svg" />
       <Title>페이지를 찾지 못했어요.</Title>
       <Message>주소에 오타가 있거나, </Message>
       <Message>변경, 삭제되었을 수도 있어요!</Message>

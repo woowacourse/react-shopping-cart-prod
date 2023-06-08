@@ -13,7 +13,7 @@ export default function CheckBox({ checked, onClickCheckbox }: Props) {
     <Wrapper>
       <input id={id} type="checkbox" checked={checked} />
       <CheckboxLabel htmlFor={id} onClick={onClickCheckbox}>
-        {checked && <img src="./whiteCheck.svg" />}
+        {checked && <img src="/whiteCheck.svg" />}
       </CheckboxLabel>
     </Wrapper>
   );

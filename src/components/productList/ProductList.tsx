@@ -4,18 +4,20 @@ import { useEffect, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
-import Product from './Product';
-import SkeletonProduct from './SkeletonProduct';
+import ProductItem from './ProductItem';
+import ProductItemSkeleton from './ProductItemSkeleton';
 
-import * as api from '../../api';
 import useToast from '../../hooks/useToast';
-import { cartState, serverNameState } from '../../recoil/state';
+import { tokenState, cartState, serverNameState } from '../../recoil/state';
+import api from '../../api';
 import { API_ERROR_MESSAGE, SKELETONS_LENGTH } from '../../constants';
 
 export default function ProductList() {
-  const [products, setProducts] = useState<ProductType[] | null>(null);
-  const setCart = useSetRecoilState(cartState);
   const serverName = useRecoilValue(serverNameState);
+  const token = useRecoilValue(tokenState);
+  const setCart = useSetRecoilState(cartState);
+
+  const [products, setProducts] = useState<ProductType[] | null>(null);
   const { showToast } = useToast();
 
   useEffect(() => {
@@ -23,22 +25,30 @@ export default function ProductList() {
       .getProducts(serverName)
       .then(setProducts)
       .catch(() => {
+        setProducts([]);
         showToast('error', API_ERROR_MESSAGE.getProducts);
       });
+  }, [serverName]);
+
+  useEffect(() => {
+    if (token == null) {
+      setCart([]);
+      return;
+    }
 
     api
-      .getCart(serverName)
+      .getCart(serverName, token)
       .then(setCart)
       .catch(() => {
         showToast('error', API_ERROR_MESSAGE.getCart);
       });
-  }, [serverName]);
+  }, [serverName, token]);
 
   return (
     <Wrapper>
       {products === null
-        ? Array.from({ length: SKELETONS_LENGTH }).map(() => <SkeletonProduct />)
-        : products.map((product) => <Product key={product.id} {...product} />)}
+        ? Array.from({ length: SKELETONS_LENGTH }).map(() => <ProductItemSkeleton />)
+        : products.map((product) => <ProductItem key={product.id} {...product} />)}
     </Wrapper>
   );
 }

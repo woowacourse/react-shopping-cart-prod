@@ -8,14 +8,14 @@ let timeoutID: null | number = null;
 const useToast = () => {
   const setToastInfo = useSetRecoilState(toastInfoState);
 
-  const showToast = (type: ToastInfoType['type'], message: ToastInfoType['message']) => {
+  const showToast = (type: ToastInfoType['type'], message: ToastInfoType['message'], ms = 1600) => {
     if (timeoutID !== null) clearTimeout(timeoutID);
 
     setToastInfo({ show: true, type, message });
 
     timeoutID = window.setTimeout(() => {
       setToastInfo({ show: false, type, message: '' });
-    }, 1600);
+    }, ms);
   };
 
   return { showToast };

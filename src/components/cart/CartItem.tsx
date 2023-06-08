@@ -5,11 +5,12 @@ import styled from 'styled-components';
 
 import CheckBox from '../common/CheckBox';
 import QuantityInput from '../common/QuantityInput';
+import Image from '../common/Image';
 
-import * as api from '../../api';
-import { cartState, serverNameState } from '../../recoil/state';
-import { API_ERROR_MESSAGE, MAX_QUANTITY } from '../../constants';
 import useToast from '../../hooks/useToast';
+import { cartState, serverNameState, tokenState } from '../../recoil/state';
+import api from '../../api';
+import { API_ERROR_MESSAGE, MAX_QUANTITY } from '../../constants';
 
 interface Props extends CartItemType {
   checked: boolean;
@@ -19,13 +20,18 @@ interface Props extends CartItemType {
 
 export default function CartItem(props: Props) {
   const { id, product, quantity, checked, toggleChecked, deleteChecked } = props;
-  const setCart = useSetRecoilState(cartState);
+
   const serverName = useRecoilValue(serverNameState);
+  const token = useRecoilValue(tokenState);
+  const setCart = useSetRecoilState(cartState);
+
   const { showToast } = useToast();
 
   const removeCartItem = async () => {
+    if (token === null) return;
+
     try {
-      await api.deleteCartItem(serverName, id);
+      await api.deleteCartItem(serverName, token, id);
       deleteChecked();
     } catch {
       showToast('error', API_ERROR_MESSAGE.deleteCartItem);
@@ -33,25 +39,23 @@ export default function CartItem(props: Props) {
     }
 
     try {
-      const cart = await api.getCart(serverName);
+      const cart = await api.getCart(serverName, token);
       setCart(cart);
     } catch {
       showToast('error', API_ERROR_MESSAGE.getCart);
     }
   };
 
-  const setAltSrc = (e: React.SyntheticEvent<HTMLImageElement>) => {
-    e.currentTarget.src = './emptyProduct.svg';
-  };
-
   return (
     <Wrapper>
       <CheckBox checked={checked} onClickCheckbox={toggleChecked} />
-      <Image src={product.imageUrl} onError={setAltSrc} />
+      <ImageBox>
+        <Image src={product.imageUrl} />
+      </ImageBox>
       <ProductName>{product.name}</ProductName>
       <ControlBox>
         <RemoveButton onClick={removeCartItem}>
-          <img src="./trashCan.svg" />
+          <img src="/trashCan.svg" />
         </RemoveButton>
         <QuantityInput
           cartItemId={id}
@@ -83,7 +87,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const Image = styled.img`
+const ImageBox = styled.div`
   width: 144px;
   height: 144px;
 

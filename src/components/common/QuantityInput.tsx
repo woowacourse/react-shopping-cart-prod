@@ -1,10 +1,12 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
+import useToast from '../../hooks/useToast';
+import useQuantityUpdater from '../../hooks/useQuantityUpdater';
 import { cartItemState } from '../../recoil/state';
-import useQuantityInput from '../../hooks/useQuantityInput';
 import { isNaturalNumberString } from '../../utils/validator';
+import { API_ERROR_MESSAGE, API_INFO_MESSAGE } from '../../constants';
 
 interface Props {
   cartItemId: number;
@@ -15,32 +17,48 @@ interface Props {
 
 export default function QuantityInput({ cartItemId, min = 0, max, style }: Props) {
   const cartItem = useRecoilValue(cartItemState(cartItemId));
-  const { input, setInput, setInputWithRequest } = useQuantityInput(cartItemId);
 
-  const getValidRange = (quantity: number) => {
+  const [input, setInput] = useState('');
+  const { quantityUpdater } = useQuantityUpdater(cartItemId);
+  const { showToast } = useToast();
+
+  const getValidQuantity = (quantity: number) => {
     if (min > quantity) return min;
     if (max && max < quantity) return max;
     return quantity;
   };
 
-  const onChangeInput = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
-    if (isNaturalNumberString(value)) {
-      setInputWithRequest(getValidRange(Number(value)));
-    } else if (value === '') {
+  const handleQuantityUpdate = async (quantity: number) => {
+    try {
+      await quantityUpdater(quantity);
+      setInput(String(quantity));
+      showToast(
+        'info',
+        quantity === 0 ? API_INFO_MESSAGE.deleteCartItem : API_INFO_MESSAGE.patchCartItemQuantity
+      );
+    } catch {
+      showToast('error', API_ERROR_MESSAGE.patchCartItemQuantity);
+    }
+  };
+
+  const setValidInput = async ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
+    if (value === '') {
       setInput(value);
+    } else if (isNaturalNumberString(value)) {
+      handleQuantityUpdate(getValidQuantity(Number(value)));
     }
   };
 
   const onBlurInput = () => {
-    if (input === '') setInputWithRequest(min);
+    if (input === '') handleQuantityUpdate(min);
   };
 
-  const quantityIncrease = () => {
-    setInputWithRequest(Number(input) + 1);
+  const increase = () => {
+    handleQuantityUpdate(Number(input) + 1);
   };
 
-  const quantityDecrease = () => {
-    setInputWithRequest(Number(input) - 1);
+  const decrease = () => {
+    handleQuantityUpdate(Number(input) - 1);
   };
 
   useEffect(() => {
@@ -49,13 +67,13 @@ export default function QuantityInput({ cartItemId, min = 0, max, style }: Props
 
   return (
     <Wrapper style={style}>
-      <Input type="text" value={input} onChange={onChangeInput} onBlur={onBlurInput} />
+      <Input type="text" value={input} onChange={setValidInput} onBlur={onBlurInput} />
       <CounterBox>
-        <Counter onClick={quantityIncrease} disabled={Number(input) === max}>
-          <img src="./arrowUp.svg" />
+        <Counter onClick={increase} disabled={Number(input) === max}>
+          <img src="/arrowUp.svg" />
         </Counter>
-        <Counter onClick={quantityDecrease} disabled={Number(input) === min}>
-          <img src="./arrowDown.svg" />
+        <Counter onClick={decrease} disabled={Number(input) === min}>
+          <img src="/arrowDown.svg" />
         </Counter>
       </CounterBox>
     </Wrapper>
