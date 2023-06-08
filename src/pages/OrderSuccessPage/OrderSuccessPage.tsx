@@ -10,9 +10,7 @@ import { memberInformationState } from '../../store/member';
 import { priceFormatter } from '../../utils/formatter';
 import * as S from './OrderSuccessPage.style';
 
-type Props = {};
-
-export const OrderSuccessPage = ({}: Props) => {
+export const OrderSuccessPage = () => {
   const navigate = useNavigate();
   const { id: memberId } = useRecoilValue(memberInformationState);
   const [searchParams] = useSearchParams();

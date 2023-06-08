@@ -8,9 +8,7 @@ import { OrderedItemDetailInformation } from '../../components/order/OrderedItem
 import { detailOrderState } from '../../store/order';
 import * as S from './OrderDetailPage.style';
 
-type Props = {};
-
-export const OrderDetailPage = ({}: Props) => {
+export const OrderDetailPage = () => {
   const { orderId } = useParams();
   const orderedItem = useRecoilValue(detailOrderState(Number(orderId)));
 

@@ -4,9 +4,7 @@ import { orderListState } from '../../../store/order';
 import { OrderedItem } from '../OrderedItem/OrderedItem';
 import * as S from './OrderedItemList.styles';
 
-type Props = {};
-
-export const OrderedItemList = ({}: Props) => {
+export const OrderedItemList = () => {
   const orderList = useRecoilValue(orderListState);
 
   return (
