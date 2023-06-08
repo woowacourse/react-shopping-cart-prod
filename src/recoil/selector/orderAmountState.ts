@@ -11,8 +11,8 @@ import selectedCouponIdState from '@Atoms/selectedCouponIdState';
 import { DELIVERY_FEE } from '@Constants/index';
 
 const calculateCouponDiscountAmount = (useCoupon: undefined | CouponType, allPrice: number) => {
-  if (!useCoupon) return null;
-  if (allPrice < 50000) return null;
+  if (!useCoupon) return 0;
+  if (allPrice < 50000) return 0;
 
   return useCoupon.discountAmount;
 };
@@ -58,7 +58,7 @@ const orderAmountState = selector({
 
     const couponDiscountAmount = calculateCouponDiscountAmount(useCoupon, allPrice);
 
-    const allDiscountAmount = discountAmount + (couponDiscountAmount || 0);
+    const allDiscountAmount = discountAmount + couponDiscountAmount;
 
     const deliveryFee = !allPrice ? `0 원` : convert.toLocalPriceFromNumber(DELIVERY_FEE);
 
