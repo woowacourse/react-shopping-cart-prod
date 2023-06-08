@@ -27,7 +27,7 @@ export const useOrder = () => {
         couponId: couponId ? couponId : null,
       })
       .then(() => {
-        setCart([...cart].filter((cartItem) => !checkedItemIdList.includes(cartItem.id)));
+        setCart(cart.filter((cartItem) => !checkedItemIdList.includes(cartItem.id)));
       })
       .catch((error) => alert(error.message));
   };
