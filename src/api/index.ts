@@ -12,13 +12,15 @@ const request = async (path: string, init?: RequestInit) => {
     SERVERS[
       getLocalStorage(KEY_LOCALSTORAGE_SERVER_OWNER, DEFAULT_VALUE_SERVER_OWNER)
     ];
-  const response = await fetch([baseServerUrl, path].join(""), {
+  const token = getLocalStorage(
+    KEY_LOCALSTORAGE_LOGIN_TOKEN,
+    DEFAULT_VALUE_LOGIN_TOKEN
+  );
+
+  const response = await fetch(`${baseServerUrl}${path}`, {
     ...init,
     headers: {
-      Authorization: `Basic ${getLocalStorage(
-        KEY_LOCALSTORAGE_LOGIN_TOKEN,
-        DEFAULT_VALUE_LOGIN_TOKEN
-      )}`,
+      Authorization: `Basic ${token}`,
       "Content-Type": "application/json",
       ...init?.headers,
     },
