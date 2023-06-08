@@ -1,3 +1,4 @@
+import useScroll from '@Hooks/useScroll/ScrollToTop';
 import { useModal } from 'noah-modal';
 import { Suspense, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
@@ -6,7 +7,6 @@ import Header from '@Components/Header';
 import LoadingHeader from '@Components/Header/LoadingHeader';
 import QuickMenu from '@Components/QuickMenu';
 import QuickMenuMobile from '@Components/QuickMenuMobile';
-import ScrollToTop from '@Components/ScrollToTop/ScrollToTop';
 
 import ErrorBoundary from '@Pages/ErrorBoundary';
 import NotFound from '@Pages/NotFound';
@@ -19,6 +19,7 @@ import mockMyCouponData3 from './mocks/mockMyCouponData3.json';
 
 function App() {
   const { Modal, isModalOpen } = useModal();
+  useScroll({ to: 'top', position: 0, behavior: 'smooth' });
 
   useEffect(() => {
     if (!localStorageHelper.hasKey('cartItems')) localStorageHelper.setInitValue('cartItems', []);
@@ -34,7 +35,6 @@ function App() {
       </Suspense>
       <CommonPageStyle>
         <ErrorBoundary fallback={NotFound}>
-          <ScrollToTop />
           <Outlet />
           {Modal && <Modal />}
         </ErrorBoundary>
