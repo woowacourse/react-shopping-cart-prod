@@ -21,13 +21,9 @@ const OrderSummary = () => {
   const baseUrl = useApiBaseUrlValue();
   const { mutation } = useMutation(FETCH_METHOD.POST);
 
-  const { data: point } = useQuery<Point>(baseUrl + '/point', {
-    Authorization: `Basic ${btoa(process.env.REACT_APP_API_CREDENTIAL!)}`,
-  });
+  const { data: point } = useQuery<Point>(baseUrl + '/point', true);
 
-  const { data: discount } = useQuery<Discount>(baseUrl + '/order-policy', {
-    Authorization: `Basic ${btoa(process.env.REACT_APP_API_CREDENTIAL!)}`,
-  });
+  const { data: discount } = useQuery<Discount>(baseUrl + '/order-policy', true);
 
   const cartOrder = cart.map((product) => {
     return { cartItemId: Number(product.id), quantity: product.quantity };

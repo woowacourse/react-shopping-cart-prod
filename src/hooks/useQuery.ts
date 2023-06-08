@@ -5,7 +5,7 @@ interface State<T> {
   error?: object;
 }
 
-export const useQuery = <T>(url: string, headers?: HeadersInit) => {
+export const useQuery = <T>(url: string, isAutorization: boolean) => {
   const [state, setState] = useState<State<T>>({});
 
   const { data, error } = state;
@@ -17,9 +17,17 @@ export const useQuery = <T>(url: string, headers?: HeadersInit) => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(url, {
-        ...(headers && { headers }),
-      });
+      const requestOptions = {
+        headers: {}
+      };
+
+      if (isAutorization) {
+        requestOptions.headers = {
+          Authorization: `Basic ${btoa(process.env.REACT_APP_API_CREDENTIAL!)}`,
+        };
+      }
+
+      const response = await fetch(url, requestOptions);
 
       const contentType = response.headers.get('content-type');
 

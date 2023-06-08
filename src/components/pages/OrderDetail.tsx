@@ -12,9 +12,7 @@ const OrderDetail = () => {
   const baseUrl = useApiBaseUrlValue();
   const orderNumber = useOrderDetailValue();
 
-  const { data } = useQuery<UserOrdersType>(baseUrl + '/orders/' + orderNumber, {
-    Authorization: `Basic ${btoa(process.env.REACT_APP_API_CREDENTIAL!)}`,
-  });
+  const { data } = useQuery<UserOrdersType>(baseUrl + '/orders/' + orderNumber, true);
 
   if (!data) return <></>;
 

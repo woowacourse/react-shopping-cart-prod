@@ -10,9 +10,7 @@ import { OrderedProductList } from '../order/OrderedProductList';
 
 const OrderList = () => {
   const baseUrl = useApiBaseUrlValue();
-  const { data } = useQuery<UserOrdersType[]>(baseUrl + '/orders', {
-    Authorization: `Basic ${btoa(process.env.REACT_APP_API_CREDENTIAL!)}`,
-  });
+  const { data } = useQuery<UserOrdersType[]>(baseUrl + '/orders', true);
 
   if (!data) return <></>;
 

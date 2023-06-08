@@ -10,7 +10,7 @@ import { FETCH_URL } from '../../constants';
 
 const ProductList = () => {
   const baseUrl = useApiBaseUrlValue();
-  const { data: products } = useQuery<IProduct[]>(baseUrl + FETCH_URL.PRODUCTS);
+  const { data: products } = useQuery<IProduct[]>(baseUrl + FETCH_URL.PRODUCTS, false);
 
   return (
     <Style.Container>

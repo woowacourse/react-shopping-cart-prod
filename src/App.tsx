@@ -23,9 +23,7 @@ const OrderList = lazy(() => import('./components/pages/OrderList'));
 
 export const App = () => {
   const baseUrl = useApiBaseUrlValue();
-  const { data: cart } = useQuery<CartItemType[]>(baseUrl + FETCH_URL.CART_ITEMS, {
-    Authorization: `Basic ${btoa(process.env.REACT_APP_API_CREDENTIAL!)}`,
-  });
+  const { data: cart } = useQuery<CartItemType[]>(baseUrl + FETCH_URL.CART_ITEMS, true);
 
   const setCartState = useSetCartState();
 
