@@ -1,33 +1,18 @@
-import { useRecoilCallback, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { serverAtom } from 'recoil/server';
-import { cartListAtom, checkedItemsAtom } from 'recoil/cartList';
 import { SERVERS } from 'constants/index';
 import { ServerName } from 'types';
 import * as S from './SelectServer.styles';
-import { getCartList } from 'api/requests';
-import { useToast } from '../Toast/hooks/useToast';
 
 const SelectServer = () => {
-  const server = useRecoilValue(serverAtom);
-  const { toast } = useToast();
+  const [server, setServer] = useRecoilState(serverAtom);
 
-  const onChangeServer: React.ChangeEventHandler<HTMLSelectElement> =
-    useRecoilCallback(
-      ({ set }) =>
-        async (event) => {
-          const serverName = event.target.value as ServerName;
-          set(serverAtom, SERVERS[serverName]);
-          try {
-            const cartList = await getCartList(SERVERS[serverName]);
-            set(cartListAtom, cartList);
-            set(checkedItemsAtom, cartList);
-          } catch (error) {
-            if (!(error instanceof Error)) return;
-            toast.error('장바구니 목록을 가져오는데 실패했습니다.');
-          }
-        },
-      []
-    );
+  const onChangeServer: React.ChangeEventHandler<HTMLSelectElement> = (
+    event
+  ) => {
+    const serverName = event.target.value as ServerName;
+    setServer(SERVERS[serverName]);
+  };
 
   return (
     <S.SelectBox onChange={onChangeServer}>
