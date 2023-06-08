@@ -17,7 +17,7 @@ function PaymentAmount() {
     orderProducts,
   } = useOrderProducts();
 
-  if (cartAmount === '0') return <></>;
+  if (cartAmount === 0) return null;
 
   return (
     <S.Container>

@@ -62,7 +62,7 @@ const CouponBanner = () => {
     updateMemberCoupon();
   };
 
-  if (cartAmount === '0') return <></>;
+  if (cartAmount === 0) return null;
 
   return (
     <>

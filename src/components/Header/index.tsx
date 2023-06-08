@@ -14,7 +14,7 @@ import * as S from './style';
 
 function Header() {
   const navigate = useNavigate();
-  const cartItemsAmount = useRecoilValue(cartItemsAmountState);
+  const cartItemsAmount = String(useRecoilValue(cartItemsAmountState));
   const server = useRecoilValue(serverState);
 
   const moveMain = () => navigate('/');

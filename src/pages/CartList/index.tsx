@@ -4,11 +4,11 @@ import SkeletonCartItem from './CartItem/SkeletonCartItem';
 import CartItems from './CartItems';
 import CartListSubHeader from './CartListSubHeader';
 import LoadingCartListSubHeader from './CartListSubHeader/LoadingCartListSubHeader';
+import CouponApplyButton from './CouponApplyButton';
 import CouponBanner from './CouponBanner';
 import EmptyCart from './EmptyCart';
 import PaymentAmount from './PaymentAmount';
 import SkeletonPaymentAmount from './PaymentAmount/SkeletonPaymentAmount';
-import UseCoupon from './UseCoupon';
 import * as S from './style';
 
 function CartList() {
@@ -35,7 +35,7 @@ function CartList() {
         </S.CartList>
         <Suspense fallback={<SkeletonPaymentAmount />}>
           <div>
-            <UseCoupon />
+            <CouponApplyButton />
             <PaymentAmount />
           </div>
         </Suspense>

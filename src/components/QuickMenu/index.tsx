@@ -7,7 +7,7 @@ import { SERVERS, SERVERS_NAMES } from '@Constants/servers';
 import * as S from './style';
 
 function QuickMenu() {
-  const { handleClick } = useQuickMenu();
+  const { makeHandleClickFromServer } = useQuickMenu();
 
   const [isHover, setIsHover] = useState(false);
   const [isInit, setIsInit] = useState(true);
@@ -27,7 +27,7 @@ function QuickMenu() {
           <S.Option
             isHover={isHover}
             key={value}
-            onClick={handleClick(value)}
+            onClick={makeHandleClickFromServer(value)}
             position={{ bottom: `${(index + 1) * 60}px` }}
             avatar={SERVERS[value].avatar}
             isInit={isInit}

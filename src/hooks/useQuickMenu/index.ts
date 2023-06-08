@@ -1,6 +1,6 @@
 import { useRecoilState, useSetRecoilState } from 'recoil';
 
-import { OrderIteminterface, Servers } from '@Types/index';
+import { OrderItemType, Servers } from '@Types/index';
 
 import useCartItems from '@Hooks/useCartItems';
 
@@ -16,19 +16,19 @@ export const useQuickMenu = () => {
   const setOrderItems = useSetRecoilState(orderListState);
   const [server, setServer] = useRecoilState<Servers>(serverState);
 
-  const handleClick = (value: Servers) => async () => {
+  const makeHandleClickFromServer = (value: Servers) => async () => {
     setServer(value);
     toggleServer(value);
 
     const fetchOrderList = await fetchData<OrderItemType[]>({
       url: FETCH_URL.orderList,
       method: FETCH_METHOD.GET,
-      server,
+      server: value,
     });
     setOrderItems(fetchOrderList);
 
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   };
 
-  return { handleClick, server };
+  return { makeHandleClickFromServer, server };
 };

@@ -14,7 +14,7 @@ function EmptyCart() {
 
   const cartAmount = useRecoilValue(cartItemsAmountState);
 
-  if (cartAmount !== '0') return <></>;
+  if (cartAmount !== 0) return null;
 
   return (
     <S.Container>

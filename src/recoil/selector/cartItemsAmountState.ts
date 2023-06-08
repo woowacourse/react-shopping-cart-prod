@@ -11,8 +11,8 @@ const cartItemsAmountState = selector({
     const cartItems = get(cartItemsState);
     const cartItemsAmount = cartItems ? cartItems.length : 0;
 
-    if (cartItemsAmount > SHOPPING_QUANTITY.MAX) return `${SHOPPING_QUANTITY.MAX}+`;
-    return String(cartItemsAmount);
+    if (cartItemsAmount > SHOPPING_QUANTITY.MAX) return SHOPPING_QUANTITY.MAX;
+    return cartItemsAmount;
   },
 });
 

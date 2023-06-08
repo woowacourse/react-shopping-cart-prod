@@ -8,7 +8,7 @@ import cartItemsAmountState from '@Selector/cartItemsAmountState';
 
 import CouponList from '../CouponList';
 
-const UseCoupon = () => {
+const CouponApplyButton = () => {
   const cartAmount = useRecoilValue(cartItemsAmountState);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -20,7 +20,7 @@ const UseCoupon = () => {
     setIsModalOpen(true);
   };
 
-  if (cartAmount === '0') return <></>;
+  if (cartAmount === 0) return null;
 
   return (
     <Container>
@@ -74,4 +74,4 @@ export const AddButton = styled.button`
   cursor: pointer;
 `;
 
-export default UseCoupon;
+export default CouponApplyButton;

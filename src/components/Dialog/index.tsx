@@ -32,6 +32,7 @@ const Container = styled.div`
 `;
 
 const Message = styled.div`
+  text-align: center;
   margin-bottom: 50px;
   width: 550px;
   line-height: 20px;
