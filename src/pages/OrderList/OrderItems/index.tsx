@@ -12,7 +12,7 @@ import * as S from './style';
 import OrderItem from '../OrderItem';
 
 function OrderItems() {
-  const { orderId } = useParams() as { orderId?: string };
+  const { orderId } = useParams<{ orderId?: string }>();
 
   const orderItems = useRecoilValue(orderItemsState);
 
