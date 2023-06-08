@@ -5,8 +5,6 @@ import type {
 } from '../types/product';
 import { rest } from 'msw';
 import products from './data/products.json';
-// import point from './data/point.json';
-// import cart from './data/cart.json';
 import { findTargetProduct } from '../domain/cartItemHandler';
 
 import { getData, updateData } from '../utils/localStorage';
