@@ -5,11 +5,12 @@ import { cartNumberSelector } from "../recoil/selector";
 import { ROUTER_PATH } from "../router";
 import { useRouter } from "../hooks/useRouter";
 import { loginState, memberState } from "../recoil/atom";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { ServerSelectBox } from "./ServerSelectBox";
 import { useLoginForm } from "../hooks/useLoginForm";
 
 export const Header = () => {
+  const navigate = useNavigate();
   const { goPage } = useRouter();
   const { logout } = useLoginForm();
   const location = useLocation();
@@ -17,10 +18,9 @@ export const Header = () => {
   const cartNumber = useRecoilValue(cartNumberSelector);
   const isLogined = useRecoilValue(loginState);
 
-  console.log(location.pathname);
   return (
     <Wrapper>
-      <TitleContainer onClick={goPage(ROUTER_PATH.Main)}>
+      <TitleContainer onClick={() => navigate(ROUTER_PATH.Main)}>
         <img src={CartIcon} alt="홈카트" />
         <p>SHOP</p>
       </TitleContainer>

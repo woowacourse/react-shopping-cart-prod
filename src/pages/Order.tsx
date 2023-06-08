@@ -66,7 +66,7 @@ const Order = () => {
         });
       const couponId =
         selectedCouponIndex === -1 ? null : coupons[selectedCouponIndex].id;
-      await api.post("orders", {
+      await api.post("/orders", {
         products: orderedProducts,
         couponId: couponId,
       });

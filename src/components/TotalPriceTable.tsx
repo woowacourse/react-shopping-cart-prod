@@ -7,7 +7,7 @@ import { ROUTER_PATH } from "../router";
 import { Button } from "../components";
 
 interface TotalPriceTableType {
-  discountPrice?: number | null;
+  discountPrice: number | null;
   handlePaymentClicked?: () => void;
 }
 
