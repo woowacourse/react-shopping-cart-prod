@@ -25,7 +25,7 @@ const zIndex = {
   MODAL_BACKDROP: 10,
   MODAL_CONTAINER: 20,
   TOAST: 30,
-};
+} as const;
 
 export const theme = {
   color,
