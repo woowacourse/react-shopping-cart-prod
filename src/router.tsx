@@ -3,6 +3,10 @@ import { createBrowserRouter } from 'react-router-dom';
 import CartList from '@Pages/CartList';
 import Home from '@Pages/Home';
 import NotFound from '@Pages/NotFound';
+import OrderList from '@Pages/OrderList';
+import OrderSheet from '@Pages/OrderSheet';
+
+import ROUTES from '@Constants/routes';
 
 import App from './App';
 
@@ -17,14 +21,22 @@ const router = createBrowserRouter(
           element: <Home />,
         },
         {
-          path: '/cart-list',
+          path: ROUTES.cartList,
           element: <CartList />,
+        },
+        {
+          path: ROUTES.orderSheet,
+          element: <OrderSheet />,
+        },
+        {
+          path: `${ROUTES.orderList}/:orderId?`,
+          element: <OrderList />,
         },
       ],
     },
   ],
   {
-    basename: '/react-shopping-cart-prod',
+    basename: ROUTES.basename,
   },
 );
 

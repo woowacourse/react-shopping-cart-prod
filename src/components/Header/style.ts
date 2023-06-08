@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
+import { Z_INDEX } from '@Constants/index';
+
 export const Container = styled.div`
+  z-index: ${Z_INDEX.above};
   position: fixed;
   background-color: #333333;
   padding: 10px 0;
@@ -9,9 +12,22 @@ export const Container = styled.div`
 
 export const Layout = styled.div`
   display: flex;
-  max-width: 1000px;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  column-gap: 30px;
+  max-width: 1080px;
   margin: auto;
   justify-content: space-between;
+  @media only screen and (max-width: 1200px) {
+    // 테블릿
+    max-width: 768px;
+  }
+  @media only screen and (max-width: 768px) {
+    // 모바일
+    grid-template-columns: 1fr auto;
+    max-width: 400px;
+  }
 `;
 
 export const LogoWrapper = styled.div`
@@ -32,4 +48,14 @@ export const LogoText = styled.span`
   top: 4px;
   font-size: 40px;
   font-weight: 900;
+`;
+
+export const OrderList = styled.div`
+  color: #ffffff;
+  cursor: pointer;
+
+  @media only screen and (max-width: 768px) {
+    // 모바일
+    display: none;
+  }
 `;

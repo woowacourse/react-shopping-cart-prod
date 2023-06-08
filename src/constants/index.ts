@@ -25,4 +25,9 @@ export const BOX_SIZE = {
   large: '36px',
 } as const;
 
+export const Z_INDEX = {
+  base: 0,
+  above: 1,
+};
+
 export const DELIVERY_FEE = 3000;

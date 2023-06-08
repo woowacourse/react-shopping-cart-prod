@@ -2,7 +2,7 @@ import styled, { createGlobalStyle } from 'styled-components';
 
 import resetStyle from './resetStyle';
 
-const GlobalStyle = createGlobalStyle`
+const GlobalStyle = createGlobalStyle<{ isModalOpen: boolean }>`
     ${resetStyle}
 
     button {
@@ -11,12 +11,14 @@ const GlobalStyle = createGlobalStyle`
 
     body {
       background-color: #FcFcFc;
+      overflow: ${(props) => props.isModalOpen && 'hidden'};
     }
 `;
 
 export const CommonPageStyle = styled.div`
   width: 60%;
-  min-width: 1000px;
+  min-width: 1080px;
+  max-width: 1080px;
   margin: auto;
   padding-top: 100px;
   @media only screen and (max-width: 1200px) {

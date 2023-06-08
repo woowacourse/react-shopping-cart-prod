@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router';
 import { Servers } from '@Types/index';
 
 import { SHOPPING_QUANTITY } from '@Constants/index';
+import ROUTES from '@Constants/routes';
 
 import * as S from './style';
 
@@ -14,7 +15,7 @@ type CartBadgeProps = {
 function CartBadge({ username, cartItemsAmount }: CartBadgeProps) {
   const navigate = useNavigate();
 
-  const moveCartList = () => navigate('/cart-list');
+  const moveCartList = () => navigate(ROUTES.cartList);
 
   return (
     <S.Container onClick={moveCartList}>

@@ -10,7 +10,7 @@ export const Container = styled.div<ContainerProps>`
   grid-template-columns: auto auto 1fr auto;
   column-gap: 20px;
   width: ${(props) => props.width};
-  background-color: #ffffff;
+  background-color: #fcfcfc;
   padding: 20px 0px 30px 0px;
 
   :first-child {
@@ -33,7 +33,7 @@ export const ShoppingItemImage = styled.img<LoadingProps>`
   ${ImageSkeletonStyle};
 `;
 
-export const ShoppingItemName = styled.div<LoadingProps>`
+export const ShoppingItemName = styled.span<LoadingProps>`
   color: #333333;
   font-size: 18px;
   font-weight: 400;
@@ -53,7 +53,7 @@ export const DeleteButton = styled.img`
   cursor: pointer;
 `;
 
-export const ShoppingItemPrice = styled.div<LoadingProps>`
+export const ShoppingItemPrice = styled.span<LoadingProps>`
   align-self: flex-end;
   color: #333333;
   font-weight: 400;

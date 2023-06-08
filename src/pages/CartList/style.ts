@@ -5,7 +5,7 @@ export const Container = styled.div``;
 export const ShoppingCartContentsLayout = styled.div`
   display: grid;
   grid-template-columns: auto 360px;
-  column-gap: 100px;
+  column-gap: 60px;
   @media only screen and (max-width: 1200px) {
     // 테블릿
     grid-template-columns: auto;
@@ -17,11 +17,11 @@ export const ShoppingCartContentsLayout = styled.div`
   }
 `;
 
-export const CartList = styled.div`
+export const CartList = styled.ul`
   margin-bottom: 60px;
 
   @media only screen and (max-width: 768px) {
-    margin-bottom: 30px;
+    margin-bottom: 10px;
   }
 `;
 
@@ -29,4 +29,11 @@ export const CartListLayout = styled.div`
   display: grid;
   background-color: #cccccc;
   row-gap: 1.5px;
+`;
+
+export const PaymentLayout = styled.div`
+  display: grid;
+  row-gap: 20px;
+  align-self: flex-start;
+  min-width: 360px;
 `;

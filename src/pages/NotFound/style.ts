@@ -19,12 +19,12 @@ export const Image = styled.img`
   width: 240px;
 `;
 
-export const MainGuideMessage = styled.div`
+export const MainGuideMessage = styled.span`
   font-size: 20px;
   font-weight: 600;
   color: #333333;
 `;
 
-export const SubGuideMessage = styled.div`
+export const SubGuideMessage = styled.span`
   color: #999999;
 `;

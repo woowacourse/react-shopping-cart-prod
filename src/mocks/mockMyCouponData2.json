@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "name": "1,000원 할인",
+    "discountAmount": 1000,
+    "description": "오픈맞이 특별 할인",
+    "isUsed": false
+  },
+  {
+    "id": 2,
+    "name": "3,000원 할인",
+    "discountAmount": 3000,
+    "description": "오픈맞이 특별 할인",
+    "isUsed": false
+  }
+]

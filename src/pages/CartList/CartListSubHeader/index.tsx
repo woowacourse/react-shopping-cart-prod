@@ -1,9 +1,11 @@
 import { Suspense } from 'react';
 import { useRecoilValue } from 'recoil';
 
-import serverState from '@Atoms/serverState';
+import PageTitle from '@Components/PageTitle';
 
-import cartItemsAmountState from '@Selector/cartItemsAmountState';
+import useCartItems from '@Hooks/useCartItems';
+
+import serverState from '@Atoms/serverState';
 
 import * as S from './style';
 import CartAmount from '../CartAmount';
@@ -11,14 +13,14 @@ import CartListController from '../CartListController';
 import LoadingCartListController from '../CartListController/LoadingCartListController';
 
 function CartListSubHeader() {
-  const cartAmount = useRecoilValue(cartItemsAmountState);
+  const { cartItemsAmount } = useCartItems();
   const server = useRecoilValue(serverState);
 
-  if (cartAmount === '0') return <></>;
+  if (cartItemsAmount === '0') return <></>;
 
   return (
     <>
-      <S.Title>{server}의 장바구니</S.Title>
+      <PageTitle title={`${server}의 장바구니`} />
       <S.CartListSubHeader>
         <Suspense fallback={<CartAmount isLoading />}>
           <CartAmount />
