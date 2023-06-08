@@ -4,7 +4,7 @@ import * as S from './style';
 
 type OrderDetailSheetLayoutProps = {
   title: string;
-  children: ReactNode;
+  children?: ReactNode;
   hasShownIcon?: boolean;
 };
 

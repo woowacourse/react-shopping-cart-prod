@@ -4,9 +4,7 @@ import OrderDetailSheetLayout from '../OrderDetailSheetLayout';
 function OrderSheetItemsLoading() {
   return (
     <S.Container>
-      <OrderDetailSheetLayout title={`주문상품(총 0개)`}>
-        <></>
-      </OrderDetailSheetLayout>
+      <OrderDetailSheetLayout title={`주문상품(총 0개)`}></OrderDetailSheetLayout>
     </S.Container>
   );
 }
