@@ -7,14 +7,14 @@ import { PageTitle } from '@components/styled/PageTitle';
 import { FallbackRender } from '@components/FallbackRender/FallbackRender';
 
 interface LayoutProps extends PropsWithChildren {
-  pageTitle?: string;
+  pageTitleValue?: string;
 }
 
-export const Layout = ({ children, pageTitle }: LayoutProps) => (
+export const Layout = ({ children, pageTitleValue }: LayoutProps) => (
   <styled.Layout>
     <Header />
     <styled.Container>
-      {pageTitle && <PageTitle>{pageTitle}</PageTitle>}
+      {pageTitleValue && <PageTitle>{pageTitleValue}</PageTitle>}
       <ErrorBoundary fallbackRender={FallbackRender}>{children}</ErrorBoundary>
     </styled.Container>
   </styled.Layout>

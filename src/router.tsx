@@ -25,7 +25,7 @@ export const Router = () => {
         <Route
           path={PATH.CART}
           Component={() => (
-            <Layout pageTitle="장바구니">
+            <Layout pageTitleValue="장바구니">
               <Suspense fallback={<Spinner size="lg" />}>
                 <CartPage />
               </Suspense>
@@ -35,7 +35,7 @@ export const Router = () => {
         <Route
           path={PATH.ORDERS}
           Component={() => (
-            <Layout pageTitle="주문 목록">
+            <Layout pageTitleValue="주문 목록">
               <Suspense fallback={<Spinner size="lg" />}>
                 <OrdersPage />
               </Suspense>
@@ -45,7 +45,7 @@ export const Router = () => {
         <Route
           path={`${PATH.ORDERS}/:id`}
           Component={() => (
-            <Layout pageTitle="주문 내역 상세">
+            <Layout pageTitleValue="주문 내역 상세">
               <Suspense fallback={<Spinner size="lg" />}>
                 <OrderDetailPage />
               </Suspense>
