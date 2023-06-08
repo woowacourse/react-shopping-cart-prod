@@ -36,8 +36,8 @@ export const useQuery = <T>(url: string, isAutorization: boolean) => {
 
         setState((prev) => ({ ...prev, data }));
       }
-    } catch {
-      setState((prev) => ({ ...prev, error }));
+    } catch (error) {
+      console.log(error);
     }
   };
 
