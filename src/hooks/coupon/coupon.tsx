@@ -33,7 +33,7 @@ export const useSpecificCoupon = (cartInfo: CartItem) => {
         ? updatedSelectedCoupons.set(cartId, targetCoupon)
         : updatedSelectedCoupons.delete(cartId);
 
-      updatedSelectedCoupons.delete(-1);
+      updatedSelectedCoupons.delete(ALL_COUPON_MAP_ID);
 
       return updatedSelectedCoupons;
     });

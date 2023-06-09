@@ -3,6 +3,7 @@ import { fetchCoupons } from './../apis/coupon';
 import { atom, selector, selectorFamily } from 'recoil';
 import { ProductCouponMap } from '../types/coupon';
 import { CartItem } from '../types/cart';
+import { ALL_COUPON_MAP_ID } from '../constants/coupon';
 
 export const couponsSelector = selector({
   key: 'couponsSelector',
@@ -57,7 +58,8 @@ export const selectedItemCouponIdList = selector({
   key: 'selectedItemCouponIdList',
   get: ({ get }) => {
     const selectedCoupons = get(selectedCouponsState);
-    if (selectedCoupons.has(-1))
+
+    if (selectedCoupons.has(ALL_COUPON_MAP_ID))
       return [...selectedCoupons].map(([_, { id }]) => id);
 
     return [...selectedCoupons].reduce<Coupon['id'][]>(
