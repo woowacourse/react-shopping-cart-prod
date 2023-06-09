@@ -1,6 +1,5 @@
 import {useRecoilValue} from "recoil";
 import {useNavigate} from "react-router-dom";
-import {modalRepository} from "../../app/recoil/modalAtoms.tsx";
 import {
   Button,
   ButtonGroup,
@@ -35,6 +34,7 @@ import {
 import PointSelector from "../PointSelector/PointSelector.tsx";
 import {useEffect} from "react";
 import {checkedCartSelector, totalPriceSelector} from "../../app/recoil/cart/cartSelectors.ts";
+import {modalRepository} from "../../app/recoil/modal/modalRepository.tsx";
 
 function Purchase() {
   const navigate = useNavigate();

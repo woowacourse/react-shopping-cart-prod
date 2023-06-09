@@ -1,6 +1,5 @@
 import {selector} from "recoil";
 import {User} from "../../../types/types";
-import {modalRepository} from "../modalAtoms";
 import {userState} from "./userAtom";
 import {serverState} from "../serverAtom";
 import {setSessionStorage} from "../../utils/storage";
@@ -8,6 +7,7 @@ import {SESSION_STORAGE_KEY_BASE64, SESSION_STORAGE_KEY_CART_ITEMS} from "../../
 import {fetchCartList} from "../../api/api";
 import {cartState} from "../cart/cartAtoms.ts";
 import Login from "../../../components/Login";
+import {modalRepository} from "../modal/modalRepository.tsx";
 
 export const userRepository = selector({
   key: "userRepository",

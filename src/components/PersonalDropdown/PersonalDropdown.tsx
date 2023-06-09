@@ -13,10 +13,10 @@ import {IoCart, IoPerson} from "react-icons/io5";
 import {useRecoilValue} from "recoil";
 import {userState} from "../../app/recoil/user/userAtom.tsx";
 import {useNavigate} from "react-router-dom";
-import {modalRepository} from "../../app/recoil/modalAtoms.tsx";
 import Point from "../Point";
 import {userRepository} from "../../app/recoil/user/userRepository.tsx";
 import {cartCountSelector} from "../../app/recoil/cart/cartSelectors.ts";
+import {modalRepository} from "../../app/recoil/modal/modalRepository.tsx";
 
 export const DropdownWrapper = styled.div`
   position: relative;

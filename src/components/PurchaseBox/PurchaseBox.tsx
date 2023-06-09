@@ -10,10 +10,10 @@ import {
   Vacant,
 } from "./PurchaseBox.style";
 import {useRecoilValue} from "recoil";
-import {modalRepository} from "../../app/recoil/modalAtoms.tsx";
 import Purchase from "../Purchase";
 import {deliveryFeeState} from "../../app/recoil/orderAtom.ts";
 import {totalPriceSelector} from "../../app/recoil/cart/cartSelectors.ts";
+import {modalRepository} from "../../app/recoil/modal/modalRepository.tsx";
 
 function PurchaseBox() {
   const totalPrice = useRecoilValue(totalPriceSelector);

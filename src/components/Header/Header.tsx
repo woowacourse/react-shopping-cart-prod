@@ -1,6 +1,6 @@
 import titleLogo from "../../assets/logo.png";
-import { useNavigate } from "react-router-dom";
-import { Container } from "../../style/style";
+import {useNavigate} from "react-router-dom";
+import {Container} from "../../style/style";
 import {
   NavBar,
   HeaderContent,
@@ -9,31 +9,31 @@ import {
   HeaderWrapper,
   LoginButton,
 } from "./Header.style";
-import { useRecoilValue } from "recoil";
+import {useRecoilValue} from "recoil";
 import ServerSelectBox from "../ServerSelectBox";
-import { modalRepository } from "../../app/recoil/modalAtoms.tsx";
 import Login from "../Login";
-import { userState } from "../../app/recoil/user/userAtom.tsx";
+import {userState} from "../../app/recoil/user/userAtom.tsx";
 import PersonalDropdown from "../PersonalDropdown";
+import {modalRepository} from "../../app/recoil/modal/modalRepository.tsx";
 
 function Header() {
   const navigate = useNavigate();
   const user = useRecoilValue(userState);
-  const { openModal } = useRecoilValue(modalRepository);
+  const {openModal} = useRecoilValue(modalRepository);
 
   return (
     <HeaderWrapper>
       <Container>
         <HeaderContent>
           <LogoWrapper onClick={() => navigate("/")}>
-            <LogoImage src={titleLogo} />
+            <LogoImage src={titleLogo}/>
           </LogoWrapper>
           <NavBar>
-            <ServerSelectBox />
+            <ServerSelectBox/>
             {user ? (
-              <PersonalDropdown />
+              <PersonalDropdown/>
             ) : (
-              <LoginButton onClick={() => openModal(<Login />)}>
+              <LoginButton onClick={() => openModal(<Login/>)}>
                 로그인
               </LoginButton>
             )}

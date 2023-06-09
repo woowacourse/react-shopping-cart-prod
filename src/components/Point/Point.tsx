@@ -1,8 +1,7 @@
-import { useEffect } from "react";
-import { useRecoilValue } from "recoil";
-import { orderRepository, pointState } from "../../app/recoil/orderAtom.ts";
-import { useNavigate } from "react-router-dom";
-import { modalRepository } from "../../app/recoil/modalAtoms.tsx";
+import {useEffect} from "react";
+import {useRecoilValue} from "recoil";
+import {orderRepository, pointState} from "../../app/recoil/orderAtom.ts";
+import {useNavigate} from "react-router-dom";
 import {
   CurrentPoint,
   FatBorder,
@@ -12,10 +11,11 @@ import {
   PointHistoryWrapper,
   ThinBorder,
 } from "./Point.style.ts";
+import {modalRepository} from "../../app/recoil/modal/modalRepository.tsx";
 
 function Point() {
-  const { closeModal } = useRecoilValue(modalRepository);
-  const { loadPoint } = useRecoilValue(orderRepository);
+  const {closeModal} = useRecoilValue(modalRepository);
+  const {loadPoint} = useRecoilValue(orderRepository);
   const point = useRecoilValue(pointState);
   const navigate = useNavigate();
 
@@ -31,9 +31,9 @@ function Point() {
   return (
     <>
       <PointHeader>포인트</PointHeader>
-      <FatBorder />
+      <FatBorder/>
       <CurrentPoint>잔여 포인트: {point.totalPoint}점</CurrentPoint>
-      <ThinBorder />
+      <ThinBorder/>
       <div>
         {point.pointHistories.map((history) => (
           <PointHistoryWrapper key={history.orderId}>
