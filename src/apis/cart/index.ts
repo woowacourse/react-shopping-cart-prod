@@ -28,7 +28,6 @@ const cartProductsParser = (data: any): CartProducts => {
 export const getCartProducts = async (): Promise<CartProducts> => {
   const fetchedData = await api.get<ServerCartProduct[]>(URL);
   const cartProducts = fetchedData.data;
-
   return cartProductsParser(cartProducts);
 };
 
@@ -50,5 +49,5 @@ export const updateCartProductsQuantity = async (quantity: CartProduct['quantity
 };
 
 export const removeCartProduct = async (cartProductId: number) => {
-  await api.remove(`${URL}/${cartProductId}`);
+  await api.remove(`${URL}/${cartProductId}`, {});
 };

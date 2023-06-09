@@ -11,7 +11,7 @@ import { ServerOwner } from 'types/serverOwner';
 import BASE_URL from 'constants/apiBaseURL';
 import { SERVER_OWNER } from 'constants/storeKey';
 
-const serverOwnerOptions = Object.entries(BASE_URL).map(([name, value]) => ({ name: name, value: name }));
+const serverOwnerOptions = Object.entries(BASE_URL).map(([name, _]) => ({ name: name, value: name }));
 
 const Header = ({ children }: PropsWithChildren) => {
   const cartProductCount = useRecoilValue(cartProductsState).size;
@@ -29,15 +29,18 @@ const Header = ({ children }: PropsWithChildren) => {
         <Title>{children}</Title>
       </FlexLink>
 
-      <FlexBox>
+      <FlexBox gap="4px">
         <SelectBox
-          value={(localStorage.getItem(SERVER_OWNER) ?? '솔로스타') as ServerOwner}
+          value={(localStorage.getItem(SERVER_OWNER) ?? '헙크') as ServerOwner}
           options={serverOwnerOptions}
           onChange={handleServerOwner}
         />
         <FlexLink to={ROUTE_PATH.cart}>
           <Cart />
           <CartProductCount>{cartProductCount}</CartProductCount>
+        </FlexLink>
+        <FlexLink to={ROUTE_PATH.orderList}>
+          <div>주문목록</div>
         </FlexLink>
       </FlexBox>
     </HeaderContainer>
@@ -54,6 +57,10 @@ const HeaderContainer = styled.header`
   height: var(--header-height);
   padding: 0 16.66%;
   background-color: #333333;
+
+  @media (max-width: 420px) {
+    padding: 0 3.66%;
+  }
 `;
 
 const Cart = styled(CartIcon)`
@@ -97,7 +104,8 @@ const CartProductCount = styled.span`
 const FlexLink = styled(Link)`
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  color: white;
 `;
 
 export default Header;

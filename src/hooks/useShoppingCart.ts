@@ -7,7 +7,6 @@ import type { CheckedCartProducts, Product } from 'types/product';
 const useShoppingCart = () => {
   const [cartProducts, setCartProducts] = useRecoilState(cartProductsState);
   const [cartProductIdStore, setCartProductIdStore] = useRecoilState(cartProductIdStoreState);
-
   const initialAddCart = async (product: Product) => {
     const cartProductId = await addCartProducts(product.id);
 

@@ -13,11 +13,12 @@ const useFetch = <T>(fetcher: () => Promise<T>) => {
       const data = await fetcher();
       setData(data);
     } catch (error) {
+      console.log(error)
       setErrorState({ isError: true, error: error as Error });
     } finally {
       setIsLoading(false);
     }
-  }, [fetcher]);
+  }, []);
 
   useEffect(() => {
     fetchData();

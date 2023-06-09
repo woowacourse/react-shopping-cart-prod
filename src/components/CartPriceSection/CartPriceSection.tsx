@@ -1,5 +1,7 @@
 import FlexBox from 'components/@common/FlexBox';
+import ROUTE_PATH from 'constants/routePath';
 import useCartCheckBox from 'hooks/useCartCheckBox';
+import { Link } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { checkedCartProductsTotalPrice } from 'state/cartProducts';
 import styled from 'styled-components';
@@ -34,7 +36,9 @@ const CartPriceSection = () => {
         <SubTitle>예상 주문금액</SubTitle>
         <CartTotalPrice>{cartTotalPriceText}</CartTotalPrice>
       </Container>
-      <OrderConfirmButton isActive={isCheckedProductsExist}>{orderConfirmButtonText}</OrderConfirmButton>
+      <StyledLink to={ROUTE_PATH.orderSheet}>
+        <OrderConfirmButton disabled={!isCheckedProductsExist}>{orderConfirmButtonText}</OrderConfirmButton>
+      </StyledLink>
     </PriceSection>
   );
 };
@@ -99,17 +103,20 @@ const CartTotalPrice = styled.span`
   font-weight: 700;
 `;
 
-const OrderConfirmButton = styled.button<{ isActive: boolean }>`
+const StyledLink = styled(Link)`
+  width: 100%;
+`;
+
+const OrderConfirmButton = styled.button<{ disabled: boolean }>`
   width: 100%;
   height: 50px;
   margin-top: 20px;
   border: none;
-  color: ${({ isActive }) => (isActive ? '#fff' : '#b1b3b5')};
+  color: ${({ disabled }) => (disabled ? '#b1b3b5' : '#fff')};
   font-size: 18px;
   font-weight: 700;
-  background-color: ${({ isActive }) => (isActive ? '#2ac1bc' : '#0000000d')};
-  cursor: pointer;
-  pointer-events: ${({ isActive }) => (isActive ? 'initial' : 'none')};
+  background-color: ${({ disabled }) => (disabled ? '#0000000d' : '#2ac1bc')};
+  cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
 
   @media (max-width: 430px) {
     margin: 0;

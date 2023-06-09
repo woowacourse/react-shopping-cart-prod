@@ -18,7 +18,7 @@ const ProductCardList = ({ products }: ProductCardListProps) => {
 
 const ProductGrid = styled.ul`
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(auto, 1fr);
   gap: 36px 20px;
 

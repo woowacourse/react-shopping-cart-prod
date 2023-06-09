@@ -3,12 +3,19 @@ import ProductListPage from 'pages/ProductListPage';
 import ROUTE_PATH from 'constants/routePath';
 import Layout from 'components/Layout/Layout';
 import ShoppingCartPage from 'pages/ShoppingCartPage';
-import { Suspense } from 'react';
+import OrderSheetPage from 'pages/OrderSheetPage';
+import OrderListPage from 'pages/OrderListPage';
+import OrderDetailPage from 'pages/OrderDetailPage';
+import { ErrorBoundary } from 'ErrorBoundary';
 
 const router = createBrowserRouter([
   {
     path: ROUTE_PATH.root,
-    element: <Layout />,
+    element: (
+      <ErrorBoundary>
+        <Layout />
+      </ErrorBoundary>
+    ),
     children: [
       {
         index: true,
@@ -16,11 +23,19 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTE_PATH.cart,
-        element: (
-          <Suspense fallback={<div>장바구니 페이지 로딩중...</div>}>
-            <ShoppingCartPage />
-          </Suspense>
-        ),
+        element: <ShoppingCartPage />,
+      },
+      {
+        path: ROUTE_PATH.orderSheet,
+        element: <OrderSheetPage />,
+      },
+      {
+        path: ROUTE_PATH.orderList,
+        element: <OrderListPage />,
+      },
+      {
+        path: ROUTE_PATH.orderDetail,
+        element: <OrderDetailPage />,
       },
     ],
   },
