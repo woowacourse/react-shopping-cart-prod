@@ -2,11 +2,15 @@ import { MEMBER_STORAGE_KEY } from '../constants/localStorage';
 import { DISCOUNT_RATE, Member, RANK } from '../types';
 import { getFromLocalStorage, saveToLocalStorage } from '../utils/localStorage';
 
-export const getMember = () => {
-  const member = getFromLocalStorage<Member>(MEMBER_STORAGE_KEY);
+const member = getFromLocalStorage<Member>(MEMBER_STORAGE_KEY);
 
+export const getMember = () => {
   if (!member) {
-    const initialMember = { id: 'b', rank: RANK.normal, discountRate: DISCOUNT_RATE[RANK.normal] };
+    const initialMember = {
+      id: 'b',
+      rank: RANK.diamond,
+      discountRate: DISCOUNT_RATE[RANK.diamond],
+    };
     setMember(initialMember);
 
     return initialMember;
