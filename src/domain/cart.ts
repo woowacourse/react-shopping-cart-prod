@@ -41,11 +41,7 @@ const changeCartItemQuantity = (cartList: CartItemData[], cartItemId: number, qu
 const removeCartItem = (cartList: CartItemData[], cartItemId: number | number[]) => {
   let cartItemIdArray: number[] = [];
 
-  if (Array.isArray(cartItemId)) {
-    cartItemIdArray = cartItemId;
-  } else {
-    cartItemIdArray = [cartItemId];
-  }
+  cartItemIdArray = Array.isArray(cartItemId) ? cartItemId : [cartItemId];
 
   cartItemIdArray.forEach((id) => {
     const hasItem = checkItemInCart(cartList, id);
