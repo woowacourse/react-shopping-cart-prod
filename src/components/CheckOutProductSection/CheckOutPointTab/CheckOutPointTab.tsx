@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import styled from 'styled-components';
 import Box from 'components/@common/Box';
 import useCheckOutPointCostContext from 'hooks/useContext/useCheckOutPointCostContext';
@@ -22,16 +21,13 @@ const CheckOutPointTab = () => {
     ? '포인트 정보를 불러오지 못했어요'
     : `${userOwnPoints?.toLocaleString('ko-KR') ?? 0}P`;
 
-  const handleChangePointCost = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      changePointCost(e, paymentAmount, userOwnPoints ?? 0);
-    },
-    [userOwnPoints, paymentAmount, changePointCost]
-  );
+  const handleChangePointCost = (e: React.ChangeEvent<HTMLInputElement>) => {
+    changePointCost(e, paymentAmount, userOwnPoints ?? 0);
+  };
 
-  const handleAllInPoint = useCallback(() => {
+  const handleAllInPoint = () => {
     allInPoint(paymentAmount, userOwnPoints ?? 0);
-  }, [paymentAmount, userOwnPoints, allInPoint]);
+  };
 
   return (
     <Box
