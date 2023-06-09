@@ -57,13 +57,12 @@ export const totalPriceSelector = selector({
     const { cartItemsPrice } = get(priceAtom);
     const cartList = get(cartListAtom);
     const checkedItems = get(checkedItemIdsAtom);
-
     return cartItemsPrice
       .filter((item) => checkedItems.includes(item.cartItemId))
       .reduce((acc, item) => {
         const quantity =
           cartList.find((cartItem) => cartItem.id === item.cartItemId)
-            ?.quantity || 1;
+            ?.quantity || 0;
         return acc + item.originalPrice * quantity;
       }, 0);
   },
@@ -81,10 +80,23 @@ export const totalDiscountPriceSelector = selector<number>({
       .reduce((acc, item) => {
         const quantity =
           cartList.find((cartItem) => cartItem.id === item.cartItemId)
-            ?.quantity || 1;
+            ?.quantity || 0;
         return acc + item.discountPrice * quantity;
       }, 0);
 
     return discountSum + discountFromTotalPrice.discountPrice;
+  },
+});
+
+export const deliveryPriceSelector = selector({
+  key: 'deliveryPriceSelector',
+  get: ({ get }) => {
+    const { deliveryPrice } = get(priceAtom);
+
+    const isDeliveryFreeFromCoupon = !(
+      deliveryPrice.originalPrice - deliveryPrice.discountPrice
+    );
+
+    return isDeliveryFreeFromCoupon;
   },
 });

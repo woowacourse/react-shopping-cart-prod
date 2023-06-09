@@ -1,7 +1,11 @@
 import { getDeliveryPolicy } from 'api/cart';
 import { useGet } from 'hooks/useGet';
 import { useRecoilValue } from 'recoil';
-import { totalDiscountPriceSelector, totalPriceSelector } from 'recoil/carts';
+import {
+  deliveryPriceSelector,
+  totalDiscountPriceSelector,
+  totalPriceSelector,
+} from 'recoil/carts';
 
 const usePrice = () => {
   const { data: delivery } = useGet(getDeliveryPolicy);
@@ -10,17 +14,20 @@ const usePrice = () => {
 
   const totalDiscountPrice = useRecoilValue(totalDiscountPriceSelector);
 
-  const isDeliveryFree =
-    totalPrice - totalDiscountPrice >= (delivery?.limit || 0);
+  const isDeliveryFreeFromCoupon = useRecoilValue(deliveryPriceSelector);
 
-  const deliveryFee = isDeliveryFree ? 0 : delivery?.price || 0;
+  const isDeliveryFree =
+    totalPrice - totalDiscountPrice >= (delivery?.limit || 0) ||
+    isDeliveryFreeFromCoupon;
+
+  const deliveryPrice = isDeliveryFree ? 0 : delivery?.price || 0;
 
   const finalPrice =
-    totalPrice === 0 ? 0 : totalPrice + deliveryFee - totalDiscountPrice;
+    totalPrice === 0 ? 0 : totalPrice + deliveryPrice - totalDiscountPrice;
 
   return {
     deliveryLimit: delivery?.limit,
-    deliveryPrice: delivery?.price,
+    deliveryPrice,
     totalPrice,
     totalDiscountPrice,
     isDeliveryFree,
