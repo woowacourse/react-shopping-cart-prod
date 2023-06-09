@@ -2,7 +2,10 @@ import { styled } from 'styled-components';
 import DeleteIcon from '../assets/icons/delete.svg';
 import useCartActions from '../hooks/useCartActions';
 import type { Product } from '../type';
-import { Image, ItemContainer, Name, Price } from './common/ProductItem';
+import { Image } from './common/productItem/Image';
+import { ItemContainer } from './common/productItem/ItemContainer';
+import { Name } from './common/productItem/Name';
+import { Price } from './common/productItem/Price';
 import Stepper from './common/Stepper';
 
 const CartItemSection = styled.section`
@@ -62,7 +65,6 @@ const CartItemListItem = (props: CartItemListItemProps) => {
             price: product.price,
             quantity,
           }}
-          containerStyle={{ display: 'flex', padding: '20px 20px 20px 0', width: '100%' }}
         >
           <Image />
           <RowFlexBox>

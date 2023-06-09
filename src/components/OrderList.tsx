@@ -1,7 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import type { OrderListEntity } from '../api/rest/ShoppingCartRestAPI';
-import { Image, ItemContainer, Name, Price, Quantity } from './common/ProductItem';
+import { Image } from './common/productItem/Image';
+import { ItemContainer } from './common/productItem/ItemContainer';
+import { Name } from './common/productItem/Name';
+import { Price } from './common/productItem/Price';
+import { Quantity } from './common/productItem/Quantity';
 
 const Container = styled.section`
   width: 100%;
@@ -92,7 +96,7 @@ const OrderList = (props: OrderListProps) => {
               price: item.price,
               quantity: item.quantity,
             }}
-            containerStyle={{ display: 'flex', padding: '20px 20px 20px 30px' }}
+            containerStyle={{ paddingLeft: '30px' }}
           >
             <Image />
             <ColumnFlexBox>
