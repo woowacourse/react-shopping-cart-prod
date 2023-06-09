@@ -1,3 +1,4 @@
+import { SHIPPING_FEE, SHIPPING_FEE_FREE_MINIMUM_PRICE } from '../constants';
 import { getMember } from '../domain/member';
 import { CartItemData, CartPriceData, OrderedItemData } from '../types';
 
@@ -39,7 +40,9 @@ export const getDiscountedTotalItemPrice = (orderedItemList: OrderedItemData[]) 
 export const getShippingFee = (orderedItemList: OrderedItemData[]) => {
   if (getDiscountedTotalItemPrice(orderedItemList) === 0) return 0;
 
-  return getDiscountedTotalItemPrice(orderedItemList) >= 50000 ? 0 : 3000;
+  return getDiscountedTotalItemPrice(orderedItemList) >= SHIPPING_FEE_FREE_MINIMUM_PRICE
+    ? 0
+    : SHIPPING_FEE;
 };
 
 export const getTotalPrice = (orderedItemList: OrderedItemData[]) => {
