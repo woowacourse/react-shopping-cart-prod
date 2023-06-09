@@ -2,9 +2,10 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   position: fixed;
-  background-color: #333333;
+  background-color: ${(props) => props.theme.color.gray100};
   padding: 10px 0;
   width: 100%;
+  z-index: ${(props) => props.theme.zIndex.front};
 `;
 
 export const Layout = styled.div`
@@ -32,4 +33,30 @@ export const LogoText = styled.span`
   top: 4px;
   font-size: 40px;
   font-weight: 900;
+`;
+
+export const RightContents = styled.div`
+  display: flex;
+`;
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 3px;
+`;
+
+export const ButtonName = styled.div`
+  font-size: 11px;
+`;
+
+export const OrderPagebutton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100px;
+  text-align: center;
+  color: white;
+  cursor: pointer;
 `;

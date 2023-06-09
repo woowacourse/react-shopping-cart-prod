@@ -14,7 +14,7 @@ function CartListSubHeader() {
   const cartAmount = useRecoilValue(cartItemsAmountState);
   const server = useRecoilValue(serverState);
 
-  if (cartAmount === '0') return <></>;
+  if (cartAmount === 0) return null;
 
   return (
     <>

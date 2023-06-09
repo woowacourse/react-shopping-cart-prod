@@ -4,6 +4,8 @@ import SkeletonCartItem from './CartItem/SkeletonCartItem';
 import CartItems from './CartItems';
 import CartListSubHeader from './CartListSubHeader';
 import LoadingCartListSubHeader from './CartListSubHeader/LoadingCartListSubHeader';
+import CouponApplyButton from './CouponApplyButton';
+import CouponBanner from './CouponBanner';
 import EmptyCart from './EmptyCart';
 import PaymentAmount from './PaymentAmount';
 import SkeletonPaymentAmount from './PaymentAmount/SkeletonPaymentAmount';
@@ -27,11 +29,15 @@ function CartList() {
               ))}
             >
               <CartItems />
+              <CouponBanner />
             </Suspense>
           </S.CartListLayout>
         </S.CartList>
         <Suspense fallback={<SkeletonPaymentAmount />}>
-          <PaymentAmount />
+          <div>
+            <CouponApplyButton />
+            <PaymentAmount />
+          </div>
         </Suspense>
       </S.ShoppingCartContentsLayout>
     </S.Container>

@@ -10,7 +10,6 @@ export const Container = styled.div`
   right: 50px;
 
   @media only screen and (max-width: 768px) {
-    // 모바일
     opacity: 0;
   }
 `;
@@ -24,7 +23,7 @@ export const Button = styled.div`
   width: 70px;
   height: 70px;
 
-  z-index: 5;
+  z-index: ${(props) => props.theme.zIndex.middle};
 
   &:hover {
     height: 270px;

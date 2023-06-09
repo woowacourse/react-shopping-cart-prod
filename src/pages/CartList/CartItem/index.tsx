@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 
 import Checkbox from '@Components/Checkbox';
+import Dialog from '@Components/Dialog';
 import QuantityController from '@Components/QuantityController';
 
 import { Product } from '@Types/index';
@@ -23,6 +25,7 @@ type CartItemProps = {
 function CartItem({ product, width = '100%', cartId }: CartItemProps) {
   const { toggleSelected, deleteSelectedCartItem } = useCartItems();
   const { name, price, imageUrl } = product;
+  const [isModalopen, setIsModalopen] = useState(false);
 
   const textPrice = `${price.toLocaleString()} 원`;
 
@@ -30,9 +33,15 @@ function CartItem({ product, width = '100%', cartId }: CartItemProps) {
   const cartItem = product && useRecoilValue(cartItemState(product.id));
 
   const deleteShoppingItem = () => {
-    if (!window.confirm(`${name} 상품을 장바구니에서 삭제하시겠습니까?`)) return;
-
     deleteSelectedCartItem(cartId);
+  };
+
+  const closeModal = () => {
+    setIsModalopen(false);
+  };
+
+  const openModal = () => {
+    setIsModalopen(true);
   };
 
   return (
@@ -41,7 +50,7 @@ function CartItem({ product, width = '100%', cartId }: CartItemProps) {
       <S.ShoppingItemImage src={imageUrl} alt={name} aria-label="장바구니 상품 이미지" />
       <S.ShoppingItemName aria-label="장바구니 상품 이름">{name}</S.ShoppingItemName>
       <S.RightContents>
-        <S.DeleteButton src={Trash} onClick={deleteShoppingItem} />
+        <S.DeleteButton src={Trash} onClick={openModal} />
         <QuantityController
           product={product}
           quantity={cartItem?.quantity}
@@ -50,6 +59,13 @@ function CartItem({ product, width = '100%', cartId }: CartItemProps) {
         />
         <S.ShoppingItemPrice aria-label="장바구니 상품 가격">{textPrice}</S.ShoppingItemPrice>
       </S.RightContents>
+      {isModalopen && (
+        <Dialog
+          message={`${name} 상품을 장바구니에서 삭제하시겠습니까?`}
+          onClick={deleteShoppingItem}
+          onClose={closeModal}
+        />
+      )}
     </S.Container>
   );
 }
