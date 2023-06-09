@@ -4,7 +4,7 @@ import { serverState } from "../../app/recoil/serverAtom";
 import { ChangeEvent, useEffect } from "react";
 import { cartRepository } from "../../app/recoil/cartAtoms";
 import { userState } from "../../app/recoil/user/userAtom.tsx";
-import { userRepository } from "../../app/recoil/user/userSelector.tsx";
+import { userRepository } from "../../app/recoil/user/userRepository.tsx";
 
 function ServerSelectBox() {
   const { loadCartList } = useRecoilValue(cartRepository);

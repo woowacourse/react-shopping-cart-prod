@@ -12,7 +12,7 @@ import {
   quantityByProductIdSelector,
 } from "../../app/recoil/cartAtoms";
 import { useRecoilValue } from "recoil";
-import { userRepository } from "../../app/recoil/user/userSelector";
+import { userRepository } from "../../app/recoil/user/userRepository";
 
 interface CartControllerProps {
   product: ProductItem;

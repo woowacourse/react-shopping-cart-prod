@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { cartCountSelector } from "../../app/recoil/cartAtoms.ts";
 import { modalRepository } from "../../app/recoil/modalAtoms.tsx";
 import Point from "../Point";
-import { userRepository } from "../../app/recoil/user/userSelector.tsx";
+import { userRepository } from "../../app/recoil/user/userRepository.tsx";
 
 export const DropdownWrapper = styled.div`
   position: relative;
