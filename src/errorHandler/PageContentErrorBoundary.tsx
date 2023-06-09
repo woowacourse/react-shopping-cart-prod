@@ -10,7 +10,7 @@ class PageContentErrorBoundary extends ErrorBoundary {
     return hasError ? (
       <ErrorDiv>
         {message}
-        <RetryButton onClick={() => this.retry()}>다시 시도하기</RetryButton>
+        <RetryButton onClick={this.retry}>다시 시도하기</RetryButton>
       </ErrorDiv>
     ) : (
       children

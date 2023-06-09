@@ -13,7 +13,7 @@ class HeaderCartErrorBoundary extends ErrorBoundary {
         장바구니
         <br />
         오류
-        <RetryButton onClick={() => this.retry()} aria-label="다시 시도하기">
+        <RetryButton onClick={this.retry} aria-label="다시 시도하기">
           <IoRefreshCircle
             style={{ backgroundColor: Colors.grey1 }}
             color={Colors.white}

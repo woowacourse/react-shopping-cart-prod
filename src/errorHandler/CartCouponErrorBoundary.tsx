@@ -11,7 +11,7 @@ class CartCouponErrorBoundary extends ErrorBoundary {
     return hasError ? (
       <ErrorDiv>
         서버에서 쿠폰 목록을 불러오지 못했어요
-        <RetryButton onClick={() => this.retry()} aria-label="다시 시도하기">
+        <RetryButton onClick={this.retry} aria-label="다시 시도하기">
           <GrPowerReset size="32px" />
         </RetryButton>
       </ErrorDiv>

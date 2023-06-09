@@ -34,7 +34,7 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
     return hasError ? (
       <>
         <p>오류가 발생하였습니다.</p>
-        <button type="button" onClick={() => this.retry()}>
+        <button type="button" onClick={this.retry}>
           재시도하기
         </button>
       </>
