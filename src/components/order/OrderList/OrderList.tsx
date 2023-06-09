@@ -2,7 +2,7 @@ import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
 import serverNameState from '../../../globalState/atoms/serverName';
 import ServerUtil from '../../../utils/ServerUrl';
-import type OrderInfo from '../../../types/order';
+import type { OrderInfo } from '../../../types/order';
 import { USER_AUTH_TOKEN } from '../../../constant';
 import useFetch from '../../../hooks/api/useFetch';
 import OrderDetail from '../OrderDetail/OrderDetail';

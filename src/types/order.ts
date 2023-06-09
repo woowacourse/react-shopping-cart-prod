@@ -1,11 +1,9 @@
-import { CartProduct } from './product';
+import type { CartProduct } from './product';
 
-interface OrderInfo {
+export interface OrderInfo {
   id: number;
   originalPrice: number;
   actualPrice: number;
   deliveryFee: number;
   cartItems: CartProduct[];
 }
-
-export default OrderInfo;

@@ -4,7 +4,7 @@ import { Suspense, useState } from 'react';
 import CartList from '../CartList/CartList';
 import PaymentAmount from '../PaymentAmount/PaymentAmount';
 import getCartLength from '../../../globalState/selectors/getCartLength';
-import CouponInfo from '../../../types/coupon';
+import type { CouponInfo } from '../../../types/coupon';
 import CouponSelectRadio from '../../coupon/CouponSelectRadio/CouponSelectRadio';
 import CartCouponErrorBoundary from '../../../errorHandler/CartCouponErrorBoundary';
 import Colors from '../../../constant/Colors';

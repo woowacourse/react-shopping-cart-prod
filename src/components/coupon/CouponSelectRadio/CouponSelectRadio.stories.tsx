@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
 import CouponSelectRadio from './CouponSelectRadio';
-import type CouponInfo from '../../../types/coupon';
+import type { CouponInfo } from '../../../types/coupon';
 import storybookHandlers from '../../../mocks/storybookHandlers';
 
 const meta: Meta<typeof CouponSelectRadio> = {
