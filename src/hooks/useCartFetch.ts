@@ -12,7 +12,6 @@ export const useCartFetch = () => {
     data: cartData,
     refetch: cartRefetch,
     isLoading,
-    isError: cartFetchError,
   } = useQuery<CartItemType[]>('cart', async () => {
     const res = await fetch(`${serverURL}/cart-items`, {
       method: 'GET',
@@ -22,7 +21,6 @@ export const useCartFetch = () => {
       },
     });
     const data = await res.json();
-    if (data.status !== 200) throw new Error();
     return data;
   });
 
@@ -102,7 +100,6 @@ export const useCartFetch = () => {
   return {
     cartData,
     isLoading,
-    cartFetchError,
     cartRefetch,
     addCartItemAPI,
     changeCartQuantityAPI,

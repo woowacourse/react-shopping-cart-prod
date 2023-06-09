@@ -11,7 +11,6 @@ const useCouponFetch = () => {
     data: allCoupon,
     refetch: issuableRefetch,
     isFetching,
-    isError: couponFetchError,
   } = useQuery<IssuableCouponType[]>('allCoupon', async () => {
     const res = await fetch(`${serverURL}/coupons`, {
       method: 'GET',
@@ -21,7 +20,6 @@ const useCouponFetch = () => {
       },
     });
     const data = await res.json();
-    if (data.status !== 200) throw new Error();
     return data;
   });
 
@@ -72,7 +70,7 @@ const useCouponFetch = () => {
     fetchAddCouponData.mutate({ body });
   };
 
-  return { allCoupon, isFetching, couponFetchError, addCouponAPI, userCoupon };
+  return { allCoupon, isFetching, addCouponAPI, userCoupon };
 };
 
 export default useCouponFetch;

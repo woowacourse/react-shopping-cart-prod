@@ -7,7 +7,7 @@ import LoadingSpinner from '../../common/LoadingSpinner/LoadingSpinner';
 import ErrorBox from '../../common/ErrorBox/ErrorBox';
 
 const CouponList = () => {
-  const { allCoupon, addCouponAPI, isFetching, couponFetchError } = useCouponFetch();
+  const { allCoupon, addCouponAPI, isFetching } = useCouponFetch();
   const { openModal } = useConfirmModal();
 
   const addCoupon = async (couponId: number) => {
@@ -16,10 +16,6 @@ const CouponList = () => {
 
   if (isFetching) {
     return <LoadingSpinner />;
-  }
-
-  if (couponFetchError) {
-    return <ErrorBox errorType="network" />;
   }
 
   return (
