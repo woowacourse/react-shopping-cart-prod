@@ -1,7 +1,7 @@
-import { useRecoilState } from 'recoil';
-import useFetchCart from './useFetchCart';
-import cartState from '../recoil/cartState';
-import { CartItemType } from 'types/ProductType';
+import { useRecoilState } from "recoil";
+import useFetchCart from "./useFetchCart";
+import cartState from "../recoil/cartState";
+import { CartItemType } from "types/ProductType";
 
 export const useCart = () => {
   const [cart, setCart] = useRecoilState(cartState);
@@ -17,22 +17,30 @@ export const useCart = () => {
     return cartItem?.id;
   };
 
-  const addCartItem = async (productId: number) => {
-    await fetchCart.POST(productId);
-    const response = await fetchCart.GET();
-    const newCart: CartItemType[] = await response.json();
-    const checkedCart = newCart.map((cartItem) => {
-      cartItem.checked = true;
-      return cartItem;
-    });
+  const addCartItem = (productId: number) => {
+    let isAdding = false;
+    return async () => {
+      if (isAdding) return;
+      isAdding = true;
 
-    setCart(checkedCart);
+      await fetchCart.POST(productId);
+      const response = await fetchCart.GET();
+      const newCart: CartItemType[] = await response.json();
+
+      const checkedCart = newCart.map((cartItem) => {
+        cartItem.checked = true;
+        return cartItem;
+      });
+
+      isAdding = false;
+      setCart(checkedCart);
+    };
   };
 
   const updateCartItemQuantity = (cartId: number, quantity: number) => {
     if (!cart.some((cartItem) => cartItem.id === cartId)) {
       console.error(
-        '수량 변경하였지만 recoil에서 관리하는 cartState에서 cartItem의 id를 찾을 수 없습니다. '
+        "수량 변경하였지만 recoil에서 관리하는 cartState에서 cartItem의 id를 찾을 수 없습니다. "
       );
 
       return;
@@ -107,13 +115,14 @@ export const useCart = () => {
   };
 
   const totalPrice = cart.reduce((totalPrice, cartItem) => {
-    return cartItem.checked ? totalPrice + cartItem.product.price * cartItem.quantity : totalPrice;
+    return cartItem.checked
+      ? totalPrice + cartItem.product.price * cartItem.quantity
+      : totalPrice;
   }, 0);
 
   return {
     cart,
     setCart,
-
     getCartItemQuantity,
     getCartItemId,
     updateCartItemQuantity,

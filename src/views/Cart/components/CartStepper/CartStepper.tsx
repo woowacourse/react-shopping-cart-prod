@@ -1,49 +1,52 @@
-import * as S from './CartStepper.style';
+import * as S from "./CartStepper.style";
 
-import { ProductItemType } from 'types/ProductType';
-import { Stepper } from '@common/Stepper';
+import { ProductItemType } from "types/ProductType";
+import { Stepper } from "@common/Stepper";
 
-import { BsCartPlus } from 'react-icons/bs';
-import { useCart } from '@views/Cart/hooks/useCart';
+import { BsCartPlus } from "react-icons/bs";
+import { useCart } from "@views/Cart/hooks/useCart";
 
 interface CartQuantityFieldProps {
   product: ProductItemType;
 }
 
+// TODO: handler
 function CartStepper({ product }: CartQuantityFieldProps) {
-  const { getCartItemId, getCartItemQuantity, updateCartItemQuantity, addCartItem } = useCart();
+  const {
+    getCartItemId,
+    getCartItemQuantity,
+    updateCartItemQuantity,
+    addCartItem,
+  } = useCart();
   const quantity = getCartItemQuantity(product.id);
-  const cartItemId = getCartItemId(product.id);
-  const isQuantityZero = quantity > 0;
+  const cartItemId = getCartItemId(product.id) ?? -1;
+
+  const changeQuantity = ({ target: value }) => {
+    updateCartItemQuantity(cartItemId, Number(event.target.value));
+  };
+
+  const increaseQuantity = () => {
+    updateCartItemQuantity(cartItemId, quantity + 1);
+  };
+
+  const decreaseQuantity = () => {
+    updateCartItemQuantity(cartItemId, quantity - 1);
+  };
 
   return (
     <S.StepperContainer>
-      {isQuantityZero ? (
+      {quantity > 0 ? (
         <Stepper
           quantity={quantity}
-          onChange={(event) => {
-            if (cartItemId) {
-              updateCartItemQuantity(cartItemId, Number(event.target.value));
-            }
-          }}
-          onIncrease={() => {
-            if (cartItemId) {
-              updateCartItemQuantity(cartItemId, quantity + 1);
-            }
-          }}
-          onDecrease={() => {
-            if (cartItemId) {
-              updateCartItemQuantity(cartItemId, quantity - 1);
-            }
-          }}
+          onChange={changeQuantity}
+          onIncrease={increaseQuantity}
+          onDecrease={decreaseQuantity}
           ariaIncreaseLabel={`${product.name}의 장바구니에 담긴 개수에서 하나 더하기`}
           ariaDecreaseLabel={`${product.name}의 장바구니에 담긴 개수에서 하나 빼기`}
         />
       ) : (
         <S.CartIcon
-          onClick={() => {
-            addCartItem(product.id);
-          }}
+          onClick={addCartItem(product.id)}
           type="button"
           aria-label={`${product.name}를 장바구니에 담기`}
           role="cart-icon"
