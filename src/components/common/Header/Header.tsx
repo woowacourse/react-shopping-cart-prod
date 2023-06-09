@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Suspense } from 'react';
 import { GiShoppingCart } from 'react-icons/gi';
 import ServerSelector from '../../ServerSelector/ServerSelector';
@@ -9,20 +9,12 @@ import HeaderCartErrorBoundary from '../../../errorHandler/HeaderCartErrorBounda
 import Colors from '../../../constant/Colors';
 
 const Header = () => {
-  const navigate = useNavigate();
-
-  const gotoMain = () => navigate('/');
-
-  const gotoCart = () => navigate('/cart');
-
-  const gotoOrderList = () => navigate('/orders');
-
   return (
     <HeaderContainer>
-      <Logo onClick={gotoMain}>
+      <LogoLink to="/">
         <GiShoppingCart color={Colors.white} size="55px" />
         <Title>SHOP</Title>
-      </Logo>
+      </LogoLink>
       <ServerSelector />
       <RightContainer>
         <HeaderCartErrorBoundary>
@@ -31,10 +23,12 @@ const Header = () => {
               <LoadingSpinner color={Colors.staleTurquoise} diameter="32px" spinnerWidth="5px" />
             }
           >
-            <CartButton onClick={gotoCart} />
+            <HeaderLink to="/cart">
+              <CartButton />
+            </HeaderLink>
           </Suspense>
         </HeaderCartErrorBoundary>
-        <Button onClick={gotoOrderList}>주문목록</Button>
+        <HeaderLink to="/orders">주문목록</HeaderLink>
       </RightContainer>
     </HeaderContainer>
   );
@@ -59,12 +53,17 @@ const HeaderContainer = styled.header`
   z-index: 1;
 `;
 
-const Logo = styled.div`
+const StyledLink = styled(Link)`
   display: flex;
   align-items: center;
-  column-gap: 15px;
+  justify-content: center;
 
-  cursor: pointer;
+  text-decoration: none;
+  color: ${Colors.white};
+`;
+
+const LogoLink = styled(StyledLink)`
+  column-gap: 15px;
 `;
 
 const Title = styled.h1`
@@ -86,18 +85,10 @@ const RightContainer = styled.div`
   height: 40px;
 `;
 
-const Button = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+const HeaderLink = styled(StyledLink)`
   column-gap: 6px;
 
-  border: none;
-  background: none;
-
-  color: white;
   font-size: 24px;
-  cursor: pointer;
 `;
 
 export default Header;

@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
 import { Suspense, useState } from 'react';
@@ -9,6 +8,7 @@ import CouponInfo from '../../../types/coupon';
 import CouponSelectRadio from '../../coupon/CouponSelectRadio/CouponSelectRadio';
 import CartCouponErrorBoundary from '../../../errorHandler/CartCouponErrorBoundary';
 import Colors from '../../../constant/Colors';
+import LinkButton from '../../common/LinkButton/LinkButton';
 
 const CartContents = () => {
   const [selectedCoupon, setSelectedCoupon] = useState<CouponInfo | null>(null);
@@ -29,9 +29,7 @@ const CartContents = () => {
   ) : (
     <EmptyCartView>
       장바구니에 상품이 존재하지 않습니다.
-      <Link to="/">
-        <LinkButton>상품 담으러 가기</LinkButton>
-      </Link>
+      <LinkButton to="/">상품 담으러 가기</LinkButton>
     </EmptyCartView>
   );
 };
@@ -59,20 +57,6 @@ const EmptyCartView = styled.div`
 
   font-weight: 500;
   font-size: 30px;
-`;
-
-const LinkButton = styled.button`
-  width: 300px;
-  padding: 20px 50px;
-  background-color: ${Colors.grey1};
-
-  border: none;
-  border-radius: 15px;
-
-  font-size: 20px;
-  color: white;
-
-  cursor: pointer;
 `;
 
 const CouponFallbackDiv = styled.div`

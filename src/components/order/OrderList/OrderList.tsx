@@ -1,13 +1,12 @@
 import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
-import { Link } from 'react-router-dom';
 import serverNameState from '../../../globalState/atoms/serverName';
 import ServerUtil from '../../../utils/ServerUrl';
 import type OrderInfo from '../../../types/order';
 import { USER_AUTH_TOKEN } from '../../../constant';
 import useFetch from '../../../hooks/api/useFetch';
 import OrderDetail from '../OrderDetail/OrderDetail';
-import Colors from '../../../constant/Colors';
+import LinkButton from '../../common/LinkButton/LinkButton';
 
 const OrderList = () => {
   const serverName = useRecoilValue(serverNameState);
@@ -31,9 +30,7 @@ const OrderList = () => {
       {(!!sortedOrders && sortedOrders.length) || (
         <EmptyCartView>
           아직 구매 기록이 없어요!
-          <LinkButton>
-            <Link to="/">초기 화면으로 가기</Link>
-          </LinkButton>
+          <LinkButton to="/">초기 화면으로 가기</LinkButton>
         </EmptyCartView>
       )}
     </Section>
@@ -60,23 +57,6 @@ const EmptyCartView = styled.div`
 
   font-weight: 500;
   font-size: 30px;
-`;
-
-const LinkButton = styled.button`
-  width: 300px;
-  padding: 20px 50px;
-  background-color: ${Colors.grey1};
-
-  border: none;
-  border-radius: 15px;
-
-  cursor: pointer;
-
-  & > a {
-    color: ${Colors.white};
-    font-size: 20px;
-    text-decoration: none;
-  }
 `;
 
 export default OrderList;

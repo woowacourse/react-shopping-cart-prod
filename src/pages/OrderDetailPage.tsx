@@ -1,8 +1,8 @@
 import { Suspense } from 'react';
-import { Link } from 'react-router-dom';
 import { styled } from 'styled-components';
 import Colors from '../constant/Colors';
 import OrderDetailLoader from '../components/order/OrderDetail/OrderDetailLoader';
+import LinkButton from '../components/common/LinkButton/LinkButton';
 
 const OrderDetailPage = () => {
   return (
@@ -12,9 +12,7 @@ const OrderDetailPage = () => {
         fallback={
           <EmptyDetailsLayoutDiv>
             주문 목록에서 상세보기를 눌러 주세요!
-            <Link to="/orders">
-              <LinkButton>주문 목록으로 가기</LinkButton>
-            </Link>
+            <LinkButton to="/orders">주문 목록으로 가기</LinkButton>
           </EmptyDetailsLayoutDiv>
         }
       >
@@ -56,20 +54,6 @@ const EmptyDetailsLayoutDiv = styled.div`
 
   font-weight: 500;
   font-size: 30px;
-`;
-
-const LinkButton = styled.button`
-  width: 300px;
-  padding: 20px 50px;
-  background-color: ${Colors.grey1};
-
-  border: none;
-  border-radius: 15px;
-
-  font-size: 20px;
-  color: white;
-
-  cursor: pointer;
 `;
 
 export default OrderDetailPage;

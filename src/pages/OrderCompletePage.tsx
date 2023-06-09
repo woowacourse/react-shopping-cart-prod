@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
-import Colors from '../constant/Colors';
+import LinkButton from '../components/common/LinkButton/LinkButton';
 
 const OrderCompletePage = () => {
   const navigate = useNavigate();
@@ -18,8 +18,10 @@ const OrderCompletePage = () => {
     <Section>
       <p>주문이 완료되었습니다!!</p>
       <p>주문번호: {orderId}</p>
-      <LinkButton onClick={() => navigate('/orders')}>주문 목록으로 가기</LinkButton>
-      <LinkButton onClick={() => navigate('/', { replace: true })}>초기 화면으로 가기</LinkButton>
+      <LinkButton to="/orders">주문 목록으로 가기</LinkButton>
+      <LinkButton to="/" replace>
+        초기 화면으로 가기
+      </LinkButton>
     </Section>
   );
 };
@@ -38,20 +40,6 @@ const Section = styled.section`
 
   font-weight: 500;
   font-size: 30px;
-`;
-
-const LinkButton = styled.button`
-  width: 300px;
-  padding: 20px 50px;
-  background-color: ${Colors.grey1};
-
-  border: none;
-  border-radius: 15px;
-
-  font-size: 20px;
-  color: white;
-
-  cursor: pointer;
 `;
 
 export default OrderCompletePage;
