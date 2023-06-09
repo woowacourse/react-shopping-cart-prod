@@ -83,12 +83,6 @@ export const orderRepository = selector({
       ({set, snapshot}) =>
         async () => {
           const totalPrice = await snapshot.getPromise(totalPriceSelector);
-          const checkedCartList = await snapshot.getPromise(
-            checkedCartSelector
-          );
-          const selectedCouponIds = await snapshot.getPromise(
-            selectedCouponIdSelector
-          );
           const discountByCoupon = await snapshot.getPromise(
             discountPriceByCouponSelector
           );
@@ -96,19 +90,6 @@ export const orderRepository = selector({
 
           const expectedOrderPrice =
             totalPrice - discountByCoupon - selectedPoint;
-
-          const query = {
-            cartItems: checkedCartList.map((cart) => {
-              return {
-                cartItemId: cart.id,
-                productId: cart.product.id,
-                quantity: cart.quantity,
-              };
-            }),
-            couponIds: [selectedCouponIds[0]],
-            usePoint: selectedPoint,
-          };
-          // 추후에 서버로 쿼리 날려서 계산 값을 검증할 예정
 
           set(expectedOrderPriceState, expectedOrderPrice);
         }
