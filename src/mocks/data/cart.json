@@ -6,7 +6,7 @@
       "id": 1,
       "name": "지빠귀",
       "price": 10000,
-      "imageUrl": "https://images.unsplash.com/photo-1606567595334-d39972c85dbe?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80"
+      "imageUrl": "https://images.unsplash.com/photo-1606567595334-d39972c85dbe"
     }
   },
   {
@@ -16,7 +16,7 @@
       "id": 2,
       "name": "참새",
       "price": 2147483647,
-      "imageUrl": "https://images.unsplash.com/photo-1606071548917-78ed9809141f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1780&q=80"
+      "imageUrl": "https://images.unsplash.com/photo-1606071548917-78ed9809141f"
     }
   },
   {
@@ -26,7 +26,7 @@
       "id": 3,
       "name": "앵무새",
       "price": 8000,
-      "imageUrl": "https://images.unsplash.com/photo-1552728089-57bdde30beb3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1925&q=80"
+      "imageUrl": "https://images.unsplash.com/photo-1552728089-57bdde30beb3"
     }
   }
 ]
