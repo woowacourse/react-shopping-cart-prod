@@ -1,6 +1,6 @@
 import styled, { keyframes } from 'styled-components';
 
-const fadeIn = keyframes` {
+const fadeIn = keyframes` 
   from {
     opacity: 0;
     transform: translate(-50%, -40%);
@@ -9,7 +9,7 @@ const fadeIn = keyframes` {
     opacity: 1;
     transform: translate(-50%, -50%);
   }
-}`;
+`;
 
 export const BackDrop = styled.div`
   padding: 0;
@@ -37,7 +37,7 @@ export const Wrapper = styled.div`
   bottom: auto;
   margin-right: -50%;
   transform: translate(-50%, -50%);
-  animation: ${fadeIn} 1s;
+  animation: ${fadeIn} 0.3s;
   background-color: ${(props) => props.theme.color.white};
   border-radius: 10px;
 `;
@@ -59,4 +59,6 @@ export const Button = styled.button`
   text-align: center;
   border: 1px solid ${(props) => props.theme.color.gray};
   border-radius: 10px;
+
+  cursor: pointer;
 `;

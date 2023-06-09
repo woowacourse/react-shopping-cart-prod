@@ -2,29 +2,26 @@ import * as S from './ProductItem.styles';
 import Svg from 'components/@common/Svg';
 import Counter from 'components/@common/Counter';
 import { useCart } from 'components/Cart/hooks/useCart';
-import { Product } from 'types';
-import { useRecoilValue } from 'recoil';
-import { cartListAtom } from 'recoil/cartList';
+import { ProductItem as ProductItemType } from 'types/api/products';
+import useProductItem from '../hooks/useProductItem';
 
 interface ProductItemProps {
-  product: Product;
+  product: ProductItemType;
 }
 
 const ProductItem = ({ product }: ProductItemProps) => {
+  const { name, isOnSale, price, imageUrl } = product;
+  const { productInCart, finalPrice, salePercentage } = useProductItem(product);
   const { decreaseItemQuantity, addItem, increaseItemQuantity } = useCart();
-  const cartList = useRecoilValue(cartListAtom);
-  const cartItem = cartList.find(
-    (cartItem) => cartItem.product.id === product.id
-  );
 
   const increase = () => {
-    if (!cartItem) return;
-    increaseItemQuantity(cartItem.id);
+    if (!productInCart) return;
+    increaseItemQuantity(productInCart.id);
   };
 
   const decrease = () => {
-    if (!cartItem) return;
-    decreaseItemQuantity(cartItem.id);
+    if (!productInCart) return;
+    decreaseItemQuantity(productInCart.id);
   };
 
   const onAddItem = () => {
@@ -33,17 +30,23 @@ const ProductItem = ({ product }: ProductItemProps) => {
 
   return (
     <S.ItemWrapper>
-      <S.ItemImage src={product.imageUrl} alt={product.name} />
+      <S.ItemImage src={imageUrl} alt={name} />
       <S.ProductWrapper>
         <div>
-          <S.ProductName>{product.name}</S.ProductName>
-          <S.ProductPrice>
-            {product.price.toLocaleString('KR')} 원
-          </S.ProductPrice>
+          <S.ProductName>{name}</S.ProductName>
+          <S.ProductPrice>{finalPrice.toLocaleString('KR')} 원</S.ProductPrice>
+          {isOnSale && (
+            <S.SalePriceBox>
+              <S.SalePercentage>{salePercentage}% </S.SalePercentage>
+              <S.ProductOriginalPrice>
+                {price.toLocaleString('KR')} 원
+              </S.ProductOriginalPrice>
+            </S.SalePriceBox>
+          )}
         </div>
-        {cartItem ? (
+        {productInCart ? (
           <Counter
-            count={cartItem.quantity}
+            count={productInCart.quantity}
             min={0}
             increment={increase}
             decrement={decrease}

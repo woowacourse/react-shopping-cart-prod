@@ -1,9 +1,5 @@
 import { api } from 'api';
-
-export const getProductList = async (server: string) => {
-  const data = await api.get(`${server}/products`);
-  return data;
-};
+import { Coupon, DeliveryPolicy, PriceResult } from 'types/api/carts';
 
 export const getCartList = async (server: string) => {
   const data = await api.get(`${server}/cart-items`);
@@ -26,3 +22,27 @@ export const deleteCartItem = (cartId: number) => async (server: string) => {
   const response = await api.delete(`${server}/cart-items/${cartId}`);
   return response;
 };
+
+export const getCoupons = async (server: string): Promise<Coupon[]> => {
+  const data = await api.get(`${server}/coupons`);
+  return data;
+};
+
+export const getDeliveryPolicy = async (
+  server: string
+): Promise<DeliveryPolicy> => {
+  const data = await api.get(`${server}/delivery-policy`);
+  return data;
+};
+
+export const getPrice =
+  (couponQuery: string) =>
+  async (server: string): Promise<PriceResult> => {
+    if (couponQuery === '') {
+      const data = await api.get(`${server}/cart-items/coupon`);
+      return data;
+    }
+
+    const data = await api.get(`${server}/cart-items/coupon/${couponQuery}`);
+    return data;
+  };

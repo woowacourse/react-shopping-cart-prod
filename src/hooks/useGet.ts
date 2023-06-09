@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useToast } from 'components/@common/Toast/hooks/useToast';
 import { serverAtom } from 'recoil/server';
 import { useRecoilValue } from 'recoil';
 
 export const useGet = <T>(callback: (server: string) => Promise<T>) => {
   const [data, setData] = useState<T>();
+  const [error, setError] = useState({ isError: false, message: '' });
   const [isLoading, setIsLoading] = useState(true);
-  const { toast } = useToast();
   const server = useRecoilValue(serverAtom);
 
   useEffect(() => {
@@ -16,15 +15,16 @@ export const useGet = <T>(callback: (server: string) => Promise<T>) => {
   const request = async () => {
     try {
       const data = await callback(server);
+      setError({ isError: false, message: '' });
       setData(data);
+      return data;
     } catch (error) {
       if (!(error instanceof Error)) return;
-      setIsLoading(false);
-      toast.error(error.message);
+      setError({ isError: true, message: error.message });
     } finally {
       setIsLoading(false);
     }
   };
 
-  return { data, isLoading };
+  return { request, data, isLoading, error };
 };

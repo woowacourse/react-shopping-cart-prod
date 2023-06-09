@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { css } from 'styled-components';
 
 export const ItemWrapper = styled.div`
   width: 600px;
@@ -52,6 +53,14 @@ export const SelectDeleteButton = styled.button`
   font: ${(props) => props.theme.font.small};
   text-align: center;
   border: 1px solid ${(props) => props.theme.color.gray};
+
+  cursor: pointer;
+
+  ${(props) =>
+    props.disabled &&
+    css`
+      cursor: default;
+    `}
 `;
 
 export const EmptyList = styled.div`

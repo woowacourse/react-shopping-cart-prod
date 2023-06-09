@@ -1,16 +1,18 @@
-import { getProductList } from 'api/requests';
+import { getProductList } from 'api/products';
 import { atom, selector } from 'recoil';
-import { Product } from 'types';
 import { serverAtom } from './server';
+import { ProductItem } from 'types/api/products';
 
-export const productListSelector = atom<Product[]>({
+const productListSelector = selector({
+  key: 'initialProductList',
+  get: async ({ get }) => {
+    const server = get(serverAtom);
+    const data = await getProductList(server);
+    return data;
+  },
+});
+
+export const productListAtom = atom<ProductItem[]>({
   key: 'productList',
-  default: selector({
-    key: 'initalProductList',
-    get: async ({ get }) => {
-      const server = get(serverAtom);
-      const data = await getProductList(server);
-      return data;
-    },
-  }),
+  default: productListSelector,
 });

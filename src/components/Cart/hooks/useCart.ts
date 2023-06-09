@@ -1,21 +1,19 @@
 import { useRecoilState } from 'recoil';
-import {
-  postCartItem,
-  patchCartItemQuantity,
-  deleteCartItem,
-} from 'api/requests';
+import { postCartItem, patchCartItemQuantity, deleteCartItem } from 'api/cart';
 import { useToast } from 'components/@common/Toast/hooks/useToast';
-import { cartListAtom } from 'recoil/cartList';
+import { cartListAtom } from 'recoil/carts';
 import { useMutate } from '../../../hooks/useMutate';
-import { Product } from 'types';
+import { ProductItem } from 'types/api/products';
 
 export const useCart = () => {
-  const { request } = useMutate();
+  const { request, error } = useMutate();
   const [cartList, setCartList] = useRecoilState(cartListAtom);
   const { toast } = useToast();
 
-  const addItem = async (product: Product) => {
+  const addItem = async (product: ProductItem) => {
     const res = await request(postCartItem({ productId: product.id }));
+    checkError();
+
     const cartId = Number(
       res.headers.get('Location').replace('/cart-items/', '')
     );
@@ -38,6 +36,7 @@ export const useCart = () => {
       )
     );
     request(patchCartItemQuantity(cartId, { quantity: cartItem.quantity + 1 }));
+    checkError();
   };
 
   const decreaseItemQuantity = (cartId: number) => {
@@ -56,6 +55,7 @@ export const useCart = () => {
       )
     );
     request(patchCartItemQuantity(cartId, { quantity: cartItem.quantity - 1 }));
+    checkError();
   };
 
   const deleteItem = (cartId: number) => {
@@ -63,6 +63,13 @@ export const useCart = () => {
 
     setCartList((prev) => prev.filter((item) => item.id !== cartId));
     request(deleteCartItem(cartId));
+    checkError();
+  };
+
+  const checkError = () => {
+    if (error.isError) {
+      toast.error(error.errorMessage);
+    }
   };
 
   return {

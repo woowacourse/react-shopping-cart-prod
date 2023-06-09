@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const HeaderContainer = styled.header`
@@ -68,4 +69,10 @@ export const CartCounter = styled.div`
   background: ${(props) => props.theme.color.secondary};
   border-radius: 50%;
   font: normal 500 16px/12px BM-HANNA;
+`;
+
+export const LinkToOrderList = styled(Link)`
+  text-decoration: none;
+  font-size: 15px;
+  font: ${(props) => props.theme.font.small};
 `;
