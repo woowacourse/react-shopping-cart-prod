@@ -7,3 +7,16 @@ export const worker = setupWorker(
   ...couponHandler,
   ...orderHandler
 );
+
+export const startWorker = async () => {
+  if (window.location.pathname === '/react-shopping-cart-prod') {
+    window.location.pathname += '/';
+    return;
+  }
+
+  await worker.start({
+    serviceWorker: {
+      url: `${process.env.PUBLIC_URL}/mockServiceWorker.js`,
+    },
+  });
+};

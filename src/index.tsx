@@ -7,23 +7,12 @@ import GlobalStyle from './GlobalStyle';
 import ProductListPage from './pages/ProductListPage';
 import CartPage from './pages/CartPages';
 import CouponPage from './pages/CouponPage';
-import { worker } from './mocks/browser';
+import { startWorker } from './mocks/browser';
 import OrderCompletePage from './pages/OrderCompletePage';
 import OrderListPage from './pages/OrderListPage';
 import OrderDetailPage from './pages/OrderDetailPage';
 
-(async () => {
-  if (window.location.pathname === '/react-shopping-cart-prod') {
-    window.location.pathname += '/';
-    return;
-  }
-
-  await worker.start({
-    serviceWorker: {
-      url: `${process.env.PUBLIC_URL}/mockServiceWorker.js`,
-    },
-  });
-})();
+startWorker();
 
 const router = createHashRouter([
   {
