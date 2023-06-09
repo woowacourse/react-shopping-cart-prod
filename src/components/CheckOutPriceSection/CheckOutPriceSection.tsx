@@ -5,7 +5,7 @@ import useCartCheckBox from 'hooks/useCartCheckBox';
 import useCheckOutPriceText from './hooks/useCheckOutPriceText';
 
 const CheckOutPriceSection = () => {
-  const { handleCreateOrder } = useOrder();
+  const { createOrder } = useOrder();
   const { checkedCartProductIds } = useCartCheckBox();
   const {
     productTotalPriceText,
@@ -45,7 +45,7 @@ const CheckOutPriceSection = () => {
         </Box>
       </PriceSection>
       <ConfirmButtonBox sizing={{ width: '100%' }}>
-        <OrderConfirmButton onClick={handleCreateOrder} isActive={isCheckedProductsExist}>
+        <OrderConfirmButton onClick={createOrder} isActive={isCheckedProductsExist}>
           {orderConfirmButtonText}
         </OrderConfirmButton>
       </ConfirmButtonBox>

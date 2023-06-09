@@ -21,15 +21,12 @@ const useOrder = () => {
       alert('상품을 주문하지 못했어요. 다시 시도해주세요');
       return;
     }
-  };
 
-  const handleCreateOrder = async () => {
-    await createOrder();
     setCartProducts(await getCartProducts());
     navigate(ROUTE_PATH.ORDER_LIST);
   };
 
-  return { handleCreateOrder };
+  return { createOrder };
 };
 
 export default useOrder;
