@@ -48,10 +48,10 @@ const ProductItem = ({ product }: { product: ProductType }) => {
       <ProductImage src={product.imageUrl} alt={product.name} loading="lazy" />
       <ProductInfoWrapper>
         <ProductTextWrapper>
-          <Text size="smallest" weight="light" color="#333333">
+          <Text size="smallest" weight="light" color="#333">
             {product.name}
           </Text>
-          <Text size="small" weight="light" color="#333333" lineHeight="33px">
+          <Text size="small" weight="light" color="#333" lineHeight="33px">
             {product.price.toLocaleString()} 원
           </Text>
         </ProductTextWrapper>

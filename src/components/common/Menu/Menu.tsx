@@ -8,11 +8,11 @@ const Menu = () => {
   return (
     <MenuWrapper>
       <EventInfo />
-      <Text color="#ffffff" size="small">
+      <Text color="#fff" size="small">
         |
       </Text>
       <UserCartInfo />
-      <Text color="#ffffff" size="small">
+      <Text color="#fff" size="small">
         |
       </Text>
       <UserOrderInfo />

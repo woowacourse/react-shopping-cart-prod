@@ -10,7 +10,7 @@ const Header = () => {
     <HeaderWrapper>
       <HeaderInner>
         <LogoWrapper to={URL.ROOT}>
-          <CartIcon fill="#FFFFFF" style={{ marginRight: '20px' }} />
+          <CartIcon fill="#FFF" style={{ marginRight: '20px' }} />
           <Title>SHOP</Title>
         </LogoWrapper>
         <MenuWrapper>
@@ -27,7 +27,7 @@ export default Header;
 const HeaderWrapper = styled.header`
   width: 100%;
   height: 100px;
-  background-color: #333333;
+  background-color: #333;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -63,7 +63,7 @@ const HeaderInner = styled.div`
 
 const Title = styled.h1`
   font: bold 56px/58px;
-  color: #ffffff;
+  color: #fff;
 `;
 const LogoWrapper = styled(Link)`
   display: flex;

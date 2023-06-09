@@ -15,10 +15,10 @@ const UserCouponItem = ({ totalPrice, coupon, isClicked, onClick }: UserCouponIt
   const available = coupon.minimumPrice < totalPrice;
   return (
     <CouponItemWrapper color={isClicked ? '#04C09E' : '#fff'} onClick={onClick}>
-      <Text color="#000000" size="small" weight="normal" lineHeight="20px">
+      <Text color="#000" size="small" weight="normal" lineHeight="20px">
         {coupon.name}
       </Text>
-      <Text color="#000000" size="smallest" weight="light" lineHeight="20px">
+      <Text color="#000" size="smallest" weight="light" lineHeight="20px">
         {minimum}
       </Text>
       {available ? (
@@ -47,6 +47,6 @@ const CouponItemWrapper = styled.div`
   padding: 3px;
 
   background-color: ${(props) => props.color};
-  border: 1px solid #000000;
+  border: 1px solid #000;
   border-radius: 8px;
 `;

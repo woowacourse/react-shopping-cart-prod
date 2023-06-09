@@ -60,7 +60,7 @@ const InputStyle = styled.input<InputStepperStyleProps>`
       ? 'width: 41.6px; height: 28px; font-size: 12px;'
       : 'width: 58px; height: 40px; font-size: 20px; '}
 
-  border: 1px solid #dddddd;
+  border: 1px solid #ddd;
   outline: none;
 
   text-align: center;
@@ -84,7 +84,7 @@ const StepperDownButton = styled.button<InputStepperStyleProps>`
       ? 'width: 23.93px; height: 14px; font-size: 12px;'
       : 'width: 32px; height: 20px; font-size: 18px; '}
 
-  border: 1px solid #dddddd;
+  border: 1px solid #ddd;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -50,7 +50,7 @@ const ListHeadWrapper = styled.div`
   height: 80px;
   padding: 30px 39px;
   background-color: rgb(243, 245, 247);
-  border: 1px solid #aaaaaa;
+  border: 1px solid #aaa;
   border-radius: 6px 6px 0 0;
   @media screen and (max-width: 510px) {
     flex-direction: column;

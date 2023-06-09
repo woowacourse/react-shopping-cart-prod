@@ -35,7 +35,7 @@ const ApplyCouponModal = ({ totalPrice, coupons }: ApplyCouponModalProps) => {
   return (
     <ModalWrapper>
       <TextWrapper>
-        <Text color="#000000" size="medium" weight="bold">
+        <Text color="#000" size="medium" weight="bold">
           보유 쿠폰 리스트
         </Text>
       </TextWrapper>

@@ -6,7 +6,7 @@ import { URL } from '../../../abstract/constants';
 const UserOrderInfo = () => {
   return (
     <EventInfoWrapper to={URL.ORDER}>
-      <Text color="#ffffff" size="small">
+      <Text color="#fff" size="small">
         주문 목록
       </Text>
     </EventInfoWrapper>

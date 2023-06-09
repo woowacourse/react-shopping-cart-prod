@@ -11,7 +11,7 @@ const DetailItem = ({ orderProduct }: { orderProduct: OrderProductsType }) => {
         <Text size="smallest" weight="bold">
           {product.name}
         </Text>
-        <Text size="smallest" weight="light" color="#888888">
+        <Text size="smallest" weight="light" color="#888">
           {product.price}원 / 수량: {quantity}개
         </Text>
       </OrderInfoWrapper>
@@ -29,9 +29,9 @@ const DetailItemWrapper = styled.div`
   width: 100%;
   padding: 20px 26px;
 
-  border-left: 1px solid #aaaaaa;
-  border-right: 1px solid #aaaaaa;
-  border-bottom: 1px solid #aaaaaa;
+  border-left: 1px solid #aaa;
+  border-right: 1px solid #aaa;
+  border-bottom: 1px solid #aaa;
 `;
 
 const OrderInfoWrapper = styled.div`

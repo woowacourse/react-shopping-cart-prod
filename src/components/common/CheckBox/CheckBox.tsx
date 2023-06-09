@@ -56,5 +56,5 @@ const LabelText = styled.label`
   font-size: 16px;
   line-height: 20px;
   letter-spacing: 0.5px;
-  color: #333333;
+  color: #333;
 `;

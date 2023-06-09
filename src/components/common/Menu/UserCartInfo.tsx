@@ -23,11 +23,11 @@ const UserCartInfo = () => {
 
   return (
     <UserCartInfoWrapper to={URL.CART}>
-      <Text color="#ffffff" size="small">
+      <Text color="#fff" size="small">
         장바구니
       </Text>
       <CartCounter>
-        <Text size="smallest" color="#ffffff" lineHeight="20px">
+        <Text size="smallest" color="#fff" lineHeight="20px">
           {cartTotalQuantity && cartTotalQuantity > 99 ? 99 : cartTotalQuantity}
         </Text>
       </CartCounter>

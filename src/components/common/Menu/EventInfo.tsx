@@ -6,7 +6,7 @@ import { URL } from '../../../abstract/constants';
 const EventInfo = () => {
   return (
     <EventInfoWrapper to={URL.EVENT}>
-      <Text color="#ffffff" size="small">
+      <Text color="#fff" size="small">
         이벤트
       </Text>
     </EventInfoWrapper>

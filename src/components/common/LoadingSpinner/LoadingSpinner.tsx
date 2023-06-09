@@ -57,7 +57,7 @@ const Ball = styled.div`
   &::after {
     content: '';
     position: absolute;
-    background-color: #333333;
+    background-color: #333;
     width: 5px;
     height: 5px;
     border-radius: 100%;
