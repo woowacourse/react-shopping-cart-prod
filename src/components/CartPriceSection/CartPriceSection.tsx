@@ -4,12 +4,15 @@ import useCartCheckBox from 'hooks/useCartCheckBox';
 import ROUTE_PATH from 'constants/routePath';
 import useCartPriceText from './hooks/useCartPriceText';
 import Box from 'components/@common/Box';
+import { useCallback } from 'react';
 
 const CartPriceSection = () => {
   const navigate = useNavigate();
   const { productTotalPriceText, shippingFeeText, paymentAmountText, orderConfirmButtonText } = useCartPriceText();
   const { checkedCartProductIds } = useCartCheckBox();
   const isCheckedProductsExist = checkedCartProductIds.size > 0;
+
+  const goCheckOutPage = useCallback(() => navigate(ROUTE_PATH.CHECKOUT), []);
 
   return (
     <Container sizing={{ width: '40%' }} flex={{ flexDirection: 'column' }}>
@@ -29,7 +32,7 @@ const CartPriceSection = () => {
         </Box>
       </PriceSection>
       <ConfirmButtonBox sizing={{ width: '100%' }}>
-        <OrderConfirmButton onClick={() => navigate(ROUTE_PATH.CHECKOUT)} isActive={isCheckedProductsExist}>
+        <OrderConfirmButton onClick={goCheckOutPage} isActive={isCheckedProductsExist}>
           {orderConfirmButtonText}
         </OrderConfirmButton>
       </ConfirmButtonBox>
