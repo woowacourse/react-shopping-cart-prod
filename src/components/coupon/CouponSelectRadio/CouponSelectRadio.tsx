@@ -6,6 +6,7 @@ import type CouponInfo from '../../../types/coupon';
 import serverNameState from '../../../globalState/atoms/serverName';
 import ServerUtil from '../../../utils/ServerUrl';
 import { USER_AUTH_TOKEN } from '../../../constant';
+import Colors from '../../../constant/Colors';
 
 interface CouponSelectRadioProps {
   selected: CouponInfo | null;
@@ -69,8 +70,8 @@ const CouponSelectRadio = (props: CouponSelectRadioProps) => {
 };
 
 const Details = styled.details`
-  border: 1px solid #dddddd;
-  color: #333333;
+  border: 1px solid ${Colors.grey4};
+  color: ${Colors.grey1};
 `;
 
 const Summary = styled.summary`
@@ -87,7 +88,7 @@ const FieldSet = styled.fieldset`
   padding: 35px;
 
   border: none;
-  border-top: 3px solid #dddddd;
+  border-top: 3px solid ${Colors.grey4};
   font-size: 1.2rem;
 `;
 
@@ -104,7 +105,7 @@ const CouponLabel = styled.label`
 `;
 
 const CurrentCouponSpan = styled.span`
-  color: #777777;
+  color: ${Colors.grey2};
   font-size: 1rem;
 `;
 

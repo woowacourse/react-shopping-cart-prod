@@ -1,6 +1,7 @@
 import { styled } from 'styled-components';
 import { GrPowerReset } from 'react-icons/gr';
 import ErrorBoundary from './ErrorBoundary';
+import Colors from '../constant/Colors';
 
 class CartCouponErrorBoundary extends ErrorBoundary {
   render() {
@@ -27,8 +28,8 @@ const ErrorDiv = styled.div`
 
   padding: 20px 30px;
 
-  border: 1px solid #dddddd;
-  color: #333333;
+  border: 1px solid ${Colors.grey4};
+  color: ${Colors.grey1};
   font-weight: 400;
   font-size: 24px;
 `;

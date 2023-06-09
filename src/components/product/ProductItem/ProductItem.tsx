@@ -5,6 +5,7 @@ import { formatPrice } from '../../../utils/formatPrice';
 import type { Product } from '../../../types/product';
 import ProductCounter from '../ProductCounter/ProductCounter';
 import LoadingSpinner from '../../common/LoadingSpinner/LoadingSpinner';
+import Colors from '../../../constant/Colors';
 
 const ProductItem = (product: Product) => {
   const { id, name, price, imageUrl } = product;
@@ -16,7 +17,7 @@ const ProductItem = (product: Product) => {
         <Suspense
           fallback={
             <Fallback>
-              <LoadingSpinner color="#04c09e" spinnerWidth="5px" diameter="22px" />
+              <LoadingSpinner color={Colors.staleTurquoise} spinnerWidth="5px" diameter="22px" />
             </Fallback>
           }
         >
@@ -70,8 +71,8 @@ const Fallback = styled.div`
 
   padding: 7px;
 
-  background: #ffffff;
-  border: 1px solid #dddddd;
+  background: ${Colors.white};
+  border: 1px solid ${Colors.grey4};
 `;
 
 export default ProductItem;

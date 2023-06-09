@@ -3,6 +3,7 @@ import { Suspense } from 'react';
 import CheckedCartListProvider from '../provider/CheckedListProvider';
 import CartContents from '../components/cart/CartContents/CartContents';
 import LoadingSpinner from '../components/common/LoadingSpinner/LoadingSpinner';
+import Colors from '../constant/Colors';
 
 const CartPage = () => {
   return (
@@ -11,7 +12,7 @@ const CartPage = () => {
       <Suspense
         fallback={
           <Fallback>
-            <LoadingSpinner color="#04c09e" />
+            <LoadingSpinner color={Colors.staleTurquoise} />
           </Fallback>
         }
       >
@@ -39,7 +40,7 @@ const Title = styled.h2`
   font-size: 32px;
 
   padding: 30px 0;
-  border-bottom: 4px solid #333333;
+  border-bottom: 4px solid ${Colors.grey1};
 
   text-align: center;
 `;

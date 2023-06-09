@@ -1,6 +1,7 @@
 import { styled } from 'styled-components';
 import { IoRefreshCircle } from 'react-icons/io5';
 import ErrorBoundary from './ErrorBoundary';
+import Colors from '../constant/Colors';
 
 class HeaderCartErrorBoundary extends ErrorBoundary {
   render() {
@@ -13,7 +14,11 @@ class HeaderCartErrorBoundary extends ErrorBoundary {
         <br />
         오류
         <RetryButton onClick={() => this.retry()} aria-label="다시 시도하기">
-          <IoRefreshCircle style={{ backgroundColor: '#333333' }} color="#ffffff" size="44px" />
+          <IoRefreshCircle
+            style={{ backgroundColor: Colors.grey1 }}
+            color={Colors.white}
+            size="44px"
+          />
         </RetryButton>
       </ErrorDiv>
     ) : (
@@ -28,7 +33,7 @@ const ErrorDiv = styled.div`
   justify-content: space-around;
   column-gap: 10px;
 
-  color: #ffffff;
+  color: ${Colors.white};
   font-size: 0.8rem;
 `;
 

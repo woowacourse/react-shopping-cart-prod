@@ -11,6 +11,7 @@ import serverNameState from '../../../globalState/atoms/serverName';
 import ServerUtil from '../../../utils/ServerUrl';
 import { USER_AUTH_TOKEN } from '../../../constant';
 import LoadingSpinner from '../../common/LoadingSpinner/LoadingSpinner';
+import Colors from '../../../constant/Colors';
 
 interface PaymentAmountProps {
   coupon?: CouponInfo | null;
@@ -104,7 +105,7 @@ const PaymentAmount = (props: PaymentAmountProps) => {
         ? createPortal(
             <OrderingDiv>
               <OrderBackdropDiv />
-              <LoadingSpinner color="#04c09e" />
+              <LoadingSpinner color={Colors.staleTurquoise} />
             </OrderingDiv>,
             document.body
           )
@@ -117,7 +118,7 @@ const PaymentAmountContainer = styled.div`
   margin-top: 30px;
   width: 100%;
 
-  border: 1px solid #dddddd;
+  border: 1px solid ${Colors.grey4};
 
   @media screen and (max-width: 1320px) {
     width: 100%;
@@ -129,9 +130,9 @@ const Title = styled.h4`
 
   font-weight: 400;
   font-size: 24px;
-  color: #333333;
+  color: ${Colors.grey1};
 
-  border-bottom: 3px solid #dddddd;
+  border-bottom: 3px solid ${Colors.grey4};
 `;
 
 const Contents = styled.div`
@@ -151,7 +152,7 @@ const AmountTextContainer = styled.div<{ marginbottom?: string }>`
 const AmountText = styled.p`
   font-weight: 700;
   font-size: 20px;
-  color: #333333;
+  color: ${Colors.grey1};
 `;
 
 const OrderButton = styled.button`
@@ -159,11 +160,11 @@ const OrderButton = styled.button`
   height: 73px;
 
   border: none;
-  background-color: #333333;
+  background-color: ${Colors.grey1};
 
   font-weight: 400;
   font-size: 24px;
-  color: #ffffff;
+  color: ${Colors.white};
 
   cursor: pointer;
 `;
@@ -186,7 +187,7 @@ const OrderBackdropDiv = styled.div`
   width: 100%;
   height: 100%;
 
-  background-color: #33333366;
+  background-color: ${Colors.grey1}66;
 `;
 
 export default PaymentAmount;

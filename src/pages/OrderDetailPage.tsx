@@ -4,6 +4,7 @@ import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
 import orderDetailState from '../globalState/atoms/orderDetail';
 import OrderDetail from '../components/order/OrderDetail/OrderDetail';
+import Colors from '../constant/Colors';
 
 const OrderDetailPage = () => {
   const navigate = useNavigate();
@@ -48,7 +49,7 @@ const Title = styled.h2`
   padding: 30px 0;
   margin-bottom: 60px;
 
-  border-bottom: 4px solid #333333;
+  border-bottom: 4px solid ${Colors.grey1};
   text-align: center;
 `;
 

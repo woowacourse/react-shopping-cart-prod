@@ -7,6 +7,7 @@ import type OrderInfo from '../../../types/order';
 import { USER_AUTH_TOKEN } from '../../../constant';
 import useFetch from '../../../hooks/api/useFetch';
 import OrderDetail from '../OrderDetail/OrderDetail';
+import Colors from '../../../constant/Colors';
 
 const OrderList = () => {
   const serverName = useRecoilValue(serverNameState);
@@ -64,7 +65,7 @@ const EmptyCartView = styled.div`
 const LinkButton = styled.button`
   width: 300px;
   padding: 20px 50px;
-  background-color: #333;
+  background-color: ${Colors.grey1};
 
   border: none;
   border-radius: 15px;
@@ -72,7 +73,7 @@ const LinkButton = styled.button`
   cursor: pointer;
 
   & > a {
-    color: #ffffff;
+    color: ${Colors.white};
     font-size: 20px;
     text-decoration: none;
   }

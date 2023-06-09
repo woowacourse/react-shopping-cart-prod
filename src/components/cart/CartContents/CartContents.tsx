@@ -8,6 +8,7 @@ import getCartLength from '../../../globalState/selectors/getCartLength';
 import CouponInfo from '../../../types/coupon';
 import CouponSelectRadio from '../../coupon/CouponSelectRadio/CouponSelectRadio';
 import CartCouponErrorBoundary from '../../../errorHandler/CartCouponErrorBoundary';
+import Colors from '../../../constant/Colors';
 
 const CartContents = () => {
   const [selectedCoupon, setSelectedCoupon] = useState<CouponInfo | null>(null);
@@ -63,7 +64,7 @@ const EmptyCartView = styled.div`
 const LinkButton = styled.button`
   width: 300px;
   padding: 20px 50px;
-  background-color: #333;
+  background-color: ${Colors.grey1};
 
   border: none;
   border-radius: 15px;
@@ -77,8 +78,8 @@ const LinkButton = styled.button`
 const CouponFallbackDiv = styled.div`
   padding: 20px 30px;
 
-  border: 1px solid #dddddd;
-  color: #333333;
+  border: 1px solid ${Colors.grey4};
+  color: ${Colors.grey1};
   font-weight: 400;
   font-size: 24px;
 `;

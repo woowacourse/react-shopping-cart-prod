@@ -3,6 +3,7 @@ import { Suspense } from 'react';
 import CouponList from '../components/coupon/CounponList/CouponList';
 import LoadingSpinner from '../components/common/LoadingSpinner/LoadingSpinner';
 import PageContentErrorBoundary from '../errorHandler/ProductsErrorBoundary';
+import Colors from '../constant/Colors';
 
 const CouponPage = () => {
   return (
@@ -12,7 +13,7 @@ const CouponPage = () => {
         <Suspense
           fallback={
             <Fallback>
-              <LoadingSpinner color="#04c09e" />
+              <LoadingSpinner color={Colors.staleTurquoise} />
             </Fallback>
           }
         >
@@ -37,7 +38,7 @@ const Title = styled.h2`
   padding: 30px 0;
   margin-bottom: 60px;
 
-  border-bottom: 4px solid #333333;
+  border-bottom: 4px solid ${Colors.grey1};
   text-align: center;
 `;
 

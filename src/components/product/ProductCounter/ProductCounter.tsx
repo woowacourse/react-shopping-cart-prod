@@ -8,6 +8,7 @@ import productQuantityInCart from '../../../globalState/selectors/productQuantit
 import useCartItemApi from '../../../hooks/api/useCartItemApi';
 import Counter from '../../common/Counter/Counter';
 import type { Product } from '../../../types/product';
+import Colors from '../../../constant/Colors';
 
 const ProductCounter = (product: Product) => {
   const { id: productId } = product;
@@ -73,8 +74,8 @@ const CartButtonWrapper = styled.div`
 `;
 
 const CartButton = styled.button`
-  background: #fff;
-  border: 1px solid #dddddd;
+  background: ${Colors.white};
+  border: 1px solid ${Colors.grey4};
 
   padding: 7px;
 

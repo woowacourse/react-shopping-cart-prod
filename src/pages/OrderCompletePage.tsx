@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
+import Colors from '../constant/Colors';
 
 const OrderCompletePage = () => {
   const navigate = useNavigate();
@@ -42,7 +43,7 @@ const Section = styled.section`
 const LinkButton = styled.button`
   width: 300px;
   padding: 20px 50px;
-  background-color: #333;
+  background-color: ${Colors.grey1};
 
   border: none;
   border-radius: 15px;

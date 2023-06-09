@@ -6,6 +6,7 @@ import ServerSelector from '../../ServerSelector/ServerSelector';
 import CartButton from './CartButton';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import HeaderCartErrorBoundary from '../../../errorHandler/HeaderCartErrorBoundary';
+import Colors from '../../../constant/Colors';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -19,14 +20,16 @@ const Header = () => {
   return (
     <HeaderContainer>
       <Logo onClick={gotoMain}>
-        <GiShoppingCart color="#ffffff" size="55px" />
+        <GiShoppingCart color={Colors.white} size="55px" />
         <Title>SHOP</Title>
       </Logo>
       <ServerSelector />
       <RightContainer>
         <HeaderCartErrorBoundary>
           <Suspense
-            fallback={<LoadingSpinner color="#04c09e" diameter="32px" spinnerWidth="5px" />}
+            fallback={
+              <LoadingSpinner color={Colors.staleTurquoise} diameter="32px" spinnerWidth="5px" />
+            }
           >
             <CartButton onClick={gotoCart} />
           </Suspense>
@@ -49,9 +52,9 @@ const HeaderContainer = styled.header`
 
   padding: 0 10%;
 
-  background-color: #333;
+  background-color: ${Colors.grey1};
 
-  color: #fff;
+  color: ${Colors.white};
 
   z-index: 1;
 `;

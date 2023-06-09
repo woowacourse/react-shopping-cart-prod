@@ -2,6 +2,7 @@ import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { ButtonHTMLAttributes } from 'react';
 import getCartLength from '../../../globalState/selectors/getCartLength';
+import Colors from '../../../constant/Colors';
 
 const CartButton = (props: ButtonHTMLAttributes<HTMLButtonElement>) => {
   const { onClick } = props;
@@ -44,7 +45,7 @@ const CartTotalQuantity = styled.span`
   height: 26px;
 
   border-radius: 50%;
-  background: #04c09e;
+  background: ${Colors.staleTurquoise};
 
   font-size: 16px;
 `;

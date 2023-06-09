@@ -10,6 +10,7 @@ import { formatPrice } from '../../../utils/formatPrice';
 import { useCheckedCartListValue } from '../../../provider/CheckedListProvider';
 import type { CartProduct } from '../../../types/product';
 import getCartStateController from '../../../globalState/selectors/getCartStateController';
+import Colors from '../../../constant/Colors';
 
 interface CartItemProps {
   cartItem: CartProduct;
@@ -60,7 +61,7 @@ const CartItem = ({ cartItem }: CartItemProps) => {
       </ItemContents>
       <ItemControllers>
         <RemoveButton onClick={deleteItemFromCart}>
-          <FaRegTrashAlt size="24px" color="#cccccc" />
+          <FaRegTrashAlt size="24px" color={Colors.grey4} />
         </RemoveButton>
         <Counter count={count} updateCount={updateQuantity} min={1} />
         <PricePCView>{formatPrice(price)}</PricePCView>
@@ -108,7 +109,7 @@ const Name = styled.div`
 
   font-weight: 400;
   font-size: 20px;
-  color: #333333;
+  color: ${Colors.grey1};
 
   @media screen and (max-width: 520px) {
     overflow: hidden;
@@ -141,7 +142,7 @@ const RemoveButton = styled.button`
 const PricePCView = styled.div`
   font-weight: 400;
   font-size: 16px;
-  color: #333333;
+  color: ${Colors.grey1};
 
   @media screen and (max-width: 520px) {
     display: none;
@@ -155,7 +156,7 @@ const PriceMobileView = styled.div`
 
   font-weight: 400;
   font-size: 20x;
-  color: #333333;
+  color: ${Colors.grey1};
 
   @media screen and (max-width: 520px) {
     display: block;

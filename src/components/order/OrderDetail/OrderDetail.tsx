@@ -6,6 +6,7 @@ import type OrderInfo from '../../../types/order';
 import OrderedProduct from '../OrderedProduct/OrderedProduct';
 import { formatPrice } from '../../../utils/formatPrice';
 import orderDetailState from '../../../globalState/atoms/orderDetail';
+import Colors from '../../../constant/Colors';
 
 interface OrderDetailProps extends OrderInfo {
   showPayments?: boolean;
@@ -37,7 +38,7 @@ const OrderDetail = (props: OrderDetailProps) => {
           <OrderIdParagraph>주문 번호 : {id}</OrderIdParagraph>
           {!showPayments ? (
             <Link onClick={setOrderDetails} to="/order-details">
-              상세보기 <GrFormNextLink size="23px" color="#333333" />
+              상세보기 <GrFormNextLink size="23px" color={Colors.grey1} />
             </Link>
           ) : null}
         </Summary>
@@ -100,8 +101,8 @@ const Summary = styled.summary`
   padding: auto 39px;
   height: 92px;
 
-  border: 1px solid #aaaaaa;
-  background-color: #f6f6f6;
+  border: 1px solid ${Colors.grey3};
+  background-color: ${Colors.grey4};
   font-weight: 400;
   font-size: 20px;
   line-height: 24px;
@@ -115,7 +116,7 @@ const Summary = styled.summary`
 
     margin-right: 39px;
 
-    color: #333333;
+    color: ${Colors.grey1};
   }
 `;
 
@@ -127,8 +128,8 @@ const PaymentDiv = styled.div`
   margin: 30px 0 auto auto;
   width: 50%;
 
-  border: 1px solid #aaaaaa;
-  color: #333333;
+  border: 1px solid ${Colors.grey3};
+  color: ${Colors.grey1};
 
   & > div {
     padding: 0 20px;
@@ -143,8 +144,8 @@ const PaymentTitleParagraph = styled.p`
   height: 72px;
   margin-bottom: 25px;
 
-  border-bottom: 1px solid #aaaaaa;
-  background-color: #f6f6f6;
+  border-bottom: 1px solid ${Colors.grey3};
+  background-color: ${Colors.grey4};
   font-weight: 700;
   font-size: 28px;
 `;
@@ -166,7 +167,7 @@ const PaymentParagraph = styled.p`
 
   font-weight: 700;
   font-size: 20px;
-  color: #333333;
+  color: ${Colors.grey1};
 
   overflow: hidden;
   white-space: nowrap;

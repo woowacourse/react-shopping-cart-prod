@@ -5,6 +5,7 @@ import CheckBox from '../../common/CheckBox/CheckBox';
 import useCartItemApi from '../../../hooks/api/useCartItemApi';
 import { useCheckedCartListValue } from '../../../provider/CheckedListProvider';
 import cartState from '../../../globalState/atoms/cartState';
+import Colors from '../../../constant/Colors';
 
 const CartList = () => {
   const { checkedCartList, addAllCheckedItem, deleteAllCheckedItem, isAllChecked } =
@@ -67,15 +68,15 @@ const CartListContainer = styled.div`
 const NumberOfCartItem = styled.h3`
   padding: 20px 0;
 
-  border-bottom: 4px solid #aaaaaa;
+  border-bottom: 4px solid ${Colors.grey3};
 
   font-weight: 400;
   font-size: 20px;
-  color: #333;
+  color: ${Colors.grey1};
 `;
 
 const Seperator = styled.div`
-  border-bottom: 1.5px solid #cccccc;
+  border-bottom: 1.5px solid ${Colors.grey4};
 `;
 
 const AllCheckContainer = styled.div`
@@ -91,7 +92,7 @@ const DeleteCheckedListButton = styled.button`
   height: 35px;
 
   background: none;
-  border: 1px solid #bbbbbb;
+  border: 1px solid ${Colors.grey3};
 
   font-weight: 400;
   font-size: 16px;

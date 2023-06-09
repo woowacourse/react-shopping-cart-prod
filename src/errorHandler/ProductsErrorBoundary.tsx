@@ -1,5 +1,6 @@
 import { styled } from 'styled-components';
 import ErrorBoundary from './ErrorBoundary';
+import Colors from '../constant/Colors';
 
 class PageContentErrorBoundary extends ErrorBoundary {
   render() {
@@ -32,13 +33,13 @@ const ErrorDiv = styled.div`
 const RetryButton = styled.button`
   width: 300px;
   padding: 20px 50px;
-  background-color: #333333;
+  background-color: ${Colors.grey1};
 
   border: none;
   border-radius: 15px;
 
   font-size: 20px;
-  color: #ffffff;
+  color: ${Colors.white};
 
   cursor: pointer;
 `;

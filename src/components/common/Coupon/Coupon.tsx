@@ -1,6 +1,7 @@
 import { TfiDownload } from 'react-icons/tfi';
 import { LuBird } from 'react-icons/lu';
 import { styled } from 'styled-components';
+import Colors from '../../../constant/Colors';
 
 interface CouponProps {
   couponName: string;
@@ -24,11 +25,11 @@ const Coupon = (props: CouponProps) => {
       </CouponInfoDiv>
       {onDownloadClick ? (
         <DownloadButton type="button" aria-label="쿠폰 받기" onClick={onDownloadClick}>
-          <TfiDownload color="#ffffff" size="25px" />
+          <TfiDownload color={Colors.white} size="25px" />
         </DownloadButton>
       ) : (
         <IconDiv>
-          <LuBird color="#ffffff" size="25px" />
+          <LuBird color={Colors.white} size="25px" />
         </IconDiv>
       )}
     </CouponDiv>
@@ -43,9 +44,9 @@ const CouponDiv = styled.div`
   width: 282px;
   height: 141px;
 
-  border: 2px solid #ffffff;
+  border: 2px solid ${Colors.white};
   border-radius: 15px;
-  background-color: #333333;
+  background-color: ${Colors.grey1};
 `;
 
 const CouponInfoDiv = styled.div`
@@ -67,17 +68,17 @@ const CouponInfoDiv = styled.div`
 `;
 
 const NameParagraph = styled.p`
-  color: #ffffff;
+  color: ${Colors.white};
   font-size: 0.8rem;
 `;
 
 const DiscountParagraph = styled.p`
-  color: #ffffff;
+  color: ${Colors.white};
   font-size: 1.25rem;
 `;
 
 const FooterParagraph = styled.p`
-  color: #888888;
+  color: ${Colors.grey2};
   font-size: 0.8rem;
 `;
 
@@ -90,9 +91,9 @@ const iconWrapper = `
   width: 55px;
   height: 55px;
 
-  border: 3px solid #ffffff;
+  border: 3px solid ${Colors.white};
   border-radius: 50%;
-  background-color: #333333;
+  background-color: ${Colors.grey1};
 `;
 
 const DownloadButton = styled.button`
@@ -100,7 +101,7 @@ const DownloadButton = styled.button`
   cursor: pointer;
 
   &:hover {
-    background-color: #525252;
+    background-color: ${Colors.grey2};
   }
 `;
 

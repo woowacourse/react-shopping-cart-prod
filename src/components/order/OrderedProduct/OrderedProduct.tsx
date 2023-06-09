@@ -1,6 +1,7 @@
 import { styled } from 'styled-components';
 import { formatPrice } from '../../../utils/formatPrice';
 import Image from '../../common/Image/Image';
+import Colors from '../../../constant/Colors';
 
 interface OrderedProductProps {
   name: string;
@@ -33,7 +34,7 @@ const OrderedProductDiv = styled.div`
   height: 220px;
   width: 100%;
 
-  border: 1px solid #aaaaaa;
+  border: 1px solid ${Colors.grey3};
 `;
 
 const ProductInfoDiv = styled.div`
@@ -47,7 +48,7 @@ const ProductInfoDiv = styled.div`
 const PrimaryParagraph = styled.p`
   width: 100%;
 
-  color: #333333;
+  color: ${Colors.grey1};
   font-weight: 400;
   font-size: 20px;
   line-height: 24px;
@@ -60,7 +61,7 @@ const PrimaryParagraph = styled.p`
 const SecondaryParagraph = styled.p`
   width: 100%;
 
-  color: #888888;
+  color: ${Colors.grey2};
   font-weight: 400;
   font-size: 16px;
   line-height: 20px;
