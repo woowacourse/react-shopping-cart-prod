@@ -60,7 +60,7 @@ const ProductItem = ({ product }: { product: ProductType }) => {
           <CartIcon
             width={25}
             height={22}
-            fill="#AAAAAA"
+            fill="#AAA"
             style={{ transform: 'scaleX(-1)', cursor: 'pointer' }}
             onClick={() => setQuantity(1)}
           />

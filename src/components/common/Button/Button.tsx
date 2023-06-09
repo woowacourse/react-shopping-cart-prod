@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
+import { ButtonHTMLAttributes } from 'react';
 
-interface ButtonProps {
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   primary?: boolean;
   size: 'small' | 'big';
   text: string;

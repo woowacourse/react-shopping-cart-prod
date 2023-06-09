@@ -39,12 +39,13 @@ const CartList = () => {
         <CartListFoot>
           <CheckBox
             label={`전체선택(${checkCartList.length})`}
-            checked={cartData ? cartData.length === checkCartList.length : false}
+            checked={cartData?.length ? cartData.length === checkCartList.length : false}
             onClick={onClickCheckBox}
           />
           <Button
             size="small"
             text="선택삭제"
+            disabled={checkCartList.length === 0}
             onClick={() => openModal({ callback: deleteSelectCart })}
           />
         </CartListFoot>
