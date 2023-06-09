@@ -1,12 +1,9 @@
 import { BsChevronRight } from 'react-icons/bs';
 import { useLocation } from 'react-router-dom';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { css, styled } from 'styled-components';
 import { ROUTE_PATH } from '../../constants';
-import { ORDER_URL } from '../../constants/url';
-import { useFetchData } from '../../hooks/useFetchData';
 import { useGoToAnotherPage } from '../../hooks/useGoToAnotherPage';
-import { orderListState, serverState } from '../../recoil';
+import { useRemoveOrderFromList } from '../../hooks/useRemoveOrderFromList';
 import { OrderList } from '../../types';
 import Button from '../common/Button';
 import TrashCanIcon from '../icons/TrashCanIcon';
@@ -20,19 +17,7 @@ const OrderDetailNavigator = ({ orderId, createdAt, orderStatus }: Props) => {
   const goToPage = useGoToAnotherPage();
   const location = useLocation().pathname;
 
-  const server = useRecoilValue(serverState);
-  const { api } = useFetchData();
-
-  const setOrderList = useSetRecoilState(orderListState);
-
-  const handleOrderRemoveFromList = () => {
-    api
-      .delete(`${server}${ORDER_URL}/${orderId}`)
-      .then(() => {
-        setOrderList((prev) => prev.filter((list) => list.orderId !== orderId));
-      })
-      .catch((error) => alert(error.message));
-  };
+  const handleOrderRemoveFromList = useRemoveOrderFromList(orderId);
 
   return (
     <S.Head tabIndex={0}>

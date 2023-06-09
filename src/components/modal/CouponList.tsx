@@ -1,28 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from 'react';
-import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
-import { COUPON_URL } from '../../constants/url';
-import { useFetchData } from '../../hooks/useFetchData';
-import { serverState } from '../../recoil';
-import { CouponItem } from '../../types';
+import { useGetCouponList } from '../../hooks/useGetCouponList';
 import Coupon from './Coupon';
 
 const CouponList = () => {
-  const server = useRecoilValue(serverState);
-  const { api } = useFetchData();
-  const [coupons, setCoupons] = useState<CouponItem[]>([]);
-
-  useEffect(() => {
-    api
-      .get(`${server}${COUPON_URL}`, {
-        Authorization: 'Basic YUBhLmNvbToxMjM0',
-        'Content-Type': 'application/json',
-      })
-      .then((data) => {
-        setCoupons(data);
-      });
-  }, [server]);
+  const coupons = useGetCouponList();
 
   return (
     <S.Wrapper role='document' tabIndex={0}>

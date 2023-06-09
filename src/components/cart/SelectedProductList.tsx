@@ -1,38 +1,30 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { SetterOrUpdater } from 'recoil';
 import { Modal } from 'simple-yummy-modal';
 import { css, styled } from 'styled-components';
-import { CART_URL } from '../../constants/url';
 import { useCart } from '../../hooks/useCart';
-import { useFetchData } from '../../hooks/useFetchData';
 import { useModal } from '../../hooks/useModal';
-import { cartState, checkedItemList, serverState } from '../../recoil';
 import { CartItem } from '../../types';
 import Button from '../common/Button';
 import CouponList from '../modal/CouponList';
 import { Checkbox } from './CheckboxStyle';
 import SelectedProductItem from './SelectedProductItem';
 
-const SelectedProductList = ({ productCountInCart }: { productCountInCart: number }) => {
-  const [cart, setCart] = useRecoilState(cartState);
-  const [checkedItemIdList, setCheckedItemIdList] = useRecoilState<number[]>(checkedItemList);
-  const server = useRecoilValue(serverState);
-  const { api } = useFetchData();
+interface Props {
+  productCountInCart: number;
+  cart: CartItem[];
+  checkedItemIdList: number[];
+  setCheckedItemIdList: SetterOrUpdater<number[]>;
+}
+
+const SelectedProductList = ({
+  productCountInCart,
+  cart,
+  checkedItemIdList,
+  setCheckedItemIdList,
+}: Props) => {
   const { removeItemFromCart } = useCart();
   const { handleModalOpen, isModalOpen, setIsModalOpen, initialState, coupon } = useModal();
-
-  useEffect(() => {
-    api
-      .get(`${server}${CART_URL}`, {
-        Authorization: 'Basic YUBhLmNvbToxMjM0',
-        'Content-Type': 'application/json',
-      })
-      .then((data) => {
-        setCart(data);
-        setCheckedItemIdList(data.map((item: CartItem) => item.id));
-      });
-  }, [server]);
 
   const isAllChecked = checkedItemIdList.length === productCountInCart && productCountInCart !== 0;
 

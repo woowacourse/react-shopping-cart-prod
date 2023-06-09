@@ -1,6 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
 import Order from '../components/cart/Order';
 import SelectedProductList from '../components/cart/SelectedProductList';
@@ -9,27 +7,11 @@ import Spinner from '../components/common/Spinner';
 import Title from '../components/common/Title';
 import MainLayout from '../components/PageMainLayout';
 import { IMAGE_PATH } from '../constants';
-import { CART_URL } from '../constants/url';
-import { useFetchData } from '../hooks/useFetchData';
-import { cartState, serverState } from '../recoil';
+import { useGetSelectedProductList } from '../hooks/useGetSelectedProductList';
 
 const CartPage = () => {
-  const [cart, setCart] = useRecoilState(cartState);
+  const { cart, checkedItemIdList, setCheckedItemIdList, isLoading } = useGetSelectedProductList();
   const productCountInCart = cart.length;
-
-  const server = useRecoilValue(serverState);
-  const { api, isLoading } = useFetchData();
-
-  useEffect(() => {
-    api
-      .get(`${server}${CART_URL}`, {
-        Authorization: 'Basic YUBhLmNvbToxMjM0',
-        'Content-Type': 'application/json',
-      })
-      .then((data) => {
-        setCart(data);
-      });
-  }, [server]);
 
   if (isLoading) return <Spinner />;
 
@@ -42,7 +24,12 @@ const CartPage = () => {
         <>
           <Title value='장바구니' />
           <S.Wrapper>
-            <SelectedProductList productCountInCart={productCountInCart} />
+            <SelectedProductList
+              productCountInCart={productCountInCart}
+              cart={cart}
+              checkedItemIdList={checkedItemIdList}
+              setCheckedItemIdList={setCheckedItemIdList}
+            />
             <Order />
           </S.Wrapper>
         </>

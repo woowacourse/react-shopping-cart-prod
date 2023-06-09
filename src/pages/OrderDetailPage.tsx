@@ -1,7 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
 import Nothing from '../components/common/Nothing';
 import Title from '../components/common/Title';
@@ -9,28 +6,10 @@ import OrderDetail from '../components/orderDetail/OrderDetail';
 import OrderItemList from '../components/orderList/OrderItemList';
 import MainLayout from '../components/PageMainLayout';
 import { IMAGE_PATH } from '../constants';
-import { ORDER_URL } from '../constants/url';
-import { useFetchData } from '../hooks/useFetchData';
-import { serverState } from '../recoil';
-import { OrderItemDetail } from '../types';
+import { useGetOrderItemDetail } from '../hooks/useGetOrderItemDetail';
 
 const OrderDetailPage = () => {
-  const server = useRecoilValue(serverState);
-  const { api } = useFetchData();
-  const orderId = useParams().id;
-
-  const [orderItemDetail, setOrderItemDetail] = useState<OrderItemDetail>();
-
-  useEffect(() => {
-    api
-      .get(`${server}${ORDER_URL}/${orderId}`, {
-        Authorization: 'Basic YUBhLmNvbToxMjM0',
-        'Content-Type': 'application/json',
-      })
-      .then((data) => {
-        setOrderItemDetail(data);
-      });
-  }, [server]);
+  const orderItemDetail = useGetOrderItemDetail();
 
   if (!orderItemDetail) {
     return (

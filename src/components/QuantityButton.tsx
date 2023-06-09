@@ -28,7 +28,7 @@ const QuantityButton = ({ isEnabledAtMin, productId, quantity }: Props) => {
 
     const updatedQuantity = quantity - STEP;
 
-    if (isEnabledAtMin && updatedQuantity === NONE) removeItemFromCart();
+    if (isEnabledAtMin && updatedQuantity === NONE) return removeItemFromCart();
 
     updateCart(updatedQuantity);
   };

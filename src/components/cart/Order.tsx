@@ -8,9 +8,8 @@ import Price from '../Price';
 
 const Order = () => {
   const totalPrice = useRecoilValue(totalPriceSelector);
-  const { orderProducts } = useOrder();
-
   const [coupon, setCoupon] = useRecoilState(selectedCoupon);
+  const { orderProducts } = useOrder();
 
   const handleProductOrder = () => {
     if (!totalPrice) return;

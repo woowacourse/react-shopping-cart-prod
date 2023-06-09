@@ -4,6 +4,7 @@ import { useRecoilValue } from 'recoil';
 import { css, styled } from 'styled-components';
 import { ORDER_STATUS, ROUTE_PATH } from '../../constants';
 import { ORDER_URL } from '../../constants/url';
+import { useCancelOrder } from '../../hooks/useCancelOrder';
 import { useFetchData } from '../../hooks/useFetchData';
 import { serverState } from '../../recoil';
 import { OrderListItem } from '../../types';
@@ -21,24 +22,13 @@ const OrderItem = ({
   orderStatus,
 }: OrderListItem) => {
   const location = useLocation().pathname;
-  const server = useRecoilValue(serverState);
-  const { api } = useFetchData();
 
-  const [changedStatus, setChangedStatus] = useState(orderStatus);
+  const { changedStatus, handleOrderCancel } = useCancelOrder({ orderStatus, orderId });
 
   const title =
     location === ROUTE_PATH.ORDER_LIST_PAGE && orderedProductCount > 1
       ? `${name} 외 ${orderedProductCount - 1}개의 상품`
       : name;
-
-  const handleOrderCancel = () => {
-    api
-      .patch(`${server}${ORDER_URL}/${orderId}`)
-      .then(() => {
-        setChangedStatus(ORDER_STATUS.CANCEL);
-      })
-      .catch((error) => alert(error.message));
-  };
 
   return (
     <S.Wrapper tabIndex={0}>
