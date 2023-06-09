@@ -1,4 +1,4 @@
-import { Server, ServerName } from 'types/server';
+import { Server, ServerName } from '../types/server';
 
 export const ROUTES = {
   PRODUCT_LIST: '/',

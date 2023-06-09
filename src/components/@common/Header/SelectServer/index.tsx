@@ -1,7 +1,7 @@
 import { useRecoilCallback, useRecoilValue } from 'recoil';
 import { serverAtom } from 'recoil/server';
 import { SERVERS } from 'utils/constants';
-import { Server, ServerName } from 'types';
+import { Server, ServerName } from 'types/server';
 import * as S from './SelectServer.styles';
 import { getCartList } from 'api/cart';
 import { cartListAtom, checkedItemIdsAtom } from 'recoil/carts';
