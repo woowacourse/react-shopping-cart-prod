@@ -1,24 +1,25 @@
 import { useState } from 'react';
-import { useToast } from 'components/@common/Toast/hooks/useToast';
 import { useRecoilValue } from 'recoil';
 import { serverAtom } from 'recoil/server';
 
 export const useMutate = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const { toast } = useToast();
+  const [error, setError] = useState({ isError: false, errorMessage: '' });
+
   const server = useRecoilValue(serverAtom);
 
   const request = async <T>(callback: (server: string) => Promise<T>) => {
     try {
       const res = await callback(server);
+      setError({ isError: false, errorMessage: '' });
       return res;
     } catch (error) {
       if (!(error instanceof Error)) return;
-      toast.error(error.message);
+      setError({ isError: true, errorMessage: error.message });
     } finally {
       setIsLoading(false);
     }
   };
 
-  return { request, isLoading };
+  return { request, isLoading, error };
 };
