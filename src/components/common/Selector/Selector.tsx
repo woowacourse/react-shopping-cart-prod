@@ -1,5 +1,6 @@
 import { ChangeEvent } from 'react';
 import { useSetRecoilState } from 'recoil';
+import styled from '@emotion/styled';
 import { serverState } from '../../../service/atom';
 import { servers } from '../../../service/apiURL';
 import { queryClient } from '../../..';
@@ -17,12 +18,17 @@ const Selector = () => {
   };
 
   return (
-    <select style={{ width: 70, height: 30 }} onChange={changeServerURL}>
+    <Select onChange={changeServerURL}>
       <option>달리</option>
       <option>오션</option>
       <option>홍고</option>
-    </select>
+    </Select>
   );
 };
 
 export default Selector;
+
+const Select = styled.select`
+  width: 70px;
+  height: 30px;
+`;
