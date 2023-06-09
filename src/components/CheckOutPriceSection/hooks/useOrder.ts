@@ -2,14 +2,14 @@ import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import { cartProductsState } from 'state/cartProducts';
 import useCartCheckBox from 'hooks/useCartCheckBox';
-import useCheckOutPointCostContext from 'hooks/useContext/useCheckOutPointCostContext';
+import { useCheckOutPointCostValueContext } from 'hooks/useContext/useCheckOutPointCostContext';
 import { postOrder } from 'apis/orders';
 import { getCartProducts } from 'apis/cart';
 import ROUTE_PATH from 'constants/routePath';
 
 const useOrder = () => {
   const { checkedCartProductIds } = useCartCheckBox();
-  const { pointCost } = useCheckOutPointCostContext();
+  const { pointCost } = useCheckOutPointCostValueContext();
   const setCartProducts = useSetRecoilState(cartProductsState);
   const navigate = useNavigate();
 

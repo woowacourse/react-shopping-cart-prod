@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 import Box from 'components/@common/Box';
-import useCheckOutPointCostContext from 'hooks/useContext/useCheckOutPointCostContext';
+import {
+  useCheckOutPointCostActionsContext,
+  useCheckOutPointCostValueContext,
+} from 'hooks/useContext/useCheckOutPointCostContext';
 import useFetch from 'hooks/useFetch';
 import { getUserOwnPoints } from 'apis/points';
 import { useRecoilValue } from 'recoil';
@@ -10,7 +13,8 @@ import reFetchIcon from 'assets/refresh-icon.svg';
 
 const CheckOutPointTab = () => {
   const { data: userOwnPoints, isLoading, errorState, fetchData } = useFetch<number>(getUserOwnPoints);
-  const { allInPoint, changePointCost, pointCost } = useCheckOutPointCostContext();
+  const { pointCost } = useCheckOutPointCostValueContext();
+  const { allInPoint, changePointCost } = useCheckOutPointCostActionsContext();
   const cartTotalPrice = useRecoilValue(checkedCartProductsTotalPriceState);
   const shippingFee = cartTotalPrice < SHIPPING_FEE_THRESHOLD ? BASE_SHIPPING_FEE : 0;
   const paymentAmount = cartTotalPrice + shippingFee;

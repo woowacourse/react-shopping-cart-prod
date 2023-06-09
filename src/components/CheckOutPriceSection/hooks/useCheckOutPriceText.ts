@@ -1,12 +1,12 @@
 import { BASE_SHIPPING_FEE, PERCENTAGE_OF_EARN_POINTS, SHIPPING_FEE_THRESHOLD } from 'constants/policy';
 import useCartCheckBox from 'hooks/useCartCheckBox';
-import useCheckOutPointCostContext from 'hooks/useContext/useCheckOutPointCostContext';
+import { useCheckOutPointCostValueContext } from 'hooks/useContext/useCheckOutPointCostContext';
 import { useRecoilValue } from 'recoil';
 import { checkedCartProductsTotalPriceState } from 'state/cartProducts';
 
 const useCheckOutPriceText = () => {
   const { checkedCartProductIds } = useCartCheckBox();
-  const { pointCost } = useCheckOutPointCostContext();
+  const { pointCost } = useCheckOutPointCostValueContext();
   const cartTotalPrice = useRecoilValue(checkedCartProductsTotalPriceState);
 
   const isCheckedProductsExist = checkedCartProductIds.size > 0;
