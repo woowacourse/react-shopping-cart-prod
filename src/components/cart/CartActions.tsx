@@ -1,12 +1,12 @@
 import { styled } from 'styled-components';
 
-import { useCartStateValue } from '../recoils/recoilCart';
-import { useCheckedState } from '../recoils/recoilChecked';
-import { useUpdateCart } from '../hooks/useUpdateCart';
+import { useCartStateValue } from '../../recoils/recoilCart';
+import { useCheckedState } from '../../recoils/recoilChecked';
+import { useUpdateCart } from '../../hooks/useUpdateCart';
 
-import { Checkbox } from './styled';
+import { Checkbox } from '../styled';
 
-import { CheckedStateType } from '../types';
+import { CheckedStateType } from '../../types';
 
 export const CartActions = () => {
   const cart = useCartStateValue();
@@ -31,11 +31,22 @@ export const CartActions = () => {
 
   const onClickDeleteSelectedItemButton = () => {
     const { all, ...selectedItems } = checkedState;
+
     const targetItemsId = Object.keys(selectedItems).map(Number);
 
     deleteCartItem(...targetItemsId);
 
-    setCheckedState({ all: false });
+    setCheckedState((prev) => {
+      const updatedCheckedState: CheckedStateType = {
+        all: true,
+      };
+
+      cart.forEach((product) => {
+        if (!targetItemsId.includes(product.id)) updatedCheckedState[product.id] = true;
+      });
+
+      return updatedCheckedState;
+    });
   };
 
   return (

@@ -1,29 +1,33 @@
 import { useEffect, useState } from 'react';
 
 interface State<T> {
-  loading: boolean;
   data?: T;
   error?: object;
 }
 
-export const useQuery = <T>(url: string, headers?: HeadersInit) => {
-  const [state, setState] = useState<State<T>>({
-    loading: false,
-  });
+export const useQuery = <T>(url: string, isAutorization: boolean) => {
+  const [state, setState] = useState<State<T>>({});
 
-  const { loading, data, error } = state;
+  const { data, error } = state;
 
   useEffect(() => {
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url]);
 
   const fetchData = async () => {
     try {
-      setState({ loading: true });
+      const requestOptions = {
+        headers: {}
+      };
 
-      const response = await fetch(url, {
-        ...(headers && { headers }),
-      });
+      if (isAutorization) {
+        requestOptions.headers = {
+          Authorization: `Basic ${btoa(process.env.REACT_APP_API_CREDENTIAL!)}`,
+        };
+      }
+
+      const response = await fetch(url, requestOptions);
 
       const contentType = response.headers.get('content-type');
 
@@ -32,12 +36,10 @@ export const useQuery = <T>(url: string, headers?: HeadersInit) => {
 
         setState((prev) => ({ ...prev, data }));
       }
-    } catch {
-      setState((prev) => ({ ...prev, error }));
-    } finally {
-      setState((prev) => ({ ...prev, loading: false }));
+    } catch (error) {
+      console.log(error);
     }
   };
 
-  return { loading, data, error };
+  return { data, error };
 };

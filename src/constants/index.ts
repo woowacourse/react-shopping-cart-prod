@@ -1,6 +1,9 @@
 const PATH = Object.freeze({
+  OTHERS: '/:notExist',
   HOME: '/',
   CART: '/shopping-cart',
+  ORDER: '/order-list',
+  ORDER_DETAIL: '/order-detail',
 });
 
 const QUANTITY = Object.freeze({
@@ -8,9 +11,15 @@ const QUANTITY = Object.freeze({
   MIN: 1,
 });
 
+const ZERO = 0;
+
 const DELIVERY_CHARGE = 3000;
 
 const SKELETON_LENGTH = 12;
+
+const LOCALE = Object.freeze({
+  KOREA: 'ko-KR',
+});
 
 const FETCH_METHOD = Object.freeze({
   POST: 'POST',
@@ -49,4 +58,6 @@ export {
   FETCH_URL,
   RECOIL_KEY,
   LOCAL_STORAGE_KEY,
+  LOCALE,
+  ZERO,
 };

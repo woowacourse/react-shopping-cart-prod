@@ -1,10 +1,17 @@
+import { Suspense, lazy } from 'react';
 import { Layout } from '../common/Layout';
-import { ProductList } from '../ProductList';
+import ProductLoading from '../product/ProductLoading';
 
-export const Home = () => {
+const ProductList = lazy(() => import('../product/ProductList'));
+
+const Home = () => {
   return (
     <Layout>
-      <ProductList />
+      <Suspense fallback={<ProductLoading />}>
+        <ProductList />
+      </Suspense>
     </Layout>
   );
 };
+
+export default Home;

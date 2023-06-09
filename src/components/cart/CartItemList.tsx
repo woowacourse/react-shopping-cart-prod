@@ -1,16 +1,18 @@
 import { styled } from 'styled-components';
 
-import { useUpdateCart } from '../hooks/useUpdateCart';
-import { useCartStateValue } from '../recoils/recoilCart';
-import { useCheckedState } from '../recoils/recoilChecked';
+import { useUpdateCart } from '../../hooks/useUpdateCart';
+import { useCartStateValue } from '../../recoils/recoilCart';
+import { useCheckedState } from '../../recoils/recoilChecked';
 
-import { Button } from './common/Button';
-import { Checkbox } from './styled';
+import { Button } from '../common/Button';
+import { Checkbox } from '../styled';
 
-import { GarbageIcon } from '../assets/svg';
-import { Stepper } from './Stepper';
+import { GarbageIcon } from '../../assets/svg';
+import { Stepper } from '../Stepper';
 
-import { CartItemType } from '../types';
+import { CartItemType } from '../../types';
+import { localeString } from '../../utils/localeString';
+import { LOCALE } from '../../constants';
 
 export const CartItemList = () => {
   const cart = useCartStateValue();
@@ -28,6 +30,15 @@ export const CartItemList = () => {
           all: false,
         };
       }
+
+      if (Object.keys(prev).length === cart.length) {
+        return {
+          ...prev,
+          all: true,
+          [id]: true,
+        };
+      }
+
       return {
         ...prev,
         [id]: true,
@@ -65,7 +76,7 @@ export const CartItemList = () => {
               <GarbageIcon />
             </Button>
             <Stepper cartId={id} quantity={quantity} />
-            <Style.ProductPrice>{product.price.toLocaleString('ko-KR')}원</Style.ProductPrice>
+            <Style.ProductPrice>{localeString(product.price, LOCALE.KOREA)}원</Style.ProductPrice>
           </Style.RightInfo>
         </Style.CartItem>
       ))}
@@ -89,7 +100,7 @@ const Style = {
     }
 
     @media screen and (min-width: 501px) {
-      width: 735px;
+      width: 100%;
       padding: 33px 0;
     }
 

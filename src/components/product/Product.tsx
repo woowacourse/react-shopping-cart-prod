@@ -1,14 +1,16 @@
 import { styled } from 'styled-components';
-import { CartIcon } from '../assets/svg';
+import { CartIcon } from '../../assets/svg';
 
-import { useCartItemValue, useSetCartState } from '../recoils/recoilCart';
+import { useCartItemValue, useSetCartState } from '../../recoils/recoilCart';
 
-import { Stepper } from './Stepper';
-import { ProductType } from '../types';
-import { useMutation } from '../hooks/useMutation';
-import { FETCH_METHOD, FETCH_URL } from '../constants';
-import { useApiBaseUrlValue } from '../recoils/recoilApiBaseUrl';
+import { Stepper } from '../Stepper';
+import { ProductType } from '../../types';
+import { useMutation } from '../../hooks/useMutation';
+import { FETCH_METHOD, FETCH_URL, LOCALE } from '../../constants';
+import { useApiBaseUrlValue } from '../../recoils/recoilApiBaseUrl';
 import { useEffect } from 'react';
+import { useSetCheckedState } from '../../recoils/recoilChecked';
+import { localeString } from '../../utils/localeString';
 
 interface Props {
   item: ProductType;
@@ -20,19 +22,29 @@ export const Product = ({ item }: Props) => {
 
   const cartItem = useCartItemValue(item.id);
 
+  const setCheckedState = useSetCheckedState();
+
   useEffect(() => {
     if (!addCartResponseData) return;
 
-    const cartId = addCartResponseData.location.split('/').pop();
+    const cartId = addCartResponseData.cartItemId;
 
     setCart((prev) => [
       ...prev,
       {
-        id: cartId,
+        id: Number(cartId),
         quantity: 1,
         product: item,
       },
     ]);
+
+    setCheckedState((prev) => {
+      return {
+        ...prev,
+        [cartId]: true,
+      };
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [addCartResponseData]);
 
   const setCart = useSetCartState();
@@ -49,7 +61,7 @@ export const Product = ({ item }: Props) => {
       <Style.ProductInfo>
         <div>
           <Style.ProductName>{item.name}</Style.ProductName>
-          <Style.ProductPrice>{item.price.toLocaleString('ko-KR')}원</Style.ProductPrice>
+          <Style.ProductPrice>{localeString(item.price, LOCALE.KOREA)}원</Style.ProductPrice>
         </div>
         {cartItem ? (
           <Style.StepperWrapper>

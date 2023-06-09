@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 
 import { styled } from 'styled-components';
 
-import { CartSize } from './CartSize';
+import { CartSize } from '../cart/CartSize';
 
-import { CartLogo } from '../assets/svg';
-import { useApiBaseUrlState } from '../recoils/recoilApiBaseUrl';
+import { CartLogo } from '../../assets/svg';
+import { useApiBaseUrlState } from '../../recoils/recoilApiBaseUrl';
+import { PATH } from '../../constants';
 
 export const Header = () => {
   const [apiUrlkey, setApiUrlKey] = useApiBaseUrlState();
@@ -29,6 +30,7 @@ export const Header = () => {
           <Style.CartLink to="/shopping-cart">
             <CartSize />
           </Style.CartLink>
+          <Link to={PATH.ORDER}>주문목록</Link>
         </Style.RightWrapper>
       </Style.Content>
     </Style.Container>
@@ -73,6 +75,12 @@ const Style = {
       content: 'SHOP';
       padding-left: 12px;
     }
+
+    @media (max-width: 500px) {
+      &::after {
+        content: none;
+      }
+    }
   `,
 
   RightWrapper: styled.div`
@@ -94,9 +102,17 @@ const Style = {
 
     font-weight: 500;
 
+    margin-right: 30px;
+
     &::before {
       content: '장바구니';
       padding-right: 6px;
+    }
+
+    @media (max-width: 500px) {
+      &::before {
+        content: none;
+      }
     }
   `,
 };

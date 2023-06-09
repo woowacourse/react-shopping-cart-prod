@@ -1,33 +1,25 @@
 import { PropsWithChildren } from 'react';
-
 import { styled } from 'styled-components';
+import { Header } from './Header';
 
-import { Header } from '../Header';
-
-export const Layout = ({ children }: PropsWithChildren) => (
-  <Style.Layout>
-    <Header />
-    <Style.Container>{children}</Style.Container>
-  </Style.Layout>
-);
+export const Layout = ({ children }: PropsWithChildren) => {
+  return (
+    <>
+      <Header />
+      <Style.Main>{children}</Style.Main>
+    </>
+  );
+};
 
 const Style = {
-  Layout: styled.div`
+  Main: styled.main`
     display: flex;
     flex-direction: column;
 
     align-items: center;
-  `,
 
-  Container: styled.div`
-    @media screen and (min-width: 501px) {
-      width: 1320px;
-    }
+    position: relative;
 
-    width: 100%;
-
-    margin-top: 80px;
-
-    padding: 0px 16px;
+    top: 140px;
   `,
 };

@@ -1,27 +1,42 @@
+import { lazy, Suspense } from 'react';
 import { styled } from 'styled-components';
 
-import { Cart } from '../Cart';
+import { Cart } from '../cart/Cart';
 import { Layout } from '../common/Layout';
-import { OrderSummary } from '../OrderSummary';
+import SmallLoader from '../Loader/SmallLoader';
 
-export const ShoppingCart = () => {
+const OrderSummary = lazy(() => import('../order/OrderSummary'));
+
+const ShoppingCart = () => {
   return (
     <Layout>
-      <Style.PageTitle>장바구니</Style.PageTitle>
-      <Style.Main>
-        <Cart />
-        <OrderSummary />
-      </Style.Main>
+      <Style.ShoppingCartWrapper>
+        <Style.PageTitle>장바구니</Style.PageTitle>
+        <Style.Main>
+          <Cart />
+          <Suspense fallback={<SmallLoader />}>
+            <OrderSummary />
+          </Suspense>
+        </Style.Main>
+      </Style.ShoppingCartWrapper>
     </Layout>
   );
 };
 
 const Style = {
+  ShoppingCartWrapper: styled.div`
+    width: 100%;
+    padding: 0 10%;
+
+    margin-bottom: 140px;
+  `,
+
   PageTitle: styled.div`
+    width: 100%;
     text-align: center;
 
-    margin-bottom: 16px;
-    padding: 30px 0;
+    margin-bottom: 30px;
+    padding: 0 0 30px 0;
 
     font-size: 32px;
     font-weight: 700;
@@ -37,9 +52,12 @@ const Style = {
   Main: styled.div`
     display: flex;
 
-    @media screen and (min-width: 501px) {
-      padding-right: 20px;
+    @media screen and (max-width: 1100px) {
+      flex-direction: column;
+      align-items: center;
+    }
 
+    @media screen and (min-width: 501px) {
       justify-content: space-between;
     }
 
@@ -50,3 +68,5 @@ const Style = {
     }
   `,
 };
+
+export default ShoppingCart;
