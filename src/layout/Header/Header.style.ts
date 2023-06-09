@@ -1,4 +1,4 @@
-import { styled } from 'styled-components';
+import { styled } from "styled-components";
 
 export const Navbar = styled.div`
   background-color: ${({ theme }) => theme.primaryColor};
@@ -13,4 +13,9 @@ export const HeaderWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 60px;
+`;
+
+export const IconWrapper = styled.div`
+  display: flex;
+  column-gap: 2rem;
 `;

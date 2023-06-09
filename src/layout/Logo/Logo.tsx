@@ -1,49 +1,39 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
-import * as S from './Logo.style';
+import * as S from "./Logo.style";
 
-import { GiFullPizza } from 'react-icons/gi';
+import { GiFullPizza } from "react-icons/gi";
 
-import { useRefreshCart } from '../../views/Cart/recoil/cartState';
-import { useRefreshProduct } from '@views/Product/recoil/productListState';
-import { styled } from 'styled-components';
-import { useRefreshCouponList } from '@views/Payment/recoil/couponListState';
+import { useRefreshCart } from "../../views/Cart/recoil/cartState";
+import { useRefreshProduct } from "@views/Product/recoil/productListState";
+import { styled } from "styled-components";
+import { useRefreshCouponList } from "@views/Payment/recoil/couponListState";
 
 function Logo() {
   const navigate = useNavigate();
   const refreshCart = useRefreshCart();
   const refreshProduct = useRefreshProduct();
   const refreshCoupon = useRefreshCouponList();
+  const moveToHome = () => {
+    refreshCart();
+    refreshProduct();
+    refreshCoupon();
+    navigate("/");
+  };
 
   return (
     <S.LogoWrapper
       type="button"
       aria-label="SHOP 홈페이지로 가기"
       role="button"
-      onClick={() => {
-        refreshCart();
-        refreshProduct();
-        refreshCoupon();
-        navigate('/');
-      }}
+      onClick={moveToHome}
     >
       <S.LogoContainer>
         <GiFullPizza size="40" />
       </S.LogoContainer>
-      <LogoName>핏-짜나라 치즈공듀</LogoName>
+      <S.LogoName>핏-짜나라 치즈공듀</S.LogoName>
     </S.LogoWrapper>
   );
 }
 
 export default Logo;
-
-const LogoName = styled.p`
-  font-size: 2.6rem;
-  font-weight: 400;
-  font-family: 'Do Hyeon';
-  color: ${({ theme }) => theme.lightColor};
-
-  @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    display: none;
-  }
-`;

@@ -1,4 +1,4 @@
-import { styled } from 'styled-components';
+import { styled } from "styled-components";
 
 export const LogoWrapper = styled.button`
   display: flex;
@@ -17,4 +17,15 @@ export const LogoContainer = styled.div`
   align-items: center;
 
   margin-right: 1rem;
+`;
+
+export const LogoName = styled.p`
+  font-size: 2.6rem;
+  font-weight: 400;
+  font-family: "Do Hyeon";
+  color: ${({ theme }) => theme.lightColor};
+
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    display: none;
+  }
 `;
