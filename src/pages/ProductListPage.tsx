@@ -1,10 +1,12 @@
 import { styled } from 'styled-components';
 import ProductListItem from '../components/ProductListItem';
+import LoadingPlaceholder from '../components/common/LoadingPlaceholder';
 import AwaitRecoilState from '../components/utils/AwaitRecoilState';
-import productsState from '../recoil/atoms/productsState';
-import type { Product } from '../type';
+import ResponseErrorBoundary from '../components/utils/ResponseErrorBoundary';
+import userCartItemsRepository from '../recoil/user/userCartItemsRepository';
+import userProductsState from '../recoil/user/userProductsState';
 
-const ProductListContainer = styled.ul`
+const ProductList = styled.ul`
   display: grid;
   grid-template-columns: repeat(4, 230px);
   column-gap: 48px;
@@ -24,26 +26,42 @@ const ProductListContainer = styled.ul`
   }
 `;
 
-type ProductListProps = {
-  products: Product[];
-};
-
-const ProductList = (props: ProductListProps) => {
-  const { products } = props;
-
-  return (
-    <ProductListContainer>
-      {products.map((product) => (
-        <ProductListItem key={product.id} product={product} />
-      ))}
-    </ProductListContainer>
-  );
-};
-
 const ProductListPage = () => {
   return (
-    <AwaitRecoilState state={productsState}>
-      {(products) => <ProductList products={products} />}
+    <AwaitRecoilState
+      state={userProductsState}
+      loadingElement={<LoadingPlaceholder title="제품 목록을 가져오는 중입니다 ..." />}
+    >
+      {(products) => (
+        <ResponseErrorBoundary
+          catches={(response) => response.accept(401)}
+          fallback={
+            <ProductList>
+              {products.map((product) => (
+                <ProductListItem key={product.id} product={product} showCartItem={false} />
+              ))}
+            </ProductList>
+          }
+        >
+          <AwaitRecoilState
+            state={userCartItemsRepository}
+            loadingElement={<LoadingPlaceholder title="장바구니 정보를 가져오는 중입니다 ..." />}
+          >
+            {({ getCartItemByProductId, setQuantity }) => (
+              <ProductList>
+                {products.map((product) => (
+                  <ProductListItem
+                    key={product.id}
+                    product={product}
+                    cartItem={getCartItemByProductId(product.id)}
+                    onChangeQuantity={(quantity) => setQuantity(product, quantity)}
+                  />
+                ))}
+              </ProductList>
+            )}
+          </AwaitRecoilState>
+        </ResponseErrorBoundary>
+      )}
     </AwaitRecoilState>
   );
 };

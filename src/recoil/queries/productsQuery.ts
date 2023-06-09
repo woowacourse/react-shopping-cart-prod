@@ -1,16 +1,16 @@
-import { selector } from 'recoil';
-import type { ProductEntity } from '../../api/rest/ShoppingCartRestAPI';
-import clientState from '../atoms/clientState';
+import { selectorFamily } from 'recoil';
+import type { Client } from '../../api';
 
-const productsQuery = selector<ProductEntity[]>({
+type ProductsQueryParams = {
+  client: Client;
+};
+
+const productsQuery = selectorFamily({
   key: 'productsQuery',
-  get: ({ get }) => {
-    const client = get(clientState);
-    return client
-      .get('/products')
-      .acceptOrThrow(200)
-      .then((response) => response.data);
-  },
+  get:
+    ({ client }: ProductsQueryParams) =>
+    () =>
+      client.get('/products'),
 });
 
 export default productsQuery;

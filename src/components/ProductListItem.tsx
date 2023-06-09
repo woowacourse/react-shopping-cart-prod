@@ -1,9 +1,8 @@
-import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
 import CartIcon from '../assets/icons/cart.svg';
-import useCartActions from '../hooks/useCartActions';
-import cartItemsState from '../recoil/atoms/cartItemsState';
-import type { Product } from '../type';
+import type { CartItem } from '../types/CartItem';
+import type { Product } from '../types/Product';
+import PriceFormat from './common/PriceFormat';
 import Stepper from './common/Stepper';
 
 const ProductListItemContainer = styled.div`
@@ -38,11 +37,6 @@ const ProductName = styled.p`
 
 const ProductPrice = styled.p`
   font-size: 20px;
-
-  &::after {
-    content: '원';
-    padding-left: 8px;
-  }
 `;
 
 const StepperContainer = styled.div`
@@ -55,13 +49,13 @@ const AddCartButton = styled.button`
 
 type ProductListItemProps = {
   product: Product;
+  cartItem?: CartItem | null;
+  showCartItem?: boolean;
+  onChangeQuantity?: (quantity: number) => void;
 };
 
 const ProductListItem = (props: ProductListItemProps) => {
-  const { product } = props;
-  const cartItems = useRecoilValue(cartItemsState);
-  const { setQuantity } = useCartActions();
-  const cartItem = cartItems.find((cartItem) => cartItem.product.id === product.id) ?? null;
+  const { product, cartItem, showCartItem = true, onChangeQuantity } = props;
 
   return (
     <ProductListItemContainer>
@@ -69,20 +63,23 @@ const ProductListItem = (props: ProductListItemProps) => {
       <ProductInfoContainer>
         <ProductInfo>
           <ProductName>{product.name}</ProductName>
-          <ProductPrice>{product.price.toLocaleString('ko-KR')}</ProductPrice>
+          <ProductPrice>
+            <PriceFormat price={product.price} />
+          </ProductPrice>
         </ProductInfo>
         <StepperContainer>
-          {cartItem === null ? (
-            <AddCartButton onClick={() => setQuantity(product, 1)}>
-              <img alt="카트" src={CartIcon} />
-            </AddCartButton>
-          ) : (
-            <Stepper
-              min={0}
-              value={cartItem.quantity}
-              onChange={(quantity) => setQuantity(product, quantity)}
-            />
-          )}
+          {showCartItem &&
+            (cartItem ? (
+              <Stepper
+                min={0}
+                value={cartItem.quantity}
+                onChange={(quantity) => onChangeQuantity?.(quantity)}
+              />
+            ) : (
+              <AddCartButton onClick={() => onChangeQuantity?.(1)}>
+                <img alt="카트" src={CartIcon} />
+              </AddCartButton>
+            ))}
         </StepperContainer>
       </ProductInfoContainer>
     </ProductListItemContainer>

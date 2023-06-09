@@ -15,7 +15,19 @@ export interface HttpRequest<
 
 export interface HttpResponse<
   StatusCode extends number = number,
-  Data = unknown,
+  Data extends Record<string, unknown> | string | number | null | undefined | unknown = any,
+  Headers extends Record<string, string> = Record<string, string>,
+> {
+  statusCode: StatusCode;
+  data: Data;
+  headers: Headers;
+}
+
+export interface HttpErrorResponse<
+  StatusCode extends number = number,
+  Data extends Record<string, unknown> | string | number | null | undefined | unknown = {
+    message: string;
+  },
   Headers extends Record<string, string> = Record<string, string>,
 > {
   statusCode: StatusCode;
@@ -36,7 +48,8 @@ export type ExtractPathFromRestAPI<
 export type ExtractBodyFromRestAPI<
   TRestAPI extends RestAPI,
   Method extends TRestAPI['request']['method'] = TRestAPI['request']['method'],
-> = Extract<TRestAPI['request'], { method: Method }>['body'];
+  Path extends TRestAPI['request']['path'] = TRestAPI['request']['path'],
+> = Extract<TRestAPI['request'], { method: Method; path: Path }>['body'];
 
 export type ExtractResponseFromRestAPI<
   TRestAPI extends RestAPI,

@@ -1,23 +1,15 @@
+import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
 import CartEmptyPlaceholder from '../components/CartEmptyPlaceholder';
 import CartItemListItem from '../components/CartItemListItem';
 import CartOrder from '../components/CartOrder';
 import Checkbox from '../components/common/Checkbox';
+import LoadingPlaceholder from '../components/common/LoadingPlaceholder';
+import PageHeader from '../components/page/PageHeader';
 import AwaitRecoilState from '../components/utils/AwaitRecoilState';
-import useCartActions from '../hooks/useCartActions';
-import useCartOrder from '../hooks/useCartOrder';
-import cartItemsState from '../recoil/atoms/cartItemsState';
-import type { CartItem } from '../type';
-
-const Header = styled.header`
-  padding-bottom: 32px;
-
-  border-bottom: 4px solid #333333;
-
-  text-align: center;
-  font-size: 32px;
-  font-weight: 700;
-`;
+import userCartItemsRepository from '../recoil/user/userCartItemsRepository';
+import userCartItemsState from '../recoil/user/userCartItemsState';
+import type { CartItem } from '../types/CartItem';
 
 const CartLayout = styled.article`
   display: grid;
@@ -80,23 +72,13 @@ type CartPageContentProps = {
 
 const CartPageContent = (props: CartPageContentProps) => {
   const { cartItems } = props;
-  const selectedCount = cartItems.filter((cartItem) => !cartItem.unselectedForOrder).length;
+  const selectedCount = cartItems.filter((cartItem) => cartItem.checked).length;
   const allSelected = selectedCount === cartItems.length;
 
-  const { deleteCartItems } = useCartActions();
-  const { selectForOrder, toggleForOrder, unselectAllForOrder } = useCartOrder();
+  const { setChecked, removeCheckedCartItem } = useRecoilValue(userCartItemsRepository);
 
-  const handleEnableAll = (cartItems: CartItem[]) => () => {
-    if (allSelected) {
-      unselectAllForOrder();
-      return;
-    }
-    cartItems.forEach((cartItem) => selectForOrder(cartItem.product.id));
-  };
-
-  const handleDeleteSelected = (cartItems: CartItem[]) => () => {
-    unselectAllForOrder();
-    deleteCartItems(cartItems.map((cartItem) => cartItem.product.id));
+  const handleEnableAll = () => {
+    cartItems.forEach((cartItem) => setChecked(cartItem, !allSelected));
   };
 
   return (
@@ -107,8 +89,8 @@ const CartPageContent = (props: CartPageContentProps) => {
           {cartItems.map((cartItem) => (
             <CartItemListItemContainer>
               <Checkbox
-                value={!cartItem.unselectedForOrder}
-                onChange={() => toggleForOrder(cartItem.product.id)}
+                value={cartItem.checked}
+                onChange={() => setChecked(cartItem, !cartItem.checked)}
               />
               <CartItemListItem
                 key={cartItem.product.id}
@@ -120,13 +102,11 @@ const CartPageContent = (props: CartPageContentProps) => {
         </CartItemList>
 
         <CartItemListController>
-          <Checkbox value={allSelected} onChange={handleEnableAll(cartItems)} />
+          <Checkbox value={allSelected} onChange={handleEnableAll} />
           <CartItemSelected>
             전체선택 ({selectedCount}/{cartItems.length}개)
           </CartItemSelected>
-          <DeleteSelectedButton onClick={handleDeleteSelected(cartItems)}>
-            선택삭제
-          </DeleteSelectedButton>
+          <DeleteSelectedButton onClick={removeCheckedCartItem}>선택삭제</DeleteSelectedButton>
         </CartItemListController>
       </CartItemListSection>
 
@@ -138,9 +118,12 @@ const CartPageContent = (props: CartPageContentProps) => {
 const CartPage = () => {
   return (
     <>
-      <Header>장바구니</Header>
+      <PageHeader>장바구니</PageHeader>
 
-      <AwaitRecoilState state={cartItemsState}>
+      <AwaitRecoilState
+        state={userCartItemsState}
+        loadingElement={<LoadingPlaceholder title="장바구니 정보를 불러오는 중입니다 ..." />}
+      >
         {(cartItems) =>
           cartItems.length === 0 ? (
             <CartEmptyPlaceholder />

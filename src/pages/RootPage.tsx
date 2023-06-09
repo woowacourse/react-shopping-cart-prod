@@ -1,6 +1,8 @@
 import { Outlet, useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
-import Header from '../components/Header';
+import AppBar from '../components/page/AppBar';
+import NotFoundErrorBoundary from './boundaries/NotFoundErrorBoundary';
+import UnauthorizedErrorBoundary from './boundaries/UnauthorizedErrorBoundary';
 
 const Content = styled.main`
   margin: 0 auto;
@@ -15,9 +17,14 @@ const RootPage = () => {
 
   return (
     <>
-      <Header onNavigate={navigate} />
+      <AppBar onNavigate={navigate} />
+
       <Content>
-        <Outlet />
+        <UnauthorizedErrorBoundary>
+          <NotFoundErrorBoundary>
+            <Outlet />
+          </NotFoundErrorBoundary>
+        </UnauthorizedErrorBoundary>
       </Content>
     </>
   );

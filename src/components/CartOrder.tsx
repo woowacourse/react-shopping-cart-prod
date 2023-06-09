@@ -1,6 +1,17 @@
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
-import cartOrderPriceState from '../recoil/selectors/cartOrderPriceState';
+import useFutureResult from '../hooks/useFutureResult';
+import useOrderMutation from '../hooks/useOrderMutation';
+import userCartOrderPriceState from '../recoil/user/userCartOrderPriceState';
+import userCartPointsState from '../recoil/user/userCartPointsState';
+import userProfileState from '../recoil/user/userProfileState';
+import userRemoteCartItemsState from '../recoil/user/userRemoteCartItemsState';
+import Button from './common/Button';
+import PriceFormat from './common/PriceFormat';
+import Spinner from './common/Spinner';
+import AwaitRecoilState from './utils/AwaitRecoilState';
 
 const CartOrderContainer = styled.form`
   min-width: 440px;
@@ -20,6 +31,9 @@ const Divider = styled.hr`
 `;
 
 const Content = styled.section`
+  display: flex;
+  flex-direction: column;
+
   padding: 30px;
 `;
 
@@ -29,8 +43,9 @@ const ContentPlaceholder = styled.h2`
   color: #444444;
 `;
 
-const PriceField = styled.p`
+const PriceField = styled.div`
   display: flex;
+  gap: 12px;
   margin-bottom: 20px;
 
   font-size: 20px;
@@ -41,10 +56,18 @@ const PriceFieldName = styled.p``;
 
 const PriceFieldValue = styled.p`
   margin-left: auto;
+`;
 
-  &::after {
-    content: '원';
-  }
+const PriceFieldInput = styled.input`
+  max-width: 120px;
+  padding: 8px;
+  border: 1px solid #666666;
+`;
+
+const PriceFieldCaption = styled.div`
+  font-size: 12px;
+  font-weight: 400;
+  white-space: nowrap;
 `;
 
 const ContentDivider = styled.hr`
@@ -53,27 +76,53 @@ const ContentDivider = styled.hr`
   border: none;
 `;
 
-const OrderButton = styled.button.attrs({ type: 'submit' })`
-  padding: 24px;
-  width: 100%;
-
-  background-color: #333333;
-
-  font-size: 24px;
-  font-weight: 400;
-  color: white;
-`;
-
 type CartOrderProps = {
   isCartEmpty: boolean;
+  onOrderDone?: (orderId: number) => void;
 };
 
 const CartOrder = (props: CartOrderProps) => {
-  const { isCartEmpty } = props;
-  const prices = useRecoilValue(cartOrderPriceState);
+  const navigate = useNavigate();
+  const { isCartEmpty, onOrderDone = (orderId) => navigate(`/orders/${orderId}/done`) } = props;
+
+  const prices = useRecoilValue(userCartOrderPriceState);
+  const { isSynchronizing } = useRecoilValue(userRemoteCartItemsState);
+  const profile = useRecoilValue(userProfileState);
+
+  const { order, future } = useOrderMutation();
+  const orderResult = useFutureResult(future);
+
+  const [inputUsedPoints, setInputUsedPoints] = useState('0');
+  const [rawUsedPoints, setUsedPoints] = useState(0);
+  const maxUsedPoints = Math.min(prices.total, profile.currentPoints);
+  const usedPoints = Math.max(0, Math.min(maxUsedPoints, rawUsedPoints));
+
+  useEffect(() => {
+    setInputUsedPoints(String(usedPoints));
+  }, [usedPoints, prices.total]);
+
+  const handleChangeUsedPoints = (value: string) => {
+    if (!/^\d+$/.test(value)) {
+      alert('숫자만 입력 가능합니다.');
+      return;
+    }
+    const newUsedPoints = Number(value);
+    if (newUsedPoints < 0 || maxUsedPoints < newUsedPoints) {
+      alert(`최소 0부터 ${maxUsedPoints}까지 사용 가능합니다.`);
+      return;
+    }
+    setUsedPoints(newUsedPoints);
+  };
+
+  const handleSubmitOrder: React.FormEventHandler<HTMLFormElement> = async (event) => {
+    event.preventDefault();
+
+    const orderId = await order({ usedPoints });
+    onOrderDone(orderId);
+  };
 
   return (
-    <CartOrderContainer>
+    <CartOrderContainer onSubmit={handleSubmitOrder}>
       <Title>결제예상금액</Title>
       <Divider />
 
@@ -88,24 +137,67 @@ const CartOrder = (props: CartOrderProps) => {
           <>
             <PriceField>
               <PriceFieldName>총 상품가격</PriceFieldName>
-              <PriceFieldValue>{prices.products}</PriceFieldValue>
+              <PriceFieldValue>
+                <PriceFormat price={prices.products} />
+              </PriceFieldValue>
+            </PriceField>
+
+            <ContentDivider />
+
+            <PriceField>
+              <PriceFieldName>적립 포인트</PriceFieldName>
+
+              <PriceFieldValue>
+                <AwaitRecoilState state={userCartPointsState} loadingElement={<Spinner />}>
+                  {(cartPoints) => (
+                    <>
+                      <PriceFormat price={cartPoints.expectedSavePoints} unit="P" /> (
+                      {cartPoints.savingRate}%)
+                    </>
+                  )}
+                </AwaitRecoilState>
+              </PriceFieldValue>
             </PriceField>
 
             <PriceField>
-              <PriceFieldName>총 배송비</PriceFieldName>
-              <PriceFieldValue>{prices.shippingFee}</PriceFieldValue>
+              <PriceFieldName>
+                사용할 포인트
+                <PriceFieldCaption>
+                  사용가능한 포인트: <PriceFormat price={profile.currentPoints} unit="P" />
+                </PriceFieldCaption>
+              </PriceFieldName>
+              <PriceFieldValue>
+                <PriceFieldInput
+                  value={inputUsedPoints}
+                  onChange={(event) => setInputUsedPoints(event.target.value)}
+                  onKeyDown={(event) => {
+                    if (event.key === 'Enter') {
+                      event.preventDefault();
+                      handleChangeUsedPoints(inputUsedPoints);
+                    }
+                  }}
+                  onBlur={() => {
+                    setInputUsedPoints(String(usedPoints));
+                  }}
+                />{' '}
+                P
+              </PriceFieldValue>
             </PriceField>
 
             <ContentDivider />
 
             <PriceField>
               <PriceFieldName>총 주문금액</PriceFieldName>
-              <PriceFieldValue>{prices.total}</PriceFieldValue>
+              <PriceFieldValue>
+                <PriceFormat price={prices.total - usedPoints} />
+              </PriceFieldValue>
             </PriceField>
 
             <ContentDivider />
 
-            <OrderButton>주문하기</OrderButton>
+            <Button disabled={orderResult.isLoading || isSynchronizing}>
+              {orderResult.isLoading ? <Spinner /> : '주문하기'}
+            </Button>
           </>
         )}
       </Content>

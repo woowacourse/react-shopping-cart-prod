@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
+import Button from './common/Button';
 
 const CartEmptyPlaceholderContainer = styled.section`
   display: flex;
@@ -18,17 +19,6 @@ const Title = styled.h1`
   color: #888888;
 `;
 
-const HomeButton = styled.button`
-  padding: 24px;
-  width: 100%;
-
-  background-color: #333333;
-
-  font-size: 24px;
-  font-weight: 400;
-  color: white;
-`;
-
 const CartEmptyPlaceholder = () => {
   const navigate = useNavigate();
 
@@ -36,7 +26,7 @@ const CartEmptyPlaceholder = () => {
     <CartEmptyPlaceholderContainer>
       <Title>장바구니가 비어있습니다!</Title>
 
-      <HomeButton onClick={() => navigate('/')}>홈으로 가기</HomeButton>
+      <Button onClick={() => navigate('/')}>홈으로 가기</Button>
     </CartEmptyPlaceholderContainer>
   );
 };
