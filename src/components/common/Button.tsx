@@ -7,15 +7,13 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const Button = ({ children, ...props }: Props) => {
-  return <S.Button {...props}>{children}</S.Button>;
+  return <StyledButton {...props}>{children}</StyledButton>;
 };
 
-const S = {
-  Button: styled.button<{ css: CSSProp }>`
-    cursor: pointer;
+const StyledButton = styled.button<{ css: CSSProp }>`
+  cursor: pointer;
 
-    ${(props) => props.css}
-  `,
-};
+  ${(props) => props.css}
+`;
 
 export default Button;

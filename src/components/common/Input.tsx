@@ -6,13 +6,11 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(({ ...props }, ref) => {
-  return <S.Input ref={ref} {...props} />;
+  return <StyledInput ref={ref} {...props} />;
 });
 
-const S = {
-  Input: styled.input<{ css: CSSProp }>`
-    ${(props) => props.css}
-  `,
-};
+const StyledInput = styled.input<{ css: CSSProp }>`
+  ${(props) => props.css}
+`;
 
 export default Input;

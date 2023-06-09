@@ -25,8 +25,8 @@ const SelectedProductList = () => {
   };
 
   return (
-    <S.Wrapper>
-      <S.Title>{`든든배송 상품 (${productCountInCart}개)`}</S.Title>
+    <StyledSection>
+      <Title>{`든든배송 상품 (${productCountInCart}개)`}</Title>
 
       <div>
         {cart.map((item) => (
@@ -42,7 +42,7 @@ const SelectedProductList = () => {
         ))}
       </div>
 
-      <S.Fieldset>
+      <StyledFieldset>
         <Checkbox
           type="checkbox"
           id="select-all"
@@ -54,65 +54,63 @@ const SelectedProductList = () => {
         <Button css={deleteButtonStyle} onClick={handleCheckedItemRemove}>
           선택삭제
         </Button>
-      </S.Fieldset>
-    </S.Wrapper>
+      </StyledFieldset>
+    </StyledSection>
   );
 };
 
-const S = {
-  Wrapper: styled.section`
-    width: 100%;
-    max-width: 736px;
-    font-size: 18px;
-    color: var(--text-color);
-  `,
+const StyledSection = styled.section`
+  width: 100%;
+  max-width: 736px;
+  font-size: 18px;
+  color: var(--text-color);
+`;
 
-  Title: styled.h3`
-    padding-bottom: 24px;
-    border-bottom: 2px solid var(--gray-color-300);
+const Title = styled.h3`
+  padding-bottom: 24px;
+  border-bottom: 2px solid var(--gray-color-300);
 
-    & + div {
-      height: 410px;
-      max-height: 410px;
-      overflow-y: auto;
+  & + div {
+    height: 410px;
+    max-height: 410px;
+    overflow-y: auto;
 
-      /* Scroll bar */
-      &::-webkit-scrollbar {
-        width: 5px;
-      }
-      &::-webkit-scrollbar-thumb {
-        border-radius: 8px;
-        background: var(--text-color);
-      }
-      &::-webkit-scrollbar-track {
-        border-radius: 8px;
-        background: var(--gray-color-100);
-      }
-      &::-webkit-scrollbar-button:start:decrement,
-      &::-webkit-scrollbar-button:end:increment {
-        display: block;
-        height: 6px;
-        background: #fff;
-      }
-
-      @media (max-width: 420px) {
-        padding: 0 10px;
-      }
+    /* Scroll bar */
+    &::-webkit-scrollbar {
+      width: 5px;
     }
-  `,
-
-  Fieldset: styled.fieldset`
-    display: flex;
-    align-items: center;
-    padding: 36px 0 48px;
-    font-size: 16px;
-
-    @media (max-width: 548px) {
-      font-size: 14px;
-      padding: 20px 0 0;
+    &::-webkit-scrollbar-thumb {
+      border-radius: 8px;
+      background: var(--text-color);
     }
-  `,
-};
+    &::-webkit-scrollbar-track {
+      border-radius: 8px;
+      background: var(--gray-color-100);
+    }
+    &::-webkit-scrollbar-button:start:decrement,
+    &::-webkit-scrollbar-button:end:increment {
+      display: block;
+      height: 6px;
+      background: #fff;
+    }
+
+    @media (max-width: 420px) {
+      padding: 0 10px;
+    }
+  }
+`;
+
+const StyledFieldset = styled.fieldset`
+  display: flex;
+  align-items: center;
+  padding: 36px 0 48px;
+  font-size: 16px;
+
+  @media (max-width: 548px) {
+    font-size: 14px;
+    padding: 20px 0 0;
+  }
+`;
 
 const deleteButtonStyle = css`
   margin-left: 20px;

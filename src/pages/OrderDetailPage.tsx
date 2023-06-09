@@ -19,7 +19,7 @@ const OrderDetailPage = () => {
     api
       .get(`${server}${ORDER_URL}/${id}`)
       .then((data) => setOrderDetail(data))
-      .catch((error) => alert(error));
+      .catch(() => alert('서버에서 주문목록을 가져오지 못하였습니다.'));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [server, id]);
 
@@ -30,75 +30,29 @@ const OrderDetailPage = () => {
   const { deliveryFee, totalPrice, coupon, totalPayments } = orderDetail;
 
   return (
-    <Main>
+    <StyledMain>
       <Title>주문 내역 상세</Title>
       <Flex>
         <OrderItem {...orderDetail} />
-        <S.Wrapper>
-          <S.Title>결제금액 정보</S.Title>
-          <S.List>
+        <StyledSection>
+          <DetailTitle>결제금액 정보</DetailTitle>
+          <List>
             <Price price={totalPrice} tag="li" description="상품금액" />
             <Price price={deliveryFee} tag="li" description="배송비" />
             {coupon && coupon.priceDiscount !== 0 ? (
               <Price price={-coupon.priceDiscount} tag="li" description={coupon.name} />
             ) : null}
             <Price price={totalPayments} tag="li" description="총 결제금액" />
-          </S.List>
-        </S.Wrapper>
+          </List>
+        </StyledSection>
       </Flex>
-    </Main>
+    </StyledMain>
   );
 };
 
 export default OrderDetailPage;
 
-const S = {
-  Wrapper: styled.section`
-    width: 400px;
-    max-width: 448px;
-    height: 280px;
-    max-height: 410px;
-    margin-top: 40px;
-    padding-bottom: 38px;
-    border: 1px solid var(--gray-color-300);
-  `,
-
-  Title: styled.h3`
-    padding: 24px 30px;
-    margin-bottom: 44px;
-    border-bottom: 1px solid var(--gray-color-300);
-    font-size: 20px;
-
-    @media (max-width: 548px) {
-      margin-bottom: 32px;
-      font-size: 18px;
-    }
-  `,
-
-  List: styled.ul`
-    & > li {
-      display: flex;
-      justify-content: space-between;
-      margin: 0 30px 20px;
-      font-size: 18px;
-      font-weight: 600;
-
-      & span {
-        font-weight: 500;
-      }
-
-      @media (max-width: 548px) {
-        flex-direction: column;
-        font-size: 15px;
-        font-weight: 600;
-        text-align: center;
-        line-height: 1.4;
-      }
-    }
-  `,
-};
-
-const Main = styled.main`
+const StyledMain = styled.main`
   max-width: 1320px;
   margin: 0 auto;
   padding: 0 20px;
@@ -138,6 +92,50 @@ const Flex = styled.div`
 
     & section:last-child {
       margin: 30px 0 80px;
+    }
+  }
+`;
+
+const StyledSection = styled.section`
+  width: 400px;
+  max-width: 448px;
+  height: 280px;
+  max-height: 410px;
+  margin-top: 40px;
+  padding-bottom: 38px;
+  border: 1px solid var(--gray-color-300);
+`;
+
+const DetailTitle = styled.h3`
+  padding: 24px 30px;
+  margin-bottom: 44px;
+  border-bottom: 1px solid var(--gray-color-300);
+  font-size: 20px;
+
+  @media (max-width: 548px) {
+    margin-bottom: 32px;
+    font-size: 18px;
+  }
+`;
+
+const List = styled.ul`
+  & > li {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 30px 20px;
+    font-size: 18px;
+    font-weight: 600;
+
+    & span {
+      font-weight: 500;
+    }
+
+    @media (max-width: 548px) {
+      flex-direction: column;
+      font-size: 15px;
+      font-weight: 600;
+      text-align: center;
+      line-height: 1.4;
     }
   }
 `;
