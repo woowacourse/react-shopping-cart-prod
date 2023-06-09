@@ -2,7 +2,7 @@ import { styled } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { GrFormNextLink } from 'react-icons/gr';
 import { useSetRecoilState } from 'recoil';
-import OrderInfo from '../../../types/order';
+import type OrderInfo from '../../../types/order';
 import OrderedProduct from '../OrderedProduct/OrderedProduct';
 import { formatPrice } from '../../../utils/formatPrice';
 import orderDetailState from '../../../globalState/atoms/orderDetail';

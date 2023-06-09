@@ -3,7 +3,7 @@ import { styled } from 'styled-components';
 import { Link } from 'react-router-dom';
 import serverNameState from '../../../globalState/atoms/serverName';
 import ServerUtil from '../../../utils/ServerUrl';
-import OrderInfo from '../../../types/order';
+import type OrderInfo from '../../../types/order';
 import { USER_AUTH_TOKEN } from '../../../constant';
 import useFetch from '../../../hooks/api/useFetch';
 import OrderDetail from '../OrderDetail/OrderDetail';

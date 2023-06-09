@@ -7,7 +7,7 @@ import getCartStateController from '../../../globalState/selectors/getCartStateC
 import productQuantityInCart from '../../../globalState/selectors/productQuantityInCart';
 import useCartItemApi from '../../../hooks/api/useCartItemApi';
 import Counter from '../../common/Counter/Counter';
-import { Product } from '../../../types/product';
+import type { Product } from '../../../types/product';
 
 const ProductCounter = (product: Product) => {
   const { id: productId } = product;

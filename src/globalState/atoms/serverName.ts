@@ -1,5 +1,5 @@
 import { atom } from 'recoil';
-import { ServerName } from '../../types/server';
+import type { ServerName } from '../../types/server';
 import { DEFAULT_SERVER_NAME } from '../../constant';
 
 const serverNameState = atom<ServerName>({

@@ -2,7 +2,7 @@ import { selector } from 'recoil';
 import { USER_AUTH_TOKEN } from '../../constant';
 import ServerUtil from '../../utils/ServerUrl';
 import serverNameState from '../atoms/serverName';
-import { CartProduct } from '../../types/product';
+import type { CartProduct } from '../../types/product';
 
 const fetchCartItems = selector<CartProduct[]>({
   key: 'fetchCartItems',

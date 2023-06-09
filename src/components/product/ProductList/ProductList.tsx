@@ -2,7 +2,7 @@ import { styled } from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import ProductItem from '../ProductItem/ProductItem';
 import useFetch from '../../../hooks/api/useFetch';
-import { Product } from '../../../types/product';
+import type { Product } from '../../../types/product';
 import serverNameState from '../../../globalState/atoms/serverName';
 import ServerUtil from '../../../utils/ServerUrl';
 

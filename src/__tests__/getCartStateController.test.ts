@@ -1,7 +1,7 @@
 import { selector, snapshot_UNSTABLE } from 'recoil';
 import cartState from '../globalState/atoms/cartState';
 import getCartQuantityController from '../globalState/selectors/getCartStateController';
-import { CartProduct, Product } from '../types/product';
+import type { CartProduct, Product } from '../types/product';
 
 const product1: Product = { id: 1, name: '참새', price: 7, imageUrl: '' };
 const product2: Product = { id: 2, name: '룩소', price: 7777, imageUrl: '' };

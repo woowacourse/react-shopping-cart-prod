@@ -1,4 +1,4 @@
-import { ServerName } from '../types/server';
+import type { ServerName } from '../types/server';
 
 export const BASE_URL: Record<ServerName, string | undefined> = {
   참새MSW: '',

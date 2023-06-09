@@ -1,4 +1,4 @@
-import { CartProduct, Product } from '../../types/product';
+import type { CartProduct, Product } from '../../types/product';
 import mockProducts from '../data/products.json';
 
 const KEY = 'MSW_CART_STEP2';

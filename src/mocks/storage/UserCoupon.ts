@@ -1,4 +1,4 @@
-import CouponInfo from '../../types/coupon';
+import type CouponInfo from '../../types/coupon';
 import mockCoupons from '../data/coupons.json';
 
 const KEY = 'MSW_USER_COUPON_STEP2';

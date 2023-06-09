@@ -5,7 +5,7 @@ import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import { formatPrice } from '../../../utils/formatPrice';
 import usePaymentAmount from './usePaymentAmount';
-import CouponInfo from '../../../types/coupon';
+import type CouponInfo from '../../../types/coupon';
 import cartState from '../../../globalState/atoms/cartState';
 import serverNameState from '../../../globalState/atoms/serverName';
 import ServerUtil from '../../../utils/ServerUrl';

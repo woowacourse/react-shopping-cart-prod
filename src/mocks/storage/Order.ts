@@ -1,5 +1,5 @@
 import OrderInfo from '../../types/order';
-import { CartProduct } from '../../types/product';
+import type { CartProduct } from '../../types/product';
 import Cart from './Cart';
 import UserCoupon from './UserCoupon';
 

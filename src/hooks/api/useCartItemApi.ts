@@ -1,9 +1,9 @@
 import { useRecoilValue } from 'recoil';
 import type { CartProduct, Product } from '../../types/product';
+import type { ServerName } from '../../types/server';
 import serverNameState from '../../globalState/atoms/serverName';
 import ServerUtil from '../../utils/ServerUrl';
 import { USER_AUTH_TOKEN } from '../../constant';
-import { ServerName } from '../../types/server';
 
 const getCartItemId = async (serverName: ServerName, productId: number) => {
   const cartItemsUrl = ServerUtil.getCartItemsUrl(serverName);

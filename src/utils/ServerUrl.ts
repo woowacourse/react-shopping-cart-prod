@@ -6,7 +6,7 @@ import {
   PRODUCTS_PATH_NAME,
   USER_COUPONS_PATH_NAME,
 } from '../constant';
-import { ServerName } from '../types/server';
+import type { ServerName } from '../types/server';
 
 const ServerUtil = {
   getProductsUrl: (serverName: ServerName) => BASE_URL[serverName] + PRODUCTS_PATH_NAME,

@@ -11,7 +11,7 @@ import {
 } from '../constant';
 import UserCoupon from './storage/UserCoupon';
 import Order from './storage/Order';
-import { CartProduct } from '../types/product';
+import type { CartProduct } from '../types/product';
 
 interface PostAddCartRequestBody {
   productId: number;

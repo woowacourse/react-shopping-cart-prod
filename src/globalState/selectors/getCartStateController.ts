@@ -1,5 +1,5 @@
 import { selectorFamily } from 'recoil';
-import { Product, CartProduct } from '../../types/product';
+import type { Product, CartProduct } from '../../types/product';
 import cartState from '../atoms/cartState';
 
 const getCartStateController = selectorFamily<

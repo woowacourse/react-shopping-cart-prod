@@ -2,7 +2,7 @@ import { useRecoilValue } from 'recoil';
 import { useEffect } from 'react';
 import { styled } from 'styled-components';
 import useFetch from '../../../hooks/api/useFetch';
-import CouponInfo from '../../../types/coupon';
+import type CouponInfo from '../../../types/coupon';
 import serverNameState from '../../../globalState/atoms/serverName';
 import ServerUtil from '../../../utils/ServerUrl';
 import { USER_AUTH_TOKEN } from '../../../constant';
