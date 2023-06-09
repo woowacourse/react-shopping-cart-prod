@@ -2,51 +2,49 @@ import { styled } from 'styled-components';
 import DeleteIcon from '../assets/icons/delete.svg';
 import useCartActions from '../hooks/useCartActions';
 import type { Product } from '../type';
+import { Image } from './common/productItem/Image';
+import { ItemContainer } from './common/productItem/ItemContainer';
+import { Name } from './common/productItem/Name';
+import { Price } from './common/productItem/Price';
 import Stepper from './common/Stepper';
+
+const CartItemSection = styled.section`
+  width: 100%;
+`;
 
 const CartItemListItemContainer = styled.div`
   display: flex;
-  gap: 20px;
 
   width: 100%;
 `;
 
-const ProductImage = styled.img`
-  width: 140px;
-  height: 140px;
-
-  background: gray;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-`;
-
-const ProductName = styled.h1`
-  flex: 1;
-
-  font-size: 20px;
-  font-weight: 400;
-  color: #333333;
-`;
-
-const CartController = styled.div`
+const DeleteButton = styled.button`
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 20px;
-`;
+  justify-content: flex-end;
 
-const ProductPrice = styled.h2`
-  &::after {
-    content: '원';
-  }
+  width: 100%;
 `;
-
-const DeleteButton = styled.button``;
 
 type CartItemListItemProps = {
   quantity: number;
   product: Product;
 };
+
+const ColumnFlexBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  margin-left: 20px;
+`;
+
+const RowFlexBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  width: 100%;
+`;
 
 const CartItemListItem = (props: CartItemListItemProps) => {
   const { quantity, product } = props;
@@ -57,18 +55,37 @@ const CartItemListItem = (props: CartItemListItemProps) => {
   };
 
   return (
-    <CartItemListItemContainer>
-      <ProductImage src={product.imageUrl} />
-      <ProductName>{product.name}</ProductName>
-
-      <CartController>
-        <DeleteButton onClick={() => setQuantity(product, 0)}>
-          <img src={DeleteIcon} alt="삭제" />
-        </DeleteButton>
-        <Stepper variant="large" value={quantity} onChange={handleChangeQuantityWithinSafeRange} />
-        <ProductPrice>{(product.price * quantity).toLocaleString('ko')}</ProductPrice>
-      </CartController>
-    </CartItemListItemContainer>
+    <CartItemSection>
+      <CartItemListItemContainer>
+        <ItemContainer
+          key={product.id}
+          productData={{
+            name: product.name,
+            image: product.imageUrl,
+            price: product.price,
+            quantity,
+          }}
+        >
+          <Image />
+          <RowFlexBox>
+            <ColumnFlexBox>
+              <Name />
+              <Stepper
+                variant="large"
+                value={quantity}
+                onChange={handleChangeQuantityWithinSafeRange}
+              />
+            </ColumnFlexBox>
+            <ColumnFlexBox>
+              <DeleteButton onClick={() => setQuantity(product, 0)}>
+                <img src={DeleteIcon} alt="삭제" />
+              </DeleteButton>
+              <Price style={{ fontSize: '16px' }} />
+            </ColumnFlexBox>
+          </RowFlexBox>
+        </ItemContainer>
+      </CartItemListItemContainer>
+    </CartItemSection>
   );
 };
 

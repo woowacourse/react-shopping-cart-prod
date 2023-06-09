@@ -1,6 +1,6 @@
 import { useSetRecoilState } from 'recoil';
 import cartItemsState from '../recoil/atoms/cartItemsState';
-import type { Product } from '../type';
+import type { CartItem, Product } from '../type';
 
 const useCartOrder = () => {
   const setCartItems = useSetRecoilState(cartItemsState);
@@ -28,10 +28,18 @@ const useCartOrder = () => {
     );
   };
 
+  const handleEnableAll = (cartItems: CartItem[], allSelected: boolean) => () => {
+    if (allSelected) {
+      unselectAllForOrder();
+      return;
+    }
+    cartItems.forEach((cartItem) => selectForOrder(cartItem.product.id));
+  };
+
   return {
-    selectForOrder,
     toggleForOrder,
     unselectAllForOrder,
+    handleEnableAll,
   };
 };
 

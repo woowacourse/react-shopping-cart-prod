@@ -1,10 +1,12 @@
 import { styled } from 'styled-components';
 
 const CheckboxElement = styled.input.attrs({ type: 'checkbox' })`
-  width: 28px;
-  height: 28px;
+  width: 18px;
+  height: 18px;
 
-  accent-color: #333333;
+  margin-left: 30px;
+
+  accent-color: #0078ff;
 `;
 
 type CheckboxProps = {

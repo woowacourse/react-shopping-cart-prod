@@ -1,4 +1,3 @@
-// eslint-disable-next-line max-classes-per-file
 import ClientResponse from './ClientResponse';
 import type {
   ExtractBodyFromRestAPI,
@@ -48,7 +47,7 @@ class Client<TRestAPI extends RestAPI> {
         ...init,
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
-          Authorization: `Basic ${btoa('a@a.com:1234')}`,
+          Authorization: `Basic ${btoa('b@b.com:1234')}`,
         },
       });
 

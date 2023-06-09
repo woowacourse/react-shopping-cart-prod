@@ -1,6 +1,7 @@
 import { useRecoilState } from 'recoil';
 import { styled } from 'styled-components';
-import HomeIcon from '../assets/icons/home-icon.svg';
+import cartIcon from '../assets/images/shopping-cart.png';
+import orderIcon from '../assets/images/shopping-bag.png';
 import cartItemsState from '../recoil/atoms/cartItemsState';
 import serverState from '../recoil/atoms/serverState';
 import servers from '../servers';
@@ -11,7 +12,7 @@ const HeaderContainer = styled.header`
   width: 100%;
   height: 80px;
 
-  background: #333;
+  background: #000000;
   color: white;
 `;
 
@@ -36,8 +37,8 @@ const HomeButton = styled.button`
 `;
 
 const HomeButtonText = styled.h1`
-  font-size: 40px;
-  font-weight: 900;
+  font-size: 30px;
+  /* font-weight: 900; */
 `;
 
 const Menu = styled.nav`
@@ -61,7 +62,19 @@ const Selector = styled.select`
 `;
 
 const Option = styled.option`
-  background-color: #333;
+  background-color: #000000;
+`;
+
+const CartIcon = styled.img`
+  width: 30px;
+  height: 30px;
+  filter: invert(100%);
+`;
+
+const OrderIcon = styled.img`
+  width: 30px;
+  height: 30px;
+  filter: invert(100%);
 `;
 
 type HeaderProps = {
@@ -83,8 +96,7 @@ const Header = (props: HeaderProps) => {
     <HeaderContainer>
       <HeaderContent>
         <HomeButton onClick={() => onNavigate('/')}>
-          <img alt="홈" src={HomeIcon} width={44} />
-          <HomeButtonText>SHOP</HomeButtonText>
+          <HomeButtonText>WOOSINSA</HomeButtonText>
         </HomeButton>
 
         <Menu>
@@ -96,11 +108,12 @@ const Header = (props: HeaderProps) => {
             ))}
           </Selector>
 
-          <MenuButton onClick={() => onNavigate('/cart')}>
-            장바구니{' '}
+          <MenuButton>
+            <CartIcon src={cartIcon} alt="cart-icon" onClick={() => onNavigate('/cart')} />
             <AwaitRecoilState state={cartItemsState}>
               {(cartItems) => <Badge show={cartItems.length > 0}>{cartItems.length}</Badge>}
             </AwaitRecoilState>
+            <OrderIcon src={orderIcon} alt="order-icon" onClick={() => onNavigate('/order-list')} />
           </MenuButton>
         </Menu>
       </HeaderContent>
