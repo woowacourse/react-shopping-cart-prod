@@ -9,7 +9,7 @@ const OrderCompletePage = () => {
   const { orderId } = location.state ?? {};
 
   useEffect(() => {
-    if (Number.isNaN(Number(orderId))) {
+    if (orderId === undefined) {
       navigate('/', { replace: true });
     }
   }, []);
