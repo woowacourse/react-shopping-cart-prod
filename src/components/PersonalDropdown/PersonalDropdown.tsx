@@ -11,11 +11,12 @@ import {
 import Icon from "../Icon.tsx";
 import { IoCart, IoPerson } from "react-icons/io5";
 import { useRecoilValue } from "recoil";
-import { userRepository, userState } from "../../app/recoil/userAtom.tsx";
+import { userState } from "../../app/recoil/user/userAtom.tsx";
 import { useNavigate } from "react-router-dom";
 import { cartCountSelector } from "../../app/recoil/cartAtoms.ts";
 import { modalRepository } from "../../app/recoil/modalAtoms.tsx";
 import Point from "../Point";
+import { userRepository } from "../../app/recoil/user/userSelector.tsx";
 
 export const DropdownWrapper = styled.div`
   position: relative;

@@ -7,7 +7,7 @@ import {
   fetchUpdateCart,
 } from "../api/api.ts";
 import { serverState } from "./serverAtom.ts";
-import { userState } from "./userAtom.tsx";
+import { userState } from "./user/userAtom.tsx";
 
 export const cartState = atom<CartItem[]>({
   key: "cartState",
@@ -71,21 +71,21 @@ export const quantityByProductIdSelector = selectorFamily({
   key: "quantityByProductIdSelector",
   get:
     (productId: number) =>
-    ({ get }) => {
-      const cartList = get(cartState);
-      const targetCart = cartList.find((cart) => cart.product.id === productId);
-      return targetCart?.quantity ?? 0;
-    },
+      ({ get }) => {
+        const cartList = get(cartState);
+        const targetCart = cartList.find((cart) => cart.product.id === productId);
+        return targetCart?.quantity ?? 0;
+      },
 });
 
 export const cartItemByProductIdSelector = selectorFamily({
   key: "cartItemByProductIdSelector",
   get:
     (productId: number) =>
-    ({ get }) => {
-      const cartList = get(cartState);
-      return cartList.find((cartItem) => cartItem.product.id === productId);
-    },
+      ({ get }) => {
+        const cartList = get(cartState);
+        return cartList.find((cartItem) => cartItem.product.id === productId);
+      },
 });
 
 export const cartRepository = selector({

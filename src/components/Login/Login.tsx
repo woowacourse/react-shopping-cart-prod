@@ -7,11 +7,11 @@ import {
   MemberWrapper,
 } from "./Login.style.ts";
 import { useRecoilValue } from "recoil";
-import { userRepository } from "../../app/recoil/userAtom.tsx";
 import { useEffect, useState } from "react";
 import { User } from "../../types/types.ts";
 import { serverState } from "../../app/recoil/serverAtom.ts";
 import { fetchMembers } from "../../app/api/api.ts";
+import { userRepository } from "../../app/recoil/user/userSelector.tsx";
 
 function Login() {
   const { login } = useRecoilValue(userRepository);

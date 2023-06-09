@@ -1,22 +1,13 @@
-import { atom, selector } from "recoil";
-import type { User } from "../../types/types.ts";
-import { modalRepository } from "./modalAtoms.tsx";
-import Login from "../../components/Login";
-import { setSessionStorage } from "../utils/storage.ts";
-import {
-  SESSION_STORAGE_KEY_BASE64,
-  SESSION_STORAGE_KEY_CART_ITEMS,
-} from "../keys.ts";
-import { fetchCartList } from "../api/api.ts";
-import { cartState } from "./cartAtoms.ts";
-import { serverState } from "./serverAtom.ts";
-import { sessionStorageEffect } from "./storageEffect.ts";
-
-export const userState = atom<User | null>({
-  key: "userState",
-  default: null,
-  effects: [sessionStorageEffect<User | null>("user")],
-});
+import { selector } from "recoil";
+import { User } from "../../../types/types";
+import { modalRepository } from "../modalAtoms";
+import { userState } from "./userAtom";
+import { serverState } from "../serverAtom";
+import { setSessionStorage } from "../../utils/storage";
+import { SESSION_STORAGE_KEY_BASE64, SESSION_STORAGE_KEY_CART_ITEMS } from "../../keys";
+import { fetchCartList } from "../../api/api";
+import { cartState } from "../cartAtoms";
+import Login from "../../../components/Login";
 
 export const userRepository = selector({
   key: "userRepository",
