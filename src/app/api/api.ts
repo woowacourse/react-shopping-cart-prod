@@ -13,27 +13,42 @@ import {getSessionStorage} from "../utils/storage.ts";
 import {SESSION_STORAGE_KEY_BASE64} from "../keys.ts";
 
 export const fetchAddCart = async (server: string, id: number) => {
-  const base64 = getSessionStorage(SESSION_STORAGE_KEY_BASE64, "");
-  const response = await fetch(`${url[server]}/cart-items`, {
-    method: "POST",
-    body: JSON.stringify({
-      productId: id,
-    }),
-    headers: {
-      Authorization: `Basic ${base64}`,
-      "Content-Type": "application/json",
-    },
-  });
+  try {
+    const base64 = getSessionStorage(SESSION_STORAGE_KEY_BASE64, "");
+    const response = await fetch(`${url[server]}/cart-items`, {
+      method: "POST",
+      body: JSON.stringify({
+        productId: id,
+      }),
+      headers: {
+        Authorization: `Basic ${base64}`,
+        "Content-Type": "application/json",
+      },
+    });
+    if (!response.ok) {
+      throw new Error('잘못 된 요청입니다.');
+    }
+  } catch (err) {
+    throw new Error((err as Error).message);
+  }
+
 };
 
 export const fetchDeleteCart = async (server: string, id: number) => {
-  const base64 = getSessionStorage(SESSION_STORAGE_KEY_BASE64, "");
-  const response = await fetch(`${url[server]}/cart-items/${id}`, {
-    method: "DELETE",
-    headers: {
-      Authorization: `Basic ${base64}`,
-    },
-  });
+  try {
+    const base64 = getSessionStorage(SESSION_STORAGE_KEY_BASE64, "");
+    const response = await fetch(`${url[server]}/cart-items/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Basic ${base64}`,
+      },
+    });
+    if (!response.ok) {
+      throw new Error('잘못 된 요청입니다.');
+    }
+  } catch (err) {
+    throw new Error((err as Error).message);
+  }
 };
 
 export const fetchUpdateCart = async (
@@ -41,17 +56,24 @@ export const fetchUpdateCart = async (
   id: number,
   quantity: number
 ) => {
-  const base64 = getSessionStorage(SESSION_STORAGE_KEY_BASE64, "");
-  const response = await fetch(`${url[server]}/cart-items/${id}`, {
-    method: "PATCH",
-    body: JSON.stringify({
-      quantity,
-    }),
-    headers: {
-      Authorization: `Basic ${base64}`,
-      "Content-Type": "application/json",
-    },
-  });
+  try {
+    const base64 = getSessionStorage(SESSION_STORAGE_KEY_BASE64, "");
+    const response = await fetch(`${url[server]}/cart-items/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify({
+        quantity,
+      }),
+      headers: {
+        Authorization: `Basic ${base64}`,
+        "Content-Type": "application/json",
+      },
+    });
+    if (!response.ok) {
+      throw new Error('잘못 된 요청입니다.');
+    }
+  } catch (err) {
+    throw new Error((err as Error).message);
+  }
 };
 
 export const fetchCartList = async (server: string) => {
