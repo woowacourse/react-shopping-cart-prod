@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import ProductItem from '../../box/ProductItem/ProductItem';
 import ErrorBox from '../../common/ErrorBox/ErrorBox';
 import LoadingSpinner from '../../common/LoadingSpinner/LoadingSpinner';
-import useProduct from '../../../hooks/useProduct';
+import useProduct from '../../../hooks/useProductFetch';
 import { NUM } from '../../../abstract/constants';
 
 const ProductList = () => {
