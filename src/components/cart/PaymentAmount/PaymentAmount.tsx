@@ -14,7 +14,7 @@ import LoadingSpinner from '../../common/LoadingSpinner/LoadingSpinner';
 import Colors from '../../../constant/Colors';
 
 interface PaymentAmountProps {
-  coupon?: CouponInfo | null;
+  coupon?: CouponInfo;
 }
 
 const PaymentAmount = (props: PaymentAmountProps) => {
@@ -170,13 +170,18 @@ const OrderButton = styled.button`
 `;
 
 const OrderingDiv = styled.div`
+  position: fixed;
+  left: 0;
+  top: 0;
+
   display: flex;
   align-items: center;
   justify-content: center;
 
-  & > * {
-    z-index: 2;
-  }
+  width: 100%;
+  height: 100%;
+
+  z-index: 2;
 `;
 
 const OrderBackdropDiv = styled.div`

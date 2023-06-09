@@ -1,9 +1,8 @@
 import { atom } from 'recoil';
 import type OrderInfo from '../../types/order';
 
-const orderDetailState = atom<OrderInfo | null>({
+const orderDetailState = atom<OrderInfo>({
   key: 'orderDetailState',
-  default: null,
 });
 
 export default orderDetailState;

@@ -23,7 +23,7 @@ const CartContents = () => {
             <CouponSelectRadio selected={selectedCoupon} setSelected={setSelectedCoupon} />
           </Suspense>
         </CartCouponErrorBoundary>
-        <PaymentAmount coupon={selectedCoupon} />
+        <PaymentAmount coupon={selectedCoupon ?? undefined} />
       </PaymentDiv>
     </Contents>
   ) : (

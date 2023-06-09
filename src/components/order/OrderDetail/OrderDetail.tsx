@@ -36,11 +36,11 @@ const OrderDetail = (props: OrderDetailProps) => {
       <details open>
         <Summary>
           <OrderIdParagraph>주문 번호 : {id}</OrderIdParagraph>
-          {!showPayments ? (
+          {showPayments || (
             <Link onClick={setOrderDetails} to="/order-details">
               상세보기 <GrFormNextLink size="23px" color={Colors.grey1} />
             </Link>
-          ) : null}
+          )}
         </Summary>
         <div>
           {cartItems.map(({ id: cartItemId, quantity, product: { imageUrl, name, price } }) => (
@@ -64,14 +64,14 @@ const OrderDetail = (props: OrderDetailProps) => {
               <PaymentParagraph>총 가격</PaymentParagraph>
               <PaymentParagraph>{originalPriceFormatted}</PaymentParagraph>
             </PaymentTextContainerDiv>
-            {originalPrice !== actualPrice ? (
+            {originalPrice === actualPrice || (
               <PaymentTextContainerDiv marginBottom="20px">
                 <PaymentParagraph>
                   <span aria-hidden="true">┕</span> 할인 금액
                 </PaymentParagraph>
                 <PaymentParagraph>-{discountedPriceFormatted}</PaymentParagraph>
               </PaymentTextContainerDiv>
-            ) : null}
+            )}
             <PaymentTextContainerDiv marginBottom="20px">
               <PaymentParagraph>배송비</PaymentParagraph>
               <PaymentParagraph>{deliveryFeeFormatted}</PaymentParagraph>

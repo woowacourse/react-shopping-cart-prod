@@ -28,14 +28,14 @@ const OrderList = () => {
           originalPrice={originalPrice}
         />
       ))}
-      {!sortedOrders || !sortedOrders.length ? (
+      {(!!sortedOrders && sortedOrders.length) || (
         <EmptyCartView>
           아직 구매 기록이 없어요!
           <LinkButton>
             <Link to="/">초기 화면으로 가기</Link>
           </LinkButton>
         </EmptyCartView>
-      ) : null}
+      )}
     </Section>
   );
 };
