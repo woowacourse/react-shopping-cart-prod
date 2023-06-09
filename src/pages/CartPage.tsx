@@ -16,7 +16,7 @@ const CartPage = () => {
         </Suspense>
       </ErrorBoundary>
       <Wrapper>
-        <Suspense fallback={<div>loading...</div>}>
+        <Suspense fallback={<Spinner />}>
           <PaymentDetail />
           <CouponSection />
         </Suspense>
