@@ -20,13 +20,11 @@ const GlobalStyle = createGlobalStyle`
   body,
   #root {
     height: 100%;
-
     font-family: 'Noto Sans KR', sans-serif;    
     font-size: 62.5%;
-  }
-
-  #root {
     position: relative;
+
+    --primary-color: #04c09e
   }
 
   button {

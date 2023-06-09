@@ -1,9 +1,12 @@
 import { createBrowserRouter } from 'react-router-dom';
 
-import RootPage from './components/page/RootPage';
+import RootPage from './page/RootPage';
 import ProductList from './components/productList/ProductList';
-import CartPage from './components/page/CartPage';
-import ErrorPage from './components/page/ErrorPage';
+import CartPage from './page/CartPage';
+import ErrorPage from './page/ErrorPage';
+import CouponPage from './page/CouponPage';
+import OrderPage from './page/OrderPage';
+import OrderDetailPage from './page/OrderDetailPage';
 
 const routes = [
   {
@@ -17,6 +20,18 @@ const routes = [
       {
         path: 'cart',
         element: <CartPage />,
+      },
+      {
+        path: 'coupon',
+        element: <CouponPage />,
+      },
+      {
+        path: 'order',
+        element: <OrderPage />,
+      },
+      {
+        path: 'order/:id',
+        element: <OrderDetailPage />,
       },
       {
         path: '*',

@@ -1,63 +1,38 @@
-import type { ProductType } from '../../types';
-
-import { useEffect, useState } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import styled from 'styled-components';
-
+import { useEffect } from 'react';
+import { useRecoilValue } from 'recoil';
+import * as S from './styles/ProductList.styles';
 import Product from './Product';
 import SkeletonProduct from './SkeletonProduct';
-
-import * as api from '../../api';
-import useToast from '../../hooks/useToast';
-import { cartState, serverNameState } from '../../recoil/state';
-import { API_ERROR_MESSAGE, SKELETONS_LENGTH } from '../../constants';
+import { PRODUCT_SKELETONS_LENGTH } from '../../constants';
+import { serverNameState } from '../../atom/serverName';
+import { loginState } from '../../atom/login';
+import { useGetProductList } from '../hooks/useGetProductList';
+import { useGetCartList } from '../hooks/useGetCartList';
+import { useGetCoupon } from '../hooks/useGetCoupon';
 
 export default function ProductList() {
-  const [products, setProducts] = useState<ProductType[] | null>(null);
-  const setCart = useSetRecoilState(cartState);
   const serverName = useRecoilValue(serverNameState);
-  const { showToast } = useToast();
+  const loginCredential = useRecoilValue(loginState);
+  const { products, getProductsThroughApi } = useGetProductList();
+  const { getCartsThroughApi } = useGetCartList();
+  const { getCouponThroughApi } = useGetCoupon();
 
   useEffect(() => {
-    api
-      .getProducts(serverName)
-      .then(setProducts)
-      .catch(() => {
-        showToast('error', API_ERROR_MESSAGE.getProducts);
-      });
+    getProductsThroughApi(serverName);
 
-    api
-      .getCart(serverName)
-      .then(setCart)
-      .catch(() => {
-        showToast('error', API_ERROR_MESSAGE.getCart);
-      });
-  }, [serverName]);
+    if (!loginCredential) return;
+
+    getCartsThroughApi(serverName, loginCredential);
+    getCouponThroughApi(serverName, loginCredential);
+  }, [serverName, loginCredential]);
 
   return (
-    <Wrapper>
+    <S.Wrapper>
       {products === null
-        ? Array.from({ length: SKELETONS_LENGTH }).map(() => <SkeletonProduct />)
+        ? Array.from({ length: PRODUCT_SKELETONS_LENGTH }).map((_, idx) => (
+            <SkeletonProduct key={idx} />
+          ))
         : products.map((product) => <Product key={product.id} {...product} />)}
-    </Wrapper>
+    </S.Wrapper>
   );
 }
-
-const Wrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, 282px);
-  grid-column-gap: 48px;
-  grid-row-gap: 64px;
-
-  @media (max-width: 1272px) {
-    grid-template-columns: repeat(3, 282px);
-  }
-
-  @media (max-width: 942px) {
-    grid-template-columns: repeat(2, 282px);
-  }
-
-  @media (max-width: 612px) {
-    grid-template-columns: repeat(1, 282px);
-  }
-`;

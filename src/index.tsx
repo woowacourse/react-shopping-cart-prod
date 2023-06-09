@@ -11,6 +11,10 @@ import '../public/assets/whiteCheck.svg';
 import '../public/assets/404.svg';
 import '../public/assets/emptyProduct.svg';
 import '../public/assets/shoppingBag.svg';
+import '../public/assets/join10DiscountCoupon.svg';
+import '../public/assets/join20DiscountCoupon.svg';
+import '../public/assets/purchase10DiscountCoupon.svg';
+import '../public/assets/purchase20DiscountCoupon.svg';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(

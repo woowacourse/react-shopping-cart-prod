@@ -1,43 +1,67 @@
-import type { CartType, ProductType, ServerNameType } from '../types';
+import type { PurchasingCartItemType, ServerNameType } from '../types';
 
-import { BASE_URL_MAP, USER_ID, USER_PASSWORD } from '../constants';
+import { API_ERROR_MESSAGE, BASE_URL_MAP } from '../constants';
 
-const Authorization = `Basic ${btoa(`${USER_ID}:${USER_PASSWORD}`)}`;
+export const getProducts = async <T>(serverName: ServerNameType) => {
+  const response = await fetch(`${BASE_URL_MAP[serverName]}/products`);
+  if (!response.ok) throw new Error(`products GET error`);
 
-const get =
-  <T>(path: string) =>
-  async (serverName: ServerNameType) => {
-    const response = await fetch(`${BASE_URL_MAP[serverName]}/${path}`, {
-      headers: {
-        Authorization,
-      },
-    });
-    if (!response.ok) throw new Error(`${path} GET error`);
+  if (!response.ok) {
+    throw response.body
+      ? new Error((await response.json()).errorMessage)
+      : new Error(API_ERROR_MESSAGE.getProducts);
+  }
 
-    const data: T = await response.json();
+  const data: T = await response.json();
 
-    return data;
-  };
+  return data;
+};
 
-export const getProducts = get<ProductType[]>('products');
+export const getCarts = async <T>(serverName: ServerNameType, loginCredential: string) => {
+  const response = await fetch(`${BASE_URL_MAP[serverName]}/cart-items`, {
+    headers: {
+      Authorization: `Basic ${loginCredential}`,
+    },
+  });
 
-export const getCart = get<CartType>('cart-items');
+  if (!response.ok) {
+    throw response.body
+      ? new Error((await response.json()).errorMessage)
+      : new Error(API_ERROR_MESSAGE.getCart);
+  }
 
-export const postCartItem = async (serverName: ServerNameType, productId: number) => {
+  const data: T = await response.json();
+
+  return data;
+};
+
+export const postCartItem = async (
+  serverName: ServerNameType,
+  loginCredential: string,
+  productId: number
+) => {
   const url = `${BASE_URL_MAP[serverName]}/cart-items`;
   const body = { productId };
 
   const response = await fetch(url, {
     method: 'POST',
-    headers: { Authorization, 'content-Type': 'application/json' },
+    headers: {
+      Authorization: `Basic ${loginCredential}`,
+      'content-Type': 'application/json',
+    },
     body: JSON.stringify(body),
   });
 
-  if (!response.ok) throw new Error(`${url} POST Error`);
+  if (!response.ok) {
+    throw response.body
+      ? new Error((await response.json()).errorMessage)
+      : new Error(API_ERROR_MESSAGE.postCartItem);
+  }
 };
 
 export const patchCartItemQuantity = async (
   serverName: ServerNameType,
+  loginCredential: string,
   cartItemId: number,
   quantity: number
 ) => {
@@ -46,26 +70,188 @@ export const patchCartItemQuantity = async (
 
   const response = await fetch(url, {
     method: 'PATCH',
-    headers: { Authorization, 'content-Type': 'application/json' },
+    headers: {
+      Authorization: `Basic ${loginCredential}`,
+      'content-Type': 'application/json',
+    },
     body: JSON.stringify(body),
   });
 
-  if (!response.ok) throw new Error(`${url} PATCH Error`);
+  if (!response.ok) {
+    throw response.body
+      ? new Error((await response.json()).errorMessage)
+      : new Error(API_ERROR_MESSAGE.patchCartItemQuantity);
+  }
 };
 
-export const deleteCartItem = async (serverName: ServerNameType, cartItemId: number) => {
+export const deleteCartItem = async (
+  serverName: ServerNameType,
+  loginCredential: string,
+  cartItemId: number
+) => {
   const url = `${BASE_URL_MAP[serverName]}/cart-items/${cartItemId}`;
 
-  const response = await fetch(url, { method: 'DELETE', headers: { Authorization } });
+  const response = await fetch(url, {
+    method: 'DELETE',
+    headers: { Authorization: `Basic ${loginCredential}` },
+  });
 
-  if (!response.ok) throw new Error(`${url} FETCH Error`);
+  if (!response.ok) {
+    throw response.body
+      ? new Error((await response.json()).errorMessage)
+      : new Error(API_ERROR_MESSAGE.deleteCartItem);
+  }
 };
 
-export const deleteCartItems = async (serverName: ServerNameType, cartItemIdList: number[]) => {
+export const deleteCartItems = async (
+  serverName: ServerNameType,
+  loginCredential: string,
+  cartItemIdList: number[]
+) => {
   const ids = cartItemIdList.map(String).join(',');
   const url = `${BASE_URL_MAP[serverName]}/cart-items?ids=${ids}`;
 
-  const response = await fetch(url, { method: 'DELETE', headers: { Authorization } });
+  const response = await fetch(url, {
+    method: 'DELETE',
+    headers: { Authorization: `Basic ${loginCredential}` },
+  });
 
-  if (!response.ok) throw new Error(`${url} FETCH Error`);
+  if (!response.ok) {
+    throw response.body
+      ? new Error((await response.json()).errorMessage)
+      : new Error(API_ERROR_MESSAGE.deleteCartItem);
+  }
+};
+
+export const postSignUpInfo = async (
+  serverName: ServerNameType,
+  signUpInfo: { name: string; password: string }
+) => {
+  const url = `${BASE_URL_MAP[serverName]}/users/join`;
+  const body = signUpInfo;
+
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+  });
+
+  if (!response.ok) {
+    throw response.body
+      ? new Error((await response.json()).errorMessage)
+      : new Error(API_ERROR_MESSAGE.postSignUp);
+  }
+};
+
+export const postLoginInfo = async (
+  serverName: ServerNameType,
+  loginInfo: { name: string; password: string }
+) => {
+  const url = `${BASE_URL_MAP[serverName]}/users/login`;
+  const body = loginInfo;
+
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+  });
+
+  if (!response.ok) {
+    throw response.body
+      ? new Error((await response.json()).errorMessage)
+      : new Error(API_ERROR_MESSAGE.postLogin);
+  }
+
+  const loginToken = await response.json();
+
+  return loginToken['token'];
+};
+
+export const getCoupon = async <T>(serverName: ServerNameType, loginCredential: string) => {
+  const url = `${BASE_URL_MAP[serverName]}/users/me/coupons`;
+
+  const response = await fetch(url, {
+    headers: {
+      Authorization: `Basic ${loginCredential}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw response.body
+      ? new Error((await response.json()).errorMessage)
+      : new Error(API_ERROR_MESSAGE.getCoupon);
+  }
+
+  const data: T = await response.json();
+
+  return data;
+};
+
+export const postPurchaseCartItem = async <T>(
+  serverName: ServerNameType,
+  loginCredential: string,
+  purchasingCartItems: PurchasingCartItemType[],
+  couponId: number | null
+) => {
+  const url = `${BASE_URL_MAP[serverName]}/orders`;
+  const body = { items: purchasingCartItems, couponId };
+
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      Authorization: `Basic ${loginCredential}`,
+      'content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+  });
+
+  if (!response.ok) {
+    throw response.body
+      ? new Error((await response.json()).errorMessage)
+      : new Error(API_ERROR_MESSAGE.postPurchaseCartItem);
+  }
+};
+
+export const getOrder = async <T>(serverName: ServerNameType, loginCredential: string) => {
+  const response = await fetch(`${BASE_URL_MAP[serverName]}/orders`, {
+    headers: {
+      Authorization: `Basic ${loginCredential}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw response.body
+      ? new Error((await response.json()).errorMessage)
+      : new Error(API_ERROR_MESSAGE.getOrder);
+  }
+
+  const data: T = await response.json();
+
+  return data;
+};
+
+export const getOrderDetail = async <T>(
+  serverName: ServerNameType,
+  loginCredential: string,
+  orderId: string
+) => {
+  const response = await fetch(`${BASE_URL_MAP[serverName]}/orders/${orderId}`, {
+    headers: {
+      Authorization: `Basic ${loginCredential}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw response.body
+      ? new Error((await response.json()).errorMessage)
+      : new Error(API_ERROR_MESSAGE.getDetailOrder);
+  }
+
+  const data: T = await response.json();
+
+  return data;
 };

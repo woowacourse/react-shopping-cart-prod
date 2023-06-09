@@ -21,10 +21,40 @@ export interface CartItemType {
 
 export interface CartType extends Array<CartItemType> {}
 
-export type ServerNameType = '라온' | '져니' | '쥬니';
+export type ServerNameType = 'RAON' | 'JOURNY' | 'ZUNY';
 
 export interface ToastInfoType {
   show: boolean;
   message: string;
   type: 'info' | 'warning' | 'error';
+}
+
+export interface CouponInfo {
+  discountRate: number;
+  expiredAt: string;
+  id: number;
+  isUsed: boolean;
+  name: string;
+}
+
+export interface PurchasingCartItemType {
+  productId: number;
+  quantity: number;
+}
+
+export interface OrderInfo {
+  orderId: number;
+  items: { product: ProductType; quantity: number }[];
+  orderedAt: string;
+}
+
+export interface OrderDetailInfo {
+  orderId: number;
+  coupon: { name: string; discountRate: number };
+  items: { product: ProductType; quantity: number }[];
+  totalPrice: number;
+  discountedTotalPrice: number;
+  couponDiscountPrice: number;
+  deliveryPrice: number;
+  orderedAt: string;
 }

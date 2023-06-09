@@ -1,143 +1,59 @@
-import type { ProductType } from '../../types';
-
+import { ProductType } from '../../types';
 import { useState } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import styled from 'styled-components';
-
+import { useRecoilValue } from 'recoil';
+import * as S from './styles/Product.styles';
 import QuantityInput from '../common/QuantityInput';
-
-import * as api from '../../api';
-import useToast from '../../hooks/useToast';
-import { cartState, serverNameState } from '../../recoil/state';
-import { API_ERROR_MESSAGE, API_SUCCESS_MESSAGE, MAX_QUANTITY } from '../../constants';
+import { cartState } from '../../atom/cart';
+import { PRODUCT_MAX_QUANTITY } from '../../constants';
+import { serverNameState } from '../../atom/serverName';
+import { loginState } from '../../atom/login';
+import { useGetCartList } from '../hooks/useGetCartList';
+import { usePostCartItem } from '../hooks/usePostCartItem';
+import Image from '../common/Image';
 
 interface Props extends ProductType {}
 
 export default function Product({ id, name, price, imageUrl }: Props) {
-  const [cart, setCart] = useRecoilState(cartState);
+  const cart = useRecoilValue(cartState);
+  const { getCartsThroughApi } = useGetCartList();
+  const { postCartItemThroughApi } = usePostCartItem();
   const [addLoading, setAddLoading] = useState(false);
   const serverName = useRecoilValue(serverNameState);
-  const { showToast } = useToast();
-
+  const loginCredential = useRecoilValue(loginState);
   const cartItem = cart.find((cartItem) => cartItem.product.id === id);
 
   const addCartItem = async () => {
     setAddLoading(true);
 
-    try {
-      await api.postCartItem(serverName, id);
-      showToast('info', API_SUCCESS_MESSAGE.postCartItem);
-    } catch {
-      showToast('error', API_ERROR_MESSAGE.postCartItem);
-      setAddLoading(false);
-      return;
-    }
+    await postCartItemThroughApi(serverName, loginCredential, id, setAddLoading);
 
-    try {
-      await api.getCart(serverName).then(setCart);
-    } catch {
-      showToast('error', API_ERROR_MESSAGE.getCart);
-    }
+    getCartsThroughApi(serverName, loginCredential);
 
     setAddLoading(false);
   };
 
-  const setAltSrc = (e: React.SyntheticEvent<HTMLImageElement>) => {
-    e.currentTarget.src = './emptyProduct.svg';
-  };
-
   return (
     <>
-      <Wrapper>
-        <Image src={imageUrl} onError={setAltSrc} />
-        <InfoBox>
-          <LabelBox>
-            <Name>{name}</Name>
-            <Price>{price.toLocaleString()} 원</Price>
-          </LabelBox>
-          <ControlBox>
-            {cartItem ? (
-              <QuantityInput cartItemId={cartItem.id} min={0} max={MAX_QUANTITY} />
-            ) : (
-              <CartItemAddButton onClick={addCartItem} disabled={addLoading}>
-                <img src="./cart.svg" />
-              </CartItemAddButton>
-            )}
-          </ControlBox>
-        </InfoBox>
-      </Wrapper>
+      <S.Wrapper>
+        <S.ImageWrapper>
+          <Image src={imageUrl} />
+        </S.ImageWrapper>
+        <S.ControlBox hasCartItem={cartItem === undefined}>
+          {cartItem ? (
+            <QuantityInput cartItemId={cartItem.id} min={0} max={PRODUCT_MAX_QUANTITY} />
+          ) : (
+            <S.CartItemAddButton onClick={addCartItem} disabled={addLoading}>
+              <Image src="./cart.svg" />
+            </S.CartItemAddButton>
+          )}
+        </S.ControlBox>
+        <S.InfoBox>
+          <S.LabelBox>
+            <S.Name>{name}</S.Name>
+            <S.Price>{price.toLocaleString()} 원</S.Price>
+          </S.LabelBox>
+        </S.InfoBox>
+      </S.Wrapper>
     </>
   );
 }
-
-const Wrapper = styled.div`
-  width: 282px;
-  height: 362px;
-
-  color: #333333;
-`;
-
-const Image = styled.img`
-  width: 100%;
-  height: 282px;
-`;
-
-const InfoBox = styled.div`
-  display: flex;
-  justify-content: space-between;
-
-  width: 282px;
-  padding-top: 16px;
-  padding-left: 8px;
-`;
-
-const LabelBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-`;
-
-const Name = styled.p`
-  margin-top: 4px;
-
-  font-size: 16px;
-  font-weight: 400;
-`;
-
-const Price = styled.p`
-  margin-top: 10px;
-
-  vertical-align: center;
-  font-size: 20px;
-  font-weight: 600;
-`;
-
-const CartItemAddButton = styled.button`
-  width: 32px;
-  height: 30px;
-  margin-right: 10px;
-
-  background: transparent;
-
-  transition: transform 0.2s;
-
-  & > img {
-    width: 100%;
-    height: 100%;
-  }
-
-  &:hover {
-    transform: rotate(12deg);
-  }
-
-  &:disabled {
-    cursor: wait;
-  }
-  &:disabled > img {
-    visibility: hidden;
-  }
-`;
-
-const ControlBox = styled.div`
-  width: auto;
-`;
