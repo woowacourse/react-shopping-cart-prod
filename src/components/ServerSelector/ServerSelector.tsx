@@ -6,7 +6,6 @@ import { BASE_URL } from '../../constant';
 import cartState from '../../globalState/atoms/cartState';
 import serverNameState from '../../globalState/atoms/serverName';
 import { isProperServerName } from '../../types/server';
-import { worker } from '../../mocks/browser';
 
 const ServerSelector = () => {
   const [serverName, setServerName] = useRecoilState(serverNameState);
@@ -18,24 +17,11 @@ const ServerSelector = () => {
     navigate('/', { replace: true });
   }, [serverName]);
 
-  const handleServerNameSelectChange: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
-    const selectedServerName = event.target.value;
-
-    if (!isProperServerName(selectedServerName)) return;
-
-    if (serverName !== selectedServerName) {
-      if (selectedServerName === '참새MSW') {
-        worker.start({
-          serviceWorker: {
-            url: `${process.env.PUBLIC_URL}/mockServiceWorker.js`,
-          },
-        });
-      } else {
-        worker.stop();
-      }
-    }
-
-    setServerName(selectedServerName);
+  const handleServerNameSelectChange: React.ChangeEventHandler<HTMLSelectElement> = ({
+    target: { value },
+  }) => {
+    if (!isProperServerName(value)) return;
+    setServerName(value);
   };
 
   return (
