@@ -4,6 +4,7 @@ import Svg from 'components/@common/Svg';
 import { useCart } from 'components/Cart/hooks/useCart';
 import { useCheckedItemIds } from '../hooks/useCheckedItems';
 import { Cart } from 'types';
+import { calculateSalePercentage, formatPrice } from 'utils';
 
 interface CartItemProps {
   cartItem: Cart;
@@ -51,8 +52,16 @@ const CartItem = ({ cartItem }: CartItemProps) => {
           decrement={decrease}
         />
         <S.CartProductPrice>
-          {product.price.toLocaleString('KR')}원
+          {product.isOnSale && (
+            <S.DiscountPercent>
+              {calculateSalePercentage(product.price, product.salePrice)}%
+            </S.DiscountPercent>
+          )}
+          {formatPrice(product.price - product.salePrice)}원
         </S.CartProductPrice>
+        {product.isOnSale && (
+          <S.DiscountPrice>{formatPrice(product.price)} 원</S.DiscountPrice>
+        )}
       </S.CounterWrapper>
     </S.CartItemWrapper>
   );

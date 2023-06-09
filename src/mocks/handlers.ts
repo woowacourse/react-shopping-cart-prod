@@ -1,10 +1,12 @@
 import { rest } from 'msw';
 import { Cart } from 'types';
-import { getLocalStorageData, setLocalStorageData } from 'utils/storage';
 import productList from './productList.json';
+import coupons from './coupons.json';
+import orderList from './orderList.json';
+import couponAppliedPrice from './couponAppliedPrice.json';
+import orderDetail from './orderDetail.json';
 
-const cartListStorage = getLocalStorageData<Cart[]>('cartList');
-const cartData = { cartList: [...cartListStorage] };
+let cartData: Cart[] = [];
 
 export const handlers = [
   rest.get('/api/products', (req, res, ctx) => {
@@ -17,27 +19,23 @@ export const handlers = [
 
   rest.post('/api/cart-items', async (req, res, ctx) => {
     const { productId } = await req.json();
-    const productItem = productList.choonsik.find(
-      (product) => product.id === productId
-    );
+    const productItem = productList.find((product) => product.id === productId);
     if (!productItem) return;
 
     const cartItem = { id: productId, product: productItem, quantity: 1 };
-    cartData.cartList = [...cartData.cartList, cartItem];
+    cartData.push(cartItem);
 
-    setLocalStorageData<Cart[]>(
-      'cartList',
-      cartData.cartList.filter((cartItem) => cartItem.quantity !== 0)
+    return res(
+      ctx.status(201),
+      ctx.set({ Location: `/cart-items/${productId}` })
     );
-
-    return res(ctx.status(201));
   }),
 
   rest.patch('/api/cart-items/:cartId', async (req, res, ctx) => {
     const cartId = Number(req.params.cartId);
     const { quantity } = await req.json();
 
-    cartData.cartList = cartData.cartList
+    cartData = cartData
       .map((cartItem) => {
         if (cartItem.id === cartId) {
           return { ...cartItem, quantity: quantity };
@@ -46,19 +44,52 @@ export const handlers = [
       })
       .filter((cartItem) => cartItem.quantity !== 0);
 
-    setLocalStorageData<Cart[]>('cartList', cartData.cartList);
-
-    return res(ctx.status(200));
+    return res(ctx.status(200), ctx.set({ Location: `/cart-items/${cartId}` }));
   }),
 
   rest.delete('/api/cart-items/:cartId', async (req, res, ctx) => {
     const cartId = Number(req.params.cartId);
 
-    cartData.cartList = cartData.cartList.filter(
-      (cartItem) => cartItem.id !== cartId
-    );
-    setLocalStorageData<Cart[]>('cartList', cartData.cartList);
+    cartData = cartData.filter((cartItem) => cartItem.id !== cartId);
 
     return res(ctx.status(204));
+  }),
+
+  rest.get('/api/coupons', (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(coupons));
+  }),
+
+  rest.get('/api/delivery-policy', (req, res, ctx) => {
+    const deliveryPolicy = {
+      price: 3000,
+      limit: 30000,
+    };
+    return res(ctx.status(200), ctx.json(deliveryPolicy));
+  }),
+
+  rest.get('/api/cart-items/coupon', (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(couponAppliedPrice));
+  }),
+
+  rest.get('/api/cart-items/coupon/:couponId', (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(couponAppliedPrice));
+  }),
+
+  rest.post('/api/payments', async (req, res, ctx) => {
+    const payments = {
+      cartItemIds: [2, 5, 6],
+      isDeliveryFree: true,
+      totalPaymentPrice: 50000,
+      couponIds: [1, 2, 3],
+    };
+    return res(ctx.status(201), ctx.json(payments));
+  }),
+
+  rest.get('/api/orders', (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(orderList));
+  }),
+
+  rest.get('/api/orders/:orderId', (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(orderDetail));
   }),
 ];

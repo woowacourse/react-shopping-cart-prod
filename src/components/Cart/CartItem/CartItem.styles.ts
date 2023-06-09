@@ -54,7 +54,19 @@ export const CartProductName = styled.p`
 `;
 
 export const CartProductPrice = styled.p`
+  font: ${(props) => props.theme.font.medium};
+`;
+
+export const DiscountPercent = styled.span`
+  margin-right: 8px;
   font: ${(props) => props.theme.font.small};
+  color: #fa622f;
+`;
+
+export const DiscountPrice = styled.p`
+  font: ${(props) => props.theme.font.small};
+  color: ${(props) => props.theme.color.gray};
+  text-decoration: line-through;
 `;
 
 export const CounterWrapper = styled.div`

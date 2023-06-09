@@ -20,6 +20,8 @@ const mock: Cart = {
     name: '춘식이 아이템',
     imageUrl:
       'https://pbs.twimg.com/profile_images/1641252178450083841/Cn2MUfHG_400x400.jpg',
+    isOnSale: false,
+    salePrice: 3000,
   },
 };
 

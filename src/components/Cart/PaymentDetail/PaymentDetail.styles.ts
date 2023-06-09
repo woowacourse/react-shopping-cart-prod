@@ -32,4 +32,9 @@ export const OrderButton = styled.button`
   text-align: center;
   color: ${(props) => props.theme.color.white};
   cursor: pointer;
+
+  &:disabled {
+    background: ${(props) => props.theme.color.gray};
+    cursor: default;
+  }
 `;

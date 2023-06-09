@@ -2,18 +2,20 @@ import { styled } from 'styled-components';
 import ContentLayout from 'components/@common/ContentLayout';
 import PaymentDetail from 'components/Cart/PaymentDetail';
 import CartItemList from 'components/Cart/CartItemList';
-import { Suspense } from 'react';
+import Coupon from 'components/Cart/Coupon';
+import { useFetchCart } from 'components/Cart/hooks/useFetchCart';
 
 const CartList = () => {
+  const { cartList } = useFetchCart();
+
   return (
     <ContentLayout>
       <Title>🛒 장바구니 🛒</Title>
       <Container>
-        <Suspense fallback={<div>loading...</div>}>
-          <CartItemList />
-        </Suspense>
+        <CartItemList cartList={cartList} />
         <PaymentDetailWrapper>
           <PaymentDetail />
+          <Coupon />
         </PaymentDetailWrapper>
       </Container>
     </ContentLayout>
@@ -42,7 +44,14 @@ const Title = styled.h1`
 const PaymentDetailWrapper = styled.div`
   position: fixed;
   right: 60px;
-  @media (min-width: 320px) and (max-width: 1100px) {
+
+  @media (min-width: 320px) and (max-width: 479px) {
+    position: unset;
+    display: flex;
+    flex-direction: column;
+  }
+
+  @media (min-width: 480px) and (max-width: 1100px) {
     position: unset;
     display: flex;
     justify-content: center;

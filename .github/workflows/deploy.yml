@@ -18,6 +18,19 @@ jobs:
         with:
           node-version: 18
 
+        # Github Repository Secrets를 통해 환경 변수 파일을 생성합니다.
+      - name: Generate Environment Variables File for Production
+        run: |
+          echo "REACT_APP_API_FOX=$REACT_APP_API_FOX" >> .env
+          echo "REACT_APP_API_LUKU=$REACT_APP_API_LUKU" >> .env
+          echo "REACT_APP_USER_EMAIL=$REACT_APP_USER_EMAIL" >> .env
+          echo "REACT_APP_USER_PASSWORD=$REACT_APP_USER_PASSWORD" >> .env
+        env:
+          REACT_APP_API_FOX: ${{ secrets.REACT_APP_API_FOX }}
+          REACT_APP_API_LUKU: ${{ secrets.REACT_APP_API_LUKU }}
+          REACT_APP_USER_EMAIL: ${{ secrets.REACT_APP_USER_EMAIL }}
+          REACT_APP_USER_PASSWORD: ${{ secrets.REACT_APP_USER_PASSWORD }}
+
       - uses: actions/cache@v3
         id: cache
         with:

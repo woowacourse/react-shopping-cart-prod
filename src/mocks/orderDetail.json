@@ -1,0 +1,26 @@
+{
+  "id": 1,
+  "orderedTime": "2023-03-12",
+  "orderedItems": [
+    {
+      "id": 1,
+      "name": "치킨",
+      "price": 10000,
+      "quantity": 4,
+      "imageUrl": "https://www.google.co.kr/",
+      "totalPrice": 2000,
+      "totalDiscountPrice": 1000
+    },
+    {
+      "id": 2,
+      "name": "샐러드",
+      "price": 20000,
+      "quantity": 1,
+      "imageUrl": "https://www.google.co.kr/",
+      "totalPrice": 2000,
+      "totalDiscountPrice": 500
+    }
+  ],
+  "deliveryPrice": 3000,
+  "discountFromTotalPrice": 2000
+}

@@ -1,5 +1,5 @@
 import { atom } from 'recoil';
-import { SERVERS } from 'utils/constants';
+import { SERVERS } from 'constants/index';
 
 export const serverAtom = atom({
   key: 'serverAtom',

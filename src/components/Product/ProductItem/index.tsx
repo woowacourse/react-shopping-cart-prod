@@ -2,20 +2,16 @@ import * as S from './ProductItem.styles';
 import Svg from 'components/@common/Svg';
 import Counter from 'components/@common/Counter';
 import { useCart } from 'components/Cart/hooks/useCart';
-import { Product } from 'types';
-import { useRecoilValue } from 'recoil';
-import { cartListAtom } from 'recoil/cartList';
+import { Cart, Product } from 'types';
+import { calculateSalePercentage, formatPrice } from 'utils';
 
 interface ProductItemProps {
+  cartItem?: Cart;
   product: Product;
 }
 
-const ProductItem = ({ product }: ProductItemProps) => {
+const ProductItem = ({ cartItem, product }: ProductItemProps) => {
   const { decreaseItemQuantity, addItem, increaseItemQuantity } = useCart();
-  const cartList = useRecoilValue(cartListAtom);
-  const cartItem = cartList.find(
-    (cartItem) => cartItem.product.id === product.id
-  );
 
   const increase = () => {
     if (!cartItem) return;
@@ -38,8 +34,16 @@ const ProductItem = ({ product }: ProductItemProps) => {
         <div>
           <S.ProductName>{product.name}</S.ProductName>
           <S.ProductPrice>
-            {product.price.toLocaleString('KR')} 원
+            {product.isOnSale && (
+              <S.DiscountPercent>
+                {calculateSalePercentage(product.price, product.salePrice)}%
+              </S.DiscountPercent>
+            )}
+            {formatPrice(product.price - product.salePrice)}원
           </S.ProductPrice>
+          {product.isOnSale && (
+            <S.DiscountPrice>{formatPrice(product.price)} 원</S.DiscountPrice>
+          )}
         </div>
         {cartItem ? (
           <Counter

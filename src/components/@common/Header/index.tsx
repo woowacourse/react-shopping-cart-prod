@@ -2,7 +2,7 @@ import Svg from 'components/@common/Svg';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { countCartListSelector } from 'recoil/cartList';
-import { ROUTES } from 'utils/constants';
+import { ROUTES } from 'constants/index';
 import SelectServer from '../SelectSever';
 import * as S from './Header.styles';
 
@@ -16,6 +16,10 @@ const Header = () => {
 
   const onNavigateToCart = () => {
     navigate(ROUTES.CART_LIST);
+  };
+
+  const onNavigateToOrder = () => {
+    navigate(ROUTES.ORDER_LIST);
   };
 
   return (
@@ -34,6 +38,9 @@ const Header = () => {
             <Svg type="cart-icon" width={25} height={22} />
           </S.CartRouteButton>
           <S.CartCounter>{cartCount}</S.CartCounter>
+          <S.OrderRouteButton onClick={onNavigateToOrder}>
+            주문목록
+          </S.OrderRouteButton>
         </S.HeaderWrapper>
       </S.HeaderContentContainer>
     </S.HeaderContainer>
