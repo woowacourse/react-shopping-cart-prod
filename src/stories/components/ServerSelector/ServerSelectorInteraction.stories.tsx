@@ -18,6 +18,8 @@ export const SuccessInteraction: Story = {
   render: () => <ServerSelectorComponent />,
 
   play: async ({ canvasElement, step }) => {
+    localStorage.clear();
+
     const canvas = within(canvasElement);
 
     await pause();
