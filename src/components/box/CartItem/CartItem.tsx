@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { useConfirmModal } from '../../../hooks/useConfirmModal';
 import { useCartFetch } from '../../../hooks/useCartFetch';
 import useCheckCart from '../../../hooks/useCheckCart';
+import { NUM } from '../../../abstract/constants';
 
 const CartItem = ({ cart }: { cart: CartItemType }) => {
   const { check, changeCheckCartList } = useCheckCart(cart.id);
@@ -16,7 +17,7 @@ const CartItem = ({ cart }: { cart: CartItemType }) => {
 
   const [quantity, setQuantity] = useState(cart.quantity);
 
-  const totalQuantity = check ? quantity : 0;
+  const totalQuantity = check ? quantity : NUM.ZERO;
 
   const deleteCartItem = () => {
     deleteCartItemAPI(cart.id);

@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { ChangeEvent } from 'react';
 
 interface CheckBoxProps {
   label?: string;

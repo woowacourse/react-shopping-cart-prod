@@ -3,20 +3,20 @@ import { Text } from '../Text/Text';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCartFetch } from '../../../hooks/useCartFetch';
-import { URL } from '../../../abstract/constants';
+import { NUM, URL } from '../../../abstract/constants';
 import { useRecoilState } from 'recoil';
 import { checkCartListState } from '../../../service/atom';
 
 const UserCartInfo = () => {
   const { cartData } = useCartFetch();
   const [checkCartList, setCheckCartList] = useRecoilState(checkCartListState);
-  const [cartTotalQuantity, setCartTotalQuantity] = useState(0);
+  const [cartTotalQuantity, setCartTotalQuantity] = useState(NUM.ZERO);
 
   useEffect(() => {
     if (cartData) {
       setCartTotalQuantity(cartData.length);
     }
-    if (cartData && checkCartList.length === 0) {
+    if (cartData && checkCartList.length === NUM.ZERO) {
       setCheckCartList(cartData.map((cart) => cart.id));
     }
   }, [cartData]);
@@ -28,7 +28,9 @@ const UserCartInfo = () => {
       </Text>
       <CartCounter>
         <Text size="smallest" color="#fff" lineHeight="20px">
-          {cartTotalQuantity && cartTotalQuantity > 99 ? 99 : cartTotalQuantity}
+          {cartTotalQuantity && cartTotalQuantity > NUM.MAX_QUANTITY
+            ? NUM.MAX_QUANTITY
+            : cartTotalQuantity}
         </Text>
       </CartCounter>
     </UserCartInfoWrapper>

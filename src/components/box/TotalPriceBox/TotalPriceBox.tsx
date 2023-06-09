@@ -3,6 +3,7 @@ import TextList from '../../common/TextList/TextList';
 import Button from '../../common/Button/Button';
 import { CouponType } from '../../../types/types';
 import { Text } from '../../common/Text/Text';
+import { NUM } from '../../../abstract/constants';
 
 interface TotalPriceBoxProps {
   totalProductPrice: number;
@@ -21,7 +22,7 @@ const TotalPriceBox = ({
 }: TotalPriceBoxProps) => {
   const discountPrice = coupon
     ? Math.floor(totalProductPrice * coupon.discountRate + coupon.discountAmount)
-    : 0;
+    : NUM.ZERO;
 
   const totalPrice = totalProductPrice + shippingFee - discountPrice;
 

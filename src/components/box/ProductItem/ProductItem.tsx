@@ -6,12 +6,13 @@ import { Text } from '../../common/Text/Text';
 import InputStepper from '../../common/InputStepper/InputStepper';
 import { keyframes } from '@emotion/react';
 import { useCartFetch } from '../../../hooks/useCartFetch';
+import { NUM } from '../../../abstract/constants';
 
 const ProductItem = ({ product }: { product: ProductType }) => {
   const { cartData, addCartItemAPI, changeCartQuantityAPI, deleteCartItemAPI } = useCartFetch();
   const [cartItemData, setCartItemData] = useState<CartItemType | null>(null);
 
-  const [quantity, setQuantity] = useState<number>(0);
+  const [quantity, setQuantity] = useState<number>(NUM.ZERO);
 
   useEffect(() => {
     if (cartData) {
@@ -24,19 +25,19 @@ const ProductItem = ({ product }: { product: ProductType }) => {
       setQuantity(cartItemData.quantity);
       return;
     }
-    setQuantity(0);
+    setQuantity(NUM.ZERO);
   }, [cartItemData]);
 
   useEffect(() => {
     const fetchCartData = async () => {
       if (cartItemData && cartItemData.quantity !== quantity) {
-        if (quantity > 0) {
+        if (quantity > NUM.ZERO) {
           cartItemData.id && changeCartQuantityAPI(cartItemData.id, { quantity });
           return;
         }
         cartItemData.id && deleteCartItemAPI(cartItemData.id);
       }
-      if (quantity > 0 && !cartItemData) {
+      if (quantity > NUM.ZERO && !cartItemData) {
         addCartItemAPI({ productId: product.id });
       }
     };
@@ -55,19 +56,19 @@ const ProductItem = ({ product }: { product: ProductType }) => {
             {product.price.toLocaleString()} 원
           </Text>
         </ProductTextWrapper>
-        {quantity === 0 ? (
+        {quantity ? (
+          <InputStepper
+            size="small"
+            quantity={quantity}
+            setQuantity={(value: number) => setQuantity(value)}
+          />
+        ) : (
           <CartIcon
             width={25}
             height={22}
             fill="#AAAAAA"
             style={{ transform: 'scaleX(-1)', cursor: 'pointer' }}
             onClick={() => setQuantity(1)}
-          />
-        ) : (
-          <InputStepper
-            size="small"
-            quantity={quantity}
-            setQuantity={(value: number) => setQuantity(value)}
           />
         )}
       </ProductInfoWrapper>

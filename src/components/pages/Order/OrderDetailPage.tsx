@@ -7,7 +7,7 @@ import DetailList from '../../list/DetailList/DetailList';
 import useOrderDetailFetch from '../../../hooks/useOrderDetailFetch';
 import { Text } from '../../common/Text/Text';
 import LoadingSpinner from '../../common/LoadingSpinner/LoadingSpinner';
-import { URL } from '../../../abstract/constants';
+import { NUM, URL } from '../../../abstract/constants';
 
 const OrderDetailPage = () => {
   const orderId = useParams().orderId;
@@ -60,7 +60,7 @@ const OrderDetailPage = () => {
         <PriceBox
           originalPrice={originalPrice}
           finalPrice={finalPrice}
-          shippingFee={3000}
+          shippingFee={NUM.SHIPPING_FEE}
           coupon={coupon}
         />
       </DetailPageWrapper>

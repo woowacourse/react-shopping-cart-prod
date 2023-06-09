@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import { Text } from '../Text/Text';
 import { Link } from 'react-router-dom';
-import { URL } from '../../../abstract/constants';
 
 const MenuInfo = ({ url, title }: { url: string; title: string }) => {
   return (

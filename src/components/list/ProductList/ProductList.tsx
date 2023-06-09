@@ -3,6 +3,7 @@ import ProductItem from '../../box/ProductItem/ProductItem';
 import ErrorBox from '../../common/ErrorBox/ErrorBox';
 import LoadingSpinner from '../../common/LoadingSpinner/LoadingSpinner';
 import useProduct from '../../../hooks/useProduct';
+import { NUM } from '../../../abstract/constants';
 
 const ProductList = () => {
   const { productData, isFetching } = useProduct();
@@ -13,7 +14,7 @@ const ProductList = () => {
   if (!productData) {
     return <ErrorBox errorType="network" />;
   }
-  if (productData.length === 0) {
+  if (productData.length === NUM.ZERO) {
     return <ErrorBox errorType="emptyList" />;
   }
   return (
