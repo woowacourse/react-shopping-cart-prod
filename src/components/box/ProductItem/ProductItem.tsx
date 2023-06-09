@@ -15,18 +15,12 @@ const ProductItem = ({ product }: { product: ProductType }) => {
   const [quantity, setQuantity] = useState<number>(NUM.ZERO);
 
   useEffect(() => {
-    if (cartData) {
-      setCartItemData(cartData.find((cart) => cart.product.id === product.id) || null);
+    const existData = cartData?.find((cart) => cart.product.id === product.id);
+    if (existData) {
+      setCartItemData(existData);
     }
+    if (existData) setQuantity(existData.quantity);
   }, [cartData]);
-
-  useEffect(() => {
-    if (cartItemData) {
-      setQuantity(cartItemData.quantity);
-      return;
-    }
-    setQuantity(NUM.ZERO);
-  }, [cartItemData]);
 
   useEffect(() => {
     const fetchCartData = async () => {
