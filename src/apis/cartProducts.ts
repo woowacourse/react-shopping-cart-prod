@@ -1,13 +1,9 @@
 import { SERVER, ServerKey } from '../constants/server';
 import type { CartProduct } from '../types/product';
-import { handleResponseError } from './utils';
+import { fetchData } from './utils';
 
-const cartProductApis = (serverName: ServerKey, endpoint: string) => {
-  const getUrl = (param?: string | number) => {
-    const baseUrl = SERVER[serverName].url + endpoint;
-
-    return param ? `${baseUrl}/${param}` : baseUrl;
-  };
+const cartProductApis = (serverName: ServerKey) => {
+  const url = `${SERVER[serverName].url}/cart-items`;
 
   const base64 = btoa(
     SERVER[serverName].id + ':' + SERVER[serverName].password
@@ -18,48 +14,43 @@ const cartProductApis = (serverName: ServerKey, endpoint: string) => {
     Authorization: `Basic ${base64}`,
   };
 
-  const getData = async () => {
-    const response = await fetch(getUrl(), { headers });
-
-    await handleResponseError(response);
-
-    const data: CartProduct[] = await response.json();
-
-    return data;
+  const getCartProducts = async () => {
+    const response = await fetchData({ url, method: 'GET', headers });
+    const cartProducts: CartProduct[] = await response.json();
+    return cartProducts;
   };
 
-  const postData = async (id: number) => {
-    const response = await fetch(getUrl(), {
+  const postCartProduct = (id: number) =>
+    fetchData({
+      url,
       method: 'POST',
       headers,
-      body: JSON.stringify({ productId: id }),
-    });
+      body: { productId: id },
+    }).then((response) => response.headers.get('location'));
 
-    await handleResponseError(response);
-
-    return response.headers.get('location');
-  };
-
-  const patchData = async (id: number, quantity: number) => {
-    const response = await fetch(getUrl(id), {
+  const patchCartProduct = (id: number, quantity: number) =>
+    fetchData({
+      url,
       method: 'PATCH',
+      param: id,
       headers,
-      body: JSON.stringify({ quantity }),
+      body: { quantity },
     });
 
-    await handleResponseError(response);
-  };
-
-  const deleteData = async (id: number) => {
-    const response = await fetch(getUrl(id), {
+  const deleteCartProduct = (id: number) =>
+    fetchData({
+      url,
       method: 'DELETE',
+      param: id,
       headers,
     });
 
-    await handleResponseError(response);
+  return {
+    getCartProducts,
+    postCartProduct,
+    patchCartProduct,
+    deleteCartProduct,
   };
-
-  return { getData, postData, patchData, deleteData };
 };
 
 export default cartProductApis;

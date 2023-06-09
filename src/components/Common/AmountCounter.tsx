@@ -2,26 +2,27 @@ import styled from 'styled-components';
 
 import ArrowUpIcon from '../../assets/ArrowUpIcon';
 import ArrowDownIcon from '../../assets/ArrowDownIcon';
-import useProductQuantity from '../../hooks/useProductQuantity';
-
-type AmountCounterSizeType = 'small' | 'medium';
-type AmountCounterStyle = Pick<AmountCounterProps, 'variant'>;
+import {
+  AmountCounterStyleProps,
+  ComponentVariant,
+  amountCounterStyles,
+} from '../../styles/component';
 
 interface AmountCounterProps {
-  variant: AmountCounterSizeType;
-  cartItemId: number;
+  variant: ComponentVariant;
   count: number;
   minCount?: number;
+  addCount: () => void;
+  subtractCount: () => void;
 }
 
 const AmountCounter = ({
   variant,
-  cartItemId,
   count,
   minCount = 0,
+  addCount,
+  subtractCount,
 }: AmountCounterProps) => {
-  const { addCount, subtractCount } = useProductQuantity(cartItemId, count);
-
   return (
     <InputGroup variant={variant}>
       <CounterInput type='number' value={count} variant={variant} readOnly />
@@ -42,41 +43,12 @@ const AmountCounter = ({
   );
 };
 
-const amountCounterStyles = {
-  small: {
-    group: {
-      height: '28px',
-    },
-    input: {
-      width: '42px',
-      fontSize: '16px',
-    },
-    button: {
-      width: '24px',
-      height: '14px',
-    },
-  },
-  medium: {
-    group: {
-      height: '48px',
-    },
-    input: {
-      width: '54px',
-      fontSize: '20px',
-    },
-    button: {
-      width: '32px',
-      height: '24px',
-    },
-  },
-};
-
-const InputGroup = styled.div<AmountCounterStyle>`
+const InputGroup = styled.div<AmountCounterStyleProps>`
   display: flex;
   ${({ variant }) => amountCounterStyles[variant].group}
 `;
 
-const CounterInput = styled.input<AmountCounterStyle>`
+const CounterInput = styled.input<AmountCounterStyleProps>`
   ${({ variant }) => amountCounterStyles[variant].input}
   border: 1px solid ${({ theme }) => theme.colors.gray100};
   text-align: center;
@@ -94,7 +66,7 @@ const CountBtnContainer = styled.div`
   height: 100%;
 `;
 
-const CountBtn = styled.button<AmountCounterStyle>`
+const CountBtn = styled.button<AmountCounterStyleProps>`
   ${({ variant }) => amountCounterStyles[variant].button}
   border: 1px solid ${({ theme }) => theme.colors.gray100};
   flex-wrap: 1;

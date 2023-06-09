@@ -2,17 +2,15 @@ import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 import ProductItem from './ProductItem';
-import Message from '../Common/Message';
+import EmptyMessage from '../Common/EmptyMessage';
 
 import { productState } from '../../states/products';
-import { serverNameState } from '../../states/serverName';
 
 const ProductList = () => {
-  const serverName = useRecoilValue(serverNameState);
-  const products = useRecoilValue(productState(serverName));
+  const products = useRecoilValue(productState);
 
   if (products.length === 0) {
-    return <Message type='empty' />;
+    return <EmptyMessage type='product' />;
   }
 
   return (

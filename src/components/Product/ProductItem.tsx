@@ -1,10 +1,8 @@
 import styled from 'styled-components';
 
-import AmountCounter from '../Common/AmountCounter';
 import Image from '../Common/Image';
+import ProductCartButton from './ProductCartButton';
 
-import CartIcon from '../../assets/CartIcon';
-import useCartProducts from '../../hooks/useCartProducts';
 import type { Product } from '../../types/product';
 
 interface ProductItemProps {
@@ -12,8 +10,7 @@ interface ProductItemProps {
 }
 
 const ProductItem = ({ product }: ProductItemProps) => {
-  const { imageUrl, name, price } = product;
-  const { targetProduct, addProduct } = useCartProducts(product);
+  const { id, imageUrl, name, price } = product;
 
   return (
     <ProductContainer>
@@ -23,24 +20,14 @@ const ProductItem = ({ product }: ProductItemProps) => {
           <ProductName>{name}</ProductName>
           <ProductPrice>{price.toLocaleString('ko-KR')} 원</ProductPrice>
         </dl>
-        {!targetProduct || targetProduct.quantity === 0 ? (
-          <ProductCartBtn type='button' onClick={addProduct}>
-            <CartIcon width={25} height={22} color='gray400' />
-          </ProductCartBtn>
-        ) : (
-          <AmountCounter
-            count={targetProduct.quantity}
-            cartItemId={targetProduct.id}
-            variant='small'
-          />
-        )}
+        <ProductCartButton productId={id} />
       </ProductInfoContainer>
     </ProductContainer>
   );
 };
 
 const ProductContainer = styled.div`
-  width: 282px;
+  width: 270px;
 `;
 
 const ProductInfoContainer = styled.div`
@@ -48,7 +35,6 @@ const ProductInfoContainer = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 18px;
-  padding: 0 14px;
 `;
 
 const ProductName = styled.dt`
@@ -57,13 +43,7 @@ const ProductName = styled.dt`
 
 const ProductPrice = styled.dd`
   font-size: 20px;
-  line-height: 26.67px;
-`;
-
-const ProductCartBtn = styled.button`
-  position: absolute;
-  top: 0;
-  right: 14px;
+  line-height: 26px;
 `;
 
 export default ProductItem;

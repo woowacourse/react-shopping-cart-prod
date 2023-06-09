@@ -1,10 +1,14 @@
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
 import styled from 'styled-components';
 
-type ButtonSizeType = 'small' | 'medium';
+import {
+  ButtonStyleProps,
+  ComponentVariant,
+  buttonStyles,
+} from '../../styles/component';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  size?: ButtonSizeType;
+  variant?: ComponentVariant;
   autoSize?: boolean;
   primary?: boolean;
   border?: boolean;
@@ -12,7 +16,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const Button = ({
-  size = 'medium',
+  variant = 'medium',
   primary = true,
   autoSize = false,
   border = false,
@@ -21,7 +25,7 @@ const Button = ({
 }: ButtonProps) => {
   return (
     <StyledButton
-      size={size}
+      variant={variant}
       primary={primary}
       autoSize={autoSize}
       border={border}
@@ -32,28 +36,10 @@ const Button = ({
   );
 };
 
-const buttonStyles = {
-  small: {
-    width: '100px',
-    height: '35px',
-    fontSize: '16px',
-  },
-  medium: {
-    width: '300px',
-    height: '73px',
-    fontSize: '20px',
-  },
-};
-
-const StyledButton = styled.button<{
-  size: ButtonSizeType;
-  primary: boolean;
-  autoSize: boolean;
-  border: boolean;
-}>`
-  ${({ size }) => buttonStyles[size]}
-  width: ${({ size, autoSize }) =>
-    autoSize ? '100%' : buttonStyles[size].width};
+const StyledButton = styled.button<ButtonStyleProps>`
+  ${({ variant }) => buttonStyles[variant]}
+  width: ${({ variant, autoSize }) =>
+    autoSize ? '100%' : buttonStyles[variant].width};
   background: ${({ theme, primary }) =>
     primary ? theme.colors.black : theme.colors.white};
   color: ${({ theme, primary }) =>

@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "name": "3000원 할인 쿠폰",
+    "discountPrice": 3000
+  },
+  {
+    "id": 2,
+    "name": "1000원 할인 쿠폰",
+    "discountPrice": 1000
+  },
+  {
+    "id": 3,
+    "name": "첫주문 40000원 할인 쿠폰",
+    "discountPrice": 40000
+  }
+]

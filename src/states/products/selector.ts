@@ -1,15 +1,12 @@
-import { selectorFamily } from 'recoil';
+import { selector } from 'recoil';
 
-import { ServerKey } from '../../constants/server';
-import { Product } from '../../types/product';
 import productApis from '../../apis/products';
+import { serverNameState } from '../serverName';
 
-export const productState = selectorFamily({
+export const productState = selector({
   key: 'productState',
-  get: (serverName: ServerKey) => async () => {
-    const data = await productApis(serverName, '/products').getData<
-      Product[]
-    >();
-    return data;
+  get: ({ get }) => {
+    const serverName = get(serverNameState);
+    return productApis(serverName).getProducts();
   },
 });

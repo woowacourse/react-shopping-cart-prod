@@ -1,19 +1,58 @@
-import { SelectHTMLAttributes } from 'react';
+import type { OptionHTMLAttributes, SelectHTMLAttributes } from 'react';
+import styled from 'styled-components';
 
-interface SelectBoxProps extends SelectHTMLAttributes<HTMLSelectElement> {
-  options: string[];
+import {
+  ComponentVariant,
+  SelectBoxStyleProps,
+  selectBoxStyles,
+} from '../../styles/component';
+
+interface SelectOption extends OptionHTMLAttributes<HTMLOptionElement> {
+  text: string;
 }
 
-const SelectBox = ({ options, ...props }: SelectBoxProps) => {
+interface SelectBoxProps extends SelectHTMLAttributes<HTMLSelectElement> {
+  options: SelectOption[];
+  variant?: Extract<ComponentVariant, 'small'>;
+  title?: string;
+  autoSize?: boolean;
+}
+
+const SelectBox = ({
+  options,
+  title,
+  variant = 'small',
+  autoSize = false,
+  ...props
+}: SelectBoxProps) => {
   return (
-    <select {...props}>
-      {options.map((option) => (
-        <option key={option} value={option}>
-          {option}
+    <Select variant={variant} autoSize={autoSize} {...props}>
+      {title && (
+        <option value='' selected disabled>
+          {title}
+        </option>
+      )}
+      {options.map(({ value, text, disabled, selected }, index) => (
+        <option
+          key={`${text}-${index}`}
+          value={value}
+          disabled={disabled}
+          selected={selected}
+        >
+          {text}
         </option>
       ))}
-    </select>
+    </Select>
   );
 };
+
+const Select = styled.select<SelectBoxStyleProps>`
+  ${({ variant }) => selectBoxStyles[variant]}
+  width: ${({ variant, autoSize }) =>
+    autoSize ? '100%' : selectBoxStyles[variant].width};
+  background: ${({ theme }) => theme.colors.white};
+  border: 1px solid ${({ theme }) => theme.colors.gray400};
+  border-radius: 0;
+`;
 
 export default SelectBox;

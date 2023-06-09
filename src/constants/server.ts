@@ -14,14 +14,16 @@ export const SERVER = {
     id: process.env.REACT_APP_ID,
     password: process.env.REACT_APP_PASSWORD,
   },
+  황펭: {
+    url: '',
+    id: 'a',
+    password: 'b',
+  },
 } as const;
-
-export const SERVER_KEYS = Object.keys(SERVER);
 
 export type ServerKey = keyof typeof SERVER;
 
-export const isServerKey = (value: unknown): value is ServerKey => {
-  const serverKey = value as ServerKey;
+export const SERVER_KEYS = Object.keys(SERVER);
 
-  return serverKey in SERVER;
-};
+export const isServerKey = (value: string): value is ServerKey =>
+  value in SERVER;

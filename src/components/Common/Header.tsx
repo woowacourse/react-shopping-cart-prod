@@ -1,38 +1,35 @@
-import { ChangeEventHandler } from 'react';
-import { useSetRecoilState } from 'recoil';
-
-import styled from 'styled-components';
+import { Suspense } from 'react';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
-import SelectBox from './SelectBox';
+import ServerNameSelectBox from '../ServerName/ServerNameSelectBox';
+import CartCountBox from '../Cart/CartCountBox';
 
 import CartIcon from '../../assets/CartIcon';
-import useCartProductCount from '../../hooks/useCartProductCount';
-import { serverNameState } from '../../states/serverName';
-import { SERVER_KEYS, isServerKey } from '../../constants/server';
+import OrderIcon from '../../assets/OrderIcon';
+import { PATH } from '../../constants/path';
 
 const Header = () => {
-  const cartProductCount = useCartProductCount();
-  const setServerName = useSetRecoilState(serverNameState);
-
-  const onChange: ChangeEventHandler<HTMLSelectElement> = (event) => {
-    const serverKey = event.currentTarget.value;
-
-    if (isServerKey(serverKey)) setServerName(serverKey);
-  };
-
   return (
     <HeaderContainer>
       <HeaderContent>
-        <LogoContainer to='/'>
-          <CartIcon width={51} height={44} color='white' />
+        <LogoContainer to={`/${PATH.product}`}>
           <Logo>SHOP</Logo>
         </LogoContainer>
-        <SelectBox options={SERVER_KEYS} onChange={onChange} />
-        <CartPageLink to='/cart'>
-          장바구니
-          <ProductCountAlert>{cartProductCount}</ProductCountAlert>
-        </CartPageLink>
+        <LinkWrapper>
+          <ServerNameSelectBox />
+          <CartPageLink to={`/${PATH.cart}`}>
+            <CartIcon width={32} height={24} color='white' />
+            <span>장바구니</span>
+            <Suspense fallback={<ProductCountAlert />}>
+              <CartCountBox />
+            </Suspense>
+          </CartPageLink>
+          <OrderPageLink to={`/${PATH.order}`}>
+            <OrderIcon width={40} height={24} color='white' />
+            <span>주문목록</span>
+          </OrderPageLink>
+        </LinkWrapper>
       </HeaderContent>
     </HeaderContainer>
   );
@@ -41,6 +38,7 @@ const Header = () => {
 const HeaderContainer = styled.header`
   width: 100%;
   height: 80px;
+  z-index: 2;
   background-color: ${({ theme }) => theme.colors.black};
 `;
 
@@ -48,69 +46,64 @@ const HeaderContent = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1250px;
+  max-width: 1300px;
   height: 100%;
   margin: 0 auto;
-  padding: 0 30px;
+  padding: 0 20px;
 `;
 
 const LogoContainer = styled(Link)`
   display: flex;
   align-items: center;
-
-  & > svg {
-    margin-right: 12px;
-    transform: scaleX(-1);
-  }
-
-  @media (min-width: ${({ theme }) => theme.breakPoints.small}) {
-    & > svg {
-      margin-right: 18px;
-      transform: scaleX(-1);
-    }
-  }
 `;
 
 const Logo = styled.h1`
-  padding: 8px 0 0;
   color: ${({ theme }) => theme.colors.white};
-  font-size: 34px;
+  font-size: 28px;
   font-weight: 900;
   letter-spacing: 0.1em;
-
-  @media (min-width: ${({ theme }) => theme.breakPoints.small}) {
-    padding: 10px 0 0;
-    font-size: 40px;
-    line-height: 40px;
-  }
 `;
 
-const CartPageLink = styled(Link)`
+const LinkWrapper = styled.div`
   display: flex;
-  color: ${({ theme }) => theme.colors.white};
-  font-size: 20px;
-  font-weight: 500;
+  align-items: center;
+  gap: 18px;
+`;
 
-  @media (min-width: ${({ theme }) => theme.breakPoints.small}) {
-    font-size: 24px;
-  }
+const PageLink = styled(Link)`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: ${({ theme }) => theme.colors.white};
+  font-size: 10px;
+  line-height: 12px;
 `;
 
 const ProductCountAlert = styled.span`
-  display: inline-block;
-  width: 22px;
-  height: 22px;
-  margin-left: 6px;
-  font-size: 16px;
+  position: absolute;
+  top: -4px;
+  right: -2px;
+  width: 16px;
+  height: 16px;
+  padding: 0 0 0 0.3px;
+  font-size: 10px;
   text-align: center;
   border-radius: 50%;
   background-color: ${({ theme }) => theme.colors.primary};
-  line-height: 24px;
+  line-height: 16px;
+`;
 
-  @media (min-width: ${({ theme }) => theme.breakPoints.small}) {
-    width: 26px;
-    height: 26px;
-    line-height: 28px;
+const CartPageLink = styled(PageLink)`
+  & > svg {
+    margin: 0 4px 4px 0;
+    transform: scaleX(-1);
+  }
+`;
+
+const OrderPageLink = styled(PageLink)`
+  & > svg {
+    margin: 0 0 4px;
   }
 `;
 
