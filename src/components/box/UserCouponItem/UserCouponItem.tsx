@@ -47,6 +47,7 @@ const CouponItemWrapper = styled.div`
   gap: 1px;
   padding: 3px;
 
+  cursor: pointer;
   background-color: ${(props) => props.color};
   border: 1px solid #000;
   border-radius: 8px;
