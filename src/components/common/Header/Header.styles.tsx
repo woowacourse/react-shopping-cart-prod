@@ -39,3 +39,7 @@ export const LinkToCart = styled(Link)`
 
   color: white;
 `;
+
+export const LinkToOrder = styled(LinkToCart)`
+  margin-left: 1rem;
+`;

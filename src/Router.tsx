@@ -6,6 +6,8 @@ import { PAGE_ROUTES } from './constants/routes';
 import CartPage from './pages/CartPage/CartPage';
 import EndpointRefresher from './components/EndpointRefresher/EndpointRefresher';
 import Loading from './components/common/Loading/Loading';
+import OrderPage from './pages/OrderPage/OrderPage';
+import OrderDetailPage from './pages/OrderDetailPage/OrderDetailPage';
 
 const Router = () => {
   return (
@@ -17,6 +19,11 @@ const Router = () => {
               <Route element={<Content />}>
                 <Route index element={<ProductPage />} />
                 <Route path={PAGE_ROUTES.CART} element={<CartPage />} />
+                <Route path={PAGE_ROUTES.ORDER} element={<OrderPage />} />
+                <Route
+                  path={PAGE_ROUTES.ORDER_DETAIL}
+                  element={<OrderDetailPage />}
+                />
               </Route>
             </Routes>
           </Layout>

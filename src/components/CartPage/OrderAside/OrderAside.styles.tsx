@@ -52,10 +52,11 @@ export const TextWrapper = styled(Flex)`
   }
 `;
 
-export const Text = styled.span`
+export const Text = styled.span<{ color?: string }>`
   font-weight: 700;
   font-size: 2rem;
-  color: #333333;
+
+  color: ${({ color }) => color ?? '#333333'};
 `;
 
 export const OrderButton = styled(Button)`

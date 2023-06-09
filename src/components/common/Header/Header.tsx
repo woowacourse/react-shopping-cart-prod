@@ -27,6 +27,7 @@ const Header = () => {
           <option value="말랑">말랑</option>
           <option value="코코닥">코코닥</option>
         </select>
+        <S.LinkToOrder to={PAGE_ROUTES.ORDER}>주문 목록</S.LinkToOrder>
         <S.LinkToCart to={PAGE_ROUTES.CART}>
           <Flex align="center">
             <div>장바구니</div>

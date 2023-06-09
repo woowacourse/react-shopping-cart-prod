@@ -4,6 +4,7 @@ import { addToCart, deleteCartItem, updateCartItem } from '../../apis/cart';
 import { cartState, selectedItemsSelector } from '../../atoms/cart';
 import { DELETE_CART_ITEMS } from '../../constants/cart';
 import { CartItem } from '../../types/cart';
+import { getParsedLocation } from '../../utils/getParsedLocation';
 import { waitForMutation } from '../../utils/waitFor';
 import {
   useRefreshableRecoilState,
@@ -12,17 +13,18 @@ import {
 
 export const useCartSelector = () => {
   const cart = useRefreshableRecoilValue(cartState);
+
   const [selectedItems, setSelectedItems] = useRefreshableRecoilState(
     selectedItemsSelector
   );
 
-  const selectItem = (id: CartItem['id']) => {
+  const selectItem = (cartId: CartItem['id']) => {
     setSelectedItems((prevSelectedItems) => {
       const updatedSelectedItems = new Set(prevSelectedItems);
 
-      prevSelectedItems.has(id)
-        ? updatedSelectedItems.delete(id)
-        : updatedSelectedItems.add(id);
+      prevSelectedItems.has(cartId)
+        ? updatedSelectedItems.delete(cartId)
+        : updatedSelectedItems.add(cartId);
 
       return updatedSelectedItems;
     });
@@ -53,7 +55,7 @@ export const useMutateCart = () => {
     quantity: number;
   }) => {
     const { headers } = await addItemToCartMutation({ productId: id });
-    const cartId = +headers.get('Location')!.replace('/cart-items/', '');
+    const cartId = getParsedLocation(headers);
 
     await updateCartItemMutation({ cartId, quantity });
   };
