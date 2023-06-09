@@ -1,20 +1,20 @@
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
-import { fetchProductsSelector } from '../../recoil/productData';
+import { getProductsSelector } from '../../recoil/productData';
 
-import ProductItem from './ProductItem';
-import Message from '../Common/Message';
+import Product from './Product';
+import ActionMessage from '../Common/ActionMessage';
 
 const ProductList = () => {
-  const products = useRecoilValue(fetchProductsSelector);
+  const products = useRecoilValue(getProductsSelector);
 
-  if (products.length === 0) return <Message type='empty' />;
+  if (products.length === 0) return <ActionMessage type='empty' />;
 
   return (
     <ProductListContainer>
       {products.map((product) => (
-        <li key={product.id}>
-          <ProductItem product={product} />
+        <li key={product.productId}>
+          <Product product={product} />
         </li>
       ))}
     </ProductListContainer>

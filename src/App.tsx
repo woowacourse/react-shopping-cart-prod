@@ -2,11 +2,11 @@ import { Suspense } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import ProductsListPage from './pages/ProductsListPage';
-import CartProductsListPage from './pages/CartProductsListPage';
+import CartItemListPage from './pages/CartItemListPage';
 import NotFoundPage from './pages/NotFoundPage';
 import Layout from './Layout';
-import ProductListSkeleton from './components/Common/ContentListSkeleton';
-import Message from './components/Common/Message';
+import OrderItemListPage from './pages/OrderItemListPage';
+import OrderItemDetailPage from './pages/OrderItemDetailPage';
 
 function App() {
   return (
@@ -22,7 +22,9 @@ function App() {
                 </Suspense>
               }
             />
-            <Route path='/cart' element={<CartProductsListPage />} />
+            <Route path='/cart' element={<CartItemListPage />} />
+            <Route path='/order' element={<OrderItemListPage />} />
+            <Route path='/order/:orderId' element={<OrderItemDetailPage />} />
             <Route path='*' element={<NotFoundPage />} />
           </Routes>
         </Layout>

@@ -1,9 +1,11 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { useRecoilState, useRecoilValue } from 'recoil';
+
 import styled from 'styled-components';
 
-import { Link } from 'react-router-dom';
 import CartIcon from '../../assets/CartIcon';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { totalCartProductSelect } from '../../recoil/cartProductData';
+import { totalCartProductSelect } from '../../recoil/cartItemData';
 import { servers } from '../../constants/server';
 import { hostNameAtom } from '../../recoil/hostData';
 import { HostNameType } from '../../types/server';
@@ -27,15 +29,20 @@ const Header = () => {
         </Link>
         <ControlContainer>
           <SelectBox value={hostName} onChange={handleSelect}>
-            {Object.keys(servers).map((server) => (
-              <option>{server}</option>
+            {Object.keys(servers).map((server, index) => (
+              <React.Fragment key={index}>
+                <option>{server}</option>
+              </React.Fragment>
             ))}
           </SelectBox>
           <Link to='/cart'>
-            <MoveCartPageBtn>
+            <MovePageBtn>
               장바구니
               <ProductCountAlert>{totalCartProduct}</ProductCountAlert>
-            </MoveCartPageBtn>
+            </MovePageBtn>
+          </Link>
+          <Link to='/order'>
+            <MovePageBtn>주문 목록</MovePageBtn>
           </Link>
         </ControlContainer>
       </HeaderContent>
@@ -84,17 +91,30 @@ const ControlContainer = styled.div`
   display: flex;
   justify-content: end;
   gap: 40px;
+
+  @media (max-width: 420px) {
+    gap: 20px;
+  }
 `;
 
 const SelectBox = styled.select`
   padding: 0 5px;
+
+  @media (max-width: 420px) {
+    height: 30px;
+  }
 `;
 
-const MoveCartPageBtn = styled.button`
+const MovePageBtn = styled.button`
   display: flex;
   color: ${({ theme }) => theme.colors.white};
   font-size: 24px;
   font-weight: 500;
+
+  @media (max-width: 420px) {
+    margin-top: 4px;
+    font-size: 13px;
+  }
 `;
 
 const ProductCountAlert = styled.p`
@@ -106,6 +126,13 @@ const ProductCountAlert = styled.p`
   background-color: ${({ theme }) => theme.colors.primary};
   line-height: 26px;
   font-size: 16px;
+
+  @media (max-width: 420px) {
+    width: 25px;
+    height: 25px;
+
+    font-size: 13px;
+  }
 `;
 
 export default Header;

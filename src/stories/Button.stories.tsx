@@ -14,14 +14,14 @@ type Story = StoryObj<typeof meta>;
 
 export const Order: Story = {
   args: {
-    designType: 'order',
+    designtype: 'order',
     buttonLabel: '주문하기',
   },
 };
 
 export const Delete: Story = {
   args: {
-    designType: 'delete',
+    designtype: 'delete',
     buttonLabel: '선택삭제',
   },
 };

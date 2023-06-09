@@ -1,37 +1,16 @@
+import type { MessageType } from '../../types/message';
+
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-type MessageType = 'error' | 'empty' | 'notFound' | 'loading';
+import { message } from '../../constants/errorMessage';
 
-interface MessageProps {
+interface ActionMessageProps {
   type: MessageType;
-  link?: boolean;
+  link?: string;
 }
 
-const message = {
-  error: {
-    title: '에러가 발생했습니다.',
-    description: '새로고침 해주세요.',
-    imageSrc: 'images/error.png',
-  },
-  empty: {
-    title: '상품을 찾을 수 없습니다.',
-    description: '새로고침 해주세요.',
-    imageSrc: 'images/error.png',
-  },
-  notFound: {
-    title: '페이지를 찾을 수 없습니다.',
-    description: '페이지가 존재하지 않거나 삭제되어 찾을 수 없어요.',
-    imageSrc: 'images/error.png',
-  },
-  loading: {
-    title: '로딩중입니다. ',
-    description: '잠시만 기다려주세요.',
-    imageSrc: 'images/loading.png',
-  },
-};
-
-const Message = ({ type, link = false }: MessageProps) => {
+const ActionMessage = ({ type, link = '' }: ActionMessageProps) => {
   return (
     <MessageSection>
       <img
@@ -42,14 +21,14 @@ const Message = ({ type, link = false }: MessageProps) => {
       />
       <MessageTitle>{message[type].title}</MessageTitle>
       <MessageDesc>{message[type].description}</MessageDesc>
-      {link && <HomeLink to='/'>홈으로 가기</HomeLink>}
+      {link && <HomeLink to={link}>홈으로 가기</HomeLink>}
     </MessageSection>
   );
 };
 
 const MessageSection = styled.section`
   position: absolute;
-  top: 50%;
+  top: 60%;
   left: 50%;
   display: flex;
   flex-direction: column;
@@ -81,4 +60,4 @@ const HomeLink = styled(Link)`
   border-radius: 4px;
 `;
 
-export default Message;
+export default ActionMessage;

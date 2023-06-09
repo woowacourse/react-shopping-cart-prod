@@ -1,39 +1,52 @@
+import type { CartItemType } from '../types/product';
+
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { cartProductAtom } from '../recoil/cartProductData';
-import { api } from '../apis/cartProducts';
-import { findTargetProduct } from '../domain/cartProductHandler';
+import { api } from '../apis/cartItems';
+import { cartAtom } from '../recoil/cartItemData';
 import { hostNameAtom } from '../recoil/hostData';
 import { HostNameType } from '../types/server';
-import type { CartProduct } from '../types/product';
 
 const updateCartProductQuantity = async (
   hostName: HostNameType,
-  targetProduct: CartProduct,
+  targetProduct: CartItemType,
   delta: number
-) =>
-  await api(hostName).then((apiInstance) => {
-    return apiInstance.patchCartProduct(
-      targetProduct.id,
-      targetProduct.quantity + delta
-    );
-  });
+) => {
+  await (
+    await api(hostName)
+  ).editCartProductQuantity(
+    targetProduct.cartItemId,
+    targetProduct.quantity + delta
+  );
+};
 
 const useProductQuantity = (productId: number) => {
   const hostName = useRecoilValue(hostNameAtom);
-  const [cartProducts, setCartProducts] = useRecoilState(cartProductAtom);
+  const [cart, setCart] = useRecoilState(cartAtom);
 
   const updateCount = async (productId: number, delta: number) => {
-    const targetProduct = findTargetProduct(cartProducts, productId);
+    const targetCartProductIndex = cart.findIndex(
+      (item) => item.product.productId === productId
+    );
+    const targetProduct = cart[targetCartProductIndex];
 
     if (targetProduct) {
+      const { quantity, product } = targetProduct;
+
+      if (quantity + delta > product.stock) {
+        alert('재고 이하의 수량만 담을 수 있어요😢');
+        return;
+      }
+
       await updateCartProductQuantity(hostName, targetProduct, delta);
 
-      const updatedCartProducts = await api(hostName).then((apiInstance) => {
-        return apiInstance.fetchCartProducts();
+      const newCart = [...cart];
+      newCart.splice(targetCartProductIndex, 1, {
+        ...cart[targetCartProductIndex],
+        quantity: targetProduct.quantity + delta,
       });
 
-      setCartProducts(updatedCartProducts);
+      setCart([...newCart]);
     }
   };
 

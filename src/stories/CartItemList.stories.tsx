@@ -1,15 +1,15 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import CartProductList from '../components/Cart/CartProductList';
+import CartItemList from '../components/Cart/CartItemList';
 
 const meta = {
-  title: 'Cart/CartProductList',
-  component: CartProductList,
+  title: 'Cart/CartItemList',
+  component: CartItemList,
   tags: ['autodocs'],
   argTypes: {},
 
-  render: (args, { loaded: { products } }) => <CartProductList {...products} />,
-} satisfies Meta<typeof CartProductList>;
+  render: (args, { loaded: { products } }) => <CartItemList {...products} />,
+} satisfies Meta<typeof CartItemList>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

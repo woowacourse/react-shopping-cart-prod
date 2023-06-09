@@ -1,30 +1,31 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import CartProductItem from '../components/Cart/CartProductItem';
+import CartItem from '../components/Cart/CartItem';
 
 const meta = {
-  title: 'Cart/CartProductItem',
-  component: CartProductItem,
+  title: 'Cart/CartItem',
+  component: CartItem,
   tags: ['autodocs'],
   argTypes: {},
-} satisfies Meta<typeof CartProductItem>;
+} satisfies Meta<typeof CartItem>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 const mockProduct = {
-  id: 1,
+  cartItemId: 1,
   quantity: 4,
   product: {
-    id: 1,
+    productId: 1,
     name: 'PET보틀-정사각(420ml)',
     price: 43400,
     imageUrl: 'images/정사각-420.jpeg',
+    stock: 4,
   },
 };
 
 export const Default: Story = {
   args: {
-    cartProduct: mockProduct,
+    cartItem: mockProduct,
   },
 };

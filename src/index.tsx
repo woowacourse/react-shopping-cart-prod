@@ -7,25 +7,14 @@ import { ThemeProvider } from 'styled-components';
 import theme from './styles/theme';
 import App from './App';
 
-const main = async () => {
-  if (window.location.pathname === '/react-shopping-cart-prod') {
-    window.location.pathname = '/react-shopping-cart-prod/';
-    return;
-  }
-};
-
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <React.StrictMode>
-    <RecoilRoot>
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        <App />
-      </ThemeProvider>
-    </RecoilRoot>
-  </React.StrictMode>
+  <RecoilRoot>
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      <App />
+    </ThemeProvider>
+  </RecoilRoot>
 );
-
-main();

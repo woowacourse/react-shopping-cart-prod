@@ -1,22 +1,23 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import ProductItem from '../components/Product/ProductItem';
+import Product from '../components/Product/Product';
 
 const meta = {
-  title: 'Product/ProductItem',
-  component: ProductItem,
+  title: 'Product/Product',
+  component: Product,
   tags: ['autodocs'],
   argTypes: {},
-} satisfies Meta<typeof ProductItem>;
+} satisfies Meta<typeof Product>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 const mockProduct = {
-  id: 1,
+  productId: 1,
   name: 'PET보틀-정사각(420ml)',
   price: 43400,
   imageUrl: 'images/정사각-420.jpeg',
+  stock: 12,
 };
 
 export const Default: Story = {

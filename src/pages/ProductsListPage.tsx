@@ -1,22 +1,20 @@
-import styled from 'styled-components';
+import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
+import styled from 'styled-components';
 
-import Message from '../components/Common/Message';
+import ActionMessage from '../components/Common/ActionMessage';
 import ContentListSkeleton from '../components/Common/ContentListSkeleton';
 import ProductList from '../components/Product/ProductList';
-import { Suspense } from 'react';
 
 const ProductsListPage = () => {
   return (
-    <>
-      <Main>
-        <ErrorBoundary fallback={<Message type='error' />}>
-          <Suspense fallback={<ContentListSkeleton content='product' />}>
-            <ProductList />
-          </Suspense>
-        </ErrorBoundary>
-      </Main>
-    </>
+    <Main>
+      <ErrorBoundary fallback={<ActionMessage type='error' />}>
+        <Suspense fallback={<ContentListSkeleton content='product' />}>
+          <ProductList />
+        </Suspense>
+      </ErrorBoundary>
+    </Main>
   );
 };
 
