@@ -10,9 +10,9 @@ import {
   ResponseOrdered,
   NewOrder,
 } from "../../types/types.ts";
-import { url } from "./url.ts";
-import { getSessionStorage } from "../utils/storage.ts";
-import { SESSION_STORAGE_KEY_BASE64 } from "../keys.ts";
+import {url} from "./url.ts";
+import {getSessionStorage} from "../utils/storage.ts";
+import {SESSION_STORAGE_KEY_BASE64} from "../keys.ts";
 
 export const fetchAddCart = async (server: string, id: number) => {
   const base64 = getSessionStorage(SESSION_STORAGE_KEY_BASE64, "");
@@ -154,44 +154,6 @@ export const fetchOrder = async (server: string, newOrder: NewOrder) => {
     });
 
     return response.ok;
-  } catch (error) {
-    throw new Error();
-  }
-};
-
-export const fetchOrderedItem = async (server: string, orderId: string) => {
-  try {
-    const base64 = getSessionStorage(SESSION_STORAGE_KEY_BASE64, "");
-    const response = await fetch(`${url[server]}/orders/${orderId}`, {
-      headers: {
-        Authorization: `Basic ${base64}`,
-      },
-    });
-    if (response.ok) {
-      const data: OrderedGroup = await response.json();
-      return data;
-    } else {
-      throw new Error();
-    }
-  } catch (error) {
-    throw new Error();
-  }
-};
-
-export const fetchOrderedList = async (server: string) => {
-  try {
-    const base64 = getSessionStorage(SESSION_STORAGE_KEY_BASE64, "");
-    const response = await fetch(`${url[server]}/orders`, {
-      headers: {
-        Authorization: `Basic ${base64}`,
-      },
-    });
-    if (response.ok) {
-      const data: ResponseOrdered = await response.json();
-      return data;
-    } else {
-      throw new Error();
-    }
   } catch (error) {
     throw new Error();
   }
