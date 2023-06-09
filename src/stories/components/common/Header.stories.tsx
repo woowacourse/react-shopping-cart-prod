@@ -1,5 +1,5 @@
 import { Meta } from '@storybook/react';
-import HeaderComponent from '../../../components/common/Header';
+import HeaderComponent from '../../../components/Header';
 
 const meta = {
   component: HeaderComponent,
@@ -31,5 +31,5 @@ interface CartProps {
 }
 
 export const Header = (args: CartProps) => {
-  return <HeaderComponent title={args.title} />;
+  return <HeaderComponent />;
 };

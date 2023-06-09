@@ -2,9 +2,7 @@ import { Meta } from '@storybook/react';
 import { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
 import SelectedProductList from '../../components/cart/SelectedProductList';
-import { KEY_CART } from '../../constants';
-import { cartState, checkedItemList } from '../../recoil';
-import { setDataInLocalStorage } from '../../utils/getAndSetDataInLocalStorage';
+import { cartState, selectedCartItems } from '../../recoil';
 
 const meta = {
   component: SelectedProductList,
@@ -40,8 +38,6 @@ export const ProductListInCart = () => {
         },
       },
     ];
-
-    setDataInLocalStorage(KEY_CART, cart);
   }, []);
 
   return <SelectedProductList />;
@@ -49,12 +45,12 @@ export const ProductListInCart = () => {
 
 export const NothingInCart = () => {
   const setCart = useSetRecoilState(cartState);
-  const setCheckedItems = useSetRecoilState<number[]>(checkedItemList);
+  const setSelectedItems = useSetRecoilState(selectedCartItems);
 
   useEffect(() => {
     setCart([]);
-    setCheckedItems([]);
-  }, [setCart, setCheckedItems]);
+    setSelectedItems([]);
+  }, [setCart, setSelectedItems]);
 
   return <SelectedProductList />;
 };

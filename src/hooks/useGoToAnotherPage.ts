@@ -5,7 +5,7 @@ export const useGoToAnotherPage = () => {
   const navigator = useNavigate();
   const location = useLocation().pathname;
 
-  const goToPage = (path: keyof typeof ROUTE_PATH) => {
+  const goToPage = (path: (typeof ROUTE_PATH)[keyof typeof ROUTE_PATH]) => {
     if (location !== path) navigator(path);
   };
 

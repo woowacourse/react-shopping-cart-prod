@@ -1,8 +1,10 @@
 import { createGlobalStyle } from 'styled-components';
-import '../src/css/reset.css';
+import ResetStyle from './ResetStyle';
 
 export const GlobalStyle = createGlobalStyle`
   @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap");
+
+  ${ResetStyle}
 
   * {
     box-sizing: border-box;

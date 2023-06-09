@@ -1,103 +1,99 @@
 import { BsPlus, BsDash } from 'react-icons/bs';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
-import { QUANTITY, STEP_HANDLER } from '../../constants';
+import { QUANTITY } from '../../constants';
 import { useSetCart } from '../../hooks/useCart';
 import { quantitySelector } from '../../recoil';
 
-const { MAX, MIN, STEP } = QUANTITY;
-const { UP, DOWN } = STEP_HANDLER;
-
-interface Props {
+type QuantityButtonProps = {
   productId: number;
-  quantity: number;
-}
+  min: number;
+  max: number;
+};
 
-const QuantityButton = ({ productId, quantity }: Props) => {
-  const setQuantity = useSetRecoilState(quantitySelector(productId));
-  const { updateCart } = useSetCart(productId);
+const QuantityButton = ({ productId, min, max }: QuantityButtonProps) => {
+  const quantity = useRecoilValue(quantitySelector(productId));
+  const { updateCart, removeItemFromCart } = useSetCart(productId);
 
-  const handleQuantityChange = (quantityLimit: number, handler: keyof typeof STEP_HANDLER) => {
-    if (quantity === quantityLimit) return;
+  const increaseQuantity = () => {
+    if (quantity === max) return;
 
-    const updatedQuantity = handler === UP ? quantity + STEP : quantity - STEP;
+    updateCart(quantity + QUANTITY.STEP);
+  };
 
-    setQuantity(updatedQuantity);
-    updateCart(updatedQuantity);
+  const decreaseQuantity = () => {
+    if (quantity === min) return;
+
+    if (quantity === QUANTITY.INITIAL) {
+      removeItemFromCart();
+      return;
+    }
+
+    updateCart(quantity - QUANTITY.STEP);
   };
 
   return (
-    <S.Wrapper>
-      <S.Button
-        quantity={quantity}
-        onClick={() => handleQuantityChange(MIN, DOWN)}
-        aria-label='button-to-lower-quantity'
-      >
+    <Wrapper>
+      <DownButton quantity={quantity} min={min} onClick={decreaseQuantity} aria-label="수량 감소">
         <BsDash />
-      </S.Button>
-      <S.Quantity>{quantity}</S.Quantity>
-      <S.Button
-        quantity={quantity}
-        onClick={() => handleQuantityChange(MAX, UP)}
-        aria-label='button-to-raise-quantity'
-      >
+      </DownButton>
+      <Quantity>{quantity}</Quantity>
+      <UpButton quantity={quantity} max={max} onClick={increaseQuantity} aria-label="수량 증가">
         <BsPlus />
-      </S.Button>
-    </S.Wrapper>
+      </UpButton>
+    </Wrapper>
   );
 };
 
-const S = {
-  Wrapper: styled.div`
-    display: flex;
-    margin: -8px 0 12px;
+const Wrapper = styled.div`
+  display: flex;
+  height: 32px;
 
-    @media (max-width: 548px) {
-      margin-bottom: 6px;
-    }
-  `,
+  @media (max-width: 548px) {
+    margin-bottom: 6px;
+  }
+`;
 
-  Quantity: styled.span`
-    display: block;
-    width: 34px;
-    border-top: 1px solid var(--gray-color-200);
-    border-bottom: 1px solid var(--gray-color-200);
-    text-align: center;
-    font-size: 14px;
-    line-height: 30px;
-    cursor: default;
+const Quantity = styled.span`
+  display: block;
+  width: 34px;
+  border-top: 1px solid var(--gray-color-200);
+  border-bottom: 1px solid var(--gray-color-200);
+  text-align: center;
+  font-size: 14px;
+  line-height: 30px;
+  cursor: default;
 
-    @media (max-width: 548px) {
-      font-size: 13px;
-    }
-  `,
+  @media (max-width: 548px) {
+    font-size: 13px;
+  }
+`;
 
-  Button: styled.button<{ quantity: number }>`
-    width: 26px;
-    max-width: 26px;
-    border: 1px solid var(--gray-color-200);
-    font-size: 16px;
-    background: none;
-    cursor: pointer;
+const StyledButton = styled.button`
+  width: 26px;
+  max-width: 26px;
+  border: 1px solid var(--gray-color-200);
+  font-size: 16px;
+  background: none;
+  cursor: pointer;
+`;
 
-    &[aria-label='button-to-raise-quantity'] {
-      border-left: 0;
-      cursor: ${(props) => props.quantity === MAX && 'default'};
+const UpButton = styled(StyledButton)<{ quantity: number; max: number }>`
+  border-left: 0;
+  cursor: ${(props) => props.quantity === props.max && 'default'};
 
-      & > svg {
-        fill: ${(props) => props.quantity === MAX && 'var(--gray-color-100)'};
-      }
-    }
+  & > svg {
+    fill: ${(props) => props.quantity === props.max && 'var(--gray-color-100)'};
+  }
+`;
 
-    &[aria-label='button-to-lower-quantity'] {
-      border-right: 0;
-      cursor: ${(props) => props.quantity === MIN && 'default'};
+const DownButton = styled(StyledButton)<{ quantity: number; min: number }>`
+  border-right: 0;
+  cursor: ${(props) => props.quantity === props.min && 'default'};
 
-      & > svg {
-        fill: ${(props) => props.quantity === MIN && 'var(--gray-color-100)'};
-      }
-    }
-  `,
-};
+  & > svg {
+    fill: ${(props) => props.quantity === props.min && 'var(--gray-color-100)'};
+  }
+`;
 
 export default QuantityButton;

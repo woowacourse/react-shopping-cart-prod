@@ -3,17 +3,15 @@ import { IconProps } from '../../types';
 
 const Icon = ({ css, pathFill, children, ...props }: IconProps) => {
   return (
-    <S.Svg {...props} css={css}>
+    <StyledSvg {...props} css={css}>
       <path d={props.path} fill={pathFill} />
       {children}
-    </S.Svg>
+    </StyledSvg>
   );
 };
 
-const S = {
-  Svg: styled.svg<{ css?: CSSProp }>`
-    ${(props) => props.css}
-  `,
-};
+const StyledSvg = styled.svg<{ css?: CSSProp }>`
+  ${(props) => props.css}
+`;
 
 export default Icon;
