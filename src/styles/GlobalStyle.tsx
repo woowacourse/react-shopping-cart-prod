@@ -1,10 +1,20 @@
 import { createGlobalStyle } from 'styled-components';
+import theme from './theme';
 
 const GlobalStyle = createGlobalStyle`
   *, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+  }
+
+  body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: ${theme.color.BLACK}
+  }
+
+  body:has([role="dialog"]) {
+    overflow: hidden;
   }
 
   ul,
@@ -15,12 +25,16 @@ const GlobalStyle = createGlobalStyle`
   a {
     text-decoration: none;
     outline: none;
-    color: #fff;
+    color: ${theme.color.BLACK};
   }
 
   a:hover, a:active, a:visited {
     text-decoration: none;
-    color: #fff;
+  }
+
+  input:disabled {
+    background: none;
+    cursor: not-allowed;
   }
 
   button {

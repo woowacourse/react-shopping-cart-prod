@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import useCartService from '../../../hooks/useCartService';
-import type { CartItem } from '../../../types/product';
+import useCart from '../../../hooks/useCart';
+import type { CartItem } from '../../../types/cart';
 
 const useCartPage = () => {
-  const { cart, removeAllProductsFromCart } = useCartService();
+  const { cart, removeAllProductsFromCart } = useCart();
   const [checkedItemIds, setCheckedItemIds] = useState(
     new Set(cart.map((cartItem) => cartItem.id)),
   );

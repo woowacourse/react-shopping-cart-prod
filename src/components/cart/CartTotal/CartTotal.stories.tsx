@@ -10,20 +10,23 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+export const WithShippingFee: Story = {
   args: {
+    selectedCartItemIds: new Set([1, 2, 3, 4]),
     totalProductPrice: 10000,
   },
 };
 
 export const WithNoPrice: Story = {
   args: {
+    selectedCartItemIds: new Set([1, 2, 3, 4]),
     totalProductPrice: 0,
   },
 };
 
 export const WithFreeShipping: Story = {
   args: {
+    selectedCartItemIds: new Set([1, 2, 3, 4]),
     totalProductPrice: 30000,
   },
 };

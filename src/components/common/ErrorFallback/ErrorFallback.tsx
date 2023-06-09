@@ -30,7 +30,7 @@ const Container = styled.div`
 `;
 
 const ErrorMessage = styled.span`
-  font-size: 20px;
+  font-size: ${(props) => props.theme.fontSize.X_LARGE};
   font-weight: 600;
 `;
 

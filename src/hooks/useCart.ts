@@ -1,5 +1,5 @@
 import { useRecoilCallback, useRecoilValue } from 'recoil';
-import { cartState, serverOriginState } from '../recoil/atoms';
+import { cartState } from '../recoil/atoms/cart';
 import { CART_BASE_URL } from '../constants/api';
 import useToast from '../components/common/Toast/useToast';
 import {
@@ -8,26 +8,39 @@ import {
   removeCartItem,
   updateQuantity,
 } from '../remotes/cart';
-import type { CartItem, Product } from '../types/product';
+import { userState } from '../recoil/atoms/auth';
+import { serverOriginState } from '../recoil/atoms/common';
+import { getBase64 } from '../constants/auth';
+import type { Product } from '../types/product';
+import type { CartItem } from '../types/cart';
 
-const useCartService = () => {
+const useCart = () => {
   const cart = useRecoilValue(cartState);
   const serverOrigin = useRecoilValue(serverOriginState);
+  const user = useRecoilValue(userState);
   const { showToast } = useToast();
 
   const updateCart = useRecoilCallback(
-    ({ set }) =>
+    ({ set, snapshot }) =>
       async () => {
-        const newCart = await fetchCartItems(`${serverOrigin}${CART_BASE_URL}`);
+        const newUser = await snapshot.getPromise(userState);
+        const newCart = await fetchCartItems(
+          `${serverOrigin}${CART_BASE_URL}`,
+          getBase64(newUser),
+        );
 
         set(cartState, newCart);
       },
-    [serverOrigin],
+    [serverOrigin, user],
   );
 
   const addProductToCart = async (productId: Product['id']) => {
     try {
-      await addCartItem(`${serverOrigin}${CART_BASE_URL}`, productId);
+      await addCartItem(
+        `${serverOrigin}${CART_BASE_URL}`,
+        productId,
+        getBase64(user),
+      );
     } catch (e) {
       if (e instanceof Error) {
         showToast('error', e.message);
@@ -47,6 +60,7 @@ const useCartService = () => {
       await updateQuantity(
         `${serverOrigin}${CART_BASE_URL}/${targetId}`,
         quantity,
+        getBase64(user),
       );
     } catch (e) {
       if (e instanceof Error) {
@@ -60,7 +74,10 @@ const useCartService = () => {
 
   const removeProductFromCart = async (targetId: CartItem['id']) => {
     try {
-      await removeCartItem(`${serverOrigin}${CART_BASE_URL}/${targetId}`);
+      await removeCartItem(
+        `${serverOrigin}${CART_BASE_URL}/${targetId}`,
+        getBase64(user),
+      );
     } catch (e) {
       if (e instanceof Error) {
         showToast('error', e.message);
@@ -85,4 +102,4 @@ const useCartService = () => {
   } as const;
 };
 
-export default useCartService;
+export default useCart;

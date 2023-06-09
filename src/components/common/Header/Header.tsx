@@ -1,26 +1,45 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import useCartService from '../../../hooks/useCartService';
+import useCart from '../../../hooks/useCart';
 import ServerSelect from '../ServerSelect/ServerSelect';
-import { CartIcon } from '../../../assets/svg';
+import { CartIcon, OrderIcon, UserIcon } from '../../../assets/svg';
+import useMenu from '../../user/UserMenu/useMenu';
+import UserMenu from '../../user/UserMenu/UserMenu';
 
 const Header = () => {
-  const { cart } = useCartService();
+  const { cart } = useCart();
+  const { isMenuOpen, isActive, openMenu, menuRef } = useMenu();
 
   return (
     <HeaderContainer>
       <Logo to="/">
-        <CartIcon />
-        <Title>SHOP</Title>
+        <LogoImage
+          src="https://cdn-mart.baemin.com/front-end/assets-static/bmmart_logo_2021@3x.png"
+          alt="배민상회 로고"
+        />
       </Logo>
       <RightContainer>
         <ServerSelect />
-        <CartButton to="/cart">
-          장바구니
+        <UserInfo onClick={openMenu} ref={menuRef}>
+          <UserInfoInner>
+            <UserIcon />
+            <span>나의상회</span>
+          </UserInfoInner>
+          {isMenuOpen && <UserMenu isActive={isActive} />}
+        </UserInfo>
+        <LinkWrapper to="/cart">
+          <CartIcon />
+          <span>장바구니</span>
           {cart.length > 0 && (
-            <CartTotalQuantity>{cart.length}</CartTotalQuantity>
+            <CartTotalQuantity>
+              <span>{cart.length}</span>
+            </CartTotalQuantity>
           )}
-        </CartButton>
+        </LinkWrapper>
+        <LinkWrapper to="/orders">
+          <OrderIcon />
+          <span>주문목록</span>
+        </LinkWrapper>
       </RightContainer>
     </HeaderContainer>
   );
@@ -33,10 +52,10 @@ const HeaderContainer = styled.header`
   justify-content: space-between;
   width: 100%;
   height: 80px;
-  padding: 0 10%;
-  background-color: #333;
-  color: #fff;
-  z-index: 1;
+  padding: 0 8%;
+  background-color: ${(props) => props.theme.color.WHITE};
+  border-bottom: 1px solid ${(props) => props.theme.color.GRAY_300};
+  z-index: ${(props) => props.theme.zIndex.HEADER};
 `;
 
 const Logo = styled(Link)`
@@ -46,38 +65,57 @@ const Logo = styled(Link)`
   cursor: pointer;
 `;
 
-const Title = styled.h1`
-  font-size: 40px;
-  font-weight: 900;
-  padding-top: 8px;
+const LogoImage = styled.img`
+  width: 136px;
+  height: 38px;
 `;
 
 const RightContainer = styled.div`
   display: flex;
   align-items: center;
-  column-gap: 24px;
+  column-gap: 20px;
 `;
 
-const CartButton = styled(Link)`
-  display: flex;
-  column-gap: 6px;
-  font-size: 24px;
+const UserInfo = styled.div`
+  position: relative;
+`;
 
+const UserInfoInner = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   cursor: pointer;
+
+  & > span {
+    font-size: 10px;
+  }
+`;
+
+const LinkWrapper = styled(Link)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+
+  & > span {
+    font-size: 10px;
+  }
 `;
 
 const CartTotalQuantity = styled.span`
+  position: absolute;
+  top: -2px;
+  right: 2px;
   display: flex;
   justify-content: center;
   align-items: center;
-
-  width: 26px;
-  height: 26px;
-
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
-  background: #04c09e;
-
-  font-size: 16px;
+  background: ${(props) => props.theme.color.ORANGE};
+  color: ${(props) => props.theme.color.WHITE};
+  font-size: ${(props) => props.theme.fontSize.X_SMALL};
 `;
 
 export default Header;

@@ -1,7 +1,7 @@
 import { useRecoilValue } from 'recoil';
-import { toastState } from '../../../recoil/atoms';
-import Toast from './Toast';
 import { styled } from 'styled-components';
+import Toast from './Toast';
+import { toastState } from '../../../recoil/atoms/common';
 
 const ToastList = () => {
   const toastList = useRecoilValue(toastState);
@@ -23,6 +23,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column-reverse;
   row-gap: 10px;
+  z-index: ${(props) => props.theme.zIndex.TOAST};
 `;
 
 export default ToastList;

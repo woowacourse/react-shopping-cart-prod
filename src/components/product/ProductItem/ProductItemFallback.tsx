@@ -38,7 +38,7 @@ const TitleWrapper = styled.div`
 const PriceWrapper = styled.div`
   width: 80px;
   height: 22px;
-  margin-top: 3px;
+  margin-top: 6px;
 `;
 
 export default ProductItemFallback;

@@ -1,4 +1,5 @@
 import { styled } from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import CartListItem from '../../cart/CartListItem/CartListItem';
 import Spacer from '../../common/Spacer/Spacer';
 import CartTotal from '../../cart/CartTotal/CartTotal';
@@ -6,7 +7,6 @@ import Checkbox from '../../common/Checkbox/Checkbox';
 import useCartPage from './useCartPage';
 import empty from '../../../assets/image/empty.png';
 import { ResetButton } from '../../common/ErrorFallback/ErrorFallback';
-import { useNavigate } from 'react-router-dom';
 
 const CartPage = () => {
   const navigate = useNavigate();
@@ -21,11 +21,11 @@ const CartPage = () => {
   } = useCartPage();
 
   return (
-    <Container>
+    <div>
       <TitleWrapper>
         <Title>장바구니</Title>
       </TitleWrapper>
-      <Spacer height={34} />
+      <Spacer height={20} />
       <Inner>
         <CartList>
           <AllCheckBoxContainer>
@@ -46,14 +46,16 @@ const CartPage = () => {
             </DeleteButton>
           </AllCheckBoxContainer>
           {cart.length > 0 ? (
-            cart.map((cartItem) => (
-              <CartListItem
-                key={cartItem.id}
-                cartItem={cartItem}
-                checked={checkedItemIds.has(cartItem.id)}
-                onChangeCheckbox={handleCheckboxChange}
-              />
-            ))
+            <CartListContainer>
+              {cart.map((cartItem) => (
+                <CartListItem
+                  key={cartItem.id}
+                  cartItem={cartItem}
+                  checked={checkedItemIds.has(cartItem.id)}
+                  onChangeCheckbox={handleCheckboxChange}
+                />
+              ))}
+            </CartListContainer>
           ) : (
             <ImageContainer>
               <Image src={empty} alt="텅 빈 장바구니 이미지" />
@@ -66,40 +68,42 @@ const CartPage = () => {
           <Spacer height={20} />
         </CartList>
         <TotalWrapper>
-          <CartTotal totalProductPrice={calcTotalPrice()} />
+          <CartTotal
+            selectedCartItemIds={checkedItemIds}
+            totalProductPrice={calcTotalPrice()}
+          />
         </TotalWrapper>
       </Inner>
-    </Container>
+    </div>
   );
 };
 
-const Container = styled.div``;
-
 const TitleWrapper = styled.div`
   height: 67px;
-  border-bottom: 4px solid #333;
 `;
 
 const Title = styled.h2`
   font-family: 'Noto Sans KR';
   font-weight: 700;
-  font-size: 32px;
+  font-size: 26px;
   line-height: 37px;
   text-align: center;
   letter-spacing: 0.5px;
-  color: #333;
+  color: ${(props) => props.theme.BLACK};
 `;
 
-const CartList = styled.ul`
-  width: 735px;
-
+const CartListContainer = styled.div`
   & > li {
-    border-bottom: 1.5px solid #ccc;
+    border-bottom: 1.5px solid ${(props) => props.theme.color.GRAY_350};
   }
 
   & > li:last-child {
     border: none;
   }
+`;
+
+const CartList = styled.ul`
+  width: 735px;
 
   @media only screen and (max-width: 768px) {
     width: 600px;
@@ -112,7 +116,7 @@ const CartList = styled.ul`
 
 const Inner = styled.div`
   display: flex;
-  column-gap: 104px;
+  column-gap: 50px;
 
   @media only screen and (max-width: 1200px) {
     flex-direction: column;
@@ -124,10 +128,10 @@ const AllCheckBoxContainer = styled.div`
   display: flex;
   align-items: center;
   height: 60px;
-  border-bottom: 4px solid #aaaaaa;
+  border-bottom: 1px solid ${(props) => props.theme.color.GRAY_350};
 
   & > span {
-    font-size: 18px;
+    font-size: ${(props) => props.theme.fontSize.LARGE};
   }
 `;
 
@@ -143,9 +147,10 @@ const Image = styled.img`
 `;
 
 const HomeButton = styled(ResetButton)`
-  font-size: 16px;
+  font-size: ${(props) => props.theme.fontSize.MEDIUM};
   font-weight: 600;
   margin-top: 10px;
+  background-color: ${(props) => props.theme.color.PRIMARY};
 `;
 
 const DeleteButton = styled.button`
@@ -153,20 +158,22 @@ const DeleteButton = styled.button`
   height: 35px;
   margin-left: auto;
   font-family: 'Noto Sans KR';
-  font-size: 16px;
+  font-size: ${(props) => props.theme.fontSize.MEDIUM};
   line-height: 21px;
   text-align: center;
-  color: #333;
-  border: 1px solid #bbb;
+  color: ${(props) => props.theme.color.BLACK};
+  border: 1px solid ${(props) => props.theme.color.GRAY_350};
+  border-radius: 4px;
 
   &:disabled {
-    color: #bbb;
+    background-color: ${(props) => props.theme.color.GRAY_100};
+    color: ${(props) => props.theme.color.GRAY_350};
   }
 `;
 
 const TotalWrapper = styled.div`
   position: relative;
-  padding-top: 54px;
+  padding-top: 56px;
 `;
 
 export default CartPage;

@@ -1,7 +1,7 @@
 import { useRecoilState } from 'recoil';
-import { toastState } from '../../../recoil/atoms';
-import { ToastProps } from './Toast';
 import { uuid } from '../../../utils/uuid';
+import { toastState } from '../../../recoil/atoms/common';
+import type { ToastProps } from './Toast';
 
 const TOAST_DURATION = 2000;
 const MAX_TOAST_COUNT = 3;

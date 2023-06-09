@@ -2,7 +2,7 @@ import { styled } from 'styled-components';
 import Counter from '../../common/Counter/Counter';
 import Image from '../../common/Image/Image';
 import { formatPrice } from '../../../utils/formatPrice';
-import useCartService from '../../../hooks/useCartService';
+import useCart from '../../../hooks/useCart';
 import { SmallCartIcon } from '../../../assets/svg';
 import type { Product } from '../../../types/product';
 
@@ -13,7 +13,7 @@ const ProductItem = (product: Product) => {
     addProductToCart,
     updateProductQuantity,
     removeProductFromCart,
-  } = useCartService();
+  } = useCart();
   const productInCart = cart.find((cartItem) => cartItem.product.id === id);
   const quantityInCart = productInCart?.quantity ?? 0;
 
@@ -43,7 +43,6 @@ const ProductItem = (product: Product) => {
     <ItemContainer>
       <ProductImageWrapper>
         <Image src={imageUrl} loading="lazy" alt={name} size="large" />
-
         <CartButtonWrapper>
           {productInCart ? (
             <Counter
@@ -96,13 +95,13 @@ const Contents = styled.div`
 `;
 
 const Title = styled.p`
-  font-size: 16px;
+  font-size: ${(props) => props.theme.fontSize.MEDIUM};
   font-weight: 400;
 `;
 
 const Price = styled.p`
   margin-top: 3px;
-  font-size: 20px;
+  font-size: ${(props) => props.theme.fontSize.X_LARGE};
   font-weight: 400;
 `;
 
