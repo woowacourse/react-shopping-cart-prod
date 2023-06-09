@@ -1,8 +1,7 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { S } from './PointInput.styles';
 import pointState from '../../../store/PointState';
-import { ChangeEventHandler, MouseEventHandler, useEffect, useState } from 'react';
+import { ChangeEventHandler, MouseEventHandler, useState } from 'react';
 import memberState from '../../../store/MemberState';
 import { validatePointInput } from '../../../utils/validatePointInput';
 import PointInfo from './PointInfo';
@@ -13,14 +12,13 @@ type Props = {
 };
 
 const PointInput = ({ totalPrice }: Props) => {
-  const setUsedPoint = useSetRecoilState(pointState);
+  const [usedPoint, setUsedPoint] = useRecoilState(pointState);
   const member = useRecoilValue(memberState);
   const [useAllPoints, setUseAllPoints] = useState(false);
-  const [inputPoint, setInputPoint] = useState('');
 
   const handleToggleUseAllPoints: MouseEventHandler<HTMLButtonElement> = () => {
     setUseAllPoints((prev) => !prev);
-    !useAllPoints ? setInputPoint(String(Math.min(totalPrice, member.point))) : setInputPoint('');
+    !useAllPoints ? setUsedPoint(Math.min(totalPrice, member.point)) : setUsedPoint(0);
   };
 
   const handlePointInputChange: ChangeEventHandler<HTMLInputElement> = ({ target }) => {
@@ -28,19 +26,15 @@ const PointInput = ({ totalPrice }: Props) => {
 
     if (!validatePointInput(value, totalPrice, member.point)) return;
 
-    const parsedValue = value.replace(/[^0-9]/g, ''); // 숫자 이외의 문자 제거 후 숫자로 변환
-    setInputPoint(parsedValue);
+    const parsedValue = value.replace(/[^0-9]/g, '');
+    setUsedPoint(Number(parsedValue));
   };
-
-  useEffect(() => {
-    setUsedPoint(Number(inputPoint));
-  }, [inputPoint]);
 
   return (
     <S.Wrapper>
       <PointInfo memberPoint={member.point} />
       <PointForm
-        inputPoint={Number(inputPoint).toLocaleString()}
+        inputPoint={usedPoint.toLocaleString()}
         handlePointInputChange={handlePointInputChange}
         handleToggleUseAllPoints={handleToggleUseAllPoints}
         useAllPoints={useAllPoints}
