@@ -11,18 +11,15 @@ interface Props {
 export const useHandleQuantityInput = ({ ...props }: Props) => {
   const { removeItemFromCart, setQuantity, updateCart } = props;
 
-  const handleNumberInputChange: ChangeEventHandler<HTMLInputElement> = ({ target }) => {
-    const { value } = target;
-    const numberValue = Number(value);
-
-    if (numberValue === QUANTITY.NONE) {
+  const handleNumberInputChange: ChangeEventHandler<HTMLInputElement> = ({ target: { valueAsNumber } }) => {
+    if (valueAsNumber === QUANTITY.NONE) {
       removeItemFromCart();
 
       return setQuantity(QUANTITY.INITIAL);
     }
 
-    setQuantity(numberValue);
-    updateCart(numberValue);
+    setQuantity(valueAsNumber);
+    updateCart(valueAsNumber);
   };
 
   return handleNumberInputChange;
