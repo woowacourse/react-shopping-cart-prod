@@ -49,13 +49,11 @@ const getTotalPrice = (orderedItemList: CartItemData[]) => {
   return getDiscountedTotalItemPrice(orderedItemList) + getShippingFee(orderedItemList);
 };
 
-export const getCartPriceInformation = (orderedItemList: CartItemData[]): CartPriceData => {
-  return {
-    totalItemDiscountAmount: getTotalItemDiscountAmount(orderedItemList),
-    totalMemberDiscountAmount: getTotalMemberDiscountAmount(orderedItemList),
-    totalItemPrice: getTotalItemPrice(orderedItemList),
-    discountedTotalItemPrice: getDiscountedTotalItemPrice(orderedItemList),
-    shippingFee: getShippingFee(orderedItemList),
-    totalPrice: getTotalPrice(orderedItemList),
-  };
-};
+export const getCartPriceInformation = (orderedItemList: CartItemData[]): CartPriceData => ({
+  totalItemDiscountAmount: getTotalItemDiscountAmount(orderedItemList),
+  totalMemberDiscountAmount: getTotalMemberDiscountAmount(orderedItemList),
+  totalItemPrice: getTotalItemPrice(orderedItemList),
+  discountedTotalItemPrice: getDiscountedTotalItemPrice(orderedItemList),
+  shippingFee: getShippingFee(orderedItemList),
+  totalPrice: getTotalPrice(orderedItemList),
+});
