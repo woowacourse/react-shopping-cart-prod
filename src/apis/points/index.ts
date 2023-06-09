@@ -7,8 +7,7 @@ type ServerUserOwnPoints = {
 };
 
 export const getUserOwnPoints = async () => {
-  const fetchedData = await api.get<ServerUserOwnPoints>(URL);
-  const userOwnPoints = fetchedData.data;
+  const { data: userOwnPoints } = await api.get<ServerUserOwnPoints>(URL);
 
   return userOwnPoints.point;
 };

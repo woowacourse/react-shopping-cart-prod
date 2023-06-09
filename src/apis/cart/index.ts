@@ -26,16 +26,15 @@ const cartProductsParser = (data: any): CartProducts => {
 };
 
 export const getCartProducts = async (): Promise<CartProducts> => {
-  const fetchedData = await api.get<ServerCartProduct[]>(URL);
-  const cartProducts = fetchedData.data;
+  const { data: cartProducts } = await api.get<ServerCartProduct[]>(URL);
 
   return cartProductsParser(cartProducts);
 };
 
 export const postCartProducts = async (productId: Product['id']): Promise<number> => {
-  const fetchedData = await api.post(URL, { productId });
+  const { headers } = await api.post(URL, { productId });
 
-  const location = fetchedData.headers.get('Location');
+  const location = headers.get('Location');
   if (!location) {
     throw new Error(`장바구니 상품 추가 요청 성공시 반환되는 location이 없습니다.`);
   }
@@ -57,8 +56,7 @@ export const getCartPriceInfo = async (checkedCartProductIds: number[]): Promise
   const params = new URLSearchParams();
   checkedCartProductIds.map((id) => params.append('item', `${id}`));
 
-  const fetchedData = await api.get<CartPriceInfo>(`${URL}/price?${params.toString()}`);
-  const cartPriceInfo = fetchedData.data;
+  const { data: cartPriceInfo } = await api.get<CartPriceInfo>(`${URL}/price?${params.toString()}`);
 
   return cartPriceInfo;
 };
