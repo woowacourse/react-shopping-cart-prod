@@ -43,11 +43,6 @@ const removeCartItem = (cartList: CartItemData[], cartItemId: number | number[])
 
   cartItemIdArray = Array.isArray(cartItemId) ? cartItemId : [cartItemId];
 
-  cartItemIdArray.forEach((id) => {
-    const hasItem = checkItemInCart(cartList, id);
-    if (!hasItem) return null;
-  });
-
   return cartList.filter((cartItem) => !cartItemIdArray.includes(cartItem.id));
 };
 
