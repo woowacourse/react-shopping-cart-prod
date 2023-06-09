@@ -1,52 +1,62 @@
 import styled from 'styled-components';
 
-import { LogoIcon } from '../../assets/ShoppingCartIcon';
 import { useNavigate } from 'react-router-dom';
 import { CartListLengthViewer } from './CartListLengthViewer';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { APIAtom } from '../../recoil/atoms/serverAtom';
-import { useCartFetch } from '../../hooks/fetch/useCartFetch';
-import { cartItemsState } from '../../recoil/atoms/cartAtom';
+import { Suspense } from 'react';
+import { Style as CartAmountStyle } from './CartListLengthViewer';
+import { ErrorBoundary } from 'react-error-boundary';
 
 export const Header = () => {
   const navigate = useNavigate();
   const [apiEndPoint, setAPIEndPoints] = useRecoilState(APIAtom);
-  const { getCartItems } = useCartFetch();
-  const setCartItems = useSetRecoilState(cartItemsState);
+
+  const handleChangeSelectedServer: React.ChangeEventHandler<
+    HTMLSelectElement
+  > = (e) => {
+    setAPIEndPoints(() => e.target.value);
+
+    const currentUrl = window.location.href;
+    window.location.replace(currentUrl);
+  };
 
   return (
     <Style.Container>
       <Style.ContentWrapper>
-        <Style.LogoContainer onClick={() => navigate('/')}>
-          <LogoIcon />
-          <Style.Logo>배민문방구</Style.Logo>
-        </Style.LogoContainer>
+        <Style.Logo
+          onClick={() => navigate('/')}
+          src={`${process.env.PUBLIC_URL}/logo.png`}
+          alt="배민 문방구 로고 이미지"
+        />
         <Style.LogoContainer>
-          서버 선택:
-          <select
+          <Style.ServerSelectBox
             name="serverList"
-            onChange={(e) => {
-              setAPIEndPoints(() => {
-                const newApiEndPoint = e.target.value;
-
-                getCartItems(newApiEndPoint).then((cartItems) => {
-                  setCartItems(cartItems);
-                });
-
-                return newApiEndPoint;
-              });
-            }}
+            onChange={handleChangeSelectedServer}
             value={apiEndPoint}
           >
-            <option value="">MSW</option>
-            <option value="https://woowacourse-sunshot.store">썬샷</option>
-            <option value="https://woowacours-abel.store">아벨</option>
-            <option value="https://woowacourse-teo.store">테오</option>
-          </select>
+            <Style.ServerOption value="">MSW</Style.ServerOption>
+            <Style.ServerOption value="https://woowacourse-sunshot.store">
+              썬샷
+            </Style.ServerOption>
+            <Style.ServerOption value="https://woowacours-abel.store">
+              아벨
+            </Style.ServerOption>
+            <Style.ServerOption value="https://woowacourse-teo.store">
+              테오
+            </Style.ServerOption>
+          </Style.ServerSelectBox>
         </Style.LogoContainer>
         <Style.CartContainer>
           <Style.Cart onClick={() => navigate('/cart')}>장바구니</Style.Cart>
-          <CartListLengthViewer />
+          <ErrorBoundary fallback={<></>}>
+            <Suspense fallback={<Style.CartAmount>0</Style.CartAmount>}>
+              <CartListLengthViewer />
+            </Suspense>
+          </ErrorBoundary>
+          <Style.Order onClick={() => navigate('/order')}>
+            주문 목록
+          </Style.Order>
         </Style.CartContainer>
       </Style.ContentWrapper>
     </Style.Container>
@@ -54,6 +64,7 @@ export const Header = () => {
 };
 
 const Style = {
+  ...CartAmountStyle,
   Container: styled.div`
     display: flex;
     justify-content: center;
@@ -65,7 +76,9 @@ const Style = {
     top: 0;
     left: 0;
 
-    background-color: #333333;
+    background-color: white;
+    z-index: 999;
+    border-bottom: 1px solid #d0d0d0;
 
     @media screen and (max-width: 480px) {
       max-width: 100%;
@@ -92,22 +105,20 @@ const Style = {
 
     cursor: pointer;
   `,
-  Logo: styled.h1`
-    margin-top: 5px;
-    padding: 0;
+  Logo: styled.img`
+    width: 170px;
+    height: 40px;
 
-    font-size: 40px;
-    font-weight: 300;
-
-    color: white;
+    cursor: pointer;
 
     @media screen and (max-width: 480px) {
-      font-size: 24px;
+      width: 100px;
+      height: 23px;
     }
   `,
   CartContainer: styled.div`
     display: flex;
-    gap: 10px;
+    gap: 5px;
 
     cursor: pointer;
   `,
@@ -118,6 +129,34 @@ const Style = {
     font-size: 24px;
     font-weight: 300;
 
-    color: white;
+    @media screen and (max-width: 480px) {
+      font-size: 15px;
+    }
+
+    /* color: white; */
   `,
+  ServerSelectBox: styled.select`
+    width: 102px;
+    height: 42px;
+    border: 1px solid #d0d0d0;
+    border-radius: 5px;
+
+    @media screen and (max-width: 480px) {
+      height: 30px;
+    }
+  `,
+  Order: styled.h1`
+    margin-top: 4px;
+    margin-left: 15px;
+    padding: 0;
+
+    font-size: 24px;
+    font-weight: 300;
+
+    @media screen and (max-width: 480px) {
+      font-size: 15px;
+      margin-left: 0px;
+    }
+  `,
+  ServerOption: styled.option``,
 };

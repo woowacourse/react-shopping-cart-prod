@@ -4,7 +4,7 @@ import { base64 } from '../../constants/user';
 export const useProductFetch = () => {
   const apiEndPoint = useRecoilValue(APIAtom);
 
-  const getProductList = async () => {
+  const getProductList = async (apiEndPoint: string) => {
     const response = await fetch(`${apiEndPoint}/products`, {
       method: 'GET',
       headers: {
@@ -21,6 +21,7 @@ export const useProductFetch = () => {
     const response = await fetch(`${apiEndPoint}/products/${id}`, {
       method: 'GET',
       headers: {
+        Authorization: `Basic ${base64}`,
         'Content-Type': 'application/json',
       },
     });
@@ -30,7 +31,7 @@ export const useProductFetch = () => {
   };
 
   return {
-    getProductList,
+    getProductItems: getProductList,
     getProductDetailById,
   };
 };

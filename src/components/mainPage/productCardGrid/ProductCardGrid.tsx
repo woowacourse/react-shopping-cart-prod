@@ -1,13 +1,14 @@
 import styled from 'styled-components';
-import { Product } from '../../../types/Product';
 
 import { ProductCard } from '../productCard/ProductCard';
+import { productItemsState } from '../../../recoil/atoms/productItemsAtom';
+import { useRecoilValue } from 'recoil';
+import { APIAtom } from '../../../recoil/atoms/serverAtom';
 
-interface ProductCardListProps {
-  products: Product[];
-}
+export const ProductCardGrid = () => {
+  const apiEndPoint = useRecoilValue(APIAtom);
+  const products = useRecoilValue(productItemsState(apiEndPoint));
 
-export const ProductCardGrid = ({ products }: ProductCardListProps) => {
   return (
     <Style.Container>
       {products.map((product) => (
@@ -26,8 +27,6 @@ const Style = {
     row-gap: 86px;
 
     @media screen and (max-width: 480px) {
-      padding: 0 10px;
-
       grid-template-columns: repeat(2, 1fr);
       column-gap: 27px;
       row-gap: 56px;

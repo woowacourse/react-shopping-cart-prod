@@ -13,7 +13,7 @@ export const Counter = ({ quantity, onQuantityChange }: CounterProps) => {
   };
 
   const handleDecrease = () => {
-    onQuantityChange(quantity ? quantity - 1 : quantity);
+    onQuantityChange(quantity - 1);
   };
 
   const handleChangeInput: React.ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -22,7 +22,7 @@ export const Counter = ({ quantity, onQuantityChange }: CounterProps) => {
     if (inputCount <= 0) return onQuantityChange(1);
     if (inputCount > 999) return onQuantityChange(999);
 
-    onQuantityChange(Number(e.target.value));
+    onQuantityChange(inputCount);
   };
 
   return (
@@ -40,16 +40,19 @@ export const Counter = ({ quantity, onQuantityChange }: CounterProps) => {
 
 const Style = {
   Container: styled.div`
-    width: 75px;
-    height: 28px;
+    width: 120px;
+    height: 35px;
 
     display: flex;
     flex-wrap: nowrap;
+    flex-shrink: 0;
 
     border: 1px solid lightgray;
+    background-color: white;
   `,
   Input: styled.input`
     width: 23px;
+    height: 35px;
 
     text-align: center;
 

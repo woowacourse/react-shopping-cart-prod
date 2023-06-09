@@ -1,55 +1,37 @@
 import styled from 'styled-components';
 import { CartItemList } from './CartItemList';
-import { selector, useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import {
   cartItemsState,
   selectedCartIdListState,
 } from '../../../recoil/atoms/cartAtom';
 import { CheckBox } from '../../../layout/checkBox/CheckBox';
-import { useCartRecoil } from '../../../hooks/recoil/useCartRecoil';
-import { useCartFetch } from '../../../hooks/fetch/useCartFetch';
-
-const isAllCheckBoxSelectedState = selector({
-  key: 'isAllCheckBoxSelectedState',
-  get: ({ get }) => {
-    const cartItems = get(cartItemsState);
-    const selectedCartIdList = get(selectedCartIdListState);
-
-    return (
-      cartItems.filter((cartItem) => !selectedCartIdList.includes(cartItem.id))
-        .length === 0
-    );
-  },
-});
+import { priceSummaryState } from '../../../recoil/selectors/priceSummarySelector';
+import { getCommaAddedNumber } from '../../../utils/number';
+import { checkBoxSelector } from '../../../recoil/selectors/cartItemsSelector';
+import { useCartItemSelect } from '../../../hooks/cartPage/useCartItemSelect';
+import { OrderModal } from '../orderModal/OrderModal';
+import { useState } from 'react';
+import { APIAtom } from '../../../recoil/atoms/serverAtom';
 
 export const CartItemsSection = () => {
-  const cartItems = useRecoilValue(cartItemsState);
-  const isAllCheckBoxChecked = useRecoilValue(isAllCheckBoxSelectedState);
-  const [selectedCartIdList, setSelectedCartIdList] = useRecoilState(
-    selectedCartIdListState
+  const apiEndPoint = useRecoilValue(APIAtom);
+  const cartItems = useRecoilValue(cartItemsState(apiEndPoint));
+
+  const { isAllCheckBoxChecked } = useRecoilValue(checkBoxSelector);
+  const selectedCartIdList = useRecoilValue(
+    selectedCartIdListState(apiEndPoint)
   );
+  const { totalPrice } = useRecoilValue(priceSummaryState);
 
-  const { deleteRecoilCartById, getAllCartIdList: getCartItemIdList } =
-    useCartRecoil();
-  const { deleteCartItemById } = useCartFetch();
+  const { deleteSelectedProduct, toggleAllCheckBoxChecked } =
+    useCartItemSelect();
 
-  const deleteSelectedProduct = () => {
-    selectedCartIdList.forEach((selectedCartId) => {
-      deleteRecoilCartById(selectedCartId);
-      deleteCartItemById(selectedCartId);
-    });
-  };
-
-  const toggleAllCheckBoxChecked: React.ChangeEventHandler<HTMLInputElement> = (
-    e
-  ) => {
-    if (e.target.checked)
-      return setSelectedCartIdList(() => getCartItemIdList());
-    setSelectedCartIdList(() => []);
-  };
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <Style.Container>
+      {isModalOpen && <OrderModal closeModal={() => setIsModalOpen(false)} />}
       <Style.Header>
         <Style.HeaderTitle>배송상품 ({cartItems.length}개)</Style.HeaderTitle>
       </Style.Header>
@@ -63,10 +45,50 @@ export const CartItemsSection = () => {
         <Style.SelectedProductCount>
           전체선택 ({selectedCartIdList.length}/{cartItems.length})
         </Style.SelectedProductCount>
-        <Style.DeleteSelectedProductButton onClick={deleteSelectedProduct}>
+        <Style.DeleteSelectedProductButton
+          onClick={() =>
+            deleteSelectedProduct('선택한 상품들을 삭제하시겠습니까?')
+          }
+        >
           선택삭제
         </Style.DeleteSelectedProductButton>
       </Style.SelectOrDeleteContainer>
+      <Style.BottomOrderSummary>
+        <Style.TotalPrice>
+          총 금액: {getCommaAddedNumber(totalPrice)}원
+        </Style.TotalPrice>
+        <Style.OrderNavigation>
+          <Style.SelectAllButtonContainer>
+            <CheckBox
+              isChecked={isAllCheckBoxChecked}
+              id={Math.random()}
+              handleClickCheckBox={toggleAllCheckBoxChecked}
+            />
+            <Style.SelectedProductCount>
+              <Style.Caption>전체선택</Style.Caption>
+              <Style.Caption>
+                ({selectedCartIdList.length}/{cartItems.length})
+              </Style.Caption>
+            </Style.SelectedProductCount>
+          </Style.SelectAllButtonContainer>
+          <Style.DeleteSelectedItemsButton
+            onClick={() =>
+              deleteSelectedProduct('선택한 상품들을 삭제하시겠습니까?')
+            }
+          >
+            선택삭제
+          </Style.DeleteSelectedItemsButton>
+          <Style.OrderButton
+            onClick={() => {
+              if (selectedCartIdList.length === 0)
+                return alert('상품을 선택해주세요!');
+              setIsModalOpen(true);
+            }}
+          >
+            주문하기
+          </Style.OrderButton>
+        </Style.OrderNavigation>
+      </Style.BottomOrderSummary>
     </Style.Container>
   );
 };
@@ -78,23 +100,45 @@ const Style = {
 
     display: flex;
     flex-direction: column;
+    align-items: center;
+
+    padding-bottom: 70px;
+
+    @media screen and (max-width: 480px) {
+      width: 100vw;
+
+      align-items: center;
+    }
   `,
   Header: styled.div`
     width: 100%;
     height: 56px;
 
     border-bottom: 4px solid #aaaaaa;
+
+    @media screen and (max-width: 480px) {
+      width: 90vw;
+      height: 40px;
+
+      align-items: center;
+    }
   `,
   HeaderTitle: styled.h2`
     font-size: 20px;
     color: #333333;
   `,
   SelectOrDeleteContainer: styled.div`
+    width: 100%;
+
     display: flex;
     align-items: center;
     gap: 13px;
 
     margin-top: 23px;
+
+    @media screen and (max-width: 480px) {
+      display: none;
+    }
   `,
   CheckBox: styled.div`
     width: 28px;
@@ -102,7 +146,8 @@ const Style = {
 
     border: 1px solid #22a6a2;
   `,
-  SelectedProductCount: styled.span`
+  SelectedProductCount: styled.div`
+    width: max-content;
     font-size: 16px;
   `,
   DeleteSelectedProductButton: styled.button`
@@ -115,5 +160,67 @@ const Style = {
 
     border: 1px solid #bbbbbb;
     font-family: var(--baemin-font);
+  `,
+  BottomOrderSummary: styled.div`
+    width: 100vw;
+    height: 140px;
+
+    position: fixed;
+    bottom: 0;
+
+    @media screen and (min-width: 480px) {
+      display: none;
+    }
+  `,
+  TotalPrice: styled.div`
+    width: 100vw;
+    height: 50px;
+
+    display: flex;
+    align-items: center;
+
+    background-color: #f0f0f0;
+    padding-left: 20px;
+    border-top: 1px solid #d0d0d0;
+    font-size: 18px;
+  `,
+  OrderNavigation: styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background-color: white;
+    border-top: 1px solid #d0d0d0;
+    padding-left: 20px;
+  `,
+  SelectAllButtonContainer: styled.div`
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  `,
+  DeleteSelectedItemsButton: styled.button`
+    height: 89px;
+
+    font-size: 16px;
+    color: rgb(57 57 57);
+    font-family: var(--baemin-font);
+  `,
+  OrderButton: styled.button`
+    all: unset;
+
+    width: 120px;
+    height: 89px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 24px;
+    color: white;
+    background-color: rgb(42, 193, 188);
+    box-sizing: border-box;
+  `,
+  Caption: styled.span`
+    color: rgb(57 57 57);
   `,
 };

@@ -1,19 +1,35 @@
 import styled from 'styled-components';
 
-import { Product } from '../../../types/Product';
 import { AddCartButton } from './AddCartButton';
 import { getCommaAddedNumber } from '../../../utils/number';
+import { ErrorBoundary } from 'react-error-boundary';
 
-export const ProductCard = ({ id, name, price, imageUrl }: Product) => {
+interface ProductCardProps {
+  id: number;
+  name: string;
+  price: number;
+  imageUrl: string;
+}
+
+export const ProductCard = ({
+  id,
+  name,
+  price,
+  imageUrl,
+}: ProductCardProps) => {
   return (
     <Style.Container>
       <Style.Image src={imageUrl} alt="상품 이미지" />
+      <ErrorBoundary fallback={<></>}>
+        <Style.AddCartButtonContainer>
+          <AddCartButton productId={id} />
+        </Style.AddCartButtonContainer>
+      </ErrorBoundary>
       <Style.DescriptionContainer>
         <Style.NamePriceContainer>
           <Style.Name>{name}</Style.Name>
           <Style.Price>{getCommaAddedNumber(price)}원</Style.Price>
         </Style.NamePriceContainer>
-        <AddCartButton productId={id} />
       </Style.DescriptionContainer>
     </Style.Container>
   );
@@ -27,6 +43,8 @@ const Style = {
     display: flex;
     flex-direction: column;
     gap: 18px;
+
+    position: relative;
 
     @media screen and (max-width: 480px) {
       width: 150px;
@@ -67,10 +85,20 @@ const Style = {
     }
   `,
   Price: styled.span`
-    font-size: 20px;
+    font-size: 25px;
 
     @media screen and (max-width: 480px) {
-      font-size: 16px;
+      font-size: 20px;
+    }
+  `,
+  AddCartButtonContainer: styled.div`
+    position: absolute;
+    top: calc(283px - 28px - 15px);
+    right: 10px;
+
+    @media screen and (max-width: 480px) {
+      top: calc(150px - 28px - 10px);
+      right: 5px;
     }
   `,
 };

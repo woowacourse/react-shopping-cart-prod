@@ -1,10 +1,11 @@
 import { Meta } from '@storybook/react';
-import { RecoilRoot, useSetRecoilState } from 'recoil';
+import { RecoilRoot, useRecoilValue, useSetRecoilState } from 'recoil';
 import { GlobalStyle } from '../GlobalStyle';
 import { CartItemsSection } from '../components/cartPage/cartItemsSection/CartItemsSection';
-import { CartProductDetail, cartItemsState } from '../recoil/atoms/cartAtom';
+import { CartItemDetail, cartItemsState } from '../recoil/atoms/cartAtom';
 import { useEffect } from 'react';
 import { useMockData } from '../hooks/useMockData';
+import { APIAtom } from '../recoil/atoms/serverAtom';
 
 const meta = {
   title: 'CartItems',
@@ -24,12 +25,13 @@ const meta = {
 export default meta;
 
 export const CartItemsComponent = () => {
-  const setCartItems = useSetRecoilState(cartItemsState);
+  const apiEndPoint = useRecoilValue(APIAtom);
+  const setCartItems = useSetRecoilState(cartItemsState(apiEndPoint));
   const { mockData } = useMockData();
 
   useEffect(() => {
     setCartItems(() => {
-      const cartItems: CartProductDetail[] = [];
+      const cartItems: CartItemDetail[] = [];
 
       Array.from({ length: 5 }).forEach((_, index) => {
         cartItems.push({
@@ -38,8 +40,6 @@ export const CartItemsComponent = () => {
           product: mockData[index],
         });
       });
-
-      console.log(cartItems);
 
       return cartItems;
     });

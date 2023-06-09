@@ -1,18 +1,20 @@
 import { useState } from 'react';
-import { ShoppingCartIcon } from '../../../assets/ShoppingCartIcon';
 import { useCartRecoil } from '../../../hooks/recoil/useCartRecoil';
 import { Counter } from '../../../layout/counter/Counter';
 import { useCartFetch } from '../../../hooks/fetch/useCartFetch';
-import Loading from '../../common/Loading';
+import { Loading } from '../../common/Loading';
 import { useRecoilValue } from 'recoil';
 import { cartItemsState } from '../../../recoil/atoms/cartAtom';
+import styled from 'styled-components';
+import { APIAtom } from '../../../recoil/atoms/serverAtom';
 
 interface AddCartButtonProps {
   productId: number;
 }
 
 export const AddCartButton = ({ productId }: AddCartButtonProps) => {
-  const cartItems = useRecoilValue(cartItemsState);
+  const apiEndPoint = useRecoilValue(APIAtom);
+  const cartItems = useRecoilValue(cartItemsState(apiEndPoint));
   const initialQuantity =
     cartItems.find((cartItem) => cartItem.product.id === productId)?.quantity ??
     1;
@@ -45,6 +47,11 @@ export const AddCartButton = ({ productId }: AddCartButtonProps) => {
   const deleteCartItem = () => {
     if (cartId === undefined) return;
 
+    // eslint-disable-next-line no-restricted-globals
+    const isUserWantDelete = confirm('상품을 장바구니에서 삭제하시겠습니까?');
+
+    if (!isUserWantDelete) return;
+
     deleteRecoilCartById(cartId);
     deleteCartItemById(cartId);
   };
@@ -72,10 +79,36 @@ export const AddCartButton = ({ productId }: AddCartButtonProps) => {
           onQuantityChange={handleChangeQuantity}
         />
       ) : isLoading ? (
-        <Loading />
+        <Style.LoadingBackground>
+          <Loading width={20} height={20} />
+        </Style.LoadingBackground>
       ) : (
-        <ShoppingCartIcon handleClick={handleClickShoppingCartIcon} />
+        <Style.ShoppingCartImage
+          src={`${process.env.PUBLIC_URL}/plusIcon.svg`}
+          alt="장바구니 추가 버튼"
+          onClick={handleClickShoppingCartIcon}
+        />
       )}
     </>
   );
+};
+
+const Style = {
+  ShoppingCartImage: styled.img`
+    width: 35px;
+    height: 35px;
+
+    cursor: pointer;
+  `,
+  LoadingBackground: styled.div`
+    width: 35px;
+    height: 35px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 50%;
+    background-color: white;
+  `,
 };

@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 import { CheckBox } from '../../../layout/checkBox/CheckBox';
-import { useCartRecoil } from '../../../hooks/recoil/useCartRecoil';
 import { Counter } from '../../../layout/counter/Counter';
-import { useCartFetch } from '../../../hooks/fetch/useCartFetch';
 import { useSelectedCartRecoil } from '../../../hooks/recoil/useSelectedCartRecoil';
 import { useRecoilValue } from 'recoil';
 import { cartItemsState } from '../../../recoil/atoms/cartAtom';
+import { useCartItem } from '../../../hooks/cartPage/useCartItem';
+import { APIAtom } from '../../../recoil/atoms/serverAtom';
 
-interface ProductSelectItemProps {
+interface CartItemProps {
   cartId: number;
   productId: number;
   name: string;
@@ -21,44 +21,16 @@ export const CartItem = ({
   name,
   price,
   imageUrl,
-}: ProductSelectItemProps) => {
-  const cartItems = useRecoilValue(cartItemsState);
+}: CartItemProps) => {
+  const apiEndPoint = useRecoilValue(APIAtom);
+  const cartItems = useRecoilValue(cartItemsState(apiEndPoint));
   const initialQuantity =
     cartItems.find((cartItem) => cartItem.id === cartId)?.quantity ?? 1;
 
-  const { deleteRecoilCartById, patchRecoilCartItemQuantity } = useCartRecoil();
-  const {
-    getIsSelectedCartIdListIncludes,
-    addNewSelectedCartId,
-    deleteSelectedCartId,
-  } = useSelectedCartRecoil();
+  const { getIsSelectedCartIdListIncludes } = useSelectedCartRecoil();
 
-  const { deleteCartItemById, patchCartItemQuantity } = useCartFetch();
-
-  const handleDeleteCartItem = () => {
-    // eslint-disable-next-line no-restricted-globals
-    const isUserWantToDeleteProduct = confirm(`${name}을 삭제하시겠습니까?`);
-
-    if (!isUserWantToDeleteProduct) return;
-
-    deleteCartItemById(cartId);
-    deleteRecoilCartById(cartId);
-  };
-
-  const handleClickCheckBox: React.ChangeEventHandler<HTMLInputElement> = (
-    e
-  ) => {
-    if (e.target.checked) return addNewSelectedCartId(cartId);
-
-    deleteSelectedCartId(cartId);
-  };
-
-  const handleChangeQuantity = (quantity: number) => {
-    if (quantity <= 0) return handleDeleteCartItem();
-
-    patchRecoilCartItemQuantity(cartId, quantity);
-    patchCartItemQuantity(cartId, quantity);
-  };
+  const { handleChangeQuantity, handleClickCheckBox, handleDeleteCartItem } =
+    useCartItem(cartId, name);
 
   return (
     <Style.Container>
@@ -69,12 +41,14 @@ export const CartItem = ({
           id={productId}
         />
         <Style.ProductImage src={imageUrl} alt={name} />
-        <Style.ProductName>{name}</Style.ProductName>
         <Style.ProductSelectorContainer>
-          <Style.DeleteIcon
-            src={`${process.env.PUBLIC_URL}/trashCan.png`}
-            onClick={handleDeleteCartItem}
-          />
+          <Style.ProductNameAndDeleteButtonContainer>
+            <Style.ProductName>{name}</Style.ProductName>
+            <Style.DeleteIcon
+              src={`${process.env.PUBLIC_URL}/trashCan.png`}
+              onClick={handleDeleteCartItem}
+            />
+          </Style.ProductNameAndDeleteButtonContainer>
           <Counter
             quantity={initialQuantity}
             onQuantityChange={handleChangeQuantity}
@@ -97,6 +71,10 @@ const Style = {
     &:not(:last-child) {
       border-bottom: 1.5px solid #aaaaaa;
     }
+
+    @media screen and (max-width: 480px) {
+      width: 90vw;
+    }
   `,
   Content: styled.div`
     width: 740px;
@@ -104,6 +82,11 @@ const Style = {
 
     display: flex;
     gap: 15px;
+
+    @media screen and (max-width: 480px) {
+      width: 90vw;
+      gap: 10px;
+    }
   `,
   CheckBox: styled.div`
     width: 28px;
@@ -114,30 +97,63 @@ const Style = {
   ProductImage: styled.img`
     width: 144px;
     height: 147px;
+
+    @media screen and (max-width: 480px) {
+      width: 100px;
+      height: 100px;
+
+      border-radius: 15px;
+    }
   `,
   ProductName: styled.div`
-    width: 389px;
+    /* width: 500px; */
 
     font-size: 20px;
     color: #333333;
+
+    @media screen and (max-width: 480px) {
+      width: fit-content;
+      font-size: 15px;
+    }
   `,
   ProductSelectorContainer: styled.div`
-    min-width: 114px;
+    width: calc(740px - 28px - 144px - 30px);
     height: 147px;
 
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
     justify-content: space-between;
-    gap: 23px;
+    align-items: flex-start;
+
+    @media screen and (max-width: 480px) {
+      width: calc(90vw - 28px - 100px - 30px);
+
+      height: 136px;
+    }
+  `,
+  ProductNameAndDeleteButtonContainer: styled.div`
+    width: calc(740px - 28px - 144px - 30px);
+    display: flex;
+    align-items: center;
+
+    justify-content: space-between;
+
+    @media screen and (max-width: 480px) {
+      width: calc(90vw - 28px - 100px - 30px);
+    }
   `,
   DeleteIcon: styled.img`
-    width: 24px;
-    height: 24px;
+    width: 30px;
+    height: 30px;
 
     cursor: pointer;
+
+    @media screen and (max-width: 480px) {
+      width: 25px;
+      height: 25px;
+    }
   `,
   ProductPrice: styled.span`
-    font-size: 16px;
+    font-size: 20px;
   `,
 };

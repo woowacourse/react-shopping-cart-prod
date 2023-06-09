@@ -1,23 +1,23 @@
 import { rest } from 'msw';
 import {
   CART_ITEMS_KEY,
-  getCartItems,
-  getProductList,
+  getCartItemsFromLocalStorage,
+  getProductListFromLocalStorage,
 } from '../utils/localStorage';
 
 export const cartHandlers = [
   rest.get('/cart-items', (_, res, ctx) => {
-    const cartItems = getCartItems();
+    const cartItems = getCartItemsFromLocalStorage();
 
-    return res(ctx.json(cartItems), ctx.status(200));
+    return res(ctx.json(cartItems), ctx.status(200), ctx.delay(2000));
   }),
   rest.post('/cart-items', async (req, res, ctx) => {
     const requestData = await req.json();
     const productId = await requestData.productId;
     const randomCartId = Math.random();
 
-    const cartItems = getCartItems();
-    const productList = getProductList();
+    const cartItems = getCartItemsFromLocalStorage();
+    const productList = getProductListFromLocalStorage();
 
     const product = productList.find((p) => p.id === productId);
 
@@ -51,7 +51,7 @@ export const cartHandlers = [
     const quantity = await requestData.quantity;
     const productId = Number(req.params.id);
 
-    const cartItems = getCartItems();
+    const cartItems = getCartItemsFromLocalStorage();
 
     if (!cartItems.some((cartItem) => cartItem.id === productId))
       return res(
@@ -73,7 +73,7 @@ export const cartHandlers = [
   }),
   rest.delete('/cart-items/:id', (req, res, ctx) => {
     const productId = Number(req.params.id);
-    const cartItems = getCartItems();
+    const cartItems = getCartItemsFromLocalStorage();
 
     if (!cartItems.some((cartItem) => cartItem.id === productId))
       return res(

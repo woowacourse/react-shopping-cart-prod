@@ -1,15 +1,9 @@
 import styled from 'styled-components';
 import { CartItem } from './CartItem';
-import { Product } from '../../../types/Product';
-
-interface CartItemType {
-  id: number;
-  quantity: number;
-  product: Product;
-}
+import { CartItemDetail } from '../../../recoil/atoms/cartAtom';
 
 interface CartProductListProps {
-  cartItemList: CartItemType[];
+  cartItemList: CartItemDetail[];
 }
 
 export const CartItemList = ({ cartItemList }: CartProductListProps) => {
@@ -36,5 +30,9 @@ const Style = {
 
     display: flex;
     flex-direction: column;
+
+    @media screen and (max-width: 480px) {
+      width: 90vw;
+    }
   `,
 };

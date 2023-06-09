@@ -1,22 +1,25 @@
 import { selector, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { cartItemsState } from '../../recoil/atoms/cartAtom';
+import { APIAtom } from '../../recoil/atoms/serverAtom';
 
 const cartProductListLengthState = selector({
   key: 'cartProductListLengthState',
   get: ({ get }) => {
-    const cartList = get(cartItemsState);
+    const apiEndPoint = get(APIAtom);
+    const cartList = get(cartItemsState(apiEndPoint));
 
     return cartList.length;
   },
 });
 
 export const CartListLengthViewer = () => {
-  const cartListLength = useRecoilValue(cartProductListLengthState);
-  return <Style.CartAmount>{cartListLength}</Style.CartAmount>;
+  const cartItemsLength = useRecoilValue(cartProductListLengthState);
+
+  return <Style.CartAmount>{cartItemsLength}</Style.CartAmount>;
 };
 
-const Style = {
+export const Style = {
   CartAmount: styled.div`
     display: flex;
     justify-content: center;
@@ -28,8 +31,14 @@ const Style = {
 
     padding-top: 3px;
 
-    background-color: #04c09e;
+    background-color: rgb(42, 193, 188);
     color: white;
     font-size: 16px;
+
+    @media screen and (max-width: 480px) {
+      width: 20px;
+      height: 20px;
+      font-size: 15px;
+    }
   `,
 };
