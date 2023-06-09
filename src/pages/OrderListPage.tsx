@@ -2,7 +2,7 @@ import { styled } from 'styled-components';
 import { Suspense } from 'react';
 import LoadingSpinner from '../components/common/LoadingSpinner/LoadingSpinner';
 import OrderList from '../components/order/OrderList/OrderList';
-import PageContentErrorBoundary from '../errorHandler/ProductsErrorBoundary';
+import PageContentErrorBoundary from '../errorHandler/PageContentErrorBoundary';
 import Colors from '../constant/Colors';
 
 const OrderListPage = () => {

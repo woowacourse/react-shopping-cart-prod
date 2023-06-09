@@ -5,7 +5,7 @@ import ProductList from '../components/product/ProductList/ProductList';
 import ProductFallBack from '../components/product/ProductFallBack/ProductFallBack';
 import CouponBannerImage from '../assets/CouponBanner.png';
 import CouponBannerImageSmall from '../assets/CouponBannerSmall.png';
-import PageContentErrorBoundary from '../errorHandler/ProductsErrorBoundary';
+import PageContentErrorBoundary from '../errorHandler/PageContentErrorBoundary';
 
 const ProductListPage = () => {
   return (
