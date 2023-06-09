@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 
 import SpinnerContainer from '../../components/common/SpinnerContainer/SpinnerContainer';
 import { StoryContainerWrapper } from '../styles';

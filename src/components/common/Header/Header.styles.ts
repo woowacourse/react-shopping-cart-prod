@@ -1,18 +1,17 @@
-import styled from 'styled-components';
-
-import { Button } from '../Button/Button.styles';
+import styled, { css } from 'styled-components';
 
 const HeaderContainer = styled.header`
   position: fixed;
   top: 0;
   width: 100%;
-  padding: ${({ theme }) => theme.spacer.spacing3} ${({ theme }) => theme.spacer.spacing4};
+  padding: ${({ theme }) => `${theme.spacer.spacing3} ${theme.spacer.spacing4}`};
+  padding-bottom: 20px;
   background-color: ${({ theme }) => theme.color.white};
   border-bottom: 1px solid ${({ theme }) => theme.color.gray2};
   z-index: 2;
 `;
 
-const HeaderContentContainer = styled.div`
+const HeaderContent = styled.div`
   position: relative;
   max-width: 1080px;
   margin: 0 auto;
@@ -21,7 +20,7 @@ const HeaderContentContainer = styled.div`
   align-items: center;
 `;
 
-const HeaderRightContainer = styled.section`
+const RightContainer = styled.section`
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -30,23 +29,29 @@ const HeaderRightContainer = styled.section`
     margin-left: ${({ theme }) => theme.spacer.spacing2};
     margin-right: 72px;
   }
+
+  @media screen and (max-width: 600px) {
+    & > label {
+      width: 86px;
+      margin-right: 48px;
+      padding-right: 6px;
+
+      & > select {
+        padding: 12px 10px;
+      }
+    }
+  }
 `;
 
 const Logo = styled.img`
   height: 40px;
+
+  @media screen and (max-width: 600px) {
+    height: 28px;
+  }
 `;
 
-const CartButton = styled(Button)`
-  position: absolute;
-  width: initial;
-  padding: 8px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-const CartItemCount = styled.span`
+const Badge = styled.span`
   position: absolute;
   height: 14px;
   right: 8px;
@@ -76,18 +81,32 @@ const CartIcon = styled.img`
   margin-bottom: ${({ theme }) => theme.spacer.spacing1};
 `;
 
-const HeaderButtonLabel = styled.span`
+const ButtonLabel = styled.span`
   font-size: 10px;
   font-weight: 400;
 `;
 
+const buttonStyle = css`
+  position: absolute;
+  width: initial;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  @media screen and (max-width: 600px) {
+    right: -8px;
+  }
+`;
+
 export {
   HeaderContainer,
-  HeaderContentContainer,
-  HeaderRightContainer,
+  HeaderContent,
+  RightContainer,
   Logo,
-  CartButton,
-  CartItemCount,
+  Badge,
   CartIcon,
-  HeaderButtonLabel,
+  ButtonLabel,
+  buttonStyle,
 };

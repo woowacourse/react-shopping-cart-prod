@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-import { ButtonProps } from './Button';
+import type { ButtonProps } from './Button';
 
 const getVariantStyling = (variant: Required<ButtonProps>['variant']) => {
   const style = {
@@ -103,6 +103,8 @@ const Button = styled.button<ButtonProps>`
     background-color: ${({ theme }) => theme.color.gray3};
     border-color: ${({ theme }) => theme.color.gray3};
   }
+
+  ${(props) => props.css}
 `;
 
 export { Button };

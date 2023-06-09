@@ -1,34 +1,45 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useRecoilCallback, useRecoilValue, useSetRecoilState } from 'recoil';
 
-import HTTPError from '../api/HTTPError';
 import { getCartAPI } from '../api/cartAPI';
-import { TOAST_SHOW_DURATION } from '../constants';
-import { CART_API_ERROR_MESSAGE, HTTP_STATUS_CODE } from '../constants/api';
-import { cartItemQuantityState, cartListState } from '../store/cart';
+import { getOrderAPI } from '../api/orderAPI';
+import type HTTPError from '../api/utils/HTTPError';
+import {
+  CART_API_ERROR_MESSAGE,
+  HTTP_STATUS_CODE,
+  ORDER_API_ERROR_MESSAGE,
+} from '../constants/api';
+import { PATH } from '../constants/path';
+import { cartItemQuantityState, cartListCheckoutCostsState, cartListState } from '../store/cart';
+import { checkedCartIdListState } from '../store/cartCheckbox';
 import { errorModalMessageState } from '../store/error';
+import { currentMemberInformationState } from '../store/member';
+import { orderListState } from '../store/order';
 import { currentServerState } from '../store/server';
-import { CartItemData, ProductItemData } from '../types';
-import { APIErrorMessage } from '../types/api';
-import { useMutationFetch } from './common/useMutationFetch';
+import type { APIErrorMessage } from '../types/api';
+import type { CartItemData } from '../types/cart';
+import type { OrderCartItemsData } from '../types/order';
+import type { ProductItemData } from '../types/product';
+import { useLoadWithSetFetchData } from './common/useLoadWithSetFetchData';
+import { useNavigateSearchParams } from './common/useNavigateSearchParams';
+import { useToast } from './common/useToast';
 
 const useCart = () => {
   const currentServer = useRecoilValue(currentServerState);
   const cartAPI = useMemo(() => getCartAPI(currentServer), [currentServer]);
   const setErrorModalMessage = useSetRecoilState(errorModalMessageState);
+  const { isToastAdded, setIsToastAdded } = useToast();
+  const navigate = useNavigateSearchParams();
 
-  const [isAdded, setIsAdded] = useState(false);
-  const timeout = useRef<ReturnType<typeof setTimeout>>();
-
-  useEffect(() => {
-    if (isAdded) {
-      timeout.current && clearTimeout(timeout.current);
-
-      timeout.current = setTimeout(() => {
-        setIsAdded(false);
-      }, TOAST_SHOW_DURATION);
-    }
-  }, [isAdded]);
+  const refreshCart = useRecoilCallback(
+    ({ set, reset }) =>
+      async () => {
+        const newCartList = await cartAPI.getCartList();
+        set(cartListState, newCartList);
+        reset(checkedCartIdListState);
+      },
+    [cartAPI]
+  );
 
   const updateCart = useRecoilCallback(
     ({ set }) =>
@@ -51,7 +62,7 @@ const useCart = () => {
     [setErrorModalMessage]
   );
 
-  const { mutate: addItem } = useMutationFetch<CartItemData, ProductItemData>(
+  const { setData: addItem } = useLoadWithSetFetchData<CartItemData, ProductItemData>(
     useRecoilCallback(
       () => async (product) => {
         const response = await cartAPI.postCartItem(product.id);
@@ -63,16 +74,16 @@ const useCart = () => {
     ),
     {
       onSuccess: (cartItem) => {
-        setIsAdded(true);
+        setIsToastAdded(true);
         updateCart(cartItem);
       },
-      onError(error) {
+      onError: (error) => {
         handleCartError(error, CART_API_ERROR_MESSAGE.ADD);
       },
     }
   );
 
-  const { mutate: updateItemQuantity } = useMutationFetch<
+  const { setData: updateItemQuantity } = useLoadWithSetFetchData<
     void,
     { cartItemId: number; quantity: number }
   >(
@@ -85,47 +96,90 @@ const useCart = () => {
       [cartAPI]
     ),
     {
-      onError(error) {
+      onError: (error) => {
         handleCartError(error, CART_API_ERROR_MESSAGE.UPDATE);
       },
     }
   );
 
-  const { mutate: removeItem } = useMutationFetch<void, number>(
-    useRecoilCallback(
-      ({ set }) =>
-        async (cartItemId) => {
-          await cartAPI.deleteCartItem(cartItemId);
-          const newCartList = await cartAPI.getCartList();
-          set(cartListState, newCartList);
-        },
+  const { setData: removeItem } = useLoadWithSetFetchData<void, number>(
+    useCallback(
+      async (cartItemId) => {
+        await cartAPI.deleteCartItem(cartItemId);
+      },
       [cartAPI]
     ),
     {
-      onError(error) {
+      onSuccess: () => {
+        refreshCart();
+      },
+      onError: (error) => {
         handleCartError(error, CART_API_ERROR_MESSAGE.DELETE);
       },
     }
   );
 
-  const { mutate: removeCheckedItems } = useMutationFetch<void, number[]>(
+  const { setData: removeCheckedItems } = useLoadWithSetFetchData<void, number[]>(
+    useCallback(
+      async (cartItemIds) => {
+        await Promise.all(cartItemIds.map((cartItemId) => cartAPI.deleteCartItem(cartItemId)));
+      },
+      [cartAPI]
+    ),
+    {
+      onSuccess: () => {
+        refreshCart();
+      },
+      onError: (error) => {
+        handleCartError(error, CART_API_ERROR_MESSAGE.DELETE);
+      },
+    }
+  );
+
+  const { setData: orderCheckedItems } = useLoadWithSetFetchData<string, number[]>(
     useRecoilCallback(
-      ({ set }) =>
+      ({ snapshot }) =>
         async (cartItemIds) => {
-          await Promise.all(cartItemIds.map((cartItemId) => cartAPI.deleteCartItem(cartItemId)));
-          const newCartList = await cartAPI.getCartList();
-          set(cartListState, newCartList);
+          const cartListCheckoutCosts = await snapshot.getPromise(cartListCheckoutCostsState);
+
+          const orderCartItemsData: OrderCartItemsData = {
+            cartItemIds: [...cartItemIds],
+            ...cartListCheckoutCosts,
+          };
+
+          const orderAPI = getOrderAPI(currentServer);
+          const response = await orderAPI.postOrder(orderCartItemsData);
+          const orderId = response.headers.get('Location')?.split('/').pop()!;
+
+          return orderId;
         },
-      [cartAPI]
+      [currentServer]
     ),
     {
-      onError(error) {
-        handleCartError(error, CART_API_ERROR_MESSAGE.DELETE);
+      onSuccess: useRecoilCallback(
+        ({ refresh }) =>
+          async (orderId) => {
+            navigate(PATH.ORDER_SUCCESS, { orderId });
+            await refreshCart();
+            refresh(currentMemberInformationState);
+            refresh(orderListState);
+          },
+        [refreshCart, navigate]
+      ),
+      onError: (error) => {
+        handleCartError(error, ORDER_API_ERROR_MESSAGE.ADD);
       },
     }
   );
 
-  return { isAdded, addItem, updateItemQuantity, removeItem, removeCheckedItems };
+  return {
+    isToastAdded,
+    addItem,
+    updateItemQuantity,
+    removeItem,
+    removeCheckedItems,
+    orderCheckedItems,
+  };
 };
 
 export { useCart };

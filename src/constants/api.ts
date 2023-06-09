@@ -1,42 +1,48 @@
 const BASE64 = btoa(process.env.REACT_APP_API_USERNAME + ':' + process.env.REACT_APP_API_PASSWORD);
 
-const MEMBER = ['아코', '주디', '저문', '프론트'] as const;
-
-const FRONT_API_BASE_URL =
-  process.env.NODE_ENV === 'production'
-    ? process.env.REACT_APP_FRONT_BASE_URL
-    : process.env.REACT_APP_LOCAL_BASE_URL;
-
-const API_BASE_URL_LIST = {
-  [MEMBER[0]]: process.env.REACT_APP_AK_API_BASE_URL,
-  [MEMBER[1]]: process.env.REACT_APP_JD_API_BASE_URL,
-  [MEMBER[2]]: process.env.REACT_APP_JM_API_BASE_URL,
-  [MEMBER[3]]: FRONT_API_BASE_URL,
-} as const;
-
-const DEFAULT_API_BASE_URL = API_BASE_URL_LIST[MEMBER[0]];
-
-const API_ENDPOINT = {
-  PRODUCTS: '/products',
-  CART_ITEMS: '/cart-items',
-} as const;
-
 const FETCH_DEFAULT_OPTION = {
   headers: {
     Accept: 'application/json',
   },
 } as const;
 
-const CART_FETCH_OPTION_HEADERS = {
+const AUTHORIZED_FETCH_OPTION_HEADERS = {
   'Content-Type': 'application/json',
   Authorization: `Basic ${BASE64}`,
 } as const;
 
+const SERVER = {
+  FRONT: '프론트',
+  AK: '아코',
+  JD: '주디',
+  JM: '저문',
+} as const;
+
+const API_BASE_URL_LIST = {
+  [SERVER.FRONT]: '',
+  [SERVER.AK]: process.env.REACT_APP_AK_API_BASE_URL,
+  [SERVER.JD]: process.env.REACT_APP_JD_API_BASE_URL,
+  [SERVER.JM]: process.env.REACT_APP_JM_API_BASE_URL,
+} as const;
+
+const DEFAULT_API_BASE_URL = API_BASE_URL_LIST[SERVER.FRONT];
+
+const API_ENDPOINT = {
+  PRODUCTS: '/products',
+  CART_ITEMS: '/cart-items',
+  CART_COSTS: '/costs',
+  ORDERS: '/orders',
+  MEMBER: '/member',
+} as const;
+
 const HTTP_STATUS_CODE = {
   OK: 200,
+  CREATED: 201,
   NO_CONTENT: 204,
   BAD_REQUEST: 400,
+  UNAUTHORIZED: 401,
   NOT_FOUND: 404,
+  CONFLICT: 409,
   INTERNAL_SERVER_ERROR: 500,
 } as const;
 
@@ -76,14 +82,22 @@ const CART_API_ERROR_MESSAGE = {
   },
 } as const;
 
+const ORDER_API_ERROR_MESSAGE = {
+  ADD: {
+    [HTTP_STATUS_CODE.BAD_REQUEST]: '일시적인 오류로 장바구니에 있는 상품들을 구매할 수 없습니다.',
+    [HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR]:
+      '일시적인 오류가 발생했습니다. 잠시 후 다시 시도해주세요.',
+  },
+} as const;
+
 export {
-  BASE64,
+  FETCH_DEFAULT_OPTION,
+  AUTHORIZED_FETCH_OPTION_HEADERS,
   API_BASE_URL_LIST,
   DEFAULT_API_BASE_URL,
   API_ENDPOINT,
-  FETCH_DEFAULT_OPTION,
-  CART_FETCH_OPTION_HEADERS,
   HTTP_STATUS_CODE,
   HTTP_ERROR_MESSAGE,
   CART_API_ERROR_MESSAGE,
+  ORDER_API_ERROR_MESSAGE,
 };

@@ -1,7 +1,9 @@
 import styled, { css } from 'styled-components';
+import type { CSSProp } from 'styled-components';
 
 export interface TextProps {
   size?: 'xSmall' | 'small' | 'medium' | 'large';
+  css?: CSSProp;
 }
 
 const getSizeStyling = (size: Required<TextProps>['size']) => {
@@ -29,6 +31,7 @@ const getSizeStyling = (size: Required<TextProps>['size']) => {
 
 const Text = styled.p<TextProps>`
   ${({ size = 'medium' }) => getSizeStyling(size)}
+  ${(props) => props.css}
 `;
 
 export { Text };

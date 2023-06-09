@@ -1,4 +1,4 @@
-import { FETCH_DEFAULT_OPTION } from '../constants/api';
+import { FETCH_DEFAULT_OPTION } from '../../constants/api';
 import HTTPError from './HTTPError';
 import { handleAPIError } from './apiError';
 

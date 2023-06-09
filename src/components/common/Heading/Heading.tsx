@@ -1,8 +1,11 @@
+import type { PropsWithChildren } from 'react';
+import type { CSSProp } from 'styled-components';
+
 import * as S from './Heading.styles';
 
-export interface HeadingProps {
+export interface HeadingProps extends PropsWithChildren {
   size?: 'xSmall' | 'small' | 'medium' | 'large' | 'xLarge' | 'xxLarge';
-  children: string | string[];
+  css?: CSSProp;
 }
 
 const HEADING_TAG_BY_SIZE = {
@@ -14,11 +17,11 @@ const HEADING_TAG_BY_SIZE = {
   xSmall: 'h6',
 } as const;
 
-const Heading = ({ size = 'medium', children }: HeadingProps) => {
+const Heading = ({ size = 'medium', children, ...attributes }: HeadingProps) => {
   const tag = HEADING_TAG_BY_SIZE[size];
 
   return (
-    <S.Heading as={tag} size={size}>
+    <S.Heading as={tag} size={size} className="heading" {...attributes}>
       {children}
     </S.Heading>
   );

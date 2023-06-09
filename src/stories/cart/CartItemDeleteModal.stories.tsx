@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 
 import CartItemDelete from '../../components/cart/CartItemDelete/CartItemDelete';
 import Modal from '../../components/common/Modal/Modal';

@@ -8,8 +8,7 @@ import {
   removeCartItem,
   setCartData,
 } from '../../domain/cart';
-import { PostCartItemRequestBody } from '../../types';
-import { PatchCartItemRequestBody } from '../../types/api';
+import type { PatchCartItemRequestBody, PostCartItemRequestBody } from '../../types/api';
 
 const cartHandlers = [
   rest.get(API_ENDPOINT.CART_ITEMS, (req, res, ctx) => {
@@ -24,14 +23,14 @@ const cartHandlers = [
 
     const newCartList = addCartItem(currentCartData, productId);
 
-    if (!newCartList) {
+    if (newCartList === null) {
       return res(ctx.status(HTTP_STATUS_CODE.NOT_FOUND));
     }
 
     setCartData(newCartList);
 
     return res(
-      ctx.status(201),
+      ctx.status(HTTP_STATUS_CODE.CREATED),
       ctx.set('Location', `${API_ENDPOINT.CART_ITEMS}/${newCartList.at(-1)?.id}`)
     );
   }),
@@ -43,7 +42,7 @@ const cartHandlers = [
 
     const newCartList = changeCartItemQuantity(currentCartData, Number(cartItemId), quantity);
 
-    if (!newCartList) {
+    if (newCartList === null) {
       return res(ctx.status(HTTP_STATUS_CODE.NOT_FOUND));
     }
 
@@ -57,7 +56,7 @@ const cartHandlers = [
     const currentCartData = getCartData();
     const newCartList = removeCartItem(currentCartData, Number(cartItemId));
 
-    if (currentCartData.length === 0 || !newCartList) {
+    if (currentCartData.length === 0 || newCartList === null) {
       return res(ctx.status(HTTP_STATUS_CODE.NOT_FOUND));
     }
 

@@ -12,7 +12,7 @@ class HTTPError extends Error {
   information: HTTPErrorInfo;
 
   constructor(statusCode: number, errorInfo: HTTPErrorInfo) {
-    super(errorInfo.message ?? errorInfo.payload?.HEADING);
+    super(errorInfo.message ?? errorInfo.payload.HEADING);
 
     this.name = 'HTTPError';
     this.statusCode = statusCode;

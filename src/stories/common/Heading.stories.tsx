@@ -1,6 +1,7 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 
-import Heading, { HeadingProps } from '../../components/common/Heading/Heading';
+import Heading from '../../components/common/Heading/Heading';
+import type { HeadingProps } from '../../components/common/Heading/Heading';
 import { StoryContainer, StoryInfoContainer } from '../styles';
 
 const meta = {

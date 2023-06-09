@@ -1,22 +1,20 @@
-import { forwardRef } from 'react';
-import type { ComponentPropsWithRef, ForwardedRef } from 'react';
+import type { ComponentPropsWithoutRef } from 'react';
+import type { CSSProp } from 'styled-components';
 
 import * as S from './Button.styles';
 
-export interface ButtonProps extends ComponentPropsWithRef<'button'> {
+export interface ButtonProps extends ComponentPropsWithoutRef<'button'> {
+  css?: CSSProp;
   variant?: 'default' | 'primary' | 'secondary' | 'danger' | 'textButton';
   size?: 'small' | 'medium' | 'large';
 }
 
-const Button = (
-  { variant = 'default', size = 'medium', children, ...attributes }: ButtonProps,
-  ref: ForwardedRef<HTMLButtonElement>
-) => {
+const Button = ({ variant = 'default', size = 'medium', children, ...attributes }: ButtonProps) => {
   return (
-    <S.Button ref={ref} variant={variant} size={size} {...attributes}>
+    <S.Button variant={variant} size={size} {...attributes}>
       {children}
     </S.Button>
   );
 };
 
-export default forwardRef(Button);
+export default Button;

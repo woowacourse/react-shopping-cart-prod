@@ -1,35 +1,27 @@
-import { styled } from 'styled-components';
+import { css, styled } from 'styled-components';
 
-import Button from '../../common/Button/Button';
-import { Text } from '../../common/Text/Text.styles';
-
-const CartItemContainer = styled.li`
+const ItemContainer = styled.li`
   display: flex;
   align-items: center;
-
-  & > p {
-    font-weight: 600;
-  }
 
   @media screen and (max-width: 600px) {
     flex-wrap: wrap;
     align-items: flex-start;
-
-    & .stepper-button {
-      margin-top: -20px;
-      margin-left: 144px;
-    }
   }
 `;
 
-const CartItemImageWrapper = styled.div`
+const ImageWrapper = styled.div`
   width: 80px;
   height: 80px;
   margin-left: ${({ theme }) => theme.spacer.spacing3};
   margin-right: ${({ theme }) => theme.spacer.spacing4};
+
+  @media screen and (max-width: 600px) {
+    margin-right: ${({ theme }) => theme.spacer.spacing3};
+  }
 `;
 
-const CartItemImage = styled.img`
+const ItemImage = styled.img`
   width: 100%;
   height: 100%;
   background-color: ${({ theme }) => theme.color.gray2};
@@ -37,7 +29,48 @@ const CartItemImage = styled.img`
   border-radius: ${({ theme }) => theme.borderRadius.small};
 `;
 
-const CartItemName = styled(Text)`
+const ItemContent = styled.div`
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  row-gap: ${({ theme }) => theme.spacer.spacing2};
+
+  & > p {
+    font-weight: 600;
+  }
+
+  @media screen and (max-width: 600px) {
+    width: calc(100% - 140px);
+  }
+`;
+
+const PriceContainer = styled.div`
+  width: 126px;
+  margin-right: 12px;
+  padding-left: 12px;
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  letter-spacing: -0.2px;
+
+  &.skeleton {
+    min-height: 30px;
+
+    &::after {
+      font-size: 0;
+      content: 'loading';
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    width: 100%;
+    margin-right: ${({ theme }) => theme.spacer.spacing4};
+    padding-left: 0;
+    text-align: left;
+  }
+`;
+
+const nameStyle = css`
   width: 300px;
   margin-right: ${({ theme }) => theme.spacer.spacing4};
   overflow: hidden;
@@ -50,31 +83,17 @@ const CartItemName = styled(Text)`
   }
 
   @media screen and (max-width: 600px) {
-    width: calc(100% - 178px);
+    width: 100%;
   }
 `;
 
-const CartItemPrice = styled(Text)`
-  width: 126px;
-  margin-right: 12px;
-  padding-left: 12px;
-  text-align: right;
-  letter-spacing: -0.2px;
-
-  &.skeleton::after {
-    font-size: 0;
-    content: 'loading';
-  }
-
-  @media screen and (max-width: 600px) {
-    margin-top: -74px;
-    margin-left: 144px;
-    padding-left: 0;
-    text-align: left;
-  }
+const originalPriceStyle = css`
+  color: #b1b3b5;
+  font-weight: normal;
+  text-decoration: line-through;
 `;
 
-const CartItemDeleteButton = styled(Button)`
+const buttonStyle = css`
   width: 30px;
   height: 30px;
   padding: 0;
@@ -108,10 +127,12 @@ const CartItemDeleteButton = styled(Button)`
 `;
 
 export {
-  CartItemContainer,
-  CartItemImageWrapper,
-  CartItemImage,
-  CartItemName,
-  CartItemPrice,
-  CartItemDeleteButton,
+  ItemContainer,
+  ImageWrapper,
+  ItemImage,
+  ItemContent,
+  PriceContainer,
+  nameStyle,
+  originalPriceStyle,
+  buttonStyle,
 };

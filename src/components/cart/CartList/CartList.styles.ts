@@ -1,8 +1,6 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-import { Text } from '../../common/Text/Text.styles';
-
-const CartListContainer = styled.section`
+const ListContainer = styled.section`
   margin-top: 24px;
   width: 760px;
   display: flex;
@@ -27,16 +25,16 @@ const CartListContainer = styled.section`
   }
 `;
 
-const CartListEmptyImage = styled.img`
+const EmptyImage = styled.img`
   width: 150px;
   height: 150px;
   margin-bottom: ${({ theme }) => theme.spacer.spacing3};
 `;
 
-const CartListEmptyMessage = styled(Text)`
+const emptyMessageStyle = css`
   margin-bottom: ${({ theme }) => theme.spacer.spacing4};
   font-weight: 600;
   text-align: center;
 `;
 
-export { CartListContainer, CartListEmptyImage, CartListEmptyMessage };
+export { ListContainer, EmptyImage, emptyMessageStyle };

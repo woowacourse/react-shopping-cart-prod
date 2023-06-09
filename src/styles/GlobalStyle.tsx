@@ -1,6 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 
 import { skeleton } from './animations';
+import theme from './theme';
 
 const GlobalStyle = createGlobalStyle`
    * {
@@ -22,30 +23,28 @@ const GlobalStyle = createGlobalStyle`
     color: #0e0e0e;
   }
 
-  body {
-    width: 100vw;
-    height: 100vh;
-  }
-
   #root {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    min-height: 100%;
-    height: 100%;
-    max-height: max-content;
+    min-height: 100vh;
     display: flex;
     justify-content: space-around;
   }
 
   main {
     position: relative;
-    margin: 0 24px;
-    padding-top: 130px;
+    margin: 0 ${theme.spacer.spacing4};
+    padding-top: 140px;
     padding-bottom: 72px;
     max-width: 1080px;
-    height: fit-content;
+    min-height: 100vh;
+  }
+
+  a {
+    text-decoration: none;
+    cursor: pointer;
   }
 
   .hide-overflow {
@@ -55,14 +54,27 @@ const GlobalStyle = createGlobalStyle`
   .skeleton {
     background: linear-gradient(
       -90deg,
-      ${({ theme }) => theme.color.gray3},
-      ${({ theme }) => theme.color.gray2},
-      ${({ theme }) => theme.color.gray3},
-      ${({ theme }) => theme.color.gray2}
+      ${theme.color.gray3},
+      ${theme.color.gray2},
+      ${theme.color.gray3},
+      ${theme.color.gray2}
     );
     background-size: 400%;
-    border-radius: ${({ theme }) => theme.borderRadius.small};
+    border-radius: ${theme.borderRadius.small};
     animation: ${skeleton} 5s infinite ease-out;
+  }
+
+  .skeleton::after {
+    font-size: 0;
+    content: 'loading';
+  }
+
+  .medium {
+    font-weight: 500;
+  }
+
+  .semi-bold {
+    font-weight: 600;
   }
 `;
 

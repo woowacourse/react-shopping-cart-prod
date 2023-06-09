@@ -3,9 +3,12 @@ import { useRecoilCallback } from 'recoil';
 
 import ProductList from '../../components/product/ProductList/ProductList';
 import ProductListSkeleton from '../../components/product/ProductList/ProductListSkeleton';
+import { useScrollToTop } from '../../hooks/common/useScrollToTop';
 import { productListState } from '../../store/product';
 
 const ProductListPage = () => {
+  useScrollToTop();
+
   const refreshProductList = useRecoilCallback(
     ({ refresh }) =>
       () => {

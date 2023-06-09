@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import { fadeIn, fadeOut, moveUp } from '../../../styles/animations';
-import { ToastProps } from './Toast';
+import type { ToastProps } from './Toast';
 
 const ToastWrapper = styled.div<ToastProps>`
   position: fixed;

@@ -1,4 +1,5 @@
-import Spinner, { SpinnerProps } from '../Spinner/Spinner';
+import Spinner from '../Spinner/Spinner';
+import type { SpinnerProps } from '../Spinner/Spinner';
 import * as S from './SpinnerContainer.styles';
 
 interface SpinnerContainerProps extends SpinnerProps {

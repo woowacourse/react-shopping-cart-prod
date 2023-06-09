@@ -1,37 +1,31 @@
-import { Suspense, useEffect } from 'react';
-import { useRecoilValueLoadable } from 'recoil';
+import { Suspense } from 'react';
 
 import CartCheckoutBox from '../../components/cart/CartCheckoutBox/CartCheckoutBox';
+import CartCheckoutBoxSkeleton from '../../components/cart/CartCheckoutBox/CartCheckoutBoxSkeleton';
 import CartList from '../../components/cart/CartList/CartList';
 import CartListSkeleton from '../../components/cart/CartList/CartListSkeleton';
 import CartListHeader from '../../components/cart/CartListHeader/CartListHeader';
-import { CART_LIST_CHECKBOX_KEY } from '../../constants/store';
-import { useCheckboxList } from '../../hooks/common/useCheckboxList';
-import { cartIdListState } from '../../store/cart';
+import PageHeading from '../../components/common/PageHeading/PageHeading';
+import { useScrollToTop } from '../../hooks/common/useScrollToTop';
 import * as S from './CartPage.style';
 
 const CartPage = () => {
-  const cartIdList = useRecoilValueLoadable(cartIdListState);
-  const { setInitialCheckedList } = useCheckboxList(CART_LIST_CHECKBOX_KEY);
-
-  useEffect(() => {
-    if (cartIdList.state === 'hasValue') {
-      setInitialCheckedList(cartIdList.contents);
-    }
-  }, [cartIdList.contents, cartIdList.state, setInitialCheckedList]);
+  useScrollToTop();
 
   return (
     <>
-      <S.CartPageHeading size="small">장바구니</S.CartPageHeading>
-      <S.CartInformationContainer>
+      <PageHeading>장바구니</PageHeading>
+      <S.InformationContainer>
         <div>
           <CartListHeader />
           <Suspense fallback={<CartListSkeleton />}>
             <CartList />
           </Suspense>
         </div>
-        <CartCheckoutBox />
-      </S.CartInformationContainer>
+        <Suspense fallback={<CartCheckoutBoxSkeleton />}>
+          <CartCheckoutBox />
+        </Suspense>
+      </S.InformationContainer>
     </>
   );
 };

@@ -1,26 +1,29 @@
 import { DefaultValue, atom, selector, selectorFamily } from 'recoil';
 
 import { getCartAPI } from '../api/cartAPI';
-import { CART_LIST_CHECKBOX_KEY } from '../constants/store';
 import { changeCartItemQuantity } from '../domain/cart';
-import { CartItemData } from '../types';
-import { checkedListState } from './checkbox';
+import type { CartCostsData, CartItemData } from '../types/cart';
+import { getCosts } from '../utils/costs';
+import { checkedCartIdListState } from './cartCheckbox';
+import { currentMemberInformationState } from './member';
 import { currentServerState } from './server';
+
+const cartListQuery = selector<CartItemData[]>({
+  key: 'cartListQuery',
+  get: ({ get }) => {
+    const currentServer = get(currentServerState);
+    const cartAPI = getCartAPI(currentServer);
+
+    return cartAPI.getCartList();
+  },
+});
 
 const cartListState = atom<CartItemData[]>({
   key: 'cartList',
-  default: selector({
-    key: 'cartList/default',
-    get: ({ get }) => {
-      const currentServer = get(currentServerState);
-      const cartAPI = getCartAPI(currentServer);
-
-      return cartAPI.getCartList();
-    },
-  }),
+  default: cartListQuery,
 });
 
-const cartIdListState = selector({
+const cartIdListState = selector<number[]>({
   key: 'cartIdList',
   get: ({ get }) => {
     const cartList = get(cartListState);
@@ -67,25 +70,30 @@ const cartItemQuantityState = selectorFamily<number, number>({
     },
 });
 
-const cartListSubTotalState = selector({
-  key: 'cartListSubTotal',
+const cartListCheckoutCostsState = selector<CartCostsData>({
+  key: 'cartListCheckoutPrice',
   get: ({ get }) => {
     const cartList = get(cartListState);
-    const checkedCartItemList = get(checkedListState(CART_LIST_CHECKBOX_KEY));
+    const checkedCartIdList = get(checkedCartIdListState);
+    const memberInformation = get(currentMemberInformationState);
+    const checkedCartItems = cartList.filter((cartItem) => checkedCartIdList.has(cartItem.id));
 
-    const subTotal = cartList
-      .filter((cartItem) => checkedCartItemList.has(cartItem.id))
-      .reduce((acc, curr) => acc + curr.product.price * curr.quantity, 0);
+    const cartCosts = getCosts(checkedCartItems, memberInformation);
 
-    return subTotal;
+    return {
+      ...cartCosts,
+      shippingFee: checkedCartIdList.size === 0 ? 0 : cartCosts.shippingFee,
+      totalPrice: checkedCartIdList.size === 0 ? 0 : cartCosts.totalPrice,
+    };
   },
 });
 
 export {
+  cartListQuery,
   cartListState,
   cartIdListState,
   cartItemIdState,
   cartListItemCountState,
   cartItemQuantityState,
-  cartListSubTotalState,
+  cartListCheckoutCostsState,
 };

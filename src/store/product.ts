@@ -1,16 +1,16 @@
 import { selector } from 'recoil';
 
-import { getProductList } from '../api/productAPI';
-import { ProductItemData } from '../types';
+import { getProductAPI } from '../api/productAPI';
+import type { ProductItemData } from '../types/product';
 import { currentServerState } from './server';
 
 const productListState = selector<ProductItemData[]>({
   key: 'productList',
-  get: async ({ get }) => {
+  get: ({ get }) => {
     const currentServer = get(currentServerState);
-    const productList = await getProductList(currentServer);
+    const productAPI = getProductAPI(currentServer);
 
-    return productList;
+    return productAPI.getProductList();
   },
 });
 

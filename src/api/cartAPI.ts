@@ -1,45 +1,45 @@
-import { API_ENDPOINT, CART_FETCH_OPTION_HEADERS } from '../constants/api';
-import { CartItemData } from '../types';
-import { fetchAPI } from './fetchAPI';
+import { API_ENDPOINT, AUTHORIZED_FETCH_OPTION_HEADERS } from '../constants/api';
+import type { CartItemData } from '../types/cart';
+import { fetchAPI } from './utils/fetchAPI';
 
 const getCartAPI = (baseUrl: string) => {
-  const getCartList = async (): Promise<CartItemData[]> => {
-    return await fetchAPI(`${baseUrl}${API_ENDPOINT.CART_ITEMS}`, {
+  const getCartList = (): Promise<CartItemData[]> => {
+    return fetchAPI(`${baseUrl}${API_ENDPOINT.CART_ITEMS}/`, {
       method: 'GET',
-      headers: { ...CART_FETCH_OPTION_HEADERS },
+      headers: { Authorization: AUTHORIZED_FETCH_OPTION_HEADERS.Authorization },
     });
   };
 
-  const postCartItem = async (productId: number): Promise<Response> => {
+  const postCartItem = (productId: number): Promise<Response> => {
     const data = {
       productId,
     };
     const jsonData = JSON.stringify(data);
 
-    return await fetchAPI(`${baseUrl}${API_ENDPOINT.CART_ITEMS}`, {
+    return fetchAPI(`${baseUrl}${API_ENDPOINT.CART_ITEMS}/`, {
       method: 'POST',
-      headers: { ...CART_FETCH_OPTION_HEADERS },
+      headers: AUTHORIZED_FETCH_OPTION_HEADERS,
       body: jsonData,
     });
   };
 
-  const patchCartItem = async (cartItemId: number, quantity: number): Promise<Response> => {
+  const patchCartItem = (cartItemId: number, quantity: number): Promise<Response> => {
     const data = {
       quantity,
     };
     const jsonData = JSON.stringify(data);
 
-    return await fetchAPI(`${baseUrl}${API_ENDPOINT.CART_ITEMS}/${cartItemId}`, {
+    return fetchAPI(`${baseUrl}${API_ENDPOINT.CART_ITEMS}/${cartItemId}`, {
       method: 'PATCH',
-      headers: { ...CART_FETCH_OPTION_HEADERS },
+      headers: AUTHORIZED_FETCH_OPTION_HEADERS,
       body: jsonData,
     });
   };
 
-  const deleteCartItem = async (cartItemId: number): Promise<Response> => {
-    return await fetchAPI(`${baseUrl}${API_ENDPOINT.CART_ITEMS}/${cartItemId}`, {
+  const deleteCartItem = (cartItemId: number): Promise<Response> => {
+    return fetchAPI(`${baseUrl}${API_ENDPOINT.CART_ITEMS}/${cartItemId}`, {
       method: 'DELETE',
-      headers: { Authorization: CART_FETCH_OPTION_HEADERS.Authorization },
+      headers: { Authorization: AUTHORIZED_FETCH_OPTION_HEADERS.Authorization },
     });
   };
 
