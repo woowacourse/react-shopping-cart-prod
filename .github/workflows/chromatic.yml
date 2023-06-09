@@ -1,10 +1,10 @@
 # Workflow name
-name: "Chromatic Deployment"
+name: 'Chromatic Deployment'
 
 # Event for the workflow
 on:
   push:
-    branches: ["step1"]
+    branches: ['step1']
 
 # List of jobs
 jobs:

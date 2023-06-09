@@ -1,13 +1,13 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import Header from ".";
-import Providers from "../../stories/Providers";
-import { useSetRecoilState } from "recoil";
-import { cartState } from "../../recoil/cartAtoms.ts";
-import type { CartItem, ProductItem } from "../../types/types.ts";
+import type { Meta, StoryObj } from '@storybook/react';
+import Providers from '../../stories/Providers';
+import { useSetRecoilState } from 'recoil';
+import { cartState } from '../../recoil/cartAtoms.ts';
+import type { CartItem, ProductItem } from '../../types/types.ts';
+import Header from './Header.tsx';
 
 const meta = {
   component: Header,
-  title: "Header",
+  title: 'Header',
   decorators: [
     (Story) => (
       <Providers>
@@ -28,12 +28,11 @@ export const Default = {
     const handleAddToCart = () => {
       const newProduct: ProductItem = {
         id: 0,
-        imageUrl: "",
-        name: "",
+        imageUrl: '',
+        name: '',
         price: 0,
       };
       const newItem: CartItem = {
-        checked: false,
         id: 0,
         product: newProduct,
         quantity: 0,
@@ -44,12 +43,11 @@ export const Default = {
     const handleAddTo100Cart = () => {
       const newProduct: ProductItem = {
         id: 0,
-        imageUrl: "",
-        name: "",
+        imageUrl: '',
+        name: '',
         price: 0,
       };
       const newItem: CartItem = {
-        checked: false,
         id: 0,
         product: newProduct,
         quantity: 0,
@@ -61,13 +59,13 @@ export const Default = {
     return (
       <>
         <Header />
-        <div style={{ marginTop: "10px" }}>
+        <div style={{ marginTop: '10px' }}>
           <button
             onClick={handleAddToCart}
             style={{
-              border: "1px black solid",
-              padding: "5px",
-              margin: "5px",
+              border: '1px black solid',
+              padding: '5px',
+              margin: '5px',
             }}
           >
             장바구니에 아무 아이템을 1개 추가
@@ -75,9 +73,9 @@ export const Default = {
           <button
             onClick={handleAddTo100Cart}
             style={{
-              border: "1px black solid",
-              padding: "5px",
-              margin: "5px",
+              border: '1px black solid',
+              padding: '5px',
+              margin: '5px',
             }}
           >
             장바구니에 아무 아이템을 100개 추가

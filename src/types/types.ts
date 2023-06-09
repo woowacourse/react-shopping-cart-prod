@@ -1,21 +1,91 @@
-export interface ProductItem {
+interface ProductItem {
   id: number;
   name: string;
   price: number;
   imageUrl: string;
 }
 
-export interface ReceivedCartItem {
+interface CartItemResponses {
+  cartItems: CartItem[];
+  totalPrice: number;
+}
+
+interface CartItem {
   id: number;
   quantity: number;
   product: ProductItem;
 }
 
-export interface CartItem extends ReceivedCartItem {
-  checked: boolean;
+interface Order {
+  orderId: number;
+  orderItems: OrderItem[];
+  usedCoupons: Coupon[];
+  usedPoint: number;
+  paymentPrice: number;
+  createdAt: string;
 }
 
-export interface NewCartItem extends CartItem {
-  quantity: 1;
-  checked: true;
+interface OrdersResponses {
+  orderResponses: Order[];
 }
+
+interface OrderRequest {
+  orderItems: [
+    {
+      cartItemId: number;
+      productId: number;
+      quantity: number;
+    }
+  ];
+  orderDiscounts: {
+    couponIds: number[];
+    point: number;
+  };
+}
+
+interface OrderItem {
+  id: number;
+  productName: string;
+  productPrice: number;
+  productQuantity: number;
+  imageUrl: string;
+}
+
+interface Coupon {
+  id: number;
+  couponName: string;
+  discountPercent: number;
+  discountAmount: number;
+  minAmount: number;
+}
+
+interface PointHistory {
+  orderId: number;
+  earnedPoint: number;
+  usedPoint: number;
+}
+
+interface Point {
+  pointHistories: PointHistory[];
+  totalPoint: number;
+}
+
+interface Member {
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+}
+
+export type {
+  ProductItem,
+  CartItemResponses,
+  CartItem,
+  Order,
+  OrdersResponses,
+  OrderRequest,
+  OrderItem,
+  Coupon,
+  Point,
+  Member,
+};

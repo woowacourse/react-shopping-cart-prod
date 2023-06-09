@@ -1,10 +1,8 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
-      'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -14,6 +12,8 @@ const GlobalStyle = createGlobalStyle`
   }
   
   * {
+    font-family: 'Spoqa Han Sans Neo', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+      'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     padding: 0;
     margin: 0;
     box-sizing: border-box;
@@ -34,8 +34,6 @@ const GlobalStyle = createGlobalStyle`
 
   html,
   body {
-    font-family: sans-serif;
-    
     margin: 0 auto;
     font-size: 62.5%;
   }

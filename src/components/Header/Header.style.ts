@@ -1,9 +1,13 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const HeaderWrapper = styled.div`
   width: 100vw;
-  color: ${({ theme }) => theme.color.light};
-  border-bottom: 1px solid ${({ theme }) => theme.color.secondary};
+  color: ${({ theme }) => theme.color.white};
+  border-bottom: 1px solid ${({ theme }) => theme.color.gray400};
+  position: sticky;
+  background-color: ${({ theme }) => theme.color.white};
+  top: 0;
+  z-index: ${({ theme }) => theme.zIndex.header};
 `;
 
 export const HeaderContent = styled.div`
@@ -13,43 +17,25 @@ export const HeaderContent = styled.div`
   height: 80px;
 `;
 
-export const CartWrapper = styled.div`
-  display: flex;
-  gap: 10px; 
-`;
-
 export const LogoWrapper = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
 `;
 
-export const LogoImage = styled.img`
+export const BigLogoImage = styled.img`
   height: 35px;
+
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    display: none;
+  }
 `;
 
-export const NavBar = styled.div`
-  display: flex;
-  cursor: pointer;
-  gap: 10px;
-`;
+export const SmallLogoImage = styled.img`
+  height: 80px;
+  display: none;
 
-export const CartTitle = styled.div`
-  font-size: 24px;
-  color: ${({ theme }) => theme.color.dark};
-`;
-
-export const CartCountWrapper = styled.div`
-  border-radius: 50%;
-  background-color: #04c09e;
-  width: 26px;
-  height: 26px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-export const CartCount = styled.div`
-  font-size: 16px;
-  color: #fff;
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    display: block;
+  }
 `;

@@ -1,50 +1,37 @@
-import CartList from "../../components/CartList";
-import PurchaseBox from "../../components/PurchaseBox";
-import {
-  CartTitle,
-  CartWrapper,
-  EmptyCartButton,
-  EmptyCartButtonWrapper,
-  EmptyCartDescription,
-  EmptyCartTitle,
-  EmptyCartWrapper,
-  FatBorder,
-} from "./Cart.style.ts";
-import { CartListTitle } from "../../components/CartList/CartList.style.ts";
-import { useRecoilValue } from "recoil";
-import { cartCountSelector } from "../../recoil/cartAtoms.ts";
-import { useNavigate } from "react-router-dom";
+import * as S from './Cart.style.ts';
+import { useRecoilValue } from 'recoil';
+import { cartCountSelector } from '../../recoil/cartAtoms.ts';
+import { useNavigate } from 'react-router-dom';
+import { FatBorder, PageTitle } from '../../style/style.ts';
+import CartList from '../../components/Cart/CartList/CartList.tsx';
+import { PAGE_PATH } from '../../constants/index.ts';
+import PurchaseBox from '../../components/Cart/PurchaseBox/PurchaseBox.tsx';
 
 function Cart() {
   const cartCount = useRecoilValue(cartCountSelector);
   const navigate = useNavigate();
 
   return (
-    <div>
-      <CartTitle>장바구니</CartTitle>
+    <>
+      <PageTitle>장바구니</PageTitle>
       <FatBorder />
       {cartCount > 0 ? (
-        <>
-          <CartListTitle>든든배송 상품 ({cartCount}개)</CartListTitle>
-          <CartWrapper>
-            <CartList />
+        <S.CartWrapper>
+          <CartList />
+          <S.PurchaseBoxWrapper>
             <PurchaseBox />
-          </CartWrapper>
-        </>
+          </S.PurchaseBoxWrapper>
+        </S.CartWrapper>
       ) : (
-        <EmptyCartWrapper>
-          <div>
-            <EmptyCartTitle>텅</EmptyCartTitle>
-            <EmptyCartDescription>장바구니가 비어있어요.</EmptyCartDescription>
-            <EmptyCartButtonWrapper>
-              <EmptyCartButton onClick={() => navigate("/")}>
-                홈으로 돌아가기
-              </EmptyCartButton>
-            </EmptyCartButtonWrapper>
-          </div>
-        </EmptyCartWrapper>
+        <S.EmptyCartWrapper>
+          <S.EmptyCartTitle>텅</S.EmptyCartTitle>
+          <S.EmptyCartDescription>장바구니가 비어있어요.</S.EmptyCartDescription>
+          <S.EmptyCartButtonWrapper>
+            <S.EmptyCartButton onClick={() => navigate(PAGE_PATH.HOME)}>홈으로 돌아가기</S.EmptyCartButton>
+          </S.EmptyCartButtonWrapper>
+        </S.EmptyCartWrapper>
       )}
-    </div>
+    </>
   );
 }
 
