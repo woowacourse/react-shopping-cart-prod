@@ -5,6 +5,7 @@ import { countCartListSelector } from 'recoil/carts';
 import { ROUTES } from 'utils/constants';
 import SelectServer from './SelectServer';
 import * as S from './Header.styles';
+import { Suspense } from 'react';
 
 const Header = () => {
   const cartCount = useRecoilValue(countCartListSelector);
@@ -33,7 +34,9 @@ const Header = () => {
           >
             <Svg type="cart-icon" width={25} height={22} />
           </S.CartRouteButton>
-          <S.CartCounter>{cartCount}</S.CartCounter>
+          <Suspense fallback={null}>
+            <S.CartCounter>{cartCount}</S.CartCounter>
+          </Suspense>
           <S.LinkToOrderList to={ROUTES.ORDERED_LIST}>
             주문 목록
           </S.LinkToOrderList>

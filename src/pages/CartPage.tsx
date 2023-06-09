@@ -4,13 +4,17 @@ import PaymentDetail from 'components/Cart/PaymentDetail';
 import CartItemList from 'components/Cart/CartItemList';
 import { Suspense } from 'react';
 import CouponSection from 'components/Cart/CouponSection';
+import Spinner from 'components/@common/Spinner';
+import ErrorBoundary from 'components/@common/ErrorBoundary';
 
 const CartPage = () => {
   return (
     <ContentLayout title="🛒 장바구니 🛒">
-      <Suspense fallback={<div>loading...</div>}>
-        <CartItemList />
-      </Suspense>
+      <ErrorBoundary fallback={<div>에러가 발생했습니다.</div>}>
+        <Suspense fallback={<Spinner />}>
+          <CartItemList />
+        </Suspense>
+      </ErrorBoundary>
       <Wrapper>
         <Suspense fallback={<div>loading...</div>}>
           <PaymentDetail />
