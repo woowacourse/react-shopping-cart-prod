@@ -1,5 +1,4 @@
 import { useRecoilValue } from 'recoil';
-import { useEffect } from 'react';
 import { styled } from 'styled-components';
 import useFetch from '../../../hooks/api/useFetch';
 import type CouponInfo from '../../../types/coupon';
@@ -19,10 +18,6 @@ const CouponSelectRadio = (props: CouponSelectRadioProps) => {
   const serverName = useRecoilValue(serverNameState);
   const url = ServerUtil.getUserCouponsUrl(serverName);
 
-  useEffect(() => {
-    setSelected(null);
-  }, [serverName]);
-
   const { getData } = useFetch<{ coupons: CouponInfo[] }>(url, USER_AUTH_TOKEN);
 
   const data = getData();
@@ -40,7 +35,7 @@ const CouponSelectRadio = (props: CouponSelectRadioProps) => {
           <input
             type="radio"
             id="empty"
-            checked={selected === null}
+            checked={!selected}
             onClick={() => setSelected(null)}
             readOnly
           />
