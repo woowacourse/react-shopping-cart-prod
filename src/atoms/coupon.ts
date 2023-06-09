@@ -1,4 +1,4 @@
-import { Coupon, SpecificCoupon } from './../types/coupon';
+import { Coupon, SpecificCoupon, AllCoupon } from './../types/coupon';
 import { fetchCoupons } from './../apis/coupon';
 import { atom, selector, selectorFamily } from 'recoil';
 import { ProductCouponMap } from '../types/coupon';
@@ -38,13 +38,18 @@ export const allCouponsSelector = selector({
   get: ({ get }) => get(couponsSelector).allCoupons,
 });
 
-export const selectedCouponsState = atom<Map<CartItem['id'], SpecificCoupon>>({
+export type SelectedCouponsMap = Map<
+  CartItem['id'],
+  AllCoupon | SpecificCoupon
+>;
+
+export const selectedCouponsState = atom<SelectedCouponsMap>({
   key: 'selectedCouponsState',
   default: new Map(),
 });
 
 export const selectedCouponState = selectorFamily<
-  SpecificCoupon | null,
+  SpecificCoupon | AllCoupon | null,
   CartItem['id']
 >({
   key: 'selectedCouponState',

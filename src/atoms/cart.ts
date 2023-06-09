@@ -1,14 +1,14 @@
-import { getDiscountInfo } from './../utils/discount';
-import { selector, atom, selectorFamily } from 'recoil';
-import { CartItem } from '../types/cart';
-import { fetchCart } from '../apis/cart';
-import { selectedCouponsState } from './coupon';
-import { ALL_COUPON_MAP_ID } from '../constants/coupon';
+import { calculateDiscountedPrice } from "./../utils/discount";
+import { selector, atom, selectorFamily } from "recoil";
+import { CartItem } from "../types/cart";
+import { fetchCart } from "../apis/cart";
+import { selectedCouponsState } from "./coupon";
+import { ALL_COUPON_MAP_ID } from "../constants/coupon";
 
 export const cartState = atom({
-  key: 'cart',
+  key: "cart",
   default: selector({
-    key: 'getMockCart',
+    key: "getMockCart",
     get: async () => {
       const { data } = await fetchCart();
 
@@ -18,38 +18,33 @@ export const cartState = atom({
 });
 
 export const cartItemsAmountSelector = selector({
-  key: 'cartItemsAmountSelector',
+  key: "cartItemsAmountSelector",
   get: ({ get }) => {
     return get(cartState).length;
   },
 });
 
 export const selectedItemsState = atom({
-  key: 'selectedItemsState',
+  key: "selectedItemsState",
   default: selector({
-    key: 'selectedItemsStateSelector',
+    key: "selectedItemsStateSelector",
     get: ({ get }) => {
       const cart = get(cartState);
 
-      return cart.reduce<Set<CartItem['id']>>(
-        (selectedItems, item) => selectedItems.add(item.id),
-        new Set()
-      );
+      return cart.reduce<Set<CartItem["id"]>>((selectedItems, item) => selectedItems.add(item.id), new Set());
     },
   }),
 });
 
 export const selectedItemsSelector = selector({
-  key: 'selectedItemsSelector',
+  key: "selectedItemsSelector",
   get: ({ get }) => {
     const cart = get(cartState);
     const selectedItems = get(selectedItemsState);
 
-    return cart.reduce<Set<CartItem['id']>>(
+    return cart.reduce<Set<CartItem["id"]>>(
       (newSelectedItems, item) =>
-        selectedItems.has(item.id)
-          ? newSelectedItems.add(item.id)
-          : newSelectedItems,
+        selectedItems.has(item.id) ? newSelectedItems.add(item.id) : newSelectedItems,
       new Set()
     );
   },
@@ -59,60 +54,39 @@ export const selectedItemsSelector = selector({
 });
 
 export const selectedItemsAmountSelector = selector({
-  key: 'selectedItemsAmountSelector',
+  key: "selectedItemsAmountSelector",
   get: ({ get }) => get(selectedItemsSelector).size,
 });
 
 export const getCartItemById = selectorFamily({
-  key: 'hasItemInCart',
+  key: "hasItemInCart",
   get:
-    (id: CartItem['id']) =>
+    (id: CartItem["id"]) =>
     ({ get }) => {
       return get(cartState).find((item) => item.id === id);
     },
 });
 
 export const totalPriceSelector = selector({
-  key: 'totalPriceSelector',
+  key: "totalPriceSelector",
   get: ({ get }) => {
     const cart = get(cartState);
     const selectedItems = get(selectedItemsSelector);
     const selectedCoupons = get(selectedCouponsState);
 
     return cart.reduce(
-      (
-        { originPrice, totalPrice },
-        { id: cartId, quantity, product: { id: productId, price } }
-      ) => {
-        let discountedPrice = price;
+      (priceInfo, { id: cartId, quantity, product: { price } }) => {
+        const { originPrice, totalPrice } = priceInfo;
         const allCoupon = selectedCoupons.get(ALL_COUPON_MAP_ID);
-        const selectedCoupon = selectedCoupons.get(cartId);
+        const specificCoupon = selectedCoupons.get(cartId);
+        const selected = selectedItems.has(cartId);
+        const selectedCoupon = allCoupon || specificCoupon;
+        const discountedPrice = selectedCoupon ? calculateDiscountedPrice(price, selectedCoupon) : price;
 
-        if (allCoupon) {
-          const { discountType, value } = allCoupon;
+        if (!selected) return priceInfo;
 
-          discountedPrice = getDiscountInfo(price, {
-            discountType,
-            value,
-          }).discountedPrice;
-        }
-
-        if (selectedCoupon) {
-          const { discountType, value } = selectedCoupon;
-
-          discountedPrice = getDiscountInfo(price, {
-            discountType,
-            value,
-          }).discountedPrice;
-        }
-
-        const updatedOriginPrice = selectedItems.has(cartId)
-          ? originPrice + quantity * price
-          : originPrice;
-
-        const updatedTotalPrice = selectedItems.has(cartId)
-          ? totalPrice + quantity * discountedPrice
-          : totalPrice;
+        const updatedOriginPrice = originPrice + quantity * price;
+        const updatedTotalPrice = totalPrice + quantity * discountedPrice;
 
         return {
           originPrice: updatedOriginPrice,
