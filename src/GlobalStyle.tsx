@@ -1,22 +1,8 @@
 import { createGlobalStyle } from 'styled-components';
-import BMEULJIRO from './assets/fonts/BMEULJIRO.otf';
 
 export const GlobalStyle = createGlobalStyle`
-    @font-face {
-    font-family: 'notosanskr';
-    src: url(./fonts/NotoSansKR-Regular.otf);
-    }
-
-    @font-face {
-        font-family: 'baemin';
-        src: url(${BMEULJIRO});
-    }
-
     :root {
     --vh: 100%;
-    --font-notosanskr: 'notosanskr';
-    --font-baemin: 'baemin';
-    --font-test: 'test';
     }
 
     html,
@@ -164,9 +150,8 @@ export const GlobalStyle = createGlobalStyle`
 
     scroll-behavior: smooth;
 
-    font-family: 'baemin';
-    font-weight: 200;
-    /* font-size: 62.5%; */
+    font-family: var(--font-notosanskr);
+    font-size: 62.5%;
     user-select: none;
     @media (min-width: 1800px) {
         font-size: 62.5%;

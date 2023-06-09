@@ -4,24 +4,30 @@ import { CartItemsSection } from '../components/cartPage/cartItemsSection/CartIt
 import { OrderSummarySection } from '../components/cartPage/orderSummarySection/OrderSummarySection';
 import { useRecoilValue } from 'recoil';
 import { cartItemsLengthState } from '../recoil/selectors/cartListSelector';
+import { PageTitle } from '../layout/pageTitle/PageTitle';
+import { Suspense } from 'react';
+import Loading from '../components/common/Loading';
 
 export const Cart = () => {
   const cartItemsLength = useRecoilValue(cartItemsLengthState);
 
   return (
     <Layout>
-      <Style.Header>
-        <Style.HeaderTitle>장바구니</Style.HeaderTitle>
-      </Style.Header>
+      <PageTitle>장바구니</PageTitle>
 
       {cartItemsLength > 0 ? (
         <Style.Content>
-          <CartItemsSection />
-          <OrderSummarySection />
+          <Suspense fallback={<Loading />}>
+            <CartItemsSection />
+            <OrderSummarySection />
+          </Suspense>
         </Style.Content>
       ) : (
         <Style.EmptyCartContainer>
-          장바구니가 비어있습니다!
+          <Style.EmptyCartImage
+            src={`${process.env.PUBLIC_URL}/assets/empty_cart_image.jpg`}
+          />
+          <p>장바구니가 비어있습니다.</p>
         </Style.EmptyCartContainer>
       )}
     </Layout>
@@ -30,7 +36,7 @@ export const Cart = () => {
 
 const Style = {
   Header: styled.div`
-    width: 1320px;
+    width: 100%;
     height: 67px;
 
     display: flex;
@@ -46,20 +52,38 @@ const Style = {
     font-size: 32px;
   `,
   Content: styled.div`
-    width: 1320px;
+    max-width: 1080px;
     height: max-content;
 
     display: flex;
-    gap: 104px;
+    gap: 70px;
+
+    margin: 0 auto;
+
+    @media (max-width: 1080px) {
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
   `,
   EmptyCartContainer: styled.div`
-    width: 1320px;
+    max-width: 1080px;
     min-height: 50vh;
 
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 
-    font-size: 50px;
+    & > p {
+      font-size: 24px;
+
+      margin-top: 60px;
+    }
+  `,
+
+  EmptyCartImage: styled.img`
+    width: 300px;
+    height: 300px;
   `,
 };

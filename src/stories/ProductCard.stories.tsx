@@ -1,7 +1,7 @@
 import { RecoilRoot } from 'recoil';
 import { ProductCard } from '../components/mainPage/productCard/ProductCard';
 import { Meta, StoryObj } from '@storybook/react';
-import mockData from '../assets/mockData.json';
+import mockData from '../mocks/mockData.json';
 import { GlobalStyle } from '../GlobalStyle';
 
 const meta = {
@@ -44,5 +44,7 @@ export const ProductCardComponent: Story = {
     price: 30000,
     imageUrl:
       'https://cdn-mart.baemin.com/sellergoods/main/212310b6-6560-4895-8171-afce97bc526d.png',
+    pointRatio: 15,
+    pointAvailable: false,
   },
 };

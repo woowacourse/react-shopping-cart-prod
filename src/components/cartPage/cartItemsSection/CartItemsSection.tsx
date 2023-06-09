@@ -8,6 +8,8 @@ import {
 import { CheckBox } from '../../../layout/checkBox/CheckBox';
 import { useCartRecoil } from '../../../hooks/recoil/useCartRecoil';
 import { useCartFetch } from '../../../hooks/fetch/useCartFetch';
+import { useEffect } from 'react';
+import { APIAtom } from '../../../recoil/atoms/serverAtom';
 
 const isAllCheckBoxSelectedState = selector({
   key: 'isAllCheckBoxSelectedState',
@@ -23,7 +25,17 @@ const isAllCheckBoxSelectedState = selector({
 });
 
 export const CartItemsSection = () => {
-  const cartItems = useRecoilValue(cartItemsState);
+  const [cartItems, setCartItems] = useRecoilState(cartItemsState);
+  const apiEndPoint = useRecoilValue(APIAtom);
+
+  const { getCartItems } = useCartFetch();
+
+  useEffect(() => {
+    getCartItems(apiEndPoint).then((data) => {
+      setCartItems(data);
+    });
+  }, [apiEndPoint]);
+
   const isAllCheckBoxChecked = useRecoilValue(isAllCheckBoxSelectedState);
   const [selectedCartIdList, setSelectedCartIdList] = useRecoilState(
     selectedCartIdListState
@@ -52,36 +64,37 @@ export const CartItemsSection = () => {
     <Style.Container>
       <Style.Header>
         <Style.HeaderTitle>배송상품 ({cartItems.length}개)</Style.HeaderTitle>
+        <Style.SelectOrDeleteContainer>
+          <Style.SlectAllCheckBoxContainer>
+            <CheckBox
+              isChecked={isAllCheckBoxChecked}
+              id={Math.random()}
+              handleClickCheckBox={toggleAllCheckBoxChecked}
+            />
+            <Style.SelectedProductCount>
+              전체선택 ({selectedCartIdList.length}/{cartItems.length})
+            </Style.SelectedProductCount>
+          </Style.SlectAllCheckBoxContainer>
+          <Style.DeleteSelectedProductButton onClick={deleteSelectedProduct}>
+            선택삭제
+          </Style.DeleteSelectedProductButton>
+        </Style.SelectOrDeleteContainer>
       </Style.Header>
       <CartItemList cartItemList={cartItems} />
-      <Style.SelectOrDeleteContainer>
-        <CheckBox
-          isChecked={isAllCheckBoxChecked}
-          id={Math.random()}
-          handleClickCheckBox={toggleAllCheckBoxChecked}
-        />
-        <Style.SelectedProductCount>
-          전체선택 ({selectedCartIdList.length}/{cartItems.length})
-        </Style.SelectedProductCount>
-        <Style.DeleteSelectedProductButton onClick={deleteSelectedProduct}>
-          선택삭제
-        </Style.DeleteSelectedProductButton>
-      </Style.SelectOrDeleteContainer>
     </Style.Container>
   );
 };
 
 const Style = {
   Container: styled.section`
-    width: 740px;
-    min-height: 704px;
+    width: 100%;
+    margin-bottom: 40px;
 
     display: flex;
     flex-direction: column;
   `,
   Header: styled.div`
     width: 100%;
-    height: 56px;
 
     border-bottom: 4px solid #aaaaaa;
   `,
@@ -94,7 +107,13 @@ const Style = {
     align-items: center;
     gap: 13px;
 
-    margin-top: 23px;
+    margin: 23px 0;
+    justify-content: space-between;
+  `,
+  SlectAllCheckBoxContainer: styled.div`
+    display: flex;
+    align-items: center;
+    gap: 10px;
   `,
   CheckBox: styled.div`
     width: 28px;

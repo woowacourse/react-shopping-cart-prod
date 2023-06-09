@@ -1,6 +1,6 @@
 import { RecoilRoot } from 'recoil';
 import { Meta, StoryObj } from '@storybook/react';
-import mockData from '../assets/mockData.json';
+import mockData from '../mocks/mockData.json';
 import { GlobalStyle } from '../GlobalStyle';
 import { CartItem } from '../components/cartPage/cartItemsSection/CartItem';
 

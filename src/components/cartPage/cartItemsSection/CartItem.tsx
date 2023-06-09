@@ -6,6 +6,7 @@ import { useCartFetch } from '../../../hooks/fetch/useCartFetch';
 import { useSelectedCartRecoil } from '../../../hooks/recoil/useSelectedCartRecoil';
 import { useRecoilValue } from 'recoil';
 import { cartItemsState } from '../../../recoil/atoms/cartAtom';
+import { getCommaAddedNumber } from '../../../utils/number';
 
 interface ProductSelectItemProps {
   cartId: number;
@@ -72,14 +73,18 @@ export const CartItem = ({
         <Style.ProductName>{name}</Style.ProductName>
         <Style.ProductSelectorContainer>
           <Style.DeleteIcon
-            src={`${process.env.PUBLIC_URL}/trashCan.png`}
+            src={`${process.env.PUBLIC_URL}/assets/trashCan.png`}
             onClick={handleDeleteCartItem}
           />
           <Counter
+            width="90px"
+            height="40px"
             quantity={initialQuantity}
             onQuantityChange={handleChangeQuantity}
           />
-          <Style.ProductPrice>{price}원</Style.ProductPrice>
+          <Style.ProductPrice>
+            {getCommaAddedNumber(price)}원
+          </Style.ProductPrice>
         </Style.ProductSelectorContainer>
       </Style.Content>
     </Style.Container>
@@ -88,38 +93,58 @@ export const CartItem = ({
 
 const Style = {
   Container: styled.li`
-    width: 740px;
+    width: 100%;
     height: 200px;
 
     display: flex;
     align-items: flex-end;
 
-    &:not(:last-child) {
+    & {
       border-bottom: 1.5px solid #aaaaaa;
     }
   `,
   Content: styled.div`
-    width: 740px;
+    width: 100%;
     height: 174px;
 
     display: flex;
-    gap: 15px;
+    gap: 20px;
+    padding: 0 10px;
+
+    @media (max-width: 480px) {
+      gap: 10px;
+    }
   `,
   CheckBox: styled.div`
     width: 28px;
     height: 28px;
 
     border: 1px solid #22a6a2;
+
+    @media (max-width: 480px) {
+      width: 20px;
+      height: 20px;
+    }
   `,
   ProductImage: styled.img`
     width: 144px;
     height: 147px;
+
+    border-radius: 8px;
+
+    @media (max-width: 480px) {
+      width: 68px;
+      height: 69px;
+    }
   `,
   ProductName: styled.div`
-    width: 389px;
-
+    flex-grow: 1;
     font-size: 20px;
     color: #333333;
+
+    @media (max-width: 480px) {
+      font-size: 14px;
+    }
   `,
   ProductSelectorContainer: styled.div`
     min-width: 114px;
@@ -130,6 +155,11 @@ const Style = {
     align-items: flex-end;
     justify-content: space-between;
     gap: 23px;
+
+    @media (max-width: 480px) {
+      min-width: 20px;
+      height: 120px;
+    }
   `,
   DeleteIcon: styled.img`
     width: 24px;
@@ -138,6 +168,10 @@ const Style = {
     cursor: pointer;
   `,
   ProductPrice: styled.span`
-    font-size: 16px;
+    font-size: 24px;
+
+    @media (max-width: 480px) {
+      font-size: 18px;
+    }
   `,
 };

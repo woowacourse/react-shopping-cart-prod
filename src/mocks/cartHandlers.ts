@@ -43,7 +43,7 @@ export const cartHandlers = [
       ctx.json('success'),
       ctx.status(200),
       ctx.set({ Location: `${randomCartId}` }),
-      ctx.delay(1000)
+      ctx.delay(300)
     );
   }),
   rest.patch('/cart-items/:id', async (req, res, ctx) => {

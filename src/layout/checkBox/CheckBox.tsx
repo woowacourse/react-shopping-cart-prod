@@ -15,7 +15,9 @@ export const CheckBox = ({
     <>
       <Style.CheckBox isChecked={isChecked} htmlFor={`${id}`}>
         {isChecked && (
-          <Style.CheckImage src={`${process.env.PUBLIC_URL}/check.png`} />
+          <Style.CheckImage
+            src={`${process.env.PUBLIC_URL}/assets/check.png`}
+          />
         )}
       </Style.CheckBox>
       <Style.HiddenInput
@@ -34,6 +36,7 @@ const Style = {
     height: 28px;
 
     display: flex;
+    flex-shrink: 0;
     justify-content: center;
     align-items: center;
 

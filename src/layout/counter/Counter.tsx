@@ -3,9 +3,16 @@ import styled from 'styled-components';
 interface CounterProps {
   quantity: number;
   onQuantityChange: (quantity: number) => void;
+  width?: string;
+  height?: string;
 }
 
-export const Counter = ({ quantity, onQuantityChange }: CounterProps) => {
+export const Counter = ({
+  quantity,
+  onQuantityChange,
+  width,
+  height,
+}: CounterProps) => {
   const handleIncrease = () => {
     const increasedValue = quantity + 1;
 
@@ -26,7 +33,7 @@ export const Counter = ({ quantity, onQuantityChange }: CounterProps) => {
   };
 
   return (
-    <Style.Container>
+    <Style.Container $width={width} $height={height}>
       <Style.Button onClick={handleDecrease}>➖</Style.Button>
       <Style.Input
         value={quantity ?? 1}
@@ -39,19 +46,22 @@ export const Counter = ({ quantity, onQuantityChange }: CounterProps) => {
 };
 
 const Style = {
-  Container: styled.div`
-    width: 75px;
-    height: 28px;
+  Container: styled.div<{ $width?: string; $height?: string }>`
+    width: ${({ $width }) => $width || '180px'};
+    height: ${({ $height }) => $height || '68px'};
 
     display: flex;
     flex-wrap: nowrap;
 
     border: 1px solid lightgray;
+    background: #ffffff;
+    opacity: 95%;
   `,
   Input: styled.input`
     width: 23px;
 
     text-align: center;
+    font-size: 22px;
 
     flex: 1;
 
@@ -64,7 +74,7 @@ const Style = {
   Button: styled.button`
     all: unset;
 
-    font-size: 10px;
+    font-size: 14px;
 
     display: flex;
     justify-content: center;

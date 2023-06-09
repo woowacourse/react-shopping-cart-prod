@@ -25,8 +25,8 @@ const spinnerAnimation = keyframes`
 const StyledLoading = styled.div`
   margin: 0 8px;
   transform: translate(-50%, -50%);
-  width: 30px;
-  height: 30px;
+  width: 60px;
+  height: 60px;
   border: 3px solid rgba(0, 0, 0, 0.1);
   border-radius: 50%;
   border-top-color: #333;

@@ -6,6 +6,7 @@ import { useCartFetch } from '../../../hooks/fetch/useCartFetch';
 import Loading from '../../common/Loading';
 import { useRecoilValue } from 'recoil';
 import { cartItemsState } from '../../../recoil/atoms/cartAtom';
+import styled from 'styled-components';
 
 interface AddCartButtonProps {
   productId: number;
@@ -13,6 +14,7 @@ interface AddCartButtonProps {
 
 export const AddCartButton = ({ productId }: AddCartButtonProps) => {
   const cartItems = useRecoilValue(cartItemsState);
+
   const initialQuantity =
     cartItems.find((cartItem) => cartItem.product.id === productId)?.quantity ??
     1;
@@ -74,8 +76,29 @@ export const AddCartButton = ({ productId }: AddCartButtonProps) => {
       ) : isLoading ? (
         <Loading />
       ) : (
-        <ShoppingCartIcon handleClick={handleClickShoppingCartIcon} />
+        <Style.Container>
+          <ShoppingCartIcon handleClick={handleClickShoppingCartIcon} />
+        </Style.Container>
       )}
     </>
   );
+};
+
+const Style = {
+  Container: styled.div`
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    background: #ffffff;
+
+    & > :first-child {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+    }
+  `,
 };
