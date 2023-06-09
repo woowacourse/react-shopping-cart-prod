@@ -1,10 +1,10 @@
 import {atom, selector, selectorFamily} from "recoil";
 import {Coupon, NewOrder, Point} from "../../types/types";
-import {cartRepository} from "./cart/cartAtoms.ts";
 import {modalRepository} from "./modalAtoms";
 import {serverState} from "./serverAtom.ts";
 import {fetchCoupons, fetchOrder, fetchPoint} from "../api/api.ts";
 import {checkedCartSelector, totalPriceSelector} from "./cart/cartSelectors.ts";
+import {cartRepository} from "./cart/cartRepository.ts";
 
 
 export const deliveryFeeState = atom({

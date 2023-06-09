@@ -1,8 +1,5 @@
 import {useRecoilValue} from "recoil";
-import {
-  cartRepository,
-  cartState,
-} from "../../app/recoil/cart/cartAtoms.ts";
+import {cartState} from "../../app/recoil/cart/cartAtoms.ts";
 import CartItem from "../CartItem";
 import {
   CartListCheckCounter,
@@ -15,6 +12,7 @@ import {
   cartCountSelector,
   checkedCartCountSelector
 } from "../../app/recoil/cart/cartSelectors.ts";
+import {cartRepository} from "../../app/recoil/cart/cartRepository.ts";
 
 function CartList() {
   const cartList = useRecoilValue(cartState);
@@ -22,8 +20,7 @@ function CartList() {
   const cartCount = useRecoilValue(cartCountSelector);
   const isAllCartItemChecked = useRecoilValue(allCartCheckedSelector);
 
-  const {switchAllCheckboxes, removeCheckedCartItems} =
-    useRecoilValue(cartRepository);
+  const {switchAllCheckboxes, removeCheckedCartItems} = useRecoilValue(cartRepository);
 
   return (
     <CartListWrapper>

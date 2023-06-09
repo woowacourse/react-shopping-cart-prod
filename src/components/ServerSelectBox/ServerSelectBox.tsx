@@ -2,9 +2,9 @@ import {useRecoilState, useRecoilValue} from "recoil";
 import {Select} from "./ServerSelectBox.style";
 import {serverState} from "../../app/recoil/serverAtom";
 import {ChangeEvent, useEffect} from "react";
-import {cartRepository} from "../../app/recoil/cart/cartAtoms.ts";
 import {userState} from "../../app/recoil/user/userAtom.tsx";
 import {userRepository} from "../../app/recoil/user/userRepository.tsx";
+import {cartRepository} from "../../app/recoil/cart/cartRepository.ts";
 
 function ServerSelectBox() {
   const {loadCartList} = useRecoilValue(cartRepository);
