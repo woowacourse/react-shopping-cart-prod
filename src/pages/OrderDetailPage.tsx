@@ -1,32 +1,25 @@
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
+import { Suspense } from 'react';
+import { Link } from 'react-router-dom';
 import { styled } from 'styled-components';
-import orderDetailState from '../globalState/atoms/orderDetail';
-import OrderDetail from '../components/order/OrderDetail/OrderDetail';
 import Colors from '../constant/Colors';
+import OrderDetailLoader from '../components/order/OrderDetail/OrderDetailLoader';
 
 const OrderDetailPage = () => {
-  const navigate = useNavigate();
-  const orderDetail = useRecoilValue(orderDetailState);
-
-  useEffect(() => {
-    if (orderDetail === null) navigate('/');
-  }, []);
-
   return (
     <Layout>
       <Title>주문 상세 내역</Title>
-      {orderDetail ? (
-        <OrderDetail
-          actualPrice={orderDetail.actualPrice}
-          cartItems={orderDetail.cartItems}
-          deliveryFee={orderDetail.deliveryFee}
-          id={orderDetail.id}
-          originalPrice={orderDetail.originalPrice}
-          showPayments
-        />
-      ) : null}
+      <Suspense
+        fallback={
+          <EmptyDetailsLayoutDiv>
+            주문 목록에서 상세보기를 눌러 주세요!
+            <Link to="/orders">
+              <LinkButton>주문 목록으로 가기</LinkButton>
+            </Link>
+          </EmptyDetailsLayoutDiv>
+        }
+      >
+        <OrderDetailLoader />
+      </Suspense>
     </Layout>
   );
 };
@@ -51,6 +44,32 @@ const Title = styled.h2`
 
   border-bottom: 4px solid ${Colors.grey1};
   text-align: center;
+`;
+
+const EmptyDetailsLayoutDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+
+  margin-top: 200px;
+
+  font-weight: 500;
+  font-size: 30px;
+`;
+
+const LinkButton = styled.button`
+  width: 300px;
+  padding: 20px 50px;
+  background-color: ${Colors.grey1};
+
+  border: none;
+  border-radius: 15px;
+
+  font-size: 20px;
+  color: white;
+
+  cursor: pointer;
 `;
 
 export default OrderDetailPage;
