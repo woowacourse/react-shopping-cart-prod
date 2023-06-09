@@ -1,21 +1,16 @@
 import styled from '@emotion/styled';
 import UserCartInfo from './UserCartInfo';
-import EventInfo from './EventInfo';
-import { Text } from '../Text/Text';
-import UserOrderInfo from './UserOrderInfo';
+import MenuInfo from './MenuInfo';
+import { URL } from '../../../abstract/constants';
 
 const Menu = () => {
   return (
     <MenuWrapper>
-      <EventInfo />
-      <Text color="#fff" size="small">
-        |
-      </Text>
+      <MenuInfo url={URL.EVENT} title={'이벤트'} />
+      <Separator />
       <UserCartInfo />
-      <Text color="#fff" size="small">
-        |
-      </Text>
-      <UserOrderInfo />
+      <Separator />
+      <MenuInfo url={URL.ORDER} title={'주문 목록'} />
     </MenuWrapper>
   );
 };
@@ -26,4 +21,13 @@ const MenuWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+`;
+
+const Separator = styled.div`
+  color: #fff;
+  padding: 0 5px;
+
+  &::before {
+    content: '|';
+  }
 `;

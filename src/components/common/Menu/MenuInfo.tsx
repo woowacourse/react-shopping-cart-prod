@@ -3,17 +3,17 @@ import { Text } from '../Text/Text';
 import { Link } from 'react-router-dom';
 import { URL } from '../../../abstract/constants';
 
-const UserOrderInfo = () => {
+const MenuInfo = ({ url, title }: { url: string; title: string }) => {
   return (
-    <EventInfoWrapper to={URL.ORDER}>
+    <EventInfoWrapper to={url}>
       <Text color="#fff" size="small">
-        주문 목록
+        {title}
       </Text>
     </EventInfoWrapper>
   );
 };
 
-export default UserOrderInfo;
+export default MenuInfo;
 
 const EventInfoWrapper = styled(Link)`
   display: flex;
