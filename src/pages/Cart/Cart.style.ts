@@ -2,13 +2,9 @@ import { styled } from 'styled-components';
 
 export const CartPageContainer = styled.section`
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
 
   width: 100%;
-
-  @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    flex-direction: column;
-  }
 `;
 
 export const FlexWrapper = styled.section`

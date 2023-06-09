@@ -1,6 +1,8 @@
-import { SERVER_NAME, useServer } from '@recoil/server/serverState';
 import { renderHook, waitFor } from '@testing-library/react';
+import { act } from 'react-dom/test-utils';
 import { RecoilRoot } from 'recoil';
+import { useServer } from '@hooks/recoil/server/useServer';
+import { SERVER_NAME } from '@constants/serverUrlConstants';
 
 describe('useServer 훅 테스트', () => {
   test('server 초기 값이 잘 적용되었는 지 확인 ', () => {
@@ -12,9 +14,12 @@ describe('useServer 훅 테스트', () => {
     const { result } = renderHook(() => useServer(), { wrapper: RecoilRoot });
     const { server, handleServer } = result.current;
 
-    handleServer(SERVER_NAME[2]);
+    act(() => {
+      handleServer(SERVER_NAME[2]);
+    });
+
     waitFor(() => {
-      expect(server).toBe('우가');
+      expect(server).toBe(SERVER_NAME[2]);
     });
   });
 });

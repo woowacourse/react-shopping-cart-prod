@@ -1,17 +1,19 @@
 import { createGlobalStyle } from 'styled-components';
+import { reset } from './reset';
 
 const GlobalStyle = createGlobalStyle`
+  ${reset}
+  
   body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
-      'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-    -webkit-font-smoothing: antialiased;
+    font-family: 'Noto Sans KR',system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     -moz-osx-font-smoothing: grayscale;
   }
-
-  code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  
+  body[data-hide-scroll='true']{
+    overflow: hidden;
   }
+
   
   * {
     padding: 0;
@@ -29,17 +31,12 @@ const GlobalStyle = createGlobalStyle`
     border: none;
     background-color: transparent;
     outline: none;
-    cursor: pointer;
-    transition: ${(props) => props.theme.transitions.default};
 
-    &:hover {
-      transform: ${({ theme }) => theme.effects.hoverScaleUp};
-    }
+    cursor: pointer;
   }
 
   html,
   body {
-    font-family: sans-serif;
     margin: 0 auto;
     font-size: 62.5%;
 

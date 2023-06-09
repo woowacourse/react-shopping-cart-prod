@@ -1,25 +1,25 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-
 import path from 'path';
+import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite';
+import tsconfigPaths from 'vite-tsconfig-paths';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
-  base: '/react-shopping-cart/',
+  plugins: [react(), tsconfigPaths()],
+  base: '/react-shopping-cart-prod',
   resolve: {
     alias: {
-      '@common': path.resolve(__dirname, 'src/common'),
-      '@assets': path.resolve(__dirname, 'src/assets'),
-      '@constants': path.resolve(__dirname, 'src/constants'),
-      '@layout': path.resolve(__dirname, 'src/layout'),
-      '@mocks': path.resolve(__dirname, 'src/mocks'),
-      '@pages': path.resolve(__dirname, 'src/pages'),
-      '@recoil': path.resolve(__dirname, 'src/recoil'),
       '@router': path.resolve(__dirname, 'src/router'),
-      '@styles': path.resolve(__dirname, 'src/styles'),
+      '@recoil': path.resolve(__dirname, 'src/recoil'),
+      '@hooks': path.resolve(__dirname, 'src/hooks'),
+      '@pages': path.resolve(__dirname, 'src/pages'),
+      '@components': path.resolve(__dirname, 'src/components'),
+      '@mocks': path.resolve(__dirname, 'src/mocks'),
       '@utils': path.resolve(__dirname, 'src/utils'),
-      '@views': path.resolve(__dirname, 'src/views'),
+      '@constants': path.resolve(__dirname, 'src/constants'),
+      '@type': path.resolve(__dirname, 'src/types'),
+      '@assets': path.resolve(__dirname, 'src/assets'),
+      '@styles': path.resolve(__dirname, 'src/styles'),
     },
   },
 });
