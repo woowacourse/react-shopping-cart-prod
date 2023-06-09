@@ -6,8 +6,6 @@ import {
   ResponseCartItem,
   Coupon,
   Point,
-  OrderedGroup,
-  ResponseOrdered,
   NewOrder,
 } from "../../types/types.ts";
 import {url} from "./url.ts";
@@ -95,7 +93,6 @@ export const fetchMembers = async (server: string) => {
       return data;
     } else {
       throw new Error();
-      return [];
     }
   } catch (error) {
     throw new Error();
