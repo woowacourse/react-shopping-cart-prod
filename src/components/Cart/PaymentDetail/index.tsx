@@ -5,13 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import { ROUTES } from 'utils/constants';
 import Modal from 'components/@common/Modal';
 import { useModal } from 'hooks/useModal';
-import { postPayment } from 'api/payments';
-import { useMutate } from 'hooks/useMutate';
 import usePrice from 'components/Cart/hooks/usePrice';
+import useSubmitOrder from '../hooks/useSubmitOrder';
 
 const PaymentDetail = () => {
   const moveTo = useNavigate();
-  const { request } = useMutate();
   const { isModalOpen, openModal, closeModal } = useModal();
   const {
     deliveryLimit,
@@ -21,18 +19,14 @@ const PaymentDetail = () => {
     finalPrice,
     isDeliveryFree,
   } = usePrice();
+  const { makeOrder } = useSubmitOrder();
   const checkItemIds = useRecoilValue(checkedItemIdsAtom);
-  const couponIds = useRecoilValue(couponAtom);
 
-  const makeOrder = () => {
-    const payment = {
-      cartItemIds: checkItemIds,
-      couponIds,
+  const submitOrder = () => {
+    makeOrder({
       isDeliveryFree,
       totalPrice: finalPrice,
-    };
-
-    request(postPayment(payment));
+    });
     moveTo(ROUTES.ORDERED_LIST);
   };
 
@@ -74,7 +68,7 @@ const PaymentDetail = () => {
       <Modal
         message="선택한 상품을 주문하시겠습니까?"
         isOpen={isModalOpen}
-        onClickYes={makeOrder}
+        onClickYes={submitOrder}
         onCloseModal={closeModal}
       />
     </S.Container>
