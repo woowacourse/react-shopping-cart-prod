@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { generatePath, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
@@ -17,6 +18,8 @@ export const OrderSuccessPage = () => {
 
   const orderId = String(searchParams).split('=')[1];
 
+  const goRoot = useCallback(() => navigate(PATH.ROOT), [navigate]);
+
   return (
     <S.Container>
       <S.CheckedIconWrapper>
@@ -28,7 +31,7 @@ export const OrderSuccessPage = () => {
       </S.OrderSuccessTextContainer>
       <Divider />
       <S.ButtonContainer>
-        <Button variant="primary" onClick={() => navigate(PATH.ROOT)}>
+        <Button variant="primary" onClick={goRoot}>
           홈으로 이동하기
         </Button>
         <Button
