@@ -12,7 +12,7 @@ export const cartState = atom({
     get: async () => {
       const { data } = await fetchCart();
 
-      return data;
+      return data.reverse();
     },
   }),
 });
