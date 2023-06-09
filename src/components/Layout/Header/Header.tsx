@@ -1,3 +1,4 @@
+import { useCallback, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -21,14 +22,14 @@ const Header = () => {
   const loadableCartProducts = useRecoilValueLoadable(cartProductsState);
   const cartProductCount = loadableCartProducts.state === 'loading' ? 0 : loadableCartProducts.contents.size;
 
-  const serverOwner = store.getStorage<ServerOwner>(SERVER_OWNER) ?? '헙크';
+  const serverOwner = useMemo(() => store.getStorage<ServerOwner>(SERVER_OWNER) ?? '헙크', []);
 
-  const handleServerOwner = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleServerOwner = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value as ServerOwner;
 
     store.setStorage(SERVER_OWNER, value);
     window.location.reload();
-  };
+  }, []);
 
   return (
     <HeaderContainer>

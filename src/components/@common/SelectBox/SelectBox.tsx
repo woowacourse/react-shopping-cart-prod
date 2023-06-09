@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import styled from 'styled-components';
 
 type Options = { name: string; value: string };
@@ -20,7 +21,7 @@ const SelectBox = ({ value, options, onChange }: SelectBoxProps) => {
   );
 };
 
-export default SelectBox;
+export default memo(SelectBox);
 
 const Select = styled.select`
   width: 100%;
