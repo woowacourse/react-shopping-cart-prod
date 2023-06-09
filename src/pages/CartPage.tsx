@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { styled } from 'styled-components';
 import Order from '../components/cart/Order';
 import SelectedProductList from '../components/cart/SelectedProductList';

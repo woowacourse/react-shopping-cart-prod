@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import Nothing from '../components/common/Nothing';
 import Spinner from '../components/common/Spinner';
 import Title from '../components/common/Title';

@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { SetterOrUpdater } from 'recoil';
 import { Modal } from 'simple-yummy-modal';
 import { css, styled } from 'styled-components';

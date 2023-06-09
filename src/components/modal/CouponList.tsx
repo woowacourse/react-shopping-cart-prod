@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { styled } from 'styled-components';
 import { useGetCouponList } from '../../hooks/useGetCouponList';
 import Coupon from './Coupon';
