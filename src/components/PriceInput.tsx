@@ -19,7 +19,7 @@ const InputField = styled.input`
   text-align: right;
 `;
 
-const Button = styled.div`
+const Button = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -48,7 +48,7 @@ const PriceInput = (props: PriceInputProps) => {
   const { useablePoint, handleInputField } = props;
   const { checkPointInput, inputValue } = usePointInput(useablePoint);
 
-  const usePoint = () => {
+  const consumePoint = () => {
     handleInputField(+inputValue);
   };
 
@@ -57,7 +57,9 @@ const PriceInput = (props: PriceInputProps) => {
       <InputContainer>
         <InputField onBlur={checkPointInput} />
 
-        <Button onClick={usePoint}>사용하기</Button>
+        <Button onClick={consumePoint} type="button">
+          사용하기
+        </Button>
       </InputContainer>
       <Description>사용가능포인트 {useablePoint}원</Description>
     </>
