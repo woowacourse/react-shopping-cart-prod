@@ -14,10 +14,7 @@ import {
 
 const base64 = 'YUBhLmNvbToxMjM0';
 
-const BASE =
-  process.env.NODE_ENV === 'development'
-    ? 'http://localhost:3000/react-shopping-cart/'
-    : 'https://n0eyes.github.io/react-shopping-cart/';
+export const BASE = ENDPOINT['말랑'];
 
 class FetchQuery implements FetchQueryInstance {
   private defaultConfig: ExternalConfig = {};
@@ -106,9 +103,10 @@ class FetchQuery implements FetchQueryInstance {
   }
 }
 
-export const fetchQuery = new FetchQuery({ baseURL: ENDPOINT['말랑'] });
+export const fetchQuery = new FetchQuery({ baseURL: BASE });
+
 export const authFetchQuery = new FetchQuery({
-  baseURL: ENDPOINT['말랑'],
+  baseURL: BASE,
   headers: {
     Authorization: `Basic ${base64}`,
     'Content-Type': 'application/json',

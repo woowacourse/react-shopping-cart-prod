@@ -1,7 +1,7 @@
 import { ChangeEvent } from 'react';
 import { useRecoilRefresher_UNSTABLE } from 'recoil';
 import { addToCart, deleteCartItem, updateCartItem } from '../../apis/cart';
-import { cartState, selectedItemsSelector } from '../../atoms/cart';
+import { cartSelector, selectedCartItemIdsState } from '../../atoms/cart';
 import { DELETE_CART_ITEMS } from '../../constants/cart';
 import { CartItem } from '../../types/cart';
 import { waitForMutation } from '../../utils/waitFor';
@@ -11,9 +11,9 @@ import {
 } from '../common/useRefreshableAtom';
 
 export const useCartSelector = () => {
-  const cart = useRefreshableRecoilValue(cartState);
+  const cart = useRefreshableRecoilValue(cartSelector);
   const [selectedItems, setSelectedItems] = useRefreshableRecoilState(
-    selectedItemsSelector
+    selectedCartItemIdsState
   );
 
   const selectItem = (id: CartItem['id']) => {
@@ -40,8 +40,8 @@ export const useCartSelector = () => {
 };
 
 export const useMutateCart = () => {
-  const refreshCart = useRecoilRefresher_UNSTABLE(cartState);
-  const selectedItems = useRefreshableRecoilValue(selectedItemsSelector);
+  const refreshCart = useRecoilRefresher_UNSTABLE(cartSelector);
+  const selectedItems = useRefreshableRecoilValue(selectedCartItemIdsState);
 
   const addItemToCartMutation = waitForMutation(addToCart);
 

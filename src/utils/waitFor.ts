@@ -19,7 +19,6 @@ export const waitFor = async <T>(
   try {
     const data = await promise;
     options?.onSuccess?.(data);
-
     return data;
   } catch (error) {
     options?.onError?.(error);
