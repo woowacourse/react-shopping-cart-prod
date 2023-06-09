@@ -1,12 +1,25 @@
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { DELIVERY_FEE } from "../constants";
+import { useRouter } from "../hooks/useRouter";
 import { totalPriceSelector } from "../recoil/selector";
-import { Button } from "./Button";
+import { ROUTER_PATH } from "../router";
+import { Button } from "../components";
 
-export const TotalPriceTable = () => {
+interface TotalPriceTableType {
+  discountPrice: number | null;
+  handlePaymentClicked?: () => void;
+}
+
+export const TotalPriceTable = ({
+  discountPrice,
+  handlePaymentClicked,
+}: TotalPriceTableType) => {
+  const { goPage } = useRouter();
   const totalPrice = useRecoilValue(totalPriceSelector);
   const deliveryFee = totalPrice === 0 ? 0 : DELIVERY_FEE;
+  const paymentPrice =
+    totalPrice + deliveryFee - (discountPrice ? discountPrice : 0);
 
   return (
     <Wrapper>
@@ -15,15 +28,27 @@ export const TotalPriceTable = () => {
         <p>총 상품가격</p>
         <p>{totalPrice.toLocaleString()}원</p>
       </RowContainer>
+      {discountPrice && (
+        <DiscountPriceBox>
+          <p>ㄴ 쿠폰할인금액</p>
+          <p>-{discountPrice?.toLocaleString()}원</p>
+        </DiscountPriceBox>
+      )}
       <RowContainer>
         <p>배송비</p>
         <p>{deliveryFee.toLocaleString()}원</p>
       </RowContainer>
       <RowContainer>
         <p>총 주문금액</p>
-        <p>{(totalPrice + deliveryFee).toLocaleString()}원</p>
+        <p>{paymentPrice.toLocaleString()}원</p>
       </RowContainer>
-      <Button disabled={totalPrice === 0}>주문하기</Button>
+      {handlePaymentClicked ? (
+        <Button onClick={handlePaymentClicked}>결제하기</Button>
+      ) : (
+        <Button disabled={totalPrice === 0} onClick={goPage(ROUTER_PATH.Order)}>
+          주문하기
+        </Button>
+      )}
     </Wrapper>
   );
 };
@@ -35,7 +60,8 @@ const Wrapper = styled.section`
 
   max-width: 380px;
   min-width: 350px;
-  height: 330px;
+  height: max-content;
+
   padding-bottom: 30px;
 
   margin-top: 35px;
@@ -73,4 +99,15 @@ const RowContainer = styled.div`
   &:last-of-type {
     padding: 30px;
   }
+`;
+
+const DiscountPriceBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+
+  color: var(--gray);
+  width: 100%;
+  padding: 5px 30px;
+  height: 30px;
 `;

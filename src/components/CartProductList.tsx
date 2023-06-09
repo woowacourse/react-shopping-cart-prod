@@ -1,16 +1,17 @@
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import type { LocalProductType, ProductType } from "../types/domain";
 import styled from "styled-components";
 import { TrashCanIcon } from "../assets";
 import { Counter } from "./Counter";
 import { localProductsSelector } from "../recoil/selector";
 import { useCheckBox } from "../hooks/useCheckBox";
-import { deleteCartItem } from "../api";
-import { localProductsState, selectedProductsState } from "../recoil/atom";
-import { makeLocalProducts } from "../utils/domain";
+import { selectedProductsState } from "../recoil/atom";
+import { useLocalProducts } from "../hooks/useLocalProducts";
+import { api } from "../api";
 
 export const CartProductList = () => {
-  const localProductsInCart = useRecoilValue<LocalProductType[]>(
+  const { updateLocalProducts } = useLocalProducts();
+  const cartProducts = useRecoilValue<LocalProductType[]>(
     localProductsSelector
   );
   const selectedProducts = useRecoilValue<LocalProductType[]>(
@@ -24,36 +25,36 @@ export const CartProductList = () => {
     handleCheckBox,
     handleAllCheckBox,
   } = useCheckBox();
-  const setLocalProducts = useSetRecoilState(localProductsState);
 
   const handleDeleteButtonClicked = async () => {
-    selectedProducts.forEach((product) => {
-      deleteCartItem(product.cartItemId);
-    });
+    await Promise.all(
+      selectedProducts.map((product) =>
+        api.delete(`/cart-items/${product.cartItemId}`)
+      )
+    );
 
     removeCheckedArray();
-    const newProducts = await makeLocalProducts();
-    setLocalProducts(newProducts);
+    await updateLocalProducts();
   };
 
-  const handleDelete = (cartItemId: number, index: number) => async () => {
-    await deleteCartItem(cartItemId);
+  const handleTrashCanClicked =
+    (cartItemId: number, index: number) => async () => {
+      await api.delete(`/cart-items/${cartItemId}`);
 
-    removeTargetIndex(index);
-    const newProducts = await makeLocalProducts();
-    setLocalProducts(newProducts);
-  };
+      removeTargetIndex(index);
+      await updateLocalProducts();
+    };
 
   return (
     <Wrapper>
-      <TitleBox>든든배송 상품 ({localProductsInCart.length}개)</TitleBox>
+      <TitleBox>우주배송 상품 ({cartProducts.length}개)</TitleBox>
       <CartProductsContainer>
-        {localProductsInCart.map((localProduct, index) => (
+        {cartProducts.map((product, index) => (
           <CartProduct
-            key={localProduct.id}
-            {...localProduct}
+            {...product}
+            key={product.id}
             checked={checkedArray[index]}
-            onDeleteHandler={handleDelete(localProduct.cartItemId, index)}
+            onDeleteHandler={handleTrashCanClicked(product.cartItemId, index)}
             onChangeHandler={handleCheckBox(index)}
           />
         ))}
@@ -64,11 +65,11 @@ export const CartProductList = () => {
             id="allProduct"
             type="checkbox"
             checked={allChecked}
-            onClick={handleAllCheckBox}
+            onChange={handleAllCheckBox}
           />
         </CheckBoxLabel>
         <p>
-          전체선택 ({selectedProducts.length}/{localProductsInCart.length})
+          전체선택 ({selectedProducts.length}/{cartProducts.length})
         </p>
         <button onClick={handleDeleteButtonClicked}>선택삭제</button>
       </AllCheckContainer>
@@ -119,7 +120,7 @@ const CartProduct = ({
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 90%;
   max-width: 750px;
 `;
 
@@ -144,6 +145,7 @@ const ProductWrapper = styled.section`
     width: 130px;
     height: 130px;
     border-radius: 5px;
+    object-fit: cover;
 
     @media screen and (max-width: 850px) {
       width: 100px;

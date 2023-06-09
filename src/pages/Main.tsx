@@ -1,6 +1,11 @@
 import { Suspense } from "react";
-import { Header, Loading, Page, ProductList } from "../components";
-import { ErrorBoundary } from "../components/index";
+import {
+  ErrorBoundary,
+  Header,
+  Loading,
+  Page,
+  ProductList,
+} from "../components";
 
 const Main = () => {
   return (

@@ -1,98 +1,52 @@
+import { getLocalStorage } from "../utils";
 import {
+  DEFAULT_VALUE_LOGIN_TOKEN,
   DEFAULT_VALUE_SERVER_OWNER,
+  KEY_LOCALSTORAGE_LOGIN_TOKEN,
   KEY_LOCALSTORAGE_SERVER_OWNER,
   SERVERS,
 } from "../constants";
-import { getLocalStorage } from "../utils";
 
-// Base64로 인코딩
-const base64 = btoa(
-  process.env.REACT_APP_USERNAME + ":" + process.env.REACT_APP_PASSWORD
-);
-
-export const fetchProducts = () =>
-  fetch(
-    `${
-      SERVERS[
-        getLocalStorage(
-          KEY_LOCALSTORAGE_SERVER_OWNER,
-          DEFAULT_VALUE_SERVER_OWNER
-        )
-      ]
-    }/products`
+const request = async (path: string, init?: RequestInit) => {
+  const baseServerUrl =
+    SERVERS[
+      getLocalStorage(KEY_LOCALSTORAGE_SERVER_OWNER, DEFAULT_VALUE_SERVER_OWNER)
+    ];
+  const token = getLocalStorage(
+    KEY_LOCALSTORAGE_LOGIN_TOKEN,
+    DEFAULT_VALUE_LOGIN_TOKEN
   );
 
-export const fetchCartItems = async () =>
-  fetch(
-    `${
-      SERVERS[
-        getLocalStorage(
-          KEY_LOCALSTORAGE_SERVER_OWNER,
-          DEFAULT_VALUE_SERVER_OWNER
-        )
-      ]
-    }/cart-items`,
-    {
-      headers: {
-        Authorization: `Basic ${base64}`,
-      },
-    }
-  );
+  const response = await fetch(`${baseServerUrl}${path}`, {
+    ...init,
+    headers: {
+      Authorization: `Basic ${token}`,
+      "Content-Type": "application/json",
+      ...init?.headers,
+    },
+  });
 
-export const changeQuantity = async (cartItemId: number, newQuantity: number) =>
-  fetch(
-    `${
-      SERVERS[
-        getLocalStorage(
-          KEY_LOCALSTORAGE_SERVER_OWNER,
-          DEFAULT_VALUE_SERVER_OWNER
-        )
-      ]
-    }/cart-items/${cartItemId}`,
-    {
-      headers: {
-        Authorization: `Basic ${base64}`,
-        "Content-Type": "application/json",
-      },
+  if (!response.ok) throw new Error(response.status.toString());
+  return response;
+};
+
+export const api = {
+  get: (path: string) => request(path).then((response) => response.json()),
+
+  patch: <T>(path: string, payload?: T) =>
+    request(path, {
       method: "PATCH",
-      body: JSON.stringify({ quantity: newQuantity }),
-    }
-  );
+      body: JSON.stringify(payload),
+    }),
 
-export const addCartItem = async (productId: number) =>
-  fetch(
-    `${
-      SERVERS[
-        getLocalStorage(
-          KEY_LOCALSTORAGE_SERVER_OWNER,
-          DEFAULT_VALUE_SERVER_OWNER
-        )
-      ]
-    }/cart-items`,
-    {
-      headers: {
-        Authorization: `Basic ${base64}`,
-        "Content-Type": "application/json",
-      },
+  post: <T>(path: string, payload?: T) =>
+    request(path, {
       method: "POST",
-      body: JSON.stringify({ productId: productId }),
-    }
-  );
+      body: JSON.stringify(payload),
+    }),
 
-export const deleteCartItem = async (cartItemId: number) =>
-  fetch(
-    `${
-      SERVERS[
-        getLocalStorage(
-          KEY_LOCALSTORAGE_SERVER_OWNER,
-          DEFAULT_VALUE_SERVER_OWNER
-        )
-      ]
-    }/cart-items/${cartItemId}`,
-    {
-      headers: {
-        Authorization: `Basic ${base64}`,
-      },
+  delete: (path: string) =>
+    request(path, {
       method: "DELETE",
-    }
-  );
+    }),
+};

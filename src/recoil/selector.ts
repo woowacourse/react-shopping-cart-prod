@@ -11,6 +11,11 @@ export const localProductsSelector = selector<LocalProductType[]>({
     ),
 });
 
+export const cartNumberSelector = selector<number>({
+  key: "cartNumberSelector",
+  get: ({ get }) => get(localProductsSelector).length,
+});
+
 export const totalPriceSelector = selector<number>({
   key: "totalPriceSelector",
   get: ({ get }) =>
