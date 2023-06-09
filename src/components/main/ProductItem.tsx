@@ -1,9 +1,11 @@
+import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { css, styled } from 'styled-components';
 import { useCart } from '../../hooks/useCart';
 import { quantitySelector } from '../../recoil';
 import { Product } from '../../types';
 import Button from '../common/Button';
+import Toast from '../common/Toast';
 import CartIcon from '../icons/CartIcon';
 import Price from '../Price';
 import QuantityButton from '../QuantityButton';
@@ -12,27 +14,38 @@ const ProductItem = ({ id, imageUrl, name, price }: Product) => {
   const quantity = useRecoilValue(quantitySelector(id));
   const { addToCart } = useCart(id);
 
+  const [isSelected, setIsSelected] = useState(false);
+
+  const handleProductAddToCart = () => {
+    addToCart();
+    setIsSelected(true);
+  };
+
   return (
-    <div>
-      <S.ImageWrapper>
-        <S.Image src={imageUrl} alt={name} loading='lazy' />
-      </S.ImageWrapper>
-      <S.InfoWrapper>
-        <div>
-          <S.Name htmlFor={name} title={name}>
-            {name}
-          </S.Name>
-          <Price value={price} css={priceStyle} />
-        </div>
-        {quantity > 0 ? (
-          <QuantityButton isEnabledAtMin productId={id} quantity={quantity} />
-        ) : (
-          <Button css={buttonStyle} onClick={() => addToCart()}>
-            <CartIcon css={svgStyle} />
-          </Button>
-        )}
-      </S.InfoWrapper>
-    </div>
+    <>
+      <div>
+        <S.ImageWrapper>
+          <S.Image src={imageUrl} alt={name} loading='lazy' />
+        </S.ImageWrapper>
+        <S.InfoWrapper>
+          <div>
+            <S.Name htmlFor={name} title={name}>
+              {name}
+            </S.Name>
+            <Price value={price} css={priceStyle} />
+          </div>
+          {quantity > 0 ? (
+            <QuantityButton isEnabledAtMin productId={id} quantity={quantity} />
+          ) : (
+            <Button css={buttonStyle} onClick={handleProductAddToCart}>
+              <CartIcon css={svgStyle} />
+            </Button>
+          )}
+        </S.InfoWrapper>
+      </div>
+      {quantity <= 0 ||
+        (isSelected && <Toast message='상품이 장바구니에 담겼습니다' duration={6000} />)}
+    </>
   );
 };
 
