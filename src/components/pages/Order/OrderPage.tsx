@@ -9,9 +9,9 @@ import LoadingSpinner from '../../common/LoadingSpinner/LoadingSpinner';
 import { NUM, URL } from '../../../abstract/constants';
 
 const OrderPage = () => {
-  const { orderListData, isError, isFetching } = useOrderFetch();
+  const { orderListData, orderListFetchError, isFetching } = useOrderFetch();
 
-  if (isError) {
+  if (orderListFetchError) {
     return (
       <PageTemplate
         title="장바구니 미션- 주문목록 페이지"

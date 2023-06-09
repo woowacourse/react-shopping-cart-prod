@@ -11,10 +11,24 @@ const useCouponFetch = () => {
     data: allCoupon,
     refetch: issuableRefetch,
     isFetching,
-  } = useQuery<IssuableCouponType[]>(
-    'allCoupon',
+    isError: couponFetchError,
+  } = useQuery<IssuableCouponType[]>('allCoupon', async () => {
+    const res = await fetch(`${serverURL}/coupons`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Basic ${base64}`,
+      },
+    });
+    const data = await res.json();
+    if (data.status !== 200) throw new Error();
+    return data;
+  });
+
+  const { data: userCoupon, refetch: userCouponRefetch } = useQuery<CouponType[]>(
+    'userCoupon',
     async () => {
-      const res = await fetch(`${serverURL}/coupons`, {
+      const res = await fetch(`${serverURL}/users/coupons`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -25,30 +39,8 @@ const useCouponFetch = () => {
       return data;
     },
     {
-      onError: (e) => {
-        console.log(e);
-      },
-    },
-  );
-
-  const fetchUserCouponData = async () => {
-    const res = await fetch(`${serverURL}/users/coupons`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Basic ${base64}`,
-      },
-    });
-    const data = await res.json();
-    return data;
-  };
-
-  const { data: userCoupon, refetch: userCouponRefetch } = useQuery<CouponType[]>(
-    'userCoupon',
-    fetchUserCouponData,
-    {
-      onError: (e) => {
-        console.log(e);
+      onError: () => {
+        alert('오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
       },
     },
   );
@@ -70,8 +62,8 @@ const useCouponFetch = () => {
         userCouponRefetch();
         issuableRefetch();
       },
-      onError: (e) => {
-        console.log(e);
+      onError: () => {
+        alert('오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
       },
     },
   );
@@ -80,7 +72,7 @@ const useCouponFetch = () => {
     fetchAddCouponData.mutate({ body });
   };
 
-  return { allCoupon, isFetching, addCouponAPI, userCoupon };
+  return { allCoupon, isFetching, couponFetchError, addCouponAPI, userCoupon };
 };
 
 export default useCouponFetch;

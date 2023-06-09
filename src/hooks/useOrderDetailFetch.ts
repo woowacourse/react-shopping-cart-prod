@@ -14,31 +14,22 @@ const useOrderDetailFetch = (orderId: number) => {
   const {
     data: orderDetailData,
     refetch,
-    isError,
+    isError: orderDetailFetchError,
     isFetching,
-  } = useQuery<OrderDetailType>(
-    'orderDetail',
-    async () => {
-      const res = await fetch(`${serverURL}/orders/${orderId}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Basic ${base64}`,
-        },
-      });
-
-      const data = await res.json();
-
-      if (data.status && data.status !== 200) throw new Error();
-      return data;
-    },
-
-    {
-      onError: (e) => {
-        console.log(e);
+  } = useQuery<OrderDetailType>('orderDetail', async () => {
+    const res = await fetch(`${serverURL}/orders/${orderId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Basic ${base64}`,
       },
-    },
-  );
+    });
+
+    const data = await res.json();
+
+    if (data.status && data.status !== 200) throw new Error();
+    return data;
+  });
 
   useEffect(() => {
     refetch();
@@ -57,6 +48,9 @@ const useOrderDetailFetch = (orderId: number) => {
     {
       onSuccess: () => {
         refetch();
+      },
+      onError: () => {
+        alert('오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
       },
     },
   );
@@ -77,6 +71,9 @@ const useOrderDetailFetch = (orderId: number) => {
       onSuccess: () => {
         queryClient.refetchQueries({ queryKey: ['orderList'] });
       },
+      onError: () => {
+        alert('오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+      },
     },
   );
 
@@ -88,7 +85,13 @@ const useOrderDetailFetch = (orderId: number) => {
     fetchOrderPatch.mutate();
   };
 
-  return { orderDetailData, deleteOrderDataAPI, confirmOrderDataAPI, isError, isFetching };
+  return {
+    orderDetailData,
+    deleteOrderDataAPI,
+    confirmOrderDataAPI,
+    orderDetailFetchError,
+    isFetching,
+  };
 };
 
 export default useOrderDetailFetch;

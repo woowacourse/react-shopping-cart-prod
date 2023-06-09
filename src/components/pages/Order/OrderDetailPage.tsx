@@ -11,8 +11,13 @@ import { NUM, URL } from '../../../abstract/constants';
 
 const OrderDetailPage = () => {
   const orderId = useParams().orderId;
-  const { orderDetailData, deleteOrderDataAPI, confirmOrderDataAPI, isError, isFetching } =
-    useOrderDetailFetch(Number(orderId));
+  const {
+    orderDetailData,
+    deleteOrderDataAPI,
+    confirmOrderDataAPI,
+    orderDetailFetchError,
+    isFetching,
+  } = useOrderDetailFetch(Number(orderId));
 
   if (isFetching) {
     return (
@@ -25,7 +30,7 @@ const OrderDetailPage = () => {
     );
   }
 
-  if (isError || !orderDetailData) {
+  if (orderDetailFetchError || !orderDetailData) {
     return (
       <PageTemplate
         title="장바구니 미션- 주문 상세보기 페이지"

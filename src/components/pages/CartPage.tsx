@@ -19,9 +19,10 @@ import CouponModal from '../Modal/CouponModal/CouponModal';
 import ApplyCouponModal from '../Modal/CouponModal/ApplyCouponModal';
 import { PERCENTAGE } from '../../abstract/constants';
 import LoadingSpinner from '../common/LoadingSpinner/LoadingSpinner';
+import ErrorBox from '../common/ErrorBox/ErrorBox';
 
 const CartPage = () => {
-  const { cartData, isLoading } = useCartFetch();
+  const { cartData, isLoading, cartFetchError } = useCartFetch();
   const { userCoupon } = useCouponFetch();
   const { addOrderDataAPI } = useAddOrderFetch();
   const { openModal } = useCouponModal();
@@ -63,6 +64,10 @@ const CartPage = () => {
         minimumPrice: 0,
       });
   }, [calcTotalPrice()]);
+
+  if (cartFetchError) {
+    return <ErrorBox errorType="network" />;
+  }
 
   return (
     <PageTemplate

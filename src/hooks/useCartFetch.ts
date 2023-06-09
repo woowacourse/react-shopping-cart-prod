@@ -12,25 +12,19 @@ export const useCartFetch = () => {
     data: cartData,
     refetch: cartRefetch,
     isLoading,
-  } = useQuery<CartItemType[]>(
-    'cart',
-    async () => {
-      const res = await fetch(`${serverURL}/cart-items`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Basic ${base64}`,
-        },
-      });
-      const data = await res.json();
-      return data;
-    },
-    {
-      onError: (e) => {
-        console.log(e);
+    isError: cartFetchError,
+  } = useQuery<CartItemType[]>('cart', async () => {
+    const res = await fetch(`${serverURL}/cart-items`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Basic ${base64}`,
       },
-    },
-  );
+    });
+    const data = await res.json();
+    if (data.status !== 200) throw new Error();
+    return data;
+  });
 
   const fetchCartData = useMutation(
     async ({
@@ -53,6 +47,9 @@ export const useCartFetch = () => {
     {
       onSuccess: () => {
         cartRefetch();
+      },
+      onError: () => {
+        alert('오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
       },
     },
   );
@@ -77,8 +74,8 @@ export const useCartFetch = () => {
         }
         cartRefetch();
       },
-      onError: (e) => {
-        console.log(e);
+      onError: () => {
+        alert('오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
       },
     },
   );
@@ -105,6 +102,7 @@ export const useCartFetch = () => {
   return {
     cartData,
     isLoading,
+    cartFetchError,
     cartRefetch,
     addCartItemAPI,
     changeCartQuantityAPI,

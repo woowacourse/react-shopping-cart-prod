@@ -10,31 +10,23 @@ export const useOrderFetch = () => {
 
   const {
     data: orderListData,
-    isError,
+    isError: orderListFetchError,
     isFetching,
-  } = useQuery<OrderListType[]>(
-    'orderList',
-    async () => {
-      const res = await fetch(`${serverURL}/orders`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Basic ${base64}`,
-        },
-      });
-
-      const data = await res.json();
-      if (data.status && data.status !== 200) throw new Error();
-      return data;
-    },
-    {
-      onError: (e) => {
-        console.log(e);
+  } = useQuery<OrderListType[]>('orderList', async () => {
+    const res = await fetch(`${serverURL}/orders`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Basic ${base64}`,
       },
-    },
-  );
+    });
 
-  return { orderListData, isError, isFetching };
+    const data = await res.json();
+    if (data.status && data.status !== 200) throw new Error();
+    return data;
+  });
+
+  return { orderListData, orderListFetchError, isFetching };
 };
 
 export const useAddOrderFetch = () => {
@@ -62,8 +54,8 @@ export const useAddOrderFetch = () => {
         const orderLocation = res.headers.get('Location');
         navigation(`${orderLocation}`);
       },
-      onError: (e) => {
-        console.log(e);
+      onError: () => {
+        alert('오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
       },
     },
   );

@@ -4,18 +4,23 @@ import useCouponFetch from '../../../hooks/useCouponFetch';
 import Button from '../../common/Button/Button';
 import { useConfirmModal } from '../../../hooks/useConfirmModal';
 import LoadingSpinner from '../../common/LoadingSpinner/LoadingSpinner';
+import ErrorBox from '../../common/ErrorBox/ErrorBox';
 
 const CouponList = () => {
-  const { allCoupon, addCouponAPI, isFetching } = useCouponFetch();
+  const { allCoupon, addCouponAPI, isFetching, couponFetchError } = useCouponFetch();
   const { openModal } = useConfirmModal();
+
+  const addCoupon = async (couponId: number) => {
+    addCouponAPI({ id: couponId });
+  };
 
   if (isFetching) {
     return <LoadingSpinner />;
   }
 
-  const addCoupon = async (couponId: number) => {
-    addCouponAPI({ id: couponId });
-  };
+  if (couponFetchError) {
+    return <ErrorBox errorType="network" />;
+  }
 
   return (
     <CouponListWrapper>
