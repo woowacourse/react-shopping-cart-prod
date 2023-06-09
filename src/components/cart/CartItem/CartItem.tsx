@@ -31,7 +31,7 @@ const CartItem = ({ cartItem }: CartItemProps) => {
     cartContoller.set(value);
   };
 
-  const handleRemoveButtonClick = () => {
+  const deleteItemFromCart = () => {
     if (!window.confirm('해당 물품을 장바구니에서 삭제 하시겠습니까?')) return;
 
     deleteCartItem(cartItemId);
@@ -39,7 +39,7 @@ const CartItem = ({ cartItem }: CartItemProps) => {
     cartContoller.delete();
   };
 
-  const handleCheckBoxChange = () => {
+  const setCheckedCartList = () => {
     if (isChecked(cartItemId)) {
       deleteCheckedItem(cartItemId);
       return;
@@ -51,7 +51,7 @@ const CartItem = ({ cartItem }: CartItemProps) => {
   return (
     <CartItemContainer>
       <ItemContents>
-        <CheckBox isChecked={isChecked(cartItemId)} onChange={handleCheckBoxChange} />
+        <CheckBox isChecked={isChecked(cartItemId)} onChange={setCheckedCartList} />
         <Image src={imageUrl} size="medium" />
         <div>
           <Name>{name}</Name>
@@ -59,7 +59,7 @@ const CartItem = ({ cartItem }: CartItemProps) => {
         </div>
       </ItemContents>
       <ItemControllers>
-        <RemoveButton onClick={handleRemoveButtonClick}>
+        <RemoveButton onClick={deleteItemFromCart}>
           <FaRegTrashAlt size="24px" color="#cccccc" />
         </RemoveButton>
         <Counter count={count} updateCount={updateQuantity} min={1} />

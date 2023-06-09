@@ -12,7 +12,7 @@ const CartList = () => {
   const { deleteCartItem } = useCartItemApi();
   const [cartList, setCartList] = useRecoilState(cartState);
 
-  const handleAllCheckBoxChange = () => {
+  const setAllCheckedCartList = () => {
     if (isAllChecked()) {
       deleteAllCheckedItem();
       return;
@@ -21,7 +21,7 @@ const CartList = () => {
     addAllCheckedItem();
   };
 
-  const handleDeleteCheckedListButtonClick = () => {
+  const deleteCheckedCartItems = () => {
     if (!window.confirm(`${checkedCartList.length}개의 선택한 품목들을 삭제하시겠습니까?`)) return;
 
     checkedCartList.forEach((checkedCartItem) => deleteCartItem(checkedCartItem));
@@ -44,10 +44,10 @@ const CartList = () => {
         <CheckBox
           isChecked={isAllChecked()}
           labelText={`전체 선택 (${checkedCartList.length}/${cartList.length})`}
-          onChange={handleAllCheckBoxChange}
+          onChange={setAllCheckedCartList}
         />
         {!!checkedCartList.length && (
-          <DeleteCheckedListButton onClick={handleDeleteCheckedListButtonClick}>
+          <DeleteCheckedListButton onClick={deleteCheckedCartItems}>
             선택 삭제
           </DeleteCheckedListButton>
         )}

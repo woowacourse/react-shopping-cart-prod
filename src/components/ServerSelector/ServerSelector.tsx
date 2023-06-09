@@ -17,15 +17,13 @@ const ServerSelector = () => {
     navigate('/', { replace: true });
   }, [serverName]);
 
-  const handleServerNameSelectChange: React.ChangeEventHandler<HTMLSelectElement> = ({
-    target: { value },
-  }) => {
-    if (!isProperServerName(value)) return;
-    setServerName(value);
+  const setProperServerName = (newServerName: string) => {
+    if (!isProperServerName(newServerName)) return;
+    setServerName(newServerName);
   };
 
   return (
-    <Select onChange={handleServerNameSelectChange} value={serverName}>
+    <Select onChange={({ target: { value } }) => setProperServerName(value)} value={serverName}>
       {Object.keys(BASE_URL).map((serverNameOption) => (
         <option key={serverNameOption}>{serverNameOption}</option>
       ))}

@@ -35,13 +35,13 @@ const ProductCounter = (product: Product) => {
     cartContoller.set(quantity);
   };
 
-  const handleAddCartButtonClick = async () => {
+  const addNewCartItem = async () => {
     const newCartItemId = await addCartItem(product);
     setCount(1);
     cartContoller.add(newCartItemId, 1, product);
   };
 
-  const handleNoQuantityAction = (quantity: number) => {
+  const deleteCartItemIfNoQuantity = (quantity: number) => {
     if (quantity !== 0 || cartItemId === null) return;
 
     deleteCartItem(cartItemId);
@@ -53,16 +53,12 @@ const ProductCounter = (product: Product) => {
         <Counter
           count={count}
           updateCount={updateCount}
-          onClickedButton={handleNoQuantityAction}
-          onBlurredInput={handleNoQuantityAction}
-          onChangedInput={handleNoQuantityAction}
+          onClickedButton={deleteCartItemIfNoQuantity}
+          onBlurredInput={deleteCartItemIfNoQuantity}
+          onChangedInput={deleteCartItemIfNoQuantity}
         />
       ) : (
-        <CartButton
-          type="button"
-          aria-label="장바구니에 추가하기"
-          onClick={handleAddCartButtonClick}
-        >
+        <CartButton type="button" aria-label="장바구니에 추가하기" onClick={addNewCartItem}>
           <BsCart4 size="25px" />
         </CartButton>
       )}

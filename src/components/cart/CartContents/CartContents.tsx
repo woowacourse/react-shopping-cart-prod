@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
 import { Suspense, useState } from 'react';
@@ -10,14 +10,8 @@ import CouponSelectRadio from '../../coupon/CouponSelectRadio/CouponSelectRadio'
 import CartCouponErrorBoundary from '../../../errorHandler/CartCouponErrorBoundary';
 
 const CartContents = () => {
-  const navigate = useNavigate();
-
   const [selectedCoupon, setSelectedCoupon] = useState<CouponInfo | null>(null);
   const cartLength = useRecoilValue(getCartLength);
-
-  const handleLinkButtonClick = () => {
-    navigate('/');
-  };
 
   return cartLength ? (
     <Contents>
@@ -34,7 +28,9 @@ const CartContents = () => {
   ) : (
     <EmptyCartView>
       장바구니에 상품이 존재하지 않습니다.
-      <LinkButton onClick={handleLinkButtonClick}>상품 담으러 가기</LinkButton>
+      <Link to="/">
+        <LinkButton>상품 담으러 가기</LinkButton>
+      </Link>
     </EmptyCartView>
   );
 };
