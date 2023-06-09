@@ -39,7 +39,7 @@ const PaymentForm = ({ totalPrice }: Props) => {
   };
 
   return (
-    <S.PaymentForm>
+    <S.PaymentForm id="payment-form">
       <S.PriceLabel>결제예상금액</S.PriceLabel>
       <S.PriceInfo>
         <Price

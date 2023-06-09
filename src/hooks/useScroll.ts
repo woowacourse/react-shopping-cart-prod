@@ -4,18 +4,28 @@ export const useScroll = () => {
   const [isScrollDown, setIsScrollDown] = useState(true);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollThreshold = 400;
-      const scrollPosition = window.scrollY || window.pageYOffset;
-
-      setIsScrollDown(scrollPosition < scrollThreshold);
+    const handleScroll = ([entry]: IntersectionObserverEntry[]) => {
+      setIsScrollDown(!entry.isIntersecting);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    const options = {
+      threshold: 0.5,
+    };
+
+    const observer = new IntersectionObserver(handleScroll, options);
+
+    const target = document.getElementById('payment-form');
+
+    if (target) {
+      observer.observe(target);
+    }
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      if (target) {
+        observer.unobserve(target);
+      }
     };
   }, []);
+
   return { isScrollDown };
 };
