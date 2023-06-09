@@ -4,6 +4,7 @@ import { Text } from '../../common/Text/Text';
 
 const DetailItem = ({ orderProduct }: { orderProduct: OrderProductsType }) => {
   const { quantity, product } = orderProduct;
+
   return (
     <DetailItemWrapper>
       <ProductImage src={product.imageUrl} alt={product.name} />

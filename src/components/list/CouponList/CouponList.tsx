@@ -12,9 +12,11 @@ const CouponList = () => {
   if (isFetching) {
     return <LoadingSpinner />;
   }
+
   const addCoupon = async (couponId: number) => {
     addCouponAPI({ id: couponId });
   };
+
   return (
     <CouponListWrapper>
       {allCoupon?.map((issuableCoupon) => {

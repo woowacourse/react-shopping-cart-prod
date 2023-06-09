@@ -13,6 +13,7 @@ const UserCouponItem = ({ totalPrice, coupon, isClicked, onClick }: UserCouponIt
   const minimum = coupon.minimumPrice ? `${coupon.minimumPrice}원 이상 구매시 적용가능` : '';
 
   const available = coupon.minimumPrice < totalPrice;
+
   return (
     <CouponItemWrapper color={isClicked ? '#04C09E' : '#fff'} onClick={onClick}>
       <Text color="#000" size="small" weight="normal" lineHeight="20px">

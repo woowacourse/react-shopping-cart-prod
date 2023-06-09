@@ -42,13 +42,13 @@ const CartPage = () => {
   };
 
   const calcTotalPrice = () => {
-    return checkCartList.reduce((prev, curr) => {
+    return checkCartList.reduce((acc, curr) => {
       const cartItem = cartData && cartData.find((cart) => cart.id === curr);
       if (cartItem) {
         const { product, quantity } = cartItem;
-        return prev + product.price * quantity;
+        return acc + product.price * quantity;
       }
-      return prev + 0;
+      return acc;
     }, 0);
   };
 

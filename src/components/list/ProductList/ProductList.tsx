@@ -11,12 +11,15 @@ const ProductList = () => {
   if (isFetching) {
     return <LoadingSpinner />;
   }
+
   if (!productData) {
     return <ErrorBox errorType="network" />;
   }
+
   if (productData.length === NUM.ZERO) {
     return <ErrorBox errorType="emptyList" />;
   }
+
   return (
     <ProductListWrapper>
       {productData.map((product) => (

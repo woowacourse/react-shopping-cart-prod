@@ -79,6 +79,7 @@ const useCouponFetch = () => {
   const addCouponAPI = (body?: object) => {
     fetchAddCouponData.mutate({ body });
   };
+
   return { allCoupon, isFetching, addCouponAPI, userCoupon };
 };
 

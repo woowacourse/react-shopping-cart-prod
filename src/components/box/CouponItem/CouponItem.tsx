@@ -10,6 +10,7 @@ const CouponItem = ({ coupon }: { coupon: CouponType }) => {
       : `${coupon.discountAmount}원`;
 
   const minimum = coupon.minimumPrice ? `${coupon.minimumPrice}원 이상 구매시 적용가능` : '';
+
   return (
     <CouponItemWrapper>
       <Text color="#FFF" size="small" weight="normal">

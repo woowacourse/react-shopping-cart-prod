@@ -37,6 +37,7 @@ const OrderDetailPage = () => {
   }
 
   const { originalPrice, discountPrice: finalPrice, coupon, ...order } = orderDetailData;
+
   return (
     <PageTemplate
       title="장바구니 미션- 주문 상세보기 페이지"
