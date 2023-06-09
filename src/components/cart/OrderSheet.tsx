@@ -42,7 +42,7 @@ const OrderSheet = () => {
           alert('주문이 완료되었습니다!');
           goToPage(ROUTE_PATH.ORDER_PAGE);
         })
-        .catch((error) => alert(error));
+        .catch(() => alert('서버로 주문을 전송하지 못하였습니다.'));
     }
   };
 

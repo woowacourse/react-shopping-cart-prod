@@ -23,7 +23,7 @@ const CartPage = () => {
       .then((data) => {
         setCart(data.map((item: CartItem) => ({ ...item, isSelected: true })));
       })
-      .catch((error) => alert(error));
+      .catch(() => alert('서버에서 장바구니 목록을 가져오지 못하였습니다.'));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [server]);

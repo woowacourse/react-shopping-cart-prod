@@ -19,7 +19,7 @@ const OrderPage = () => {
         const orders = data.sort((a: any, b: any) => b.orderId - a.orderId);
         setOrders(orders);
       })
-      .catch((error) => alert(error));
+      .catch(() => alert('서버에서 주문목록을 가져오지 못하였습니다.'));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [server]);
 
