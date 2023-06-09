@@ -1,4 +1,4 @@
-import { PropsWithChildren, useState } from 'react';
+import { PropsWithChildren, useCallback, useState } from 'react';
 import AccordionContext from './context';
 
 type AccordionProviderProps = {
@@ -8,9 +8,9 @@ type AccordionProviderProps = {
 const AccordionProvider = ({ children, defaultOpen = true }: PropsWithChildren<AccordionProviderProps>) => {
   const [isAccordionOpen, setIsAccordionOpen] = useState(defaultOpen);
 
-  const toggleAccordion = () => {
+  const toggleAccordion = useCallback(() => {
     setIsAccordionOpen((prev) => !prev);
-  };
+  }, []);
 
   return <AccordionContext.Provider value={{ isAccordionOpen, toggleAccordion }}>{children}</AccordionContext.Provider>;
 };
