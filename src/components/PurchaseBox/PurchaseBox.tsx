@@ -49,6 +49,7 @@ function PurchaseBox() {
                   openModal(<Purchase/>);
                 }
               }}
+              disabled={totalPrice === 0}
             >
               할인받고 결제하기
             </PurchaseButton>
