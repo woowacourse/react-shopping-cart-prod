@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import {
   CouponBoxContainer,
   CouponBoxWrapper,
@@ -7,14 +7,14 @@ import {
   CouponSelectTitle,
   SelectedCouponText,
 } from "./CouponSelector.style";
-import { useRecoilValue, useResetRecoilState } from "recoil";
+import {useRecoilValue, useResetRecoilState} from "recoil";
 import {
   couponState,
-  orderRepository,
   selectedCouponState,
-  selectedCouponIdSelector,
-} from "../../app/recoil/orderAtom";
+} from "../../app/recoil/order/orderAtom.ts";
 import CouponBox from "../CouponBox";
+import {orderRepository} from "../../app/recoil/order/orderRepository.ts";
+import {selectedCouponIdSelector} from "../../app/recoil/order/orderSelector.ts";
 
 function CouponSelector() {
   const [isCouponSelectorOpen, setCouponSelectorOpen] = useState(false);
@@ -22,7 +22,7 @@ function CouponSelector() {
   const selectedCoupon = useRecoilValue(selectedCouponState);
   const selectedCouponIds = useRecoilValue(selectedCouponIdSelector);
   const resetSelectedCouponIdsState = useResetRecoilState(selectedCouponState);
-  const { loadCoupons } = useRecoilValue(orderRepository);
+  const {loadCoupons} = useRecoilValue(orderRepository);
 
   useEffect(() => {
     resetSelectedCouponIdsState();
@@ -47,7 +47,7 @@ function CouponSelector() {
         <CouponBoxContainer>
           {coupons.length > 0 ? (
             coupons.map((coupon) => (
-              <CouponBox key={coupon.id} coupon={coupon} />
+              <CouponBox key={coupon.id} coupon={coupon}/>
             ))
           ) : (
             <div>쿠폰이 없습니다.</div>

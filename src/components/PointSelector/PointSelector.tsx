@@ -12,11 +12,11 @@ import {
 } from "./PointSelector.style";
 import {ChangeEvent, useEffect} from "react";
 import {
-  orderRepository,
   pointState,
   selectedPointState,
-} from "../../app/recoil/orderAtom";
+} from "../../app/recoil/order/orderAtom.ts";
 import {totalPriceSelector} from "../../app/recoil/cart/cartSelectors.ts";
+import {orderRepository} from "../../app/recoil/order/orderRepository.ts";
 
 function PointSelector() {
   const point = useRecoilValue(pointState);

@@ -25,16 +25,15 @@ import {
 import CouponSelector from "../CouponSelector";
 import {
   deliveryFeeState,
-  discountPriceByCouponSelector,
   expectedOrderPriceState,
-  orderRepository,
-  selectedCouponIdSelector,
   selectedPointState,
-} from "../../app/recoil/orderAtom.ts";
+} from "../../app/recoil/order/orderAtom.ts";
 import PointSelector from "../PointSelector/PointSelector.tsx";
 import {useEffect} from "react";
 import {checkedCartSelector, totalPriceSelector} from "../../app/recoil/cart/cartSelectors.ts";
 import {modalRepository} from "../../app/recoil/modal/modalRepository.tsx";
+import {orderRepository} from "../../app/recoil/order/orderRepository.ts";
+import {discountPriceByCouponSelector, selectedCouponIdSelector} from "../../app/recoil/order/orderSelector.ts";
 
 function Purchase() {
   const navigate = useNavigate();

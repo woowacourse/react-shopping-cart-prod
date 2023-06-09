@@ -1,8 +1,4 @@
 import {useRecoilValue} from "recoil";
-import {
-  isCouponSelectedSelector,
-  orderRepository,
-} from "../../app/recoil/orderAtom.ts";
 import type {Coupon} from "../../types/types.ts";
 import {
   CouponDescription,
@@ -11,6 +7,8 @@ import {
   CouponWrapper,
 } from "./CouponBox.style.ts";
 import {totalPriceSelector} from "../../app/recoil/cart/cartSelectors.ts";
+import {orderRepository} from "../../app/recoil/order/orderRepository.ts";
+import {isCouponSelectedSelector} from "../../app/recoil/order/orderSelector.ts";
 
 function CouponBox({coupon}: { coupon: Coupon }) {
   const isCouponSelected = useRecoilValue(isCouponSelectedSelector(coupon.id));

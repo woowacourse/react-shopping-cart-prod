@@ -11,7 +11,7 @@ import {
 } from "./PurchaseBox.style";
 import {useRecoilValue} from "recoil";
 import Purchase from "../Purchase";
-import {deliveryFeeState} from "../../app/recoil/orderAtom.ts";
+import {deliveryFeeState} from "../../app/recoil/order/orderAtom.ts";
 import {totalPriceSelector} from "../../app/recoil/cart/cartSelectors.ts";
 import {modalRepository} from "../../app/recoil/modal/modalRepository.tsx";
 

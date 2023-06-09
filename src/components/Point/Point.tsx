@@ -1,6 +1,6 @@
 import {useEffect} from "react";
 import {useRecoilValue} from "recoil";
-import {orderRepository, pointState} from "../../app/recoil/orderAtom.ts";
+import {pointState} from "../../app/recoil/order/orderAtom.ts";
 import {useNavigate} from "react-router-dom";
 import {
   CurrentPoint,
@@ -12,6 +12,7 @@ import {
   ThinBorder,
 } from "./Point.style.ts";
 import {modalRepository} from "../../app/recoil/modal/modalRepository.tsx";
+import {orderRepository} from "../../app/recoil/order/orderRepository.ts";
 
 function Point() {
   const {closeModal} = useRecoilValue(modalRepository);

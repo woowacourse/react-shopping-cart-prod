@@ -1,77 +1,18 @@
-import {atom, selector, selectorFamily} from "recoil";
-import {Coupon, NewOrder, Point} from "../../types/types";
-import {serverState} from "./serverAtom.ts";
-import {fetchCoupons, fetchOrder, fetchPoint} from "../api/api.ts";
-import {checkedCartSelector, totalPriceSelector} from "./cart/cartSelectors.ts";
-import {cartRepository} from "./cart/cartRepository.ts";
-import {modalRepository} from "./modal/modalRepository.tsx";
-
-
-export const deliveryFeeState = atom({
-  key: "deliveryFeeState",
-  default: 3000,
-});
-
-export const couponState = atom<Coupon[]>({
-  key: "couponState",
-  default: [],
-});
-
-export const pointState = atom<Point>({
-  key: "pointState",
-  default: {
-    pointHistories: [],
-    totalPoint: 0,
-  },
-});
-
-export const selectedCouponState = atom<Coupon[]>({
-  key: "selectedCouponState",
-  default: [],
-});
-
-export const selectedCouponIdSelector = selector<number[]>({
-  key: "selectedCouponIdSelector",
-  get: ({get}) => {
-    const selectedCoupons = get(selectedCouponState);
-    return selectedCoupons.map((coupon) => coupon.id);
-  },
-});
-
-export const discountPriceByCouponSelector = selector<number>({
-  key: "discountPriceByCouponSelector",
-  get: ({get}) => {
-    const totalPrice = get(totalPriceSelector);
-    const selectedCoupons = get(selectedCouponState);
-    const discount =
-      selectedCoupons.length > 0
-        ? (totalPrice * selectedCoupons[0]?.discountPercent) / 100 +
-        selectedCoupons[0]?.discountAmount
-        : 0;
-    return discount;
-  },
-});
-
-export const isCouponSelectedSelector = selectorFamily<boolean, number>({
-  key: "selectedCouponSelectedSelector",
-  get:
-    (couponId: number) =>
-      ({get}) => {
-        const selectedCouponIds = get(selectedCouponIdSelector);
-
-        return selectedCouponIds.includes(couponId);
-      },
-});
-
-export const selectedPointState = atom({
-  key: "selectedPointState",
-  default: 0,
-});
-
-export const expectedOrderPriceState = atom({
-  key: "expectedOrderPriceState",
-  default: 0,
-});
+import {selector} from "recoil";
+import {serverState} from "../serverAtom.ts";
+import {fetchCoupons, fetchOrder, fetchPoint} from "../../api/api.ts";
+import {cartRepository} from "../cart/cartRepository.ts";
+import {checkedCartSelector, totalPriceSelector} from "../cart/cartSelectors.ts";
+import {modalRepository} from "../modal/modalRepository.tsx";
+import {Coupon, NewOrder} from "../../../types/types.ts";
+import {
+  couponState,
+  expectedOrderPriceState,
+  pointState,
+  selectedCouponState,
+  selectedPointState
+} from "./orderAtom.ts";
+import {discountPriceByCouponSelector, selectedCouponIdSelector} from "./orderSelector.ts";
 
 export const orderRepository = selector({
   key: "orderRepository",
