@@ -54,7 +54,7 @@ export const removeCartProduct = async (cartProductIds: number[]) => {
 
 export const getCartPriceInfo = async (checkedCartProductIds: number[]): Promise<CartPriceInfo> => {
   const params = new URLSearchParams();
-  checkedCartProductIds.map((id) => params.append('item', `${id}`));
+  checkedCartProductIds.forEach((id) => params.append('item', `${id}`));
 
   const { data: cartPriceInfo } = await api.get<CartPriceInfo>(`${URL}/price?${params.toString()}`);
 
