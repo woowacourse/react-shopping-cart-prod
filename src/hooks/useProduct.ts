@@ -1,5 +1,5 @@
 import { ChangeEventHandler, FocusEventHandler } from 'react';
-import { NONE_QUANTITY } from '../constants';
+import { NONE_QUANTITY, base64 } from '../constants';
 import { useRecoilCallback, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   SelectorParams,
@@ -9,50 +9,93 @@ import {
 } from '../store/CartSelector';
 import { validateQuantityInput } from '../utils/validateQuantityInput';
 import { CART_BASE_URL } from '../constants/url';
-import { useFetchData } from './useFetchData';
 import { serverState } from '../store/ServerState';
-
 import { CartItem } from '../types';
 import { cartState } from '../store/CartState';
+import useMutation from './useMutation';
+import useToast from './useToast';
 
 export const useProduct = (productId: number) => {
   const newQuantity = useRecoilValue(updateCartSelector({ id: productId }));
   const serverUrl = useRecoilValue(serverState);
   const setCart = useSetRecoilState(cartState);
-
   const findCartItemId = useRecoilValue(getCartItemIdSelector(productId));
 
-  const updateCart = useRecoilCallback(({ set }) => ({ id, quantity }: SelectorParams) => {
-    set(updateCartSelector({ id, quantity }), 0);
+  const updateCart = useRecoilCallback(({ set }) => ({ id, cartId, quantity }: SelectorParams) => {
+    set(updateCartSelector({ id, cartId, quantity }), 0);
   });
 
   const removeProductItemFromCart = useRecoilCallback(({ set }) => (productId: number) => {
     set(removeProductItemFromCartSelector(productId), []);
   });
 
-  const { api } = useFetchData<CartItem[]>(setCart);
+  const { mutate, isLoading, error } = useMutation<CartItem[]>(setCart);
 
-  const removeItem = () => {
-    if (findCartItemId < 0) return;
+  const { toast } = useToast();
 
-    api.delete(`${serverUrl}${CART_BASE_URL}/${findCartItemId}`, CART_BASE_URL);
-    removeProductItemFromCart(productId);
-  };
-
-  const updateItem = (quantity: number) => {
-    if (findCartItemId < 0) return;
-
-    api.patch(`${serverUrl}${CART_BASE_URL}/${findCartItemId}`, { quantity }, CART_BASE_URL);
-    updateCart({ id: productId, cartId: findCartItemId, quantity });
-  };
   const addItemToCart = () => {
-    api.post(`${serverUrl}${CART_BASE_URL}`, { productId }, CART_BASE_URL);
+    mutate(
+      {
+        url: `${serverUrl}${CART_BASE_URL}`,
+        method: 'POST',
+        bodyData: { productId },
+        headers: {
+          Authorization: `basic ${base64}`,
+          'Content-Type': 'application/json',
+        },
+      },
+      CART_BASE_URL,
+    );
 
+    if (error) return;
+
+    toast.success('🧺 상품이 장바구니에 담겼습니다.');
     updateCart({
       id: productId,
       cartId: findCartItemId,
       quantity: 1,
     });
+  };
+
+  const updateItem = (quantity: number) => {
+    if (findCartItemId < 0) return;
+
+    mutate(
+      {
+        url: `${serverUrl}${CART_BASE_URL}/${findCartItemId}`,
+        method: 'PATCH',
+        bodyData: { quantity },
+        headers: {
+          Authorization: `Basic ${base64}`,
+          'Content-Type': 'application/json',
+        },
+      },
+      CART_BASE_URL,
+    );
+    if (error) return;
+
+    updateCart({ id: productId, cartId: findCartItemId, quantity });
+  };
+
+  const removeItem = () => {
+    if (findCartItemId < 0) return;
+
+    mutate(
+      {
+        url: `${serverUrl}${CART_BASE_URL}/${findCartItemId}`,
+        method: 'DELETE',
+        bodyData: { productId },
+        headers: {
+          Authorization: `Basic ${base64}`,
+          'Content-Type': 'application/json',
+        },
+      },
+      CART_BASE_URL,
+    );
+    if (error) return;
+
+    toast.success('🥲 상품을 장바구니에서 꺼냈습니다.');
+    removeProductItemFromCart(productId);
   };
 
   const handleNumberInputChange: ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -105,5 +148,6 @@ export const useProduct = (productId: number) => {
     addItemToCart,
     handleBlurItem,
     removeItem,
+    isLoading,
   };
 };

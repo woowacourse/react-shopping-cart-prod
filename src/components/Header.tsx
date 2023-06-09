@@ -4,7 +4,6 @@ import { ReactComponent as MobileLogo } from '../assets/onlyImageIcon.svg';
 import CartRouteButton from './main/CartRouteButton';
 import ServerDropdown from './ServerDropdown';
 import useNavigatePage from '../hooks/useNavigatePage';
-import { useFetchData } from '../hooks/useFetchData';
 import { CartItem } from '../types';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { cartState } from '../store/CartState';
@@ -12,37 +11,43 @@ import { serverState } from '../store/ServerState';
 import { useEffect } from 'react';
 import { CART_BASE_URL } from '../constants/url';
 import useIsMobile from '../hooks/useIsMobile';
+import useGet from '../hooks/useGet';
+import { BiListUl } from 'react-icons/bi';
 
 const Header = () => {
-  const { goHome, goCart } = useNavigatePage();
+  const { goHome, goCart, goOrder } = useNavigatePage();
   const serverUrl = useRecoilValue(serverState);
   const setCart = useSetRecoilState(cartState);
-  const { api } = useFetchData<CartItem[]>(setCart);
   const isMobile = useIsMobile();
 
+  const { data: cartData } = useGet<CartItem[]>(`${serverUrl}${CART_BASE_URL}`);
+
   useEffect(() => {
-    api.get(`${serverUrl}${CART_BASE_URL}`);
-  }, [api, serverUrl]);
+    if (cartData) setCart(cartData);
+  }, [cartData, setCart, serverUrl]);
 
   return (
     <S.Header>
-      <S.Wrapper>
-        <S.TitleButton onClick={goHome}>
-          {isMobile ? <MobileLogo /> : <DesktopLogo />}
-        </S.TitleButton>
-        <ServerDropdown />
-        <CartRouteButton onClick={goCart} />
-        <S.OrderButton>주문 목록</S.OrderButton>
-      </S.Wrapper>
+      <S.TitleButton onClick={goHome}>{isMobile ? <MobileLogo /> : <DesktopLogo />}</S.TitleButton>
+      <ServerDropdown />
+      <CartRouteButton onClick={goCart} />
+      <S.OrderButton onClick={goOrder}>
+        <BiListUl size={44} />
+        <S.OrderLabel>주문 목록</S.OrderLabel>
+      </S.OrderButton>
     </S.Header>
   );
 };
 
 const S = {
   Header: styled.header`
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     height: 80px;
     position: fixed;
+    padding: 0 20px;
     z-index: 1;
     background: #f2f2f2;
     font-size: 36px;
@@ -80,8 +85,8 @@ const S = {
     display: flex;
     justify-content: center;
     background-color: transparent;
-    cursor: pointer;
     color: var(--text-color);
+
     @media all and (max-width: 479px) {
       width: 60px;
       height: 60px;
@@ -96,11 +101,23 @@ const S = {
   Title: styled.span``,
 
   OrderButton: styled.button`
-    width: 100px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 50px;
     color: var(--text-color);
     font-size: 20px;
     font-weight: 700;
+    margin-left: 10px;
     background-color: transparent;
+  `,
+
+  OrderLabel: styled.label`
+    position: absolute;
+    top: 10px;
+    height: 12px;
+    font-size: 12px;
+    font-weight: 400;
   `,
 };
 

@@ -20,6 +20,19 @@ export const GlobalStyle = createGlobalStyle`
     display: none;
   }
 
+  button {
+    cursor: pointer;
+    
+  }
+
+  button:disabled{
+    cursor: not-allowed;
+  }
+
+  li {
+    list-style: none;
+  }
+
   input[type="number"]::-webkit-inner-spin-button,
   input[type="number"]::-webkit-outer-spin-button {
     width: 16px;
@@ -33,7 +46,7 @@ export const GlobalStyle = createGlobalStyle`
   :root {
     --gray-color-200: #c7c7c7;
     --text-color: #333;
-    --mint-color: #04c092;
+    --mint-color: #04c09e;
     --white-color: #ffffff;
     --mint-color-hover: #439a97;
   }

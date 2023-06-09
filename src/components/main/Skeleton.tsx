@@ -29,11 +29,11 @@ const skeleton = styled.div`
   border-radius: 8px;
   overflow: hidden;
   @media all and (min-width: 768px) and (max-width: 1023px) {
-    width: 265px;
+    width: 225px;
   }
 
   @media all and (min-width: 480px) and (max-width: 767px) {
-    width: 275px;
+    width: 235px;
   }
 
   @media all and (max-width: 479px) {
@@ -46,19 +46,22 @@ const S = {
     list-style: none;
   `,
   SkeletonThumbnail: styled(skeleton)`
-    width: 270px;
-    height: 270px;
+    width: 210px;
+    height: 210px;
     margin-bottom: 20px;
 
     @media all and (min-width: 768px) and (max-width: 1023px) {
-      height: 265px;
+      width: 225px;
+      height: 225px;
     }
 
     @media all and (min-width: 480px) and (max-width: 767px) {
-      height: 275px;
+      width: 235px;
+      height: 235px;
     }
 
     @media all and (max-width: 479px) {
+      width: 286px;
       height: 286px;
     }
   `,

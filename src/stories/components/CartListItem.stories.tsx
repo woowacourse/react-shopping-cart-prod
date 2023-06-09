@@ -24,7 +24,7 @@ const meta = {
         id: 1,
         name: 'PET보틀-정사각(370ml)',
         price: 41000,
-        imageUrl: `${process.env.PUBLIC_URL}/assets/product1.svg`,
+        imageUrl: `https://cdn-mart.baemin.com/sellergoods/main/2ddb9f04-c15d-4647-b6e7-30afb9e8d072.jpg?h=300&w=300`,
       },
     },
   },

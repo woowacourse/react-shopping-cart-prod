@@ -4,8 +4,7 @@ import { useRecoilValue } from 'recoil';
 import { isSelectedProductSelector } from '../../store/CartSelector';
 import CartIconButton from './CartIconButton';
 import { useProduct } from '../../hooks/useProduct';
-import useToast from '../../hooks/useToast';
-import Toast from '../@common/Toast';
+import CartLoadingSpinner from '../@common/LoadingSpinner/CartLoadingSpinner';
 
 interface Props {
   id: number;
@@ -23,28 +22,23 @@ const ProductItem = ({ id, imgUrl, name, price }: Props) => {
     handleDecreaseItem,
     handleIncreaseItem,
     handleNumberInputChange,
+    isLoading,
   } = useProduct(id);
-
-  const { isShowToast, showToast, dismissToast } = useToast();
 
   const handleCartClick = () => {
     addItemToCart();
-    showToast();
   };
 
   return (
-    <div>
-      <S.Image src={imgUrl} alt={`img${id}`} />
-      <S.InfoWrapper>
-        <div>
-          <S.Name htmlFor={`product${id}`}>{name}</S.Name>
-          <S.Price>
-            {price.toLocaleString()}
-            <span>원</span>
-          </S.Price>
-        </div>
+    <S.Wrapper>
+      <S.ImageWrapper>
+        <S.Image src={imgUrl} alt={`img${id}`} />
+      </S.ImageWrapper>
+      <S.ButtonWrapper>
         {isSelected ? (
-          <>
+          isLoading ? (
+            <CartLoadingSpinner />
+          ) : (
             <QuantityInput
               value={newQuantity}
               onChange={handleNumberInputChange}
@@ -53,24 +47,63 @@ const ProductItem = ({ id, imgUrl, name, price }: Props) => {
               onBlur={handleBlurItem}
               id={`product${id}`}
             />
-            <Toast
-              isShowToast={isShowToast}
-              message="상품이 장바구니에 담겼습니다."
-              dismissToast={dismissToast}
-            />
-          </>
+          )
         ) : (
           <CartIconButton onClick={handleCartClick} ariaLabel={id} />
         )}
+      </S.ButtonWrapper>
+      <S.InfoWrapper>
+        <div>
+          <S.Name htmlFor={`product${id}`}>{name}</S.Name>
+          <S.Price>
+            {price.toLocaleString()}
+            <span>원</span>
+          </S.Price>
+        </div>
       </S.InfoWrapper>
-    </div>
+    </S.Wrapper>
   );
 };
 
 const S = {
+  Wrapper: styled.div`
+    position: relative;
+  `,
+  ImageWrapper: styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 210px;
+    height: 210px;
+    overflow: hidden;
+    border-radius: 10px;
+    background-color: #e2e2e2;
+
+    @media all and (min-width: 768px) and (max-width: 1023px) {
+      width: 225px;
+      height: 225px;
+    }
+
+    @media all and (min-width: 480px) and (max-width: 767px) {
+      width: 235px;
+      height: 235px;
+    }
+
+    @media all and (max-width: 479px) {
+      width: 286px;
+      height: 286px;
+    }
+  `,
+
   Image: styled.img`
     width: 100%;
     height: auto;
+  `,
+
+  ButtonWrapper: styled.div`
+    position: absolute;
+    bottom: 70px;
+    right: 8px;
   `,
 
   InfoWrapper: styled.div`
@@ -78,10 +111,6 @@ const S = {
     display: flex;
     justify-content: space-between;
     padding: 12px 6px 0;
-
-    & > button:last-child {
-      cursor: pointer;
-    }
   `,
 
   Name: styled.label`

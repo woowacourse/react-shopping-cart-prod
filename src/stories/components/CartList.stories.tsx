@@ -7,43 +7,42 @@ import { within } from '@testing-library/react';
 import { setDataInLocalStorage } from '../../utils/localStorage';
 import { expect } from '@storybook/jest';
 import userEvent from '@testing-library/user-event';
+import CartPage from '../../pages/CartPage';
 
 const mockData = [
   {
     id: 1,
-    quantity: 1,
-    product: {
-      id: 1,
-      name: 'PET보틀-정사각(420ml)',
-      price: 43400,
-      imageUrl: '/assets/product1.svg',
-    },
+    name: 'PET보틀-정사각(420ml)',
+    price: 43400,
+    imageUrl:
+      'https://cdn-mart.baemin.com/sellergoods/main/2ddb9f04-c15d-4647-b6e7-30afb9e8d072.jpg?h=300&w=300',
   },
   {
     id: 2,
-    quantity: 2,
-    product: {
-      id: 2,
-      name: 'PET보틀-밀크티(370ml)',
-      price: 73400,
-      imageUrl: '/assets/product2.svg',
-    },
+    name: 'PET보틀-밀크티(370ml)',
+    price: 73400,
+    imageUrl:
+      'https://cdn-mart.baemin.com/sellergoods/main/ac90cb6d-70ad-4271-a25e-03e4db9a9960.jpg?h=300&w=300',
   },
   {
     id: 3,
-    quantity: 3,
-    product: {
-      id: 3,
-      name: 'PET보틀-정사각(370ml)',
-      price: 41000,
-      imageUrl: '/assets/product3.svg',
-    },
+    name: 'PET보틀-정사각(370ml)',
+    price: 41000,
+    imageUrl:
+      'https://cdn-mart.baemin.com/sellergoods/main/fbe1660a-20f4-4077-8ce7-d8926c7b4e6d.jpg?h=300&w=300',
+  },
+  {
+    id: 4,
+    name: 'PET보틀-납작(450ml)',
+    price: 39900,
+    imageUrl:
+      'https://cdn-mart.baemin.com/sellergoods/main/6adcd3f3-25a3-4038-82a4-322eb72ec281.jpg?h=300&w=300',
   },
 ];
 
 const meta = {
-  title: 'Pages/cart/CartList',
-  component: CartList,
+  title: 'Pages/cart/CartPage',
+  component: CartPage,
   tags: ['autodocs'],
   decorators: [
     (Story) => {
@@ -54,7 +53,7 @@ const meta = {
       );
     },
   ],
-} satisfies Meta<typeof CartList>;
+} satisfies Meta<typeof CartPage>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

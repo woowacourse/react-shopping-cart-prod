@@ -5,7 +5,7 @@ import { ChangeEventHandler } from 'react';
 import { serverUrlObj } from '../constants/url';
 
 const ServerDropdown = () => {
-  const options = ['주노', '헤나', '메리'];
+  const options = Object.keys(serverUrlObj);
 
   const setServerState = useSetRecoilState(serverState);
 
@@ -28,7 +28,11 @@ const ServerDropdown = () => {
 
 const S = {
   Dropdown: styled.select`
-    width: 50px;
+    width: 60px;
+    height: 40px;
+    font-size: 18px;
+    background-color: transparent;
+    border: none;
   `,
 };
 
