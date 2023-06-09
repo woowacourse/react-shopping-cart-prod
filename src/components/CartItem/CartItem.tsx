@@ -1,4 +1,4 @@
-import type { CartItem } from "../../types/types";
+import type {CartItem} from "../../types/types";
 import CartController from "../CartController";
 import {
   CartItemControllerWrapper,
@@ -11,19 +11,19 @@ import {
   CartItemTrashImage,
 } from "./CartItem.style";
 import trashIcon from "../../assets/trash.png";
-import { useRecoilCallback, useRecoilValue, useSetRecoilState } from "recoil";
-import { cartState } from "../../app/recoil/cartAtoms.ts";
-import { serverState } from "../../app/recoil/serverAtom.ts";
-import { fetchCartList } from "../../app/api/api.ts";
-import { fetchDeleteCart } from "../../app/api/api.ts";
+import {useRecoilCallback, useRecoilValue, useSetRecoilState} from "recoil";
+import {cartState} from "../../app/recoil/cart/cartAtoms.ts";
+import {serverState} from "../../app/recoil/serverAtom.ts";
+import {fetchCartList} from "../../app/api/api.ts";
+import {fetchDeleteCart} from "../../app/api/api.ts";
 
 interface CartItemProps {
   cart: CartItem;
 }
 
-function CartItem({ cart }: CartItemProps) {
+function CartItem({cart}: CartItemProps) {
   const switchCheckbox = useRecoilCallback(
-    ({ snapshot, set }) =>
+    ({snapshot, set}) =>
       async (id: number) => {
         const cartList = [...(await snapshot.getPromise(cartState))];
         const targetIndex = cartList.findIndex(
@@ -82,7 +82,7 @@ function CartItem({ cart }: CartItemProps) {
               src={trashIcon}
               onClick={() => removeCartItem(cart.id)}
             />
-            <CartController product={cart.product} />
+            <CartController product={cart.product}/>
           </CartItemControllerWrapper>
         </CartItemInfo>
         <CartItemPrice>{cart.product.price.toLocaleString()}원</CartItemPrice>

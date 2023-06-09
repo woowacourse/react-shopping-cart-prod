@@ -1,5 +1,4 @@
 import {
-  DiscountText,
   PurchaseBoxWrapper,
   PurchaseButton,
   PurchaseButtonWrapper,
@@ -10,16 +9,16 @@ import {
   RealPriceText,
   Vacant,
 } from "./PurchaseBox.style";
-import { useRecoilValue } from "recoil";
-import { totalPriceSelector } from "../../app/recoil/cartAtoms.ts";
-import { modalRepository } from "../../app/recoil/modalAtoms.tsx";
+import {useRecoilValue} from "recoil";
+import {modalRepository} from "../../app/recoil/modalAtoms.tsx";
 import Purchase from "../Purchase";
-import { deliveryFeeState } from "../../app/recoil/orderAtom.ts";
+import {deliveryFeeState} from "../../app/recoil/orderAtom.ts";
+import {totalPriceSelector} from "../../app/recoil/cart/cartSelectors.ts";
 
 function PurchaseBox() {
   const totalPrice = useRecoilValue(totalPriceSelector);
   const DELIVERY_FEE = useRecoilValue(deliveryFeeState);
-  const { openModal } = useRecoilValue(modalRepository);
+  const {openModal} = useRecoilValue(modalRepository);
 
   return (
     <>
@@ -36,7 +35,7 @@ function PurchaseBox() {
             <PurchaseText>총 배송비</PurchaseText>
             <PurchaseText>+{totalPrice > 0 ? DELIVERY_FEE.toLocaleString() : 0}원</PurchaseText>
           </PurchasePropertyWrapper>
-          <Vacant />
+          <Vacant/>
           <PurchasePropertyWrapper>
             <RealPriceText>총 주문 금액</RealPriceText>
             <RealPriceText>
@@ -47,7 +46,7 @@ function PurchaseBox() {
             <PurchaseButton
               onClick={() => {
                 if (confirm("결제 페이지로 이동하시겠습니까?")) {
-                  openModal(<Purchase />);
+                  openModal(<Purchase/>);
                 }
               }}
             >

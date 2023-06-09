@@ -1,17 +1,17 @@
-import { useRecoilState, useRecoilValue } from "recoil";
-import { Select } from "./ServerSelectBox.style";
-import { serverState } from "../../app/recoil/serverAtom";
-import { ChangeEvent, useEffect } from "react";
-import { cartRepository } from "../../app/recoil/cartAtoms";
-import { userState } from "../../app/recoil/user/userAtom.tsx";
-import { userRepository } from "../../app/recoil/user/userRepository.tsx";
+import {useRecoilState, useRecoilValue} from "recoil";
+import {Select} from "./ServerSelectBox.style";
+import {serverState} from "../../app/recoil/serverAtom";
+import {ChangeEvent, useEffect} from "react";
+import {cartRepository} from "../../app/recoil/cart/cartAtoms.ts";
+import {userState} from "../../app/recoil/user/userAtom.tsx";
+import {userRepository} from "../../app/recoil/user/userRepository.tsx";
 
 function ServerSelectBox() {
-  const { loadCartList } = useRecoilValue(cartRepository);
+  const {loadCartList} = useRecoilValue(cartRepository);
   const [server, setServer] = useRecoilState(serverState);
   const user = useRecoilValue(userState);
 
-  const { logout } = useRecoilValue(userRepository);
+  const {logout} = useRecoilValue(userRepository);
 
   const onChangeServer = (e: ChangeEvent<HTMLSelectElement>) => {
     if (user) {

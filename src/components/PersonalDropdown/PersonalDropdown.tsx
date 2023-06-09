@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useState} from "react";
 import styled from "styled-components";
 import {
   CartCount,
@@ -9,14 +9,14 @@ import {
   MenuWrapper,
 } from "../Header/Header.style.ts";
 import Icon from "../Icon.tsx";
-import { IoCart, IoPerson } from "react-icons/io5";
-import { useRecoilValue } from "recoil";
-import { userState } from "../../app/recoil/user/userAtom.tsx";
-import { useNavigate } from "react-router-dom";
-import { cartCountSelector } from "../../app/recoil/cartAtoms.ts";
-import { modalRepository } from "../../app/recoil/modalAtoms.tsx";
+import {IoCart, IoPerson} from "react-icons/io5";
+import {useRecoilValue} from "recoil";
+import {userState} from "../../app/recoil/user/userAtom.tsx";
+import {useNavigate} from "react-router-dom";
+import {modalRepository} from "../../app/recoil/modalAtoms.tsx";
 import Point from "../Point";
-import { userRepository } from "../../app/recoil/user/userRepository.tsx";
+import {userRepository} from "../../app/recoil/user/userRepository.tsx";
+import {cartCountSelector} from "../../app/recoil/cart/cartSelectors.ts";
 
 export const DropdownWrapper = styled.div`
   position: relative;
@@ -31,7 +31,7 @@ export const DropdownMenu = styled.div<{ isOpen: boolean }>`
   background-color: #ffffff;
   border: 1px solid #cccccc;
   border-top: none;
-  display: ${({ isOpen }) => (isOpen ? "block" : "none")};
+  display: ${({isOpen}) => (isOpen ? "block" : "none")};
   font-size: 18px;
   z-index: 9999;
 `;
@@ -53,7 +53,7 @@ export const Backdrop = styled.div<{ isOpen: boolean }>`
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0);
-  display: ${({ isOpen }) => (isOpen ? "block" : "none")};
+  display: ${({isOpen}) => (isOpen ? "block" : "none")};
   z-index: 9998;
 `;
 
@@ -66,14 +66,14 @@ function PersonalDropdown() {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const user = useRecoilValue(userState);
-  const { logout } = useRecoilValue(userRepository);
+  const {logout} = useRecoilValue(userRepository);
   const cartCount = useRecoilValue(cartCountSelector);
-  const { openModal } = useRecoilValue(modalRepository);
+  const {openModal} = useRecoilValue(modalRepository);
 
   const options = [
     {
       name: "포인트",
-      callback: () => openModal(<Point />),
+      callback: () => openModal(<Point/>),
     },
     {
       name: "주문목록",
@@ -111,7 +111,7 @@ function PersonalDropdown() {
               </CartCountWrapper>
             ) : (
               <Icon fontSize={30}>
-                <IoCart />
+                <IoCart/>
               </Icon>
             )}
             <MenuTitle>장바구니</MenuTitle>
@@ -120,7 +120,7 @@ function PersonalDropdown() {
         <MenuWrapper onClick={() => toggleDropdown()}>
           <MenuIcon>
             <Icon fontSize={30}>
-              <IoPerson />
+              <IoPerson/>
             </Icon>
             <MenuTitle>{user?.name} 님</MenuTitle>
           </MenuIcon>
@@ -136,7 +136,7 @@ function PersonalDropdown() {
           </DropdownMenuItem>
         ))}
       </DropdownMenu>
-      <Backdrop isOpen={isOpen} onClick={() => toggleDropdown()} />
+      <Backdrop isOpen={isOpen} onClick={() => toggleDropdown()}/>
     </DropdownWrapper>
   );
 }

@@ -1,20 +1,20 @@
-import { useRecoilValue } from "recoil";
+import {useRecoilValue} from "recoil";
 import {
   isCouponSelectedSelector,
   orderRepository,
 } from "../../app/recoil/orderAtom.ts";
-import type { Coupon } from "../../types/types.ts";
+import type {Coupon} from "../../types/types.ts";
 import {
   CouponDescription,
   CouponInfo,
   CouponTitle,
   CouponWrapper,
 } from "./CouponBox.style.ts";
-import { totalPriceSelector } from "../../app/recoil/cartAtoms.ts";
+import {totalPriceSelector} from "../../app/recoil/cart/cartSelectors.ts";
 
-function CouponBox({ coupon }: { coupon: Coupon }) {
+function CouponBox({coupon}: { coupon: Coupon }) {
   const isCouponSelected = useRecoilValue(isCouponSelectedSelector(coupon.id));
-  const { updateSelectedCoupon } = useRecoilValue(orderRepository);
+  const {updateSelectedCoupon} = useRecoilValue(orderRepository);
   const totalPrice = useRecoilValue(totalPriceSelector);
 
   const isValid = totalPrice >= coupon.minAmount;
@@ -29,7 +29,7 @@ function CouponBox({ coupon }: { coupon: Coupon }) {
 
   return (
     <CouponWrapper onClick={() => handleClickCoupon(coupon)} disabled={!isValid}>
-      <input type="checkbox" checked={isCouponSelected} readOnly />
+      <input type="checkbox" checked={isCouponSelected} readOnly/>
       <CouponInfo>
         <CouponTitle>{coupon.couponName}</CouponTitle>
         <CouponDescription>

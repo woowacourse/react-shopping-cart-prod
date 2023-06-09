@@ -1,13 +1,10 @@
-import { atom, selector, selectorFamily } from "recoil";
-import { Coupon, NewOrder, Point } from "../../types/types";
-import {
-  cartRepository,
-  checkedCartSelector,
-  totalPriceSelector,
-} from "./cartAtoms";
-import { modalRepository } from "./modalAtoms";
-import { serverState } from "./serverAtom.ts";
-import { fetchCoupons, fetchOrder, fetchPoint } from "../api/api.ts";
+import {atom, selector, selectorFamily} from "recoil";
+import {Coupon, NewOrder, Point} from "../../types/types";
+import {cartRepository} from "./cart/cartAtoms.ts";
+import {modalRepository} from "./modalAtoms";
+import {serverState} from "./serverAtom.ts";
+import {fetchCoupons, fetchOrder, fetchPoint} from "../api/api.ts";
+import {checkedCartSelector, totalPriceSelector} from "./cart/cartSelectors.ts";
 
 
 export const deliveryFeeState = atom({
@@ -35,7 +32,7 @@ export const selectedCouponState = atom<Coupon[]>({
 
 export const selectedCouponIdSelector = selector<number[]>({
   key: "selectedCouponIdSelector",
-  get: ({ get }) => {
+  get: ({get}) => {
     const selectedCoupons = get(selectedCouponState);
     return selectedCoupons.map((coupon) => coupon.id);
   },
@@ -43,7 +40,7 @@ export const selectedCouponIdSelector = selector<number[]>({
 
 export const discountPriceByCouponSelector = selector<number>({
   key: "discountPriceByCouponSelector",
-  get: ({ get }) => {
+  get: ({get}) => {
     const totalPrice = get(totalPriceSelector);
     const selectedCoupons = get(selectedCouponState);
     const discount =
@@ -59,7 +56,7 @@ export const isCouponSelectedSelector = selectorFamily<boolean, number>({
   key: "selectedCouponSelectedSelector",
   get:
     (couponId: number) =>
-      ({ get }) => {
+      ({get}) => {
         const selectedCouponIds = get(selectedCouponIdSelector);
 
         return selectedCouponIds.includes(couponId);
@@ -78,30 +75,30 @@ export const expectedOrderPriceState = atom({
 
 export const orderRepository = selector({
   key: "orderRepository",
-  get: ({ getCallback }) => {
-    const loadCoupons = getCallback(({ set, snapshot }) => async () => {
+  get: ({getCallback}) => {
+    const loadCoupons = getCallback(({set, snapshot}) => async () => {
       const server = await snapshot.getPromise(serverState);
       const coupons = await fetchCoupons(server);
 
       set(couponState, coupons);
     });
 
-    const loadPoint = getCallback(({ set, snapshot }) => async () => {
+    const loadPoint = getCallback(({set, snapshot}) => async () => {
       const server = await snapshot.getPromise(serverState);
       const point = await fetchPoint(server);
 
       set(pointState, point);
     });
 
-    const commitPurchaseItems = getCallback(({ snapshot }) => async () => {
-      const { loadCartList } = await snapshot.getPromise(cartRepository);
+    const commitPurchaseItems = getCallback(({snapshot}) => async () => {
+      const {loadCartList} = await snapshot.getPromise(cartRepository);
       const server = await snapshot.getPromise(serverState);
       const checkedCartList = await snapshot.getPromise(checkedCartSelector);
       const selectedPoint = await snapshot.getPromise(selectedPointState);
       const selectedCouponIds = await snapshot.getPromise(
         selectedCouponIdSelector
       );
-      const { closeModal } = await snapshot.getPromise(modalRepository);
+      const {closeModal} = await snapshot.getPromise(modalRepository);
 
       const newOrder: NewOrder = {
         orderItems: checkedCartList.map((item) => ({
@@ -129,7 +126,7 @@ export const orderRepository = selector({
     });
 
     const updateSelectedCoupon = getCallback(
-      ({ set, snapshot }) =>
+      ({set, snapshot}) =>
         async (coupon: Coupon) => {
           const selectedCoupons = await snapshot.getPromise(
             selectedCouponState
@@ -142,7 +139,7 @@ export const orderRepository = selector({
     );
 
     const updateExpectedOrderPrice = getCallback(
-      ({ set, snapshot }) =>
+      ({set, snapshot}) =>
         async () => {
           const totalPrice = await snapshot.getPromise(totalPriceSelector);
           const checkedCartList = await snapshot.getPromise(

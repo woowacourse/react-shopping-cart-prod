@@ -1,19 +1,19 @@
-import { selector } from "recoil";
-import { User } from "../../../types/types";
-import { modalRepository } from "../modalAtoms";
-import { userState } from "./userAtom";
-import { serverState } from "../serverAtom";
-import { setSessionStorage } from "../../utils/storage";
-import { SESSION_STORAGE_KEY_BASE64, SESSION_STORAGE_KEY_CART_ITEMS } from "../../keys";
-import { fetchCartList } from "../../api/api";
-import { cartState } from "../cartAtoms";
+import {selector} from "recoil";
+import {User} from "../../../types/types";
+import {modalRepository} from "../modalAtoms";
+import {userState} from "./userAtom";
+import {serverState} from "../serverAtom";
+import {setSessionStorage} from "../../utils/storage";
+import {SESSION_STORAGE_KEY_BASE64, SESSION_STORAGE_KEY_CART_ITEMS} from "../../keys";
+import {fetchCartList} from "../../api/api";
+import {cartState} from "../cart/cartAtoms.ts";
 import Login from "../../../components/Login";
 
 export const userRepository = selector({
   key: "userRepository",
-  get: ({ getCallback }) => {
-    const login = getCallback(({ set, snapshot }) => async (member: User) => {
-      const { closeModal } = await snapshot.getPromise(modalRepository);
+  get: ({getCallback}) => {
+    const login = getCallback(({set, snapshot}) => async (member: User) => {
+      const {closeModal} = await snapshot.getPromise(modalRepository);
       const user = await snapshot.getPromise(userState);
       const server = await snapshot.getPromise(serverState);
 
@@ -33,7 +33,7 @@ export const userRepository = selector({
       }
     });
 
-    const logout = getCallback(({ set }) => async () => {
+    const logout = getCallback(({set}) => async () => {
       setSessionStorage(SESSION_STORAGE_KEY_BASE64, "");
       setSessionStorage(SESSION_STORAGE_KEY_CART_ITEMS, {
         cartItems: [],
@@ -44,20 +44,20 @@ export const userRepository = selector({
     });
 
     const loginCheckerCallback = getCallback(
-      ({ snapshot }) =>
+      ({snapshot}) =>
         async (callback: () => void) => {
           const user = await snapshot.getPromise(userState);
-          const { openModal } = await snapshot.getPromise(modalRepository);
+          const {openModal} = await snapshot.getPromise(modalRepository);
           if (user) {
             callback();
           } else if (
             confirm("로그인이 필요한 메뉴입니다. 로그인 하시겠습니까?")
           ) {
-            openModal(<Login />);
+            openModal(<Login/>);
           }
         }
     );
 
-    return { login, logout, loginCheckerCallback };
+    return {login, logout, loginCheckerCallback};
   },
 });

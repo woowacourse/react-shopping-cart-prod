@@ -1,9 +1,9 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type {Meta, StoryObj} from "@storybook/react";
 import Header from ".";
 import Providers from "../../stories/Providers";
-import { useSetRecoilState } from "recoil";
-import { cartState } from "../../app/recoil/cartAtoms.ts";
-import type { CartItem, ProductItem } from "../../types/types.ts";
+import {useSetRecoilState} from "recoil";
+import {cartState} from "../../app/recoil/cart/cartAtoms.ts";
+import type {CartItem, ProductItem} from "../../types/types.ts";
 
 const meta = {
   component: Header,
@@ -11,7 +11,7 @@ const meta = {
   decorators: [
     (Story) => (
       <Providers>
-        <Story />
+        <Story/>
       </Providers>
     ),
   ],
@@ -54,14 +54,14 @@ export const Default = {
         product: newProduct,
         quantity: 0,
       };
-      const newItems = Array.from({ length: 100 }).map(() => newItem);
+      const newItems = Array.from({length: 100}).map(() => newItem);
       setCartList((prevCartList: CartItem[]) => [...prevCartList, ...newItems]);
     };
 
     return (
       <>
-        <Header />
-        <div style={{ marginTop: "10px" }}>
+        <Header/>
+        <div style={{marginTop: "10px"}}>
           <button
             onClick={handleAddToCart}
             style={{

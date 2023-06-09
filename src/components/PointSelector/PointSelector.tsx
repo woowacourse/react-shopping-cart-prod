@@ -1,4 +1,4 @@
-import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
+import {useRecoilState, useRecoilValue, useResetRecoilState} from "recoil";
 import {
   PointButton,
   PointDescription,
@@ -10,13 +10,13 @@ import {
   PointSelectorWrapper,
   PointText,
 } from "./PointSelector.style";
-import { ChangeEvent, useEffect } from "react";
+import {ChangeEvent, useEffect} from "react";
 import {
   orderRepository,
   pointState,
   selectedPointState,
 } from "../../app/recoil/orderAtom";
-import { totalPriceSelector } from "../../app/recoil/cartAtoms";
+import {totalPriceSelector} from "../../app/recoil/cart/cartSelectors.ts";
 
 function PointSelector() {
   const point = useRecoilValue(pointState);
@@ -24,7 +24,7 @@ function PointSelector() {
     useRecoilState(selectedPointState);
   const resetSelectedPoints = useResetRecoilState(selectedPointState);
   const totalPrice = useRecoilValue(totalPriceSelector);
-  const { loadPoint } = useRecoilValue(orderRepository);
+  const {loadPoint} = useRecoilValue(orderRepository);
 
   useEffect(() => {
     resetSelectedPoints();
@@ -60,7 +60,7 @@ function PointSelector() {
       </PointSelectorHeader>
       <PointSelectorInput>
         <PointInputWrapper>
-          <PointInput value={selectedPoints} onChange={handlePointInput} />
+          <PointInput value={selectedPoints} onChange={handlePointInput}/>
           <PointDescription>점 사용하기</PointDescription>
         </PointInputWrapper>
       </PointSelectorInput>

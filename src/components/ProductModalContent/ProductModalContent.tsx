@@ -1,9 +1,8 @@
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { ProductItem } from "../../types/types.ts";
+import {useRecoilValue, useSetRecoilState} from "recoil";
+import {ProductItem} from "../../types/types.ts";
 import CartController from "../CartController/index.tsx";
-import { modalOpenState } from "../../app/recoil/modalAtoms.tsx";
+import {modalOpenState} from "../../app/recoil/modalAtoms.tsx";
 import cartIcon from "../../assets/cart.svg";
-import { quantityByProductIdSelector } from "../../app/recoil/cartAtoms.ts";
 import {
   ModalCloseButton,
   ModalHeader,
@@ -15,10 +14,11 @@ import {
   ProductName,
   ProductPrice,
 } from "./ProductModalContent.style.ts";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
+import {quantityByProductIdSelector} from "../../app/recoil/cart/cartSelectors.ts";
 
-function ProductModalContent({ product }: { product: ProductItem }) {
-  const { name, price, imageUrl } = product;
+function ProductModalContent({product}: { product: ProductItem }) {
+  const {name, price, imageUrl} = product;
   const navigate = useNavigate();
   const setModalOpen = useSetRecoilState(modalOpenState);
 
@@ -36,7 +36,7 @@ function ProductModalContent({ product }: { product: ProductItem }) {
       </ModalHeader>
       <ProductModalContentWrapper>
         <ProductItemImageBox>
-          <ProductItemImage src={imageUrl} />
+          <ProductItemImage src={imageUrl}/>
         </ProductItemImageBox>
         <ProductDetails>
           <div>
@@ -52,14 +52,14 @@ function ProductModalContent({ product }: { product: ProductItem }) {
             }}
           >
             {quantity > 0 && (
-              <div style={{ cursor: 'pointer' }} onClick={() => {
+              <div style={{cursor: 'pointer'}} onClick={() => {
                 closeModal();
                 navigate('/cart');
               }}>
                 <img src={cartIcon}></img>
               </div>
             )}
-            <CartController product={product} />
+            <CartController product={product}/>
           </div>
         </ProductDetails>
       </ProductModalContentWrapper>
