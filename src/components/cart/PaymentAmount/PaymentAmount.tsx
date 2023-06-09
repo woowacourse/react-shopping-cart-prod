@@ -8,10 +8,9 @@ import usePaymentAmount from './usePaymentAmount';
 import type { CouponInfo } from '../../../types/coupon';
 import cartState from '../../../globalState/atoms/cartState';
 import serverNameState from '../../../globalState/atoms/serverName';
-import ServerUtil from '../../../utils/ServerUrl';
-import { USER_AUTH_TOKEN } from '../../../constant';
 import LoadingSpinner from '../../common/LoadingSpinner/LoadingSpinner';
 import Colors from '../../../constant/Colors';
+import OrderApi from '../../../api/Order';
 
 interface PaymentAmountProps {
   coupon?: CouponInfo;
@@ -44,28 +43,21 @@ const PaymentAmount = (props: PaymentAmountProps) => {
 
     setIsOrdering(true);
 
-    const url = ServerUtil.getOrderUrl(serverName);
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Basic ${USER_AUTH_TOKEN}`,
-      },
-      body: JSON.stringify({
+    let orderId: number;
+
+    try {
+      orderId = await OrderApi.purchase(serverName, {
         cartItems: orderingItems,
         couponIds: coupon ? [coupon.id] : [],
         deliveryFee,
-      }),
-    });
-
-    setIsOrdering(false);
-
-    if (response.status !== 201) {
+      });
+    } catch {
       alert('추문에 실패하였습니다. 잠시 후 다시 시도해 주세요!');
+      setIsOrdering(false);
       return;
     }
 
-    const { orderId } = await response.json();
+    setIsOrdering(false);
 
     setCartState((prevCart) => {
       const orderedCartItemIds = orderingItems.map(({ id }) => id);
