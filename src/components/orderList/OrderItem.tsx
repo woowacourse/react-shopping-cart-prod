@@ -1,12 +1,7 @@
-import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
 import { css, styled } from 'styled-components';
 import { ORDER_STATUS, ROUTE_PATH } from '../../constants';
-import { ORDER_URL } from '../../constants/url';
 import { useCancelOrder } from '../../hooks/useCancelOrder';
-import { useFetchData } from '../../hooks/useFetchData';
-import { serverState } from '../../recoil';
 import { OrderListItem } from '../../types';
 import Button from '../common/Button';
 import Price from '../Price';

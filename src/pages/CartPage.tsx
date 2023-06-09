@@ -18,22 +18,20 @@ const CartPage = () => {
     return <Nothing src={IMAGE_PATH.EMPTY_CART} alt='장바구니가 텅 비었어요' />;
 
   return (
-    <>
-      <MainLayout>
-        <>
-          <Title value='장바구니' />
-          <S.Wrapper>
-            <SelectedProductList
-              productCountInCart={productCountInCart}
-              cart={cart}
-              checkedItemIdList={checkedItemIdList}
-              setCheckedItemIdList={setCheckedItemIdList}
-            />
-            <Order />
-          </S.Wrapper>
-        </>
-      </MainLayout>
-    </>
+    <MainLayout>
+      <>
+        <Title value='장바구니' />
+        <S.Wrapper>
+          <SelectedProductList
+            productCountInCart={productCountInCart}
+            cart={cart}
+            checkedItemIdList={checkedItemIdList}
+            setCheckedItemIdList={setCheckedItemIdList}
+          />
+          <Order />
+        </S.Wrapper>
+      </>
+    </MainLayout>
   );
 };
 

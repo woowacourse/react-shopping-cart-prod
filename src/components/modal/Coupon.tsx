@@ -15,7 +15,6 @@ const Coupon = ({ id, priceDiscount, name }: CouponItem) => {
       return { id: Number(value), priceDiscount, name };
     });
   };
-  console.log(coupon, 'coupon2');
 
   return (
     <>
