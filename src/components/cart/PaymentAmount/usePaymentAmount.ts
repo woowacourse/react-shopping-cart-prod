@@ -3,18 +3,24 @@ import { useCheckedCartListValue } from '../../../provider/CheckedListProvider';
 
 const usePaymentAmount = () => {
   const { cartList } = useCartService();
-  const { checkedCartList } = useCheckedCartListValue();
+  const { checkedCartIdList } = useCheckedCartListValue();
 
   const paymentAmount = cartList
-    .filter((cartItem) => checkedCartList.includes(cartItem.id))
+    .filter((cartItem) => checkedCartIdList.includes(cartItem.id))
     .reduce(
       (acc, cartItem) => acc + cartItem.product.price * cartItem.quantity,
       0,
     );
 
-  const deliveryFee = checkedCartList.length ? 3000 : 0;
+  const getDeliveryFee = () => {
+    if (!checkedCartIdList.length) {
+      return 0;
+    }
 
-  return { paymentAmount, deliveryFee };
+    return 3000;
+  };
+
+  return { paymentAmount, getDeliveryFee };
 };
 
 export default usePaymentAmount;

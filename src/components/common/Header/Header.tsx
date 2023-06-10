@@ -1,15 +1,22 @@
+import { Suspense } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import CartIcon from '../../../assets/icons/CartIcon';
-import { useNavigate } from 'react-router-dom';
-import useCartService from '../../../hooks/useCartService';
-import { BASE_URL } from '../../../constant';
-import { useRecoilState } from 'recoil';
+import { BASE_URL } from '../../../constant/server';
 import serverNameState from '../../../globalState/atoms/serverName';
 import { isProperServerName } from '../../../types/server';
+import cartState from '../../../globalState/atoms/cartState';
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
+import Modal from '../Modal/Modal';
+import CouponList from '../../coupon/CouponList/CouponList';
+import {
+  CART_PAGE_PATH_NAME,
+  ORDER_PAGE_PATH_NAME,
+} from '../../../constant/route';
 
 const Header = () => {
   const navigate = useNavigate();
-  const { cartList } = useCartService();
   const [serverName, setServerName] = useRecoilState(serverNameState);
 
   const handleLogoClick = () => {
@@ -27,7 +34,11 @@ const Header = () => {
   };
 
   const handleCartButtonClick = () => {
-    navigate('/cart');
+    navigate(CART_PAGE_PATH_NAME);
+  };
+
+  const handleOrderListButtonClick = () => {
+    navigate(ORDER_PAGE_PATH_NAME);
   };
 
   return (
@@ -37,6 +48,12 @@ const Header = () => {
         <Title>SHOP</Title>
       </Logo>
       <RightContainer>
+        <Modal
+          title="쿠폰 받기"
+          trigger={<GetCouponButton>쿠폰 받기</GetCouponButton>}
+        >
+          <CouponList />
+        </Modal>
         <select onChange={handleServerNameSelectChange} value={serverName}>
           {Object.keys(BASE_URL).map((serverNameOption) => (
             <option key={serverNameOption}>{serverNameOption}</option>
@@ -44,11 +61,24 @@ const Header = () => {
         </select>
         <CartButton onClick={handleCartButtonClick}>
           <p>장바구니</p>
-          <CartTotalQuantity>{cartList.length}</CartTotalQuantity>
+          <Suspense
+            fallback={<LoadingSpinner diameter="26px" spinnerWidth="3px" />}
+          >
+            <TotalCartQuantity />
+          </Suspense>
         </CartButton>
+        <OrderListButton onClick={handleOrderListButtonClick}>
+          주문 목록
+        </OrderListButton>
       </RightContainer>
     </HeaderContainer>
   );
+};
+
+const TotalCartQuantity = () => {
+  const cartList = useRecoilValue(cartState);
+
+  return <CartTotalQuantity>{cartList.length}</CartTotalQuantity>;
 };
 
 const HeaderContainer = styled.header`
@@ -89,10 +119,22 @@ const RightContainer = styled.div`
   gap: 25px;
 `;
 
-const CartButton = styled.div`
+const GetCouponButton = styled.button`
+  border: none;
+  background: none;
+
+  color: white;
+`;
+
+const CartButton = styled.button`
   display: flex;
   column-gap: 6px;
   font-size: 24px;
+
+  border: none;
+  background: none;
+
+  color: white;
 
   cursor: pointer;
 
@@ -115,6 +157,16 @@ const CartTotalQuantity = styled.span`
   background: #04c09e;
 
   font-size: 16px;
+`;
+
+const OrderListButton = styled.button`
+  border: none;
+  background: none;
+
+  font-size: 24px;
+  color: white;
+
+  cursor: pointer;
 `;
 
 export default Header;

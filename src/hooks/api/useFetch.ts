@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 
-const useFetch = <T>(url: string) => {
+const useFetch = <T>(url: string, option?: object) => {
   const [data, setData] = useState<T | null>(null);
   const [promise, setPromise] = useState<Promise<void>>();
   const [error, setError] = useState<Error>();
 
   const fetchData = async () => {
-    const response = await fetch(url);
+    const response = await fetch(url, option);
 
     try {
       if (!response.ok) {

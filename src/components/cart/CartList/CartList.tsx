@@ -1,40 +1,55 @@
+import { useEffect } from 'react';
+import { useRecoilRefresher_UNSTABLE, useResetRecoilState } from 'recoil';
 import { styled } from 'styled-components';
 import CartItem from '../CartItem/CartItem';
 import CheckBox from '../../common/CheckBox/CheckBox';
 import useCartService from '../../../hooks/useCartService';
 import { useCheckedCartListValue } from '../../../provider/CheckedListProvider';
+import cartState from '../../../globalState/atoms/cartState';
+import fetchCartItemList from '../../../globalState/selectors/fetchCartItemList';
+import useResetCartWhenServerChange from '../../../hooks/useResetCartWhenServerChange';
 
 const CartList = () => {
   const {
-    checkedCartList,
-    addAllCheckedItem,
-    deleteAllCheckedItem,
+    checkedCartIdList,
+    checkAllCartItem,
+    uncheckAllCartItem,
     isAllChecked,
   } = useCheckedCartListValue();
   const { cartList, deleteCartItem } = useCartService();
 
+  const refreshFetchCartList = useRecoilRefresher_UNSTABLE(fetchCartItemList);
+  const resetCart = useResetRecoilState(cartState);
+
   const handleAllCheckBoxChange = () => {
     if (isAllChecked()) {
-      deleteAllCheckedItem();
+      uncheckAllCartItem();
       return;
     }
 
-    addAllCheckedItem();
+    checkAllCartItem();
   };
 
   const handleDeleteCheckedListButtonClick = () => {
     if (
       !window.confirm(
-        `${checkedCartList.length}개의 선택한 품목들을 삭제하시겠습니까?`,
+        `${checkedCartIdList.length}개의 선택한 품목들을 삭제하시겠습니까?`,
       )
     )
       return;
 
-    checkedCartList.forEach((checkedCartItem) =>
+    checkedCartIdList.forEach((checkedCartItem) =>
       deleteCartItem(checkedCartItem),
     );
-    deleteAllCheckedItem();
+    uncheckAllCartItem();
   };
+
+  useEffect(() => {
+    refreshFetchCartList();
+    resetCart();
+  }, []);
+
+  useResetCartWhenServerChange();
 
   return (
     <CartListContainer>
@@ -50,10 +65,10 @@ const CartList = () => {
       <AllCheckContainer>
         <CheckBox
           isChecked={isAllChecked()}
-          labelText={`전체 선택 (${checkedCartList.length}/${cartList.length})`}
+          labelText={`전체 선택 (${checkedCartIdList.length}/${cartList.length})`}
           onChange={handleAllCheckBoxChange}
         />
-        {!!checkedCartList.length && (
+        {!!checkedCartIdList.length && (
           <DeleteCheckedListButton onClick={handleDeleteCheckedListButtonClick}>
             선택 삭제
           </DeleteCheckedListButton>

@@ -1,13 +1,15 @@
 import { createContext, useContext } from 'react';
 import useCheckedCartList from '../hooks/useCheckedCartList';
+import { CartProduct } from '../types/product';
 
 interface CheckedCartListValue {
-  checkedCartList: string[];
-  addCheckedItem: (id: string) => void;
-  deleteCheckedItem: (targetId: string) => void;
+  checkedCartIdList: string[];
+  checkCartItem: (id: string) => void;
+  uncheckCartItem: (targetId: string) => void;
+  checkAllCartItem: () => void;
+  uncheckAllCartItem: () => void;
+  getCheckedItemList: () => CartProduct[];
   isChecked: (id: string) => boolean;
-  addAllCheckedItem: () => void;
-  deleteAllCheckedItem: () => void;
   isAllChecked: () => boolean;
 }
 

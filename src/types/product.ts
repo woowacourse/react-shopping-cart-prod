@@ -10,3 +10,19 @@ export interface CartProduct {
   quantity: number;
   product: Product;
 }
+
+type CouponType = 'percent' | 'amount';
+export interface Coupon {
+  id: number;
+  type: CouponType;
+  amount: number;
+  name: string;
+}
+
+export interface Order {
+  id: number;
+  originalPrice: number;
+  actualPrice: number;
+  deliveryFee: number;
+  cartItems: CartProduct[];
+}
