@@ -1,7 +1,7 @@
 import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
 import { useCallback } from 'react';
-import usePromise from '../../../hooks/api/usePromise';
+import usePromise from '../../../hooks/usePromise';
 import type { CouponInfo } from '../../../types/coupon';
 import serverNameState from '../../../globalState/atoms/serverName';
 import Colors from '../../../constant/Colors';

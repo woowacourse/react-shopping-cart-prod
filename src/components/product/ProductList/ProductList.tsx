@@ -2,7 +2,7 @@ import { styled } from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { useCallback } from 'react';
 import ProductItem from '../ProductItem/ProductItem';
-import usePromise from '../../../hooks/api/usePromise';
+import usePromise from '../../../hooks/usePromise';
 import type { Product } from '../../../types/product';
 import serverNameState from '../../../globalState/atoms/serverName';
 import ProductsApi from '../../../api/Products';

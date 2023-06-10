@@ -2,7 +2,7 @@ import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
 import { useCallback } from 'react';
 import serverNameState from '../../../globalState/atoms/serverName';
-import usePromise from '../../../hooks/api/usePromise';
+import usePromise from '../../../hooks/usePromise';
 import type { CouponInfo } from '../../../types/coupon';
 import ServerUtil from '../../../utils/ServerUrl';
 import { USER_AUTH_TOKEN } from '../../../constant';

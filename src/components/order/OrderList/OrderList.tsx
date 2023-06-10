@@ -3,7 +3,7 @@ import { styled } from 'styled-components';
 import { useCallback } from 'react';
 import serverNameState from '../../../globalState/atoms/serverName';
 import type { OrderInfo } from '../../../types/order';
-import usePromise from '../../../hooks/api/usePromise';
+import usePromise from '../../../hooks/usePromise';
 import OrderDetail from '../OrderDetail/OrderDetail';
 import LinkButton from '../../common/LinkButton/LinkButton';
 import OrderApi from '../../../api/Order';
