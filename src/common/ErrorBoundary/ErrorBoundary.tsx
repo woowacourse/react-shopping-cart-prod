@@ -1,7 +1,7 @@
-import React, { Component, ErrorInfo, ReactNode } from "react";
-import { Button } from "@common/Button";
-import { styled } from "styled-components";
-import * as S from "./ErrorBoundary.style";
+import { Component, ReactNode } from 'react';
+import { Button } from '@common/Button';
+
+import * as S from './ErrorBoundary.style';
 
 interface Props {
   children?: ReactNode;
@@ -16,9 +16,9 @@ class ErrorBoundary extends Component<Props, State> {
     hasError: false,
   };
 
-  static getDerivedStateFromError(error) {
-    console.log("error: ", error);
-    // 다음 렌더링에서 폴백 UI가 보이도록 상태를 업데이트
+  static getDerivedStateFromError(error: Error) {
+    console.log('error: ', error);
+
     return { hasError: true };
   }
 

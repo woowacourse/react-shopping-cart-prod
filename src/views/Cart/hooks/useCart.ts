@@ -1,8 +1,8 @@
-import { useRecoilState } from "recoil";
-import useFetchCart from "./useFetchCart";
-import cartState from "../recoil/cartState";
-import { CartItemType } from "types/ProductType";
-import validateCart from "@views/Payment/utils/validateCart";
+import { useRecoilState } from 'recoil';
+import useFetchCart from './useFetchCart';
+import cartState from '../recoil/cartState';
+import { CartItemType } from 'types/ProductType';
+import validateCart from '@views/Payment/utils/validateCart';
 
 export const useCart = () => {
   const [cart, setCart] = useRecoilState(cartState);
@@ -65,9 +65,7 @@ export const useCart = () => {
   };
 
   const totalPrice = cart.reduce((totalPrice, cartItem) => {
-    return cartItem.checked
-      ? totalPrice + cartItem.product.price * cartItem.quantity
-      : totalPrice;
+    return cartItem.checked ? totalPrice + cartItem.product.price * cartItem.quantity : totalPrice;
   }, 0);
 
   return {
@@ -83,6 +81,7 @@ export const useCart = () => {
 
 export const useCheckCart = () => {
   const [cart, setCart] = useRecoilState(cartState);
+  const fetchCart = useFetchCart();
 
   const isAllChecked = cart.every((cartItem) => cartItem.checked);
 
@@ -131,9 +130,7 @@ export const useCheckCart = () => {
   };
 
   const totalPrice = cart.reduce((totalPrice, cartItem) => {
-    return cartItem.checked
-      ? totalPrice + cartItem.product.price * cartItem.quantity
-      : totalPrice;
+    return cartItem.checked ? totalPrice + cartItem.product.price * cartItem.quantity : totalPrice;
   }, 0);
 
   return {

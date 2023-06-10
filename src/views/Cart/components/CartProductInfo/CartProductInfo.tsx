@@ -1,10 +1,10 @@
-import { Stepper } from "@common/Stepper";
-import { useCart } from "@views/Cart/hooks/useCart";
+import { Stepper } from '@common/Stepper';
+import { useCart } from '@views/Cart/hooks/useCart';
 
-import { ProductItemType } from "../../../../types/ProductType";
+import { ProductItemType } from '../../../../types/ProductType';
 
-import * as S from "./CartProductInfo.style";
-import { FaTrashAlt } from "react-icons/fa";
+import * as S from './CartProductInfo.style';
+import { FaTrashAlt } from 'react-icons/fa';
 
 interface CartProductInfoProps {
   cartItemId: number;
@@ -28,9 +28,9 @@ function CartProductInfo({ cartItemId, product }: CartProductInfoProps) {
     updateCartItemQuantity(cartItemId, quantity - 1);
   };
 
-  const updateQuantity = ({ target: { value: quantity } }) => {
+  const updateQuantity = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
     if (!cartItemId) return;
-    updateCartItemQuantity(cartItemId, quantity);
+    updateCartItemQuantity(cartItemId, Number(value));
   };
 
   return (
@@ -45,9 +45,7 @@ function CartProductInfo({ cartItemId, product }: CartProductInfoProps) {
         onDecrease={decreaseQuantity}
       />
 
-      <S.PriceText>{`${(product.price * quantity).toLocaleString(
-        "ko-KR"
-      )} 원`}</S.PriceText>
+      <S.PriceText>{`${(product.price * quantity).toLocaleString('ko-KR')} 원`}</S.PriceText>
     </S.ProductContainer>
   );
 }

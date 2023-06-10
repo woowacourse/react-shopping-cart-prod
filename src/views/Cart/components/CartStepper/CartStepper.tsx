@@ -1,26 +1,22 @@
-import { Stepper } from "@common/Stepper";
-import { useCart } from "@views/Cart/hooks/useCart";
+import React from 'react';
+import { Stepper } from '@common/Stepper';
+import { useCart } from '@views/Cart/hooks/useCart';
 
-import { ProductItemType } from "types/ProductType";
+import { ProductItemType } from 'types/ProductType';
 
-import * as S from "./CartStepper.style";
-import { BsCartPlus } from "react-icons/bs";
+import * as S from './CartStepper.style';
+import { BsCartPlus } from 'react-icons/bs';
 
 interface CartQuantityFieldProps {
   product: ProductItemType;
 }
 
 function CartStepper({ product }: CartQuantityFieldProps) {
-  const {
-    getCartItemId,
-    getCartItemQuantity,
-    updateCartItemQuantity,
-    addCartItem,
-  } = useCart();
+  const { getCartItemId, getCartItemQuantity, updateCartItemQuantity, addCartItem } = useCart();
   const quantity = getCartItemQuantity(product.id);
   const cartItemId = getCartItemId(product.id) ?? -1;
 
-  const changeQuantity = ({ target: value }) => {
+  const changeQuantity = ({ target: value }: React.ChangeEvent<HTMLInputElement>) => {
     updateCartItemQuantity(cartItemId, Number(value));
   };
 
