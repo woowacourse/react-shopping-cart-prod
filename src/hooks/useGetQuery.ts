@@ -11,6 +11,11 @@ const useGetQuery = <DataType>(fetchUrl: string, headers: HeadersInit = DEFAULT_
     setLoading(true);
     setError(null);
 
+    if (fetchUrl.endsWith('?')) {
+      setLoading(false);
+      return;
+    }
+
     fetch(fetchUrl, { headers })
       .then(res => res.json())
       .then(resData => {
@@ -23,6 +28,11 @@ const useGetQuery = <DataType>(fetchUrl: string, headers: HeadersInit = DEFAULT_
   const refreshQuery = useCallback(async (url?: string) => {
     setLoading(true);
     setError(null);
+
+    if (fetchUrl.endsWith('?')) {
+      setLoading(false);
+      return;
+    }
 
     await fetch(url ?? fetchUrl, { headers })
       .then(res => res.json())

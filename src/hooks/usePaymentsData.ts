@@ -19,8 +19,20 @@ const usePaymentsData = (currentServerUrl: string) => {
   );
 
   useEffect(() => {
-    refreshPaymentsData(`${currentServerUrl}/total-cart-price?${queryParams.toString()}`);
+    if (checkedCartIdList.length !== 0) {
+      refreshPaymentsData(`${currentServerUrl}/total-cart-price?${queryParams.toString()}`);
+    }
   }, [cartList]);
+
+  if (queryParams.toString() === '') {
+    return {
+      originalPrice: 0,
+      discounts: [],
+      discountedPrice: 0,
+      deliveryFee: 0,
+      finalPrice: 0,
+    };
+  }
 
   return paymentsData;
 };
