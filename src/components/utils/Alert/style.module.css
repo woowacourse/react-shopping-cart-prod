@@ -1,0 +1,79 @@
+.AlertBox {
+  top: 50%;
+  left: 50%;
+  z-index: 10;
+  position: fixed;
+  width: 30%;
+  height: 20%;
+  transform: translate(-50%, -50%);
+  border-radius: 10px;
+  background-color: #ffffff;
+  animation: showAnimation 0.2s ease-in 0.05s forwards;
+  opacity: 0;
+}
+
+@keyframes showAnimation {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.textBox {
+  width: 100%;
+  height: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ButtonBox {
+  width: 100%;
+  height: 30%;
+  display: flex;
+}
+
+.acceptButton {
+  border-top: 1px solid #999999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  border-right: 1px solid #999999;
+  cursor: pointer;
+  transition: all 0.2s ease-in;
+}
+
+.acceptButton:hover {
+  background-color: #dddddd;
+  border-bottom-left-radius: 10px;
+}
+
+.cancelButton {
+  border-top: 1px solid #999999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease-in;
+}
+
+.cancelButton:hover {
+  background-color: #dddddd;
+  border-bottom-right-radius: 10px;
+}
+
+.backdrop {
+  z-index: 9;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  animation: showAnimation 0.2s;
+}

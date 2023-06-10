@@ -1,0 +1,49 @@
+.OrderListHeader {
+  padding-top: 22px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 32px;
+  letter-spacing: 3px;
+  margin-bottom: 10px;
+}
+
+.OrderItemBox {
+  margin-top: 10px;
+  margin-bottom: 100px;
+  border-radius: 5px;
+}
+
+.OrderItemBox img {
+  width: 100px;
+  height: 100px;
+}
+
+.OrderItemHeader {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  border-bottom: 2px solid #000000;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.OrderItemData {
+  padding: 20px;
+  display: flex;
+  gap: 20px;
+  border-bottom: 1px solid #aaaaaa;
+}
+
+.itemDataBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 15px;
+}
+
+.priceData {
+  margin-left: auto;
+  font-size: 18px;
+}

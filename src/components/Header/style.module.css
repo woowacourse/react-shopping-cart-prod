@@ -38,7 +38,6 @@ header {
   padding: 0px 4px;
   display: flex;
   justify-content: center;
-  /* align-items: center; */
 
   background-color: rgb(255, 102, 16);
   color: white;
@@ -60,7 +59,20 @@ header {
   justify-content: right;
 }
 
+.cartIconBox {
+  width: 100%;
+  display: flex;
+  margin-bottom: -10px;
+  justify-content: right;
+}
+
 .cartIcon {
+  width: 32px;
+  height: 32px;
+  margin-bottom: 4px;
+}
+
+.orderListIcon {
   width: 32px;
   height: 32px;
   margin-bottom: 4px;
@@ -71,14 +83,14 @@ header {
   font-weight: 400;
 }
 
+.navigateButtons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 @media (min-width: 480px) and (max-width: 719px) {
   .logo {
     height: 40px;
-  }
-}
-
-@media (max-width: 479px) {
-  .logo {
-    height: 36px;
   }
 }
