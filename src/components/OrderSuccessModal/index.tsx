@@ -27,9 +27,9 @@ function OrderSuccessModal({
   const handleClickNavigate =
     (path: string): React.MouseEventHandler<HTMLButtonElement> =>
     () => {
-      navigate(path);
       setCartList(prev => prev.filter(item => !checkedCartIdList.includes(item.id)));
       setCheckedCartIdList([]);
+      navigate(path);
     };
 
   return (
