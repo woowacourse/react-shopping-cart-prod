@@ -1,4 +1,4 @@
-import serverUrlState from '@recoil/server/serverUrlState';
+import serverUrlState from "@recoil/server/serverUrlState";
 
 import {
   atom,
@@ -7,38 +7,41 @@ import {
   useRecoilRefresher_UNSTABLE,
   useRecoilValue,
   useResetRecoilState,
-} from 'recoil';
-import { ProductItemType } from 'types/ProductType';
+} from "recoil";
+import { ProductItemType } from "types/ProductType";
 
-import fetchProductList from '../remote/fetchProductList';
-import credentialState from '@recoil/server/credentialState';
+import fetchProductList from "../remote/fetchProductList";
+import credentialState from "@recoil/server/credentialState";
 
 export const productRefresher = atom({
-  key: 'productRefresher',
+  key: "productRefresher",
   default: 0,
 });
 
 const productListQuery = selector({
-  key: 'productListQuery/default',
+  key: "productListQuery/default",
   get: async ({ get }) => {
     const serverUrl = get(serverUrlState);
     get(credentialState);
     const response = await fetchProductList(serverUrl);
+    if (!response.ok) throw new Error();
+
     const productList: ProductItemType[] = await response.json();
 
     return productList;
   },
 
   cachePolicy_UNSTABLE: {
-    eviction: 'most-recent',
+    eviction: "most-recent",
   },
 });
 
 export const productListState = atom<ProductItemType[]>({
-  key: 'productListState',
+  key: "productListState",
   default: productListQuery,
 });
 
 export const useProductList = () => useRecoilValue(productListState);
 
-export const useRefreshProduct = () => useRecoilRefresher_UNSTABLE(productListState);
+export const useRefreshProduct = () =>
+  useRecoilRefresher_UNSTABLE(productListState);

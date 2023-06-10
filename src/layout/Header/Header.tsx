@@ -14,6 +14,7 @@ import { useCredential } from "@recoil/server/credentialState";
 import OrderListButton from "@views/Payment/components/OrderListButton/OrderListButton";
 import { styled } from "styled-components";
 import { useNavigate } from "react-router-dom";
+import ErrorBoundary from "@common/ErrorBoundary/ErrorBoundary";
 
 function Header() {
   const { setServerUrlBy } = useServerUrl();
@@ -37,28 +38,30 @@ function Header() {
       <Container>
         <S.HeaderWrapper>
           <Logo />
-          <Suspense>
-            <S.IconWrapper>
-              <SelectBox
-                options={[
-                  { value: "허브", name: "허브" },
-                  { value: "마코", name: "마코" },
-                  { value: "우가", name: "우가" },
-                  { value: "MSW", name: "MSW" },
-                ]}
-                onChange={handleChangeServer}
-              />
-              <SelectBox
-                options={[
-                  { value: "1", name: "치즈왕자" },
-                  { value: "2", name: "치즈공주" },
-                ]}
-                onChange={handleChangeUser}
-              />
-              <OrderListButton />
-              <CartButtonWithIcon />
-            </S.IconWrapper>
-          </Suspense>
+          <ErrorBoundary>
+            <Suspense>
+              <S.IconWrapper>
+                <SelectBox
+                  options={[
+                    { value: "허브", name: "허브" },
+                    { value: "마코", name: "마코" },
+                    { value: "우가", name: "우가" },
+                    { value: "MSW", name: "MSW" },
+                  ]}
+                  onChange={handleChangeServer}
+                />
+                <SelectBox
+                  options={[
+                    { value: "1", name: "치즈왕자" },
+                    { value: "2", name: "치즈공주" },
+                  ]}
+                  onChange={handleChangeUser}
+                />
+                <OrderListButton />
+                <CartButtonWithIcon />
+              </S.IconWrapper>
+            </Suspense>
+          </ErrorBoundary>
         </S.HeaderWrapper>
       </Container>
     </S.Navbar>

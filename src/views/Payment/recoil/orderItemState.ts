@@ -1,15 +1,15 @@
-import credentialState from '@recoil/server/credentialState';
-import serverUrlState from '@recoil/server/serverUrlState';
-import { atomFamily, selectorFamily, useRecoilValue } from 'recoil';
+import credentialState from "@recoil/server/credentialState";
+import serverUrlState from "@recoil/server/serverUrlState";
+import { atomFamily, selectorFamily, useRecoilValue } from "recoil";
 
-import { ORDER_PATH } from '@constants/urlConstants';
-import { OrderType } from 'types/OrderType';
-import generateFetchOrders from '../remote/fetchOrders';
+import { ORDER_PATH } from "@constants/urlConstants";
+import { OrderType } from "types/OrderType";
+import generateFetchOrders from "../remote/fetchOrders";
 
 const orderItemState = atomFamily<OrderType, number>({
-  key: 'orderItemState',
+  key: "orderItemState",
   default: selectorFamily({
-    key: 'orderListState/default',
+    key: "orderListState/default",
     get:
       (orderId) =>
       async ({ get }) => {
@@ -21,6 +21,8 @@ const orderItemState = atomFamily<OrderType, number>({
         });
 
         const response = await fetchOrders.getOrder(orderId);
+        if (!response.ok) throw new Error();
+
         return await response.json();
       },
   }),
@@ -28,4 +30,5 @@ const orderItemState = atomFamily<OrderType, number>({
 
 export default orderItemState;
 
-export const useOrderItem = (orderId: number) => useRecoilValue(orderItemState(orderId));
+export const useOrderItem = (orderId: number) =>
+  useRecoilValue(orderItemState(orderId));

@@ -26,6 +26,8 @@ export const useCart = () => {
 
       await fetchCart.POST(productId);
       const response = await fetchCart.GET();
+      if (!response.ok) throw new Error();
+
       const newCart: CartItemType[] = await response.json();
 
       const checkedCart = newCart.map((cartItem) => {

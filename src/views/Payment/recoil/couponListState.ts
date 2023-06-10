@@ -1,5 +1,5 @@
-import credentialState from '@recoil/server/credentialState';
-import serverUrlState from '@recoil/server/serverUrlState';
+import credentialState from "@recoil/server/credentialState";
+import serverUrlState from "@recoil/server/serverUrlState";
 import {
   atom,
   selector,
@@ -7,20 +7,24 @@ import {
   useRecoilState,
   useRecoilValue,
   useResetRecoilState,
-} from 'recoil';
-import fetchCoupons from '../remote/fetchCoupons';
-import { COUPON_PATH } from '@constants/urlConstants';
-import { CouponRemote, CouponType } from 'types/CouponType';
-import { cartTotalPrice } from '@views/Cart/recoil/cartState';
+} from "recoil";
+import fetchCoupons from "../remote/fetchCoupons";
+import { COUPON_PATH } from "@constants/urlConstants";
+import { CouponRemote, CouponType } from "types/CouponType";
+import { cartTotalPrice } from "@views/Cart/recoil/cartState";
 
 export const couponListState = atom<CouponType[]>({
-  key: 'couponListState',
+  key: "couponListState",
   default: selector({
-    key: 'couponListState/default',
+    key: "couponListState/default",
     get: async ({ get }) => {
       const serverUrl = get(serverUrlState);
       const credential = get(credentialState);
-      const response = await fetchCoupons({ resource: `${serverUrl}/${COUPON_PATH}`, credential });
+      const response = await fetchCoupons({
+        resource: `${serverUrl}/${COUPON_PATH}`,
+        credential,
+      });
+      if (!response.ok) throw new Error();
       const couponList: CouponRemote[] = await response.json();
 
       return couponList.map((coupon) => {
@@ -31,16 +35,18 @@ export const couponListState = atom<CouponType[]>({
       });
     },
     cachePolicy_UNSTABLE: {
-      eviction: 'lru',
+      eviction: "lru",
       maxSize: 0,
     },
   }),
 });
 
 export const couponSelected = selector({
-  key: 'couponSelected',
+  key: "couponSelected",
   get: ({ get }) => {
-    const coupon = get(couponListState).find((coupon) => coupon.checked === true);
+    const coupon = get(couponListState).find(
+      (coupon) => coupon.checked === true
+    );
     const totalPrice = get(cartTotalPrice);
 
     if (!coupon) return null;
@@ -50,7 +56,7 @@ export const couponSelected = selector({
     return coupon;
   },
   cachePolicy_UNSTABLE: {
-    eviction: 'lru',
+    eviction: "lru",
     maxSize: 0,
   },
 });

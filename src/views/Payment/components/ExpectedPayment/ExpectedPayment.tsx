@@ -33,8 +33,9 @@ function ExpectedPayment() {
     if (couponSelected) requestBody.couponId = couponSelected;
 
     const response = await fetchOrders.postOrder(requestBody);
-    const orderId = response.headers.get("Location")?.split("/").pop();
+    if (!response.ok) throw new Error();
 
+    const orderId = response.headers.get("Location")?.split("/").pop();
     if (!orderId) throw new Error("주문 후 orderId를 조회할 수 없습니다.");
 
     navigate(`${ROUTER_PATH.order}/${Number(orderId)}`);

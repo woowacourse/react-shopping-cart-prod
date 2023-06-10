@@ -5,30 +5,34 @@ import {
   useRecoilState,
   useRecoilValue,
   useResetRecoilState,
-} from 'recoil';
-import type { CartItemType } from '../../../types/ProductType';
+} from "recoil";
+import type { CartItemType } from "../../../types/ProductType";
 
-import serverUrlState from '@recoil/server/serverUrlState';
+import serverUrlState from "@recoil/server/serverUrlState";
 
-import generateFetchCart from '../remote/generateFetchCart';
-import credentialState from '@recoil/server/credentialState';
+import generateFetchCart from "../remote/generateFetchCart";
+import credentialState from "@recoil/server/credentialState";
 
-import { CART_PATH } from '@constants/urlConstants';
+import { CART_PATH } from "@constants/urlConstants";
 
 const cartRefresher = atom({
-  key: 'cartRefresher',
+  key: "cartRefresher",
   default: 0,
 });
 
 const cartQuery = selector({
-  key: 'cartState/default',
+  key: "cartState/default",
   get: async ({ get }) => {
     get(cartRefresher);
     const serverUrl = get(serverUrlState);
     const credential = get(credentialState);
-    const fetchCart = generateFetchCart({ resource: `${serverUrl}/${CART_PATH}`, credential });
+    const fetchCart = generateFetchCart({
+      resource: `${serverUrl}/${CART_PATH}`,
+      credential,
+    });
 
     const response = await fetchCart.GET();
+    if (!response.ok) throw Error();
 
     const cartProducts: CartItemType[] = await response.json();
 
@@ -39,17 +43,17 @@ const cartQuery = selector({
   },
 
   cachePolicy_UNSTABLE: {
-    eviction: 'most-recent',
+    eviction: "most-recent",
   },
 });
 
 export const cartState = atom<CartItemType[]>({
-  key: 'cartState',
+  key: "cartState",
   default: cartQuery,
 });
 
 export const cartTotalPrice = selector({
-  key: 'cartTotalPrice',
+  key: "cartTotalPrice",
   get: ({ get }) => {
     return get(cartState).reduce((totalPrice, cartItem) => {
       return cartItem.checked
