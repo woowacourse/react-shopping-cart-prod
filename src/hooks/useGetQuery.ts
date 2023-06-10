@@ -25,16 +25,16 @@ const useGetQuery = <DataType>(fetchUrl: string, headers: HeadersInit = DEFAULT_
       .finally(() => setLoading(false));
   }, [fetchUrl]);
 
-  const refreshQuery = useCallback(async (url?: string) => {
+  const refreshQuery = useCallback(async (url: string = fetchUrl) => {
     setLoading(true);
     setError(null);
 
-    if (fetchUrl.endsWith('?')) {
+    if (url.endsWith('?')) {
       setLoading(false);
       return;
     }
 
-    await fetch(url ?? fetchUrl, { headers })
+    await fetch(url, { headers })
       .then(res => res.json())
       .then(resData => {
         setData(resData);
