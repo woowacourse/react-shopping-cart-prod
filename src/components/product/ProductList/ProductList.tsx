@@ -1,16 +1,17 @@
 import { styled } from 'styled-components';
 import { useRecoilValue } from 'recoil';
+import { useCallback } from 'react';
 import ProductItem from '../ProductItem/ProductItem';
-import useFetch from '../../../hooks/api/useFetch';
+import usePromise from '../../../hooks/api/usePromise';
 import type { Product } from '../../../types/product';
 import serverNameState from '../../../globalState/atoms/serverName';
-import ServerUtil from '../../../utils/ServerUrl';
+import ProductsApi from '../../../api/Products';
 
 const ProductList = () => {
   const serverName = useRecoilValue(serverNameState);
-  const productsUrl = ServerUtil.getProductsUrl(serverName);
 
-  const { getData } = useFetch<Product[]>(productsUrl);
+  const productsFetcher = useCallback(() => ProductsApi.getAllList(serverName), [serverName]);
+  const { getData } = usePromise<Product[]>(productsFetcher);
 
   const productList = getData();
 

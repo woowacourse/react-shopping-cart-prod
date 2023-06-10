@@ -1,19 +1,20 @@
 import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
+import { useCallback } from 'react';
 import serverNameState from '../../../globalState/atoms/serverName';
-import ServerUtil from '../../../utils/ServerUrl';
 import type { OrderInfo } from '../../../types/order';
-import { USER_AUTH_TOKEN } from '../../../constant';
-import useFetch from '../../../hooks/api/useFetch';
+import usePromise from '../../../hooks/api/usePromise';
 import OrderDetail from '../OrderDetail/OrderDetail';
 import LinkButton from '../../common/LinkButton/LinkButton';
+import OrderApi from '../../../api/Order';
 
 const OrderList = () => {
   const serverName = useRecoilValue(serverNameState);
-  const url = ServerUtil.getOrderUrl(serverName);
 
-  const { getData } = useFetch<{ orders: OrderInfo[] }>(url, USER_AUTH_TOKEN);
-  const sortedOrders = getData()?.orders.sort((one, another) => another.id - one.id);
+  const couponFetcher = useCallback(() => OrderApi.getAllList(serverName), [serverName]);
+  const { getData } = usePromise<OrderInfo[]>(couponFetcher);
+
+  const sortedOrders = getData()?.sort((one, another) => another.id - one.id);
 
   return (
     <Section>

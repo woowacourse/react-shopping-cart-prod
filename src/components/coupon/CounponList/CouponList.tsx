@@ -1,18 +1,21 @@
 import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
+import { useCallback } from 'react';
 import serverNameState from '../../../globalState/atoms/serverName';
-import useFetch from '../../../hooks/api/useFetch';
+import usePromise from '../../../hooks/api/usePromise';
 import type { CouponInfo } from '../../../types/coupon';
 import ServerUtil from '../../../utils/ServerUrl';
 import { USER_AUTH_TOKEN } from '../../../constant';
 import Coupon from '../../common/Coupon/Coupon';
+import CouponApi from '../../../api/Coupon';
 
 const CouponList = () => {
   const serverName = useRecoilValue(serverNameState);
-  const couponsUrl = ServerUtil.getCouponsUrl(serverName);
 
-  const { getData } = useFetch<{ coupons: CouponInfo[] }>(couponsUrl);
-  const data = getData();
+  const couponFetcher = useCallback(() => CouponApi.getPublicList(serverName), [serverName]);
+  const { getData } = usePromise<CouponInfo[]>(couponFetcher);
+
+  const coupons = getData();
 
   const makeDownloadCouponFunction = (couponId: number) => async () => {
     const url = ServerUtil.getUserCouponsUrl(serverName);
@@ -41,7 +44,7 @@ const CouponList = () => {
 
   return (
     <CouponUl>
-      {data?.coupons.map(({ name, id, amount, type }) => (
+      {coupons?.map(({ name, id, amount, type }) => (
         <li key={name}>
           <Coupon
             couponName={name}

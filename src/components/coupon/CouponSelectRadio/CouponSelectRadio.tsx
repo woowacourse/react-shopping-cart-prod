@@ -1,11 +1,11 @@
 import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
-import useFetch from '../../../hooks/api/useFetch';
+import { useCallback } from 'react';
+import usePromise from '../../../hooks/api/usePromise';
 import type { CouponInfo } from '../../../types/coupon';
 import serverNameState from '../../../globalState/atoms/serverName';
-import ServerUtil from '../../../utils/ServerUrl';
-import { USER_AUTH_TOKEN } from '../../../constant';
 import Colors from '../../../constant/Colors';
+import CouponApi from '../../../api/Coupon';
 
 interface CouponSelectRadioProps {
   selected: CouponInfo | null;
@@ -16,11 +16,11 @@ const CouponSelectRadio = (props: CouponSelectRadioProps) => {
   const { selected, setSelected } = props;
 
   const serverName = useRecoilValue(serverNameState);
-  const url = ServerUtil.getUserCouponsUrl(serverName);
+  const couponFetcher = useCallback(() => CouponApi.getUserList(serverName), [serverName]);
+  const { getData } = usePromise<CouponInfo[]>(couponFetcher);
 
-  const { getData } = useFetch<{ coupons: CouponInfo[] }>(url, USER_AUTH_TOKEN);
+  const coupons = getData();
 
-  const data = getData();
   const currentCoupon = selected
     ? `현재: ${selected.amount}${selected.type === 'percent' ? '%' : '원'} 할인`
     : '고른 쿠폰이 없어요';
@@ -41,7 +41,7 @@ const CouponSelectRadio = (props: CouponSelectRadioProps) => {
           />
           <p>선택 안 함</p>
         </CouponLabel>
-        {data?.coupons.map((coupon) => {
+        {coupons?.map((coupon) => {
           const { id, name, type, amount } = coupon;
 
           return (
