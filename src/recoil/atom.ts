@@ -1,16 +1,12 @@
 /* eslint-disable @typescript-eslint/return-await */
 import { atom, atomFamily } from 'recoil';
-import { USER } from '../constants';
+import { DEFAULT_HEADER } from '../constants';
 import userServerUrlList from '../data/serverData';
 import { getLocalStorage } from '../utils/localStorage';
 import type { CartItem, ToastState } from '../types';
 
 const getCart = async (url: string) => {
-  const response = await fetch(`${url}/cart-items`, {
-    headers: {
-      Authorization: `Basic ${btoa(USER)}`,
-    },
-  });
+  const response = await fetch(`${url}/cart-items`, { headers: DEFAULT_HEADER });
 
   if (!response.ok) return [];
   const data = (await response.json()) as CartItem[];

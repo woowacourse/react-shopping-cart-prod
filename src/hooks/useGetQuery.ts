@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useEffect, useState } from 'react';
+import { DEFAULT_HEADER } from '../constants';
 
-const useGetQuery = <DataType>(fetchUrl: string, headers?: HeadersInit) => {
+const useGetQuery = <DataType>(fetchUrl: string, headers: HeadersInit = DEFAULT_HEADER) => {
   const [data, setData] = useState<DataType | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);

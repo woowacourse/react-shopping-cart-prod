@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FETCH_METHOD, MESSAGE } from '../constants';
+import { DEFAULT_HEADER, FETCH_METHOD, MESSAGE } from '../constants';
 import { MutationFetchMethod } from '../types';
 
 interface UseMutationArg<BodyData, ResponseData> {
@@ -29,7 +29,7 @@ const useMutation = <BodyData, ResponseData>({
 
   const mutateQuery = async (fetchInformation: FetchInformation<BodyData>) => {
     setLoading(true);
-    const { url, method, bodyData, headers } = fetchInformation;
+    const { url, method, bodyData, headers = DEFAULT_HEADER } = fetchInformation;
 
     const body = bodyData ? JSON.stringify(bodyData) : null;
 
