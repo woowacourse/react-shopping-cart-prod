@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "name": "5월의 달 20% 할인 쿠폰",
+    "discountType": "percentage",
+    "discountRate": 0.2,
+    "discountAmount": 0,
+    "minimumPrice": 0,
+    "issuable": true
+  },
+  {
+    "id": 2,
+    "name": "5월의 달 1000원 할인 쿠폰",
+    "discountType": "deduction",
+    "discountRate": 0.0,
+    "discountAmount": 1000,
+    "minimumPrice": 0,
+    "issuable": true
+  },
+  {
+    "id": 3,
+    "name": "50000원 이상 구매시 20% 할인 쿠폰",
+    "discountType": "percentage",
+    "discountRate": 0.2,
+    "discountAmount": 0,
+    "minimumPrice": 50000,
+    "issuable": true
+  }
+]

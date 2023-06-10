@@ -2,7 +2,8 @@ import styled from '@emotion/styled';
 import ProductItem from '../../box/ProductItem/ProductItem';
 import ErrorBox from '../../common/ErrorBox/ErrorBox';
 import LoadingSpinner from '../../common/LoadingSpinner/LoadingSpinner';
-import useProduct from '../../../hooks/useProduct';
+import useProduct from '../../../hooks/useProductFetch';
+import { NUM } from '../../../abstract/constants';
 
 const ProductList = () => {
   const { productData, isFetching } = useProduct();
@@ -10,12 +11,15 @@ const ProductList = () => {
   if (isFetching) {
     return <LoadingSpinner />;
   }
+
   if (!productData) {
     return <ErrorBox errorType="network" />;
   }
-  if (productData.length === 0) {
+
+  if (productData.length === NUM.ZERO) {
     return <ErrorBox errorType="emptyList" />;
   }
+
   return (
     <ProductListWrapper>
       {productData.map((product) => (

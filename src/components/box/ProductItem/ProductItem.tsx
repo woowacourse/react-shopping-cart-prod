@@ -4,47 +4,38 @@ import { CartIcon } from '../../../assets';
 import type { CartItemType, ProductType } from '../../../types/types';
 import { Text } from '../../common/Text/Text';
 import InputStepper from '../../common/InputStepper/InputStepper';
-import getPriceFormat from '../../../utils/getPriceFormat';
 import { keyframes } from '@emotion/react';
 import { useCartFetch } from '../../../hooks/useCartFetch';
+import { NUM } from '../../../abstract/constants';
 
 const ProductItem = ({ product }: { product: ProductType }) => {
   const { cartData, addCartItemAPI, changeCartQuantityAPI, deleteCartItemAPI } = useCartFetch();
-
   const [cartItemData, setCartItemData] = useState<CartItemType | null>(null);
 
-  const [quantity, setQuantity] = useState<number>(0);
+  const [quantity, setQuantity] = useState<number>(NUM.ZERO);
 
   useEffect(() => {
-    if (cartData) {
-      setCartItemData(cartData.find((cart) => cart.product.id === product.id) || null);
+    const existData = cartData?.find((cart) => cart.product.id === product.id);
+    if (existData) {
+      setCartItemData(existData);
     }
+    if (existData) setQuantity(existData.quantity);
   }, [cartData]);
 
   useEffect(() => {
-    if (cartItemData) {
-      setQuantity(cartItemData.quantity);
-      return;
-    }
-    setQuantity(0);
-  }, [cartItemData]);
-
-  useEffect(() => {
-    const mutateCartItem = async () => {
-      if (cartData) {
-        if (cartItemData && cartItemData.quantity !== quantity) {
-          if (quantity > 0) {
-            cartItemData.id && changeCartQuantityAPI(cartItemData.id, { quantity });
-            return;
-          }
-          cartItemData.id && deleteCartItemAPI(cartItemData.id);
+    const fetchCartData = async () => {
+      if (cartItemData && cartItemData.quantity !== quantity) {
+        if (quantity > NUM.ZERO) {
+          cartItemData.id && changeCartQuantityAPI(cartItemData.id, { quantity });
+          return;
         }
-        if (quantity > 0 && !cartItemData) {
-          addCartItemAPI({ productId: product.id });
-        }
+        cartItemData.id && deleteCartItemAPI(cartItemData.id);
+      }
+      if (quantity > NUM.ZERO && !cartItemData) {
+        addCartItemAPI({ productId: product.id });
       }
     };
-    mutateCartItem();
+    fetchCartData();
   }, [quantity]);
 
   return (
@@ -52,26 +43,26 @@ const ProductItem = ({ product }: { product: ProductType }) => {
       <ProductImage src={product.imageUrl} alt={product.name} loading="lazy" />
       <ProductInfoWrapper>
         <ProductTextWrapper>
-          <Text size="smallest" weight="light" color="#333333">
+          <Text size="smallest" weight="light" color="#333">
             {product.name}
           </Text>
-          <Text size="small" weight="light" color="#333333" lineHeight="33px">
-            {getPriceFormat(product.price)} 원
+          <Text size="small" weight="light" color="#333" lineHeight="33px">
+            {product.price.toLocaleString()} 원
           </Text>
         </ProductTextWrapper>
-        {quantity === 0 ? (
-          <CartIcon
-            width={25}
-            height={22}
-            fill="#AAAAAA"
-            style={{ transform: 'scaleX(-1)', cursor: 'pointer' }}
-            onClick={() => setQuantity(1)}
-          />
-        ) : (
+        {quantity ? (
           <InputStepper
             size="small"
             quantity={quantity}
             setQuantity={(value: number) => setQuantity(value)}
+          />
+        ) : (
+          <CartIcon
+            width={25}
+            height={22}
+            fill="#AAA"
+            style={{ transform: 'scaleX(-1)', cursor: 'pointer' }}
+            onClick={() => setQuantity(1)}
           />
         )}
       </ProductInfoWrapper>

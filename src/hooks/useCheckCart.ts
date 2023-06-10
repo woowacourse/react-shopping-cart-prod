@@ -11,18 +11,17 @@ const useCheckCart = (cartId: number) => {
 
   const changeCheckCartList = () => {
     const existItemIndex = checkCartList.findIndex((checkCartId) => checkCartId === cartId);
-    console.log(cartId);
-    if (check) {
-      if (existItemIndex !== -1) {
-        setCheckCartList((prev) => {
-          const newCartList = [...prev];
-          newCartList.splice(existItemIndex, 1);
-          return newCartList;
-        });
-      }
+
+    if (existItemIndex !== -1) {
+      setCheckCartList((prev) => {
+        const newCartList = [...prev];
+        newCartList.splice(existItemIndex, 1);
+        return newCartList;
+      });
       setCheck(false);
       return;
     }
+
     setCheckCartList((prev) => [...prev, cartId]);
     setCheck(true);
   };

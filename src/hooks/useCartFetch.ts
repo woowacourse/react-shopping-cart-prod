@@ -2,30 +2,29 @@ import { base64 } from '../service/apiURL';
 import { checkCartListState, serverState } from '../service/atom';
 import { CartItemType } from '../types/types';
 import { useMutation, useQuery } from 'react-query';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useRecoilState } from 'recoil';
 
 export const useCartFetch = () => {
   const serverURL = useRecoilValue(serverState);
-  const setCheckCartList = useSetRecoilState(checkCartListState);
+  const [checkCartList, setCheckCartList] = useRecoilState(checkCartListState);
 
-  const fetchCartData = async () => {
+  const {
+    data: cartData,
+    refetch: cartRefetch,
+    isLoading,
+  } = useQuery<CartItemType[]>('cart', async () => {
     const res = await fetch(`${serverURL}/cart-items`, {
       method: 'GET',
       headers: {
+        'Content-Type': 'application/json',
         Authorization: `Basic ${base64}`,
       },
     });
     const data = await res.json();
     return data;
-  };
-
-  const { data: cartData, refetch } = useQuery<CartItemType[]>('cart', fetchCartData, {
-    onError: (e) => {
-      console.log(e);
-    },
   });
 
-  const mutateCartData = useMutation(
+  const fetchCartData = useMutation(
     async ({
       method,
       cartId,
@@ -45,12 +44,15 @@ export const useCartFetch = () => {
       }),
     {
       onSuccess: () => {
-        refetch();
+        cartRefetch();
+      },
+      onError: () => {
+        alert('오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
       },
     },
   );
 
-  const fetchAddCartItem = useMutation(
+  const fetchAddCartData = useMutation(
     async ({ body }: { body?: object }) => {
       const res = await fetch(`${serverURL}/cart-items`, {
         method: 'POST',
@@ -68,25 +70,37 @@ export const useCartFetch = () => {
         if (cartId) {
           setCheckCartList((prev) => [...prev, cartId]);
         }
-        refetch();
+        cartRefetch();
       },
-      onError: (e) => {
-        console.log(e);
+      onError: () => {
+        alert('오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
       },
     },
   );
 
   const addCartItemAPI = (body?: object) => {
-    fetchAddCartItem.mutate({ body });
+    fetchAddCartData.mutate({ body });
   };
 
   const changeCartQuantityAPI = (cartId: number, body?: object) =>
-    mutateCartData.mutate({ method: 'PATCH', cartId, body });
+    fetchCartData.mutate({ method: 'PATCH', cartId, body });
 
-  const deleteCartItemAPI = (cartId: number) => mutateCartData.mutate({ method: 'DELETE', cartId });
+  const deleteCartItemAPI = (cartId: number) => {
+    const existItemIndex = checkCartList.findIndex((checkCartId) => checkCartId === cartId);
+    if (existItemIndex !== -1) {
+      setCheckCartList((prev) => {
+        const newCartList = [...prev];
+        newCartList.splice(existItemIndex, 1);
+        return newCartList;
+      });
+    }
+    fetchCartData.mutate({ method: 'DELETE', cartId });
+  };
 
   return {
     cartData,
+    isLoading,
+    cartRefetch,
     addCartItemAPI,
     changeCartQuantityAPI,
     deleteCartItemAPI,

@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
+import { ButtonHTMLAttributes } from 'react';
 
-interface ButtonProps {
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   primary?: boolean;
   size: 'small' | 'big';
   text: string;
@@ -11,7 +12,7 @@ interface ButtonProps {
 
 const Button = ({ isValid = true, text, onClick, ...props }: ButtonProps) => {
   return (
-    <ButtonStyle {...props} isValid={isValid} onClick={onClick}>
+    <ButtonStyle type="button" {...props} isValid={isValid} onClick={onClick}>
       {text}
     </ButtonStyle>
   );

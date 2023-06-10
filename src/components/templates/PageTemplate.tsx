@@ -28,4 +28,8 @@ const PageWrapper = styled.div`
   padding: 142px 0 62px 0;
   display: flex;
   justify-content: center;
+
+  @media screen and (max-width: 660px) {
+    padding: 142px 0 0 0;
+  }
 `;

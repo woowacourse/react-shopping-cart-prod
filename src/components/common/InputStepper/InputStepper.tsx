@@ -1,5 +1,6 @@
 import type { ChangeEvent } from 'react';
 import styled from '@emotion/styled';
+import { NUM, REG } from '../../../abstract/constants';
 
 interface InputStepperProps {
   size: 'small' | 'big';
@@ -12,9 +13,9 @@ interface InputStepperStyleProps {
   $size: InputStepperProps['size'];
 }
 
-const InputStepper = ({ size, quantity, setQuantity, minNumber = 0 }: InputStepperProps) => {
+const InputStepper = ({ size, quantity, setQuantity, minNumber = NUM.ZERO }: InputStepperProps) => {
   const changeText = (e: ChangeEvent<HTMLInputElement>) => {
-    const checkNumberRegExp = /^\d{1,2}$/;
+    const checkNumberRegExp = REG.CHECK_NUM;
     if (!checkNumberRegExp.test(e.target.value)) return;
 
     if (Number(e.target.value) !== quantity) {
@@ -26,12 +27,15 @@ const InputStepper = ({ size, quantity, setQuantity, minNumber = 0 }: InputStepp
     <InputStepperWrapper>
       <InputStyle $size={size} type="text" value={quantity} onChange={changeText} />
       <StepperButtonWrapper>
-        <StepperUpButton $size={size} onClick={() => quantity < 99 && setQuantity(quantity + 1)}>
+        <StepperUpButton
+          $size={size}
+          onClick={() => quantity < NUM.MAX_QUANTITY && setQuantity(quantity + NUM.ONE)}
+        >
           &#9662;
         </StepperUpButton>
         <StepperDownButton
           $size={size}
-          onClick={() => quantity > minNumber && setQuantity(quantity - 1)}
+          onClick={() => quantity > minNumber && setQuantity(quantity - NUM.ONE)}
         >
           &#9662;
         </StepperDownButton>
@@ -60,7 +64,7 @@ const InputStyle = styled.input<InputStepperStyleProps>`
       ? 'width: 41.6px; height: 28px; font-size: 12px;'
       : 'width: 58px; height: 40px; font-size: 20px; '}
 
-  border: 1px solid #dddddd;
+  border: 1px solid #ddd;
   outline: none;
 
   text-align: center;
@@ -84,7 +88,7 @@ const StepperDownButton = styled.button<InputStepperStyleProps>`
       ? 'width: 23.93px; height: 14px; font-size: 12px;'
       : 'width: 32px; height: 20px; font-size: 18px; '}
 
-  border: 1px solid #dddddd;
+  border: 1px solid #ddd;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -3,16 +3,17 @@ import CartItem from '../../box/CartItem/CartItem';
 import CheckBox from '../../common/CheckBox/CheckBox';
 import Button from '../../common/Button/Button';
 import { Text } from '../../common/Text/Text';
-import { useModal } from '../../../hooks/useModal';
+import { useConfirmModal } from '../../../hooks/useConfirmModal';
 import { useCartFetch } from '../../../hooks/useCartFetch';
 import { useRecoilState } from 'recoil';
 import { checkCartListState } from '../../../service/atom';
 
 const CartList = () => {
   const { cartData, deleteCartItemAPI } = useCartFetch();
-  const [checkCartList, setCheckCartList] = useRecoilState(checkCartListState);
 
-  const { openModal } = useModal();
+  const { openModal } = useConfirmModal();
+
+  const [checkCartList, setCheckCartList] = useRecoilState(checkCartListState);
 
   const deleteSelectCart = async () => {
     checkCartList.forEach((cartId) => {
@@ -38,12 +39,13 @@ const CartList = () => {
         <CartListFoot>
           <CheckBox
             label={`전체선택(${checkCartList.length})`}
-            checked={cartData ? cartData.length === checkCartList.length : false}
+            checked={cartData?.length ? cartData.length === checkCartList.length : false}
             onClick={onClickCheckBox}
           />
           <Button
             size="small"
             text="선택삭제"
+            disabled={checkCartList.length === 0}
             onClick={() => openModal({ callback: deleteSelectCart })}
           />
         </CartListFoot>
@@ -66,16 +68,22 @@ const CartListWrapper = styled.div`
 `;
 
 const CartListHead = styled.div`
-  width: 100%;
-  border-bottom: 3px solid #aaa;
-  padding: 80px 0 20px 0;
   display: flex;
-  align-items: center;
   justify-content: space-between;
   position: sticky;
-  top: 70px;
-  background-color: #fff;
   z-index: 30;
+  align-items: center;
+  width: 100%;
+  top: 70px;
+  border-bottom: 3px solid #aaa;
+  padding: 80px 0 20px 0;
+  background-color: #fff;
+
+  @media screen and (max-width: 660px) {
+    flex-direction: column;
+    gap: 6px;
+    padding: 20px 0 20px 0;
+  }
 `;
 
 const Cart = styled.div`
