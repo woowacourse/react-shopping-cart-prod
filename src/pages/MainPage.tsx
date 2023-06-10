@@ -3,11 +3,9 @@ import { ProductListWrapper } from '../style/ContentLayout';
 
 const MainPage = () => {
   return (
-    <>
-      <ProductListWrapper>
-        <ProductList />
-      </ProductListWrapper>
-    </>
+    <ProductListWrapper>
+      <ProductList />
+    </ProductListWrapper>
   );
 };
 

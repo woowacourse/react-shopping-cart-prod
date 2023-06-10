@@ -3,7 +3,7 @@ import { CartItem } from '../../types';
 import { styled } from 'styled-components';
 import { BsFillTrash3Fill } from 'react-icons/bs';
 import { useProduct } from '../../hooks/useProduct';
-import { Dispatch, MouseEvent, SetStateAction } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 
 interface Props {
   item: CartItem;
@@ -11,14 +11,10 @@ interface Props {
 }
 
 const CartListItem = ({ item, setCheckItems }: Props) => {
-  const {
-    removeItem,
-    handleNumberInputChange,
-    handleIncreaseItem,
-    handleDecreaseCartItem,
-  } = useProduct(item.product.id);
+  const { removeItem, handleNumberInputChange, handleIncreaseItem, handleDecreaseCartItem } =
+    useProduct(item.product.id);
 
-  const handleRemoveFromCart = (id: number) => (e: MouseEvent<HTMLButtonElement>) => {
+  const handleRemoveFromCart = (id: number) => () => {
     const confirmResult = window.confirm('정말로 삭제하시겠습니까?');
     if (confirmResult) {
       setCheckItems((prev) => prev.filter((itemId) => itemId !== id));

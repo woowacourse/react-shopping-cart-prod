@@ -3,25 +3,29 @@ import { cartState } from '../../store/CartState';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { useCart } from '../../hooks/useCart';
 import { useFetchData } from '../../hooks/useFetchData';
-import { CartItem, Product } from '../../types';
+import { CartItem, MemberTypes, Product } from '../../types';
 import CartListItem from './CartListItem';
 import Checkbox from '../@common/Checkbox';
 import TotalCheckbox from './TotalCheckbox';
 import PriceWrapper from './PriceWrapper';
 import { LoadingSpinner } from '../@common/LoadingSpinner';
-import { CART_BASE_URL, PRODUCT_BASE_URL } from '../../constants/url';
+import { CART_BASE_URL, MEMBER_BASE_URL, PRODUCT_BASE_URL } from '../../constants/url';
 import { styled } from 'styled-components';
 import { serverState } from '../../store/ServerState';
 import { productListState } from '../../store/ProductListState';
+import { memberState } from '../../store/MemberState';
 
 const CartList = () => {
   const [cart, setCart] = useRecoilState(cartState);
   const setProduct = useSetRecoilState(productListState);
+  const setMember = useSetRecoilState(memberState);
   const { api, isLoading } = useFetchData<CartItem[]>(setCart);
   const { api: productApi } = useFetchData<Product[]>(setProduct);
+  const { api: memberApi } = useFetchData<MemberTypes | undefined>(setMember);
   const serverUrl = useRecoilValue(serverState);
 
   useEffect(() => {
+    memberApi.get(`${serverUrl}${MEMBER_BASE_URL}`);
     api.get(`${serverUrl}${CART_BASE_URL}`);
     productApi.get(`${serverUrl}${PRODUCT_BASE_URL}`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -31,7 +35,7 @@ const CartList = () => {
     checkedItems,
     isChecked,
     setCheckedItems,
-    totalPrice,
+    subtotal,
     handleCheckAllItems,
     handleCheckedItem,
     handleRemoveCheckedItem,
@@ -48,6 +52,10 @@ const CartList = () => {
     <S.ItemListWrapper>{isLoading ? <LoadingSpinner /> : cartList}</S.ItemListWrapper>
   );
 
+  useEffect(() => {
+    console.log(cart.length);
+  });
+
   return (
     <>
       <S.Title>장바구니</S.Title>
@@ -60,7 +68,7 @@ const CartList = () => {
         />
         <S.ContentWrapper>
           {itemList}
-          <PriceWrapper totalPrice={totalPrice} />
+          <PriceWrapper subtotal={subtotal} />
         </S.ContentWrapper>
       </S.Wrapper>
     </>

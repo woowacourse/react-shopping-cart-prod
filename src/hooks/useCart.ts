@@ -1,15 +1,15 @@
-import { useRecoilCallback, useRecoilValue } from 'recoil';
+import { useRecoilCallback, useRecoilState, useRecoilValue } from 'recoil';
 import { cartState } from '../store/CartState';
-import { ChangeEvent, MouseEvent, useState } from 'react';
+import { MouseEvent } from 'react';
 import { removeProductItemFromCartSelector, totalPriceSelector } from '../store/CartSelector';
 import { useFetchData } from './useFetchData';
 import { serverState } from '../store/ServerState';
 import { CART_BASE_URL } from '../constants/url';
+import { checkedItemsState } from '../store/CheckedItemsState';
 
 export const useCart = () => {
   const cart = useRecoilValue(cartState);
-  const initialCheckedItems = cart.map((item) => item.id);
-  const [checkedItems, setCheckedItems] = useState<number[]>(initialCheckedItems);
+  const [checkedItems, setCheckedItems] = useRecoilState(checkedItemsState);
   const removeProductItemFromCart = useRecoilCallback(({ set }) => (id: number) => {
     set(removeProductItemFromCartSelector(id), []);
   });
@@ -21,13 +21,13 @@ export const useCart = () => {
     return checkedItems.includes(id);
   };
 
-  const totalPrice = useRecoilValue(totalPriceSelector(checkedItems));
+  const subtotal = useRecoilValue(totalPriceSelector(checkedItems));
 
   const handleRemoveFromCartList = (id: number) => (e: MouseEvent<HTMLButtonElement>) => {
     removeProductItemFromCart(id);
   };
 
-  const handleCheckedItem = (id: number) => (e: ChangeEvent<HTMLInputElement>) => {
+  const handleCheckedItem = (id: number) => () => {
     checkedItems.includes(id)
       ? setCheckedItems((prev) => prev.filter((itemId) => itemId !== id))
       : setCheckedItems((prev) => [...prev, id]);
@@ -54,7 +54,7 @@ export const useCart = () => {
     checkedItems,
     isChecked,
     setCheckedItems,
-    totalPrice,
+    subtotal,
     handleRemoveFromCartList,
     handleCheckAllItems,
     handleCheckedItem,

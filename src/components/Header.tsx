@@ -12,8 +12,11 @@ import { serverState } from '../store/ServerState';
 import { useEffect } from 'react';
 import { CART_BASE_URL } from '../constants/url';
 import useIsMobile from '../hooks/useIsMobile';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
+  const orderListLink = '/order-list';
+  const memberLink = '/member';
   const { goHome, goCart } = useNavigatePage();
   const serverUrl = useRecoilValue(serverState);
   const setCart = useSetRecoilState(cartState);
@@ -32,7 +35,12 @@ const Header = () => {
         </S.TitleButton>
         <ServerDropdown />
         <CartRouteButton onClick={goCart} />
-        <S.OrderButton>주문 목록</S.OrderButton>
+        <Link to={orderListLink}>
+          <S.OrderButton>주문 목록</S.OrderButton>
+        </Link>
+        <Link to={memberLink}>
+          <S.MemberButton>마이 정보</S.MemberButton>
+        </Link>
       </S.Wrapper>
     </S.Header>
   );
@@ -100,6 +108,16 @@ const S = {
     color: var(--text-color);
     font-size: 20px;
     font-weight: 700;
+    cursor: pointer;
+    background-color: transparent;
+  `,
+
+  MemberButton: styled.button`
+    /* width: 100px; */
+    color: var(--text-color);
+    font-size: 20px;
+    font-weight: 700;
+    cursor: pointer;
     background-color: transparent;
   `,
 };

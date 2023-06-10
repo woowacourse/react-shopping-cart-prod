@@ -6,3 +6,6 @@ export const serverUrlObj: Record<string, string> = {
 
 export const PRODUCT_BASE_URL = '/products';
 export const CART_BASE_URL = '/cart-items';
+export const ORDER_BASE_URL = '/orders';
+export const ORDER_DETAIL_BASE_URL = '/orders/:orderId';
+export const MEMBER_BASE_URL = '/members';

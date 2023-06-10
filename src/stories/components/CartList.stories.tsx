@@ -1,9 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import CartList from '../../components/cart/CartList';
-import { CartListWrapper } from '../../style/ContentLayout';
+import { Wrapper } from '../../style/ContentLayout';
 import { styled } from 'styled-components';
 import Header from '../../components/Header';
-import { within } from '@testing-library/react';
 import { setDataInLocalStorage } from '../../utils/localStorage';
 import { expect } from '@storybook/jest';
 import userEvent from '@testing-library/user-event';
@@ -80,34 +79,31 @@ export const Interaction: Story = {
 
     setDataInLocalStorage('cart', mockData);
 
-    const canvas = within(canvasElement);
-
     await new Promise((resolve) => setTimeout(resolve, 3000));
-    
+
     const badge = document.querySelector('#cart-badge');
-    expect(badge).toContainHTML('3')
+    expect(badge).toContainHTML('3');
 
     await new Promise((resolve) => setTimeout(resolve, 1000));
-    
-    const totalPrice = document.querySelector('#total-price')!;
-    expect(totalPrice).toHaveTextContent('총 주문금액316,200원')
-    
+
+    const subTotal = document.querySelector('#total-price')!;
+    expect(subTotal).toHaveTextContent('총 주문금액316,200원');
+
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     const checkedAllItems = document.querySelector('#check-all-items')!;
     userEvent.click(checkedAllItems);
-    expect(totalPrice).toHaveTextContent('총 주문금액3,000원')
-    
+    expect(subTotal).toHaveTextContent('총 주문금액3,000원');
+
     // const removeSelectedItems = document.querySelector('#remove-checked-items')!;
     // await userEvent.click(removeSelectedItems);
     // await userEvent.click( screen.getByRole('button', { name: '확인' }));
     // expect(badge).toContainHTML('0')
-
   },
 };
 
 const S = {
-  Wrapper: styled(CartListWrapper)`
+  Wrapper: styled(Wrapper)`
     width: calc(100vw - 5vw);
   `,
 };

@@ -1,13 +1,11 @@
 import CartList from '../components/cart/CartList';
-import { CartListWrapper } from '../style/ContentLayout';
+import { Wrapper } from '../style/ContentLayout';
 
 const CartPage = () => {
   return (
-    <>
-      <CartListWrapper>
-        <CartList />
-      </CartListWrapper>
-    </>
+    <Wrapper>
+      <CartList />
+    </Wrapper>
   );
 };
 

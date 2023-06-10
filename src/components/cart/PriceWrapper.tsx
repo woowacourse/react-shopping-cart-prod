@@ -1,27 +1,60 @@
 import { styled } from 'styled-components';
 import { DELIVERY_FEE } from '../../constants';
+import Point from './Point';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { checkedItemsState } from '../../store/CheckedItemsState';
+import { useOrder } from '../../hooks/useOrder';
+import { inputPointValueState } from '../../store/InputPointValueState';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
-  totalPrice: number;
+  subtotal: number;
 };
 
-const PriceWrapper = ({ totalPrice }: Props) => {
-  const Price = (id: string, description: string, price: string) => (
-    <section id={id}>
-      <li>{description}</li>
-      <p>{price}</p>
-    </section>
-  );
+const PriceWrapper = ({ subtotal }: Props) => {
+  const setCheckedItems = useSetRecoilState(checkedItemsState);
+  const inputPointValue = useRecoilValue(inputPointValueState);
+
+  const navigate = useNavigate();
+
+  const { orderToItems } = useOrder();
+
+  const handleOrderButtonClick = () => {
+    if (subtotal === 0) {
+      alert('선택 후 주문을 해주세요.');
+      return;
+    }
+    const confirmOrder = window.confirm('주문을 진행하시겠습니까?');
+    if (confirmOrder) {
+      orderToItems();
+      setCheckedItems([]);
+      navigate('/');
+    }
+  };
 
   return (
     <S.PriceWrapper>
       <S.PriceLabel>결제예상금액</S.PriceLabel>
       <S.PriceInfo>
-        {Price('total-product-price', '총 상품가격', `${totalPrice.toLocaleString()}원`)}
-        {Price('delivery-fee', '총 배송비', `${DELIVERY_FEE.toLocaleString()}원`)}
-        {Price('total-price', '총 주문금액', `${(totalPrice + DELIVERY_FEE).toLocaleString()}원`)}
+        <section id="total-product-price">
+          <li>총 상품가격</li>
+          <p>{subtotal !== 0 ? `${subtotal.toLocaleString()}원` : '0원'}</p>
+        </section>
+        <section id="delivery-fee">
+          <li>총 배송비</li>
+          <p>{subtotal !== 0 ? `${DELIVERY_FEE.toLocaleString()}원` : '0원'}</p>
+        </section>
+        <Point subtotal={subtotal} />
+        <section id="total-price">
+          <li>총 주문금액</li>
+          <p>
+            {subtotal !== 0
+              ? `${(subtotal + DELIVERY_FEE - Number(inputPointValue)).toLocaleString()}원`
+              : '0원'}
+          </p>
+        </section>
       </S.PriceInfo>
-      <S.OrderButton>주문하기</S.OrderButton>
+      <S.OrderButton onClick={handleOrderButtonClick}>주문하기</S.OrderButton>
     </S.PriceWrapper>
   );
 };

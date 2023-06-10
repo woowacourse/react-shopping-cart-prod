@@ -5,6 +5,7 @@ import userEvent from '@testing-library/user-event';
 import { expect } from '@storybook/jest';
 import Header from '../../components/Header';
 import { styled } from 'styled-components';
+import { DELIVERY_FEE } from '../../constants';
 
 const meta = {
   title: 'Pages/product/ProductList',
@@ -42,16 +43,15 @@ export const Interaction: Story = {
 
     window.localStorage.clear();
 
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+    await new Promise((resolve) => setTimeout(resolve, DELIVERY_FEE));
 
     const badge = document.querySelector('#cart-badge');
-    expect(badge).toContainHTML('0')
+    expect(badge).toContainHTML('0');
 
     const addCartButton = document.querySelectorAll('svg')[1];
     await userEvent.click(addCartButton);
     expect(canvas.getAllByLabelText('increase'));
-    expect(badge).toContainHTML('1')
-
+    expect(badge).toContainHTML('1');
 
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -70,14 +70,13 @@ export const Interaction: Story = {
     await userEvent.type(quantityInput, '{backspace}{backspace}', { delay: 200 });
 
     await new Promise((resolve) => setTimeout(resolve, 1000));
-    
+
     const decreaseButton = document.querySelector('button[aria-label="decrease"]')!;
     await userEvent.click(decreaseButton);
 
     await new Promise((resolve) => setTimeout(resolve, 100));
 
-    expect(badge).toContainHTML('0')
-
+    expect(badge).toContainHTML('0');
   },
 };
 
