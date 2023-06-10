@@ -37,7 +37,7 @@ const ProductCounter = (product: Product) => {
   };
 
   const addNewCartItem = async () => {
-    const newCartItemId = await addCartItem(product);
+    const newCartItemId = await addCartItem(productId);
     setCount(1);
     cartContoller.add(newCartItemId, 1, product);
   };
@@ -48,6 +48,7 @@ const ProductCounter = (product: Product) => {
     deleteCartItem(cartItemId);
     cartContoller.delete();
   };
+
   return (
     <CartButtonWrapper>
       {count ? (

@@ -1,13 +1,12 @@
 import { useRecoilValue } from 'recoil';
-import type { Product } from '../../types/product';
 import serverNameState from '../../globalState/atoms/serverName';
 import CartApi from '../../api/Cart';
 
 const useCartItemApi = () => {
   const serverName = useRecoilValue(serverNameState);
 
-  const addCartItem = async (product: Product) => {
-    const cartItemId = await CartApi.addNewItem(serverName, product);
+  const addCartItem = async (productId: number) => {
+    const cartItemId = await CartApi.addNewItem(serverName, productId);
     return cartItemId;
   };
 
@@ -25,4 +24,5 @@ const useCartItemApi = () => {
     deleteCartItem,
   } as const;
 };
+
 export default useCartItemApi;

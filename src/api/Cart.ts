@@ -1,5 +1,5 @@
 import { USER_AUTH_TOKEN } from '../constant';
-import type { CartProduct, Product } from '../types/product';
+import type { CartProduct } from '../types/product';
 import type { ServerName } from '../types/server';
 import ServerUtil from '../utils/ServerUrl';
 
@@ -27,7 +27,7 @@ const findCartItemId = async (serverName: ServerName, productId: number) => {
   return product ? product.id : null;
 };
 
-const addNewItem = async (serverName: ServerName, product: Product): Promise<string> => {
+const addNewItem = async (serverName: ServerName, productId: number): Promise<string> => {
   const url = ServerUtil.getCartItemsUrl(serverName);
 
   const response = await fetch(url, {
@@ -36,7 +36,7 @@ const addNewItem = async (serverName: ServerName, product: Product): Promise<str
       'Content-Type': 'application/json',
       Authorization: `Basic ${USER_AUTH_TOKEN}`,
     },
-    body: JSON.stringify({ productId: product.id }),
+    body: JSON.stringify({ productId }),
   });
 
   if (response.status !== 201) {
@@ -55,7 +55,7 @@ const addNewItem = async (serverName: ServerName, product: Product): Promise<str
   try {
     ({ cartItemId } = await response.json());
   } catch {
-    cartItemId = await findCartItemId(serverName, product.id);
+    cartItemId = await findCartItemId(serverName, productId);
   }
 
   if (!cartItemId) {
