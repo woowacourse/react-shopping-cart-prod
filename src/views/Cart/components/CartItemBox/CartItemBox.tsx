@@ -1,11 +1,11 @@
-import { CheckBox } from '@common/CheckBox';
+import { CheckBox } from "@common/CheckBox";
 
-import * as S from './CartItemBox.style';
-import { Stepper } from '@common/Stepper';
+import * as S from "./CartItemBox.style";
 
-import { ProductItemType } from 'types/ProductType';
-import { FaTrashAlt } from 'react-icons/fa';
-import { useCart } from '@views/Cart/hooks/useCart';
+import { ProductItemType } from "types/ProductType";
+
+import { useCheckCart } from "@views/Cart/hooks/useCart";
+import { CartProductInfo } from "@views/Cart/components/CartProductInfo";
 
 interface CartItemProps {
   cartItemId: number;
@@ -13,17 +13,10 @@ interface CartItemProps {
 }
 
 function CartItemBox({ cartItemId, product }: CartItemProps) {
-  const {
-    setCartItemIsChecked,
-    getCartItemIsChecked,
-    getCartItemQuantity,
-    updateCartItemQuantity,
-  } = useCart();
-
-  const quantity = getCartItemQuantity(product.id);
+  const { setCartItemIsChecked, getCartItemIsChecked } = useCheckCart();
   const isChecked = getCartItemIsChecked(cartItemId);
 
-  const { name, imageUrl, price } = product;
+  const { name, imageUrl } = product;
 
   return (
     <S.CartItemContainer>
@@ -39,37 +32,7 @@ function CartItemBox({ cartItemId, product }: CartItemProps) {
         <S.ItemImage src={imageUrl} />
       </S.ItemImageWrapper>
       <S.NameText>{name}</S.NameText>
-
-      <S.ProductInfo>
-        <S.DeleteButton>
-          <FaTrashAlt
-            size="1.8rem"
-            onClick={() => {
-              updateCartItemQuantity(cartItemId, 0);
-            }}
-          />
-        </S.DeleteButton>
-        <Stepper
-          quantity={quantity}
-          onChange={(event) => {
-            if (cartItemId) {
-              updateCartItemQuantity(cartItemId, Number(event.target.value));
-            }
-          }}
-          onIncrease={() => {
-            if (cartItemId) {
-              updateCartItemQuantity(cartItemId, quantity + 1);
-            }
-          }}
-          onDecrease={() => {
-            if (quantity !== 1 && cartItemId) {
-              updateCartItemQuantity(cartItemId, quantity - 1);
-            }
-          }}
-        />
-
-        <S.PriceText>{`${(price * quantity).toLocaleString('ko-KR')} 원`}</S.PriceText>
-      </S.ProductInfo>
+      <CartProductInfo cartItemId={cartItemId} product={product} />
     </S.CartItemContainer>
   );
 }

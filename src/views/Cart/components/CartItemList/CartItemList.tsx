@@ -3,16 +3,16 @@ import { CartItemBox } from "@views/Cart/components/CartItemBox";
 import { CheckBox } from "@common/CheckBox";
 
 import empty from "@assets/empty.png";
-import { useCart } from "@views/Cart/hooks/useCart";
+import { useCheckCart } from "@views/Cart/hooks/useCart";
 
 function CartItemList() {
   const {
     cart,
-    isAllChecked,
-    checkedCartCount,
     toggleAllCartItem,
     deleteCheckedItems,
-  } = useCart();
+    checkedCartCount,
+    isAllChecked,
+  } = useCheckCart();
 
   const cartLength = cart.length;
 

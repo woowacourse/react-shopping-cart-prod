@@ -1,5 +1,5 @@
-import { FlexWrapper } from '@pages/CartPage/CartPage.style';
-import { styled } from 'styled-components';
+import { FlexWrapper } from "@pages/CartPage/CartPage.style";
+import { styled } from "styled-components";
 
 export const CartItemContainer = styled(FlexWrapper)`
   column-gap: 1rem;
@@ -29,26 +29,4 @@ export const ItemImage = styled.img`
 
 export const NameText = styled.p`
   font-size: 1.8rem;
-`;
-
-export const ProductInfo = styled.div`
-  flex: 1 1 12rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: end;
-`;
-
-export const DeleteButton = styled.button`
-  width: 30px;
-  height: 30px;
-`;
-
-export const DeleteIcon = styled.img`
-  width: 18px;
-  height: 18px;
-`;
-
-export const PriceText = styled.p`
-  font-size: 1.6rem;
 `;

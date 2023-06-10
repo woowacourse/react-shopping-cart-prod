@@ -10,7 +10,6 @@ interface CartQuantityFieldProps {
   product: ProductItemType;
 }
 
-// TODO: handler
 function CartStepper({ product }: CartQuantityFieldProps) {
   const {
     getCartItemId,
@@ -22,7 +21,7 @@ function CartStepper({ product }: CartQuantityFieldProps) {
   const cartItemId = getCartItemId(product.id) ?? -1;
 
   const changeQuantity = ({ target: value }) => {
-    updateCartItemQuantity(cartItemId, Number(event.target.value));
+    updateCartItemQuantity(cartItemId, Number(value));
   };
 
   const increaseQuantity = () => {

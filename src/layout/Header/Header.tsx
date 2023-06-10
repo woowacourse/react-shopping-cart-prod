@@ -21,12 +21,12 @@ function Header() {
   const navigate = useNavigate();
   const resetCart = useResetCart();
 
-  const handleChangeServer = ({ currentTarget: value }) => {
+  const handleChangeServer = ({ currentTarget: { value } }) => {
     resetCart();
-    if (isCrewNameType(serverName)) setServerUrlBy(value);
+    if (isCrewNameType(value)) setServerUrlBy(value);
   };
 
-  const handleChangeUser = ({ currentTarget: value }) => {
+  const handleChangeUser = ({ currentTarget: { value } }) => {
     resetCart();
     setCredentialBy(Number(value));
     navigate("/");
@@ -37,7 +37,6 @@ function Header() {
       <Container>
         <S.HeaderWrapper>
           <Logo />
-
           <Suspense>
             <S.IconWrapper>
               <SelectBox

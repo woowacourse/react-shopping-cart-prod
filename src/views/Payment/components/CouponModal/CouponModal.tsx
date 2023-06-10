@@ -48,8 +48,8 @@ function CouponModal({ isOpen, closeModal }: CouponModalProps) {
   const [checkedCouponId, setCheckedCouponId] = useState<number | null>(null);
 
   const totalPrice = useTotalPrice();
-  const selectCouponTempt = () => {
-    setCheckedCouponId(coupon.id);
+  const selectCouponTempt = (couponId: number) => () => {
+    setCheckedCouponId(couponId);
   };
 
   const unSelectCoupon = () => {
@@ -75,7 +75,7 @@ function CouponModal({ isOpen, closeModal }: CouponModalProps) {
               return (
                 <CouponItem
                   key={coupon.id}
-                  onClick={selectCoupon}
+                  onClick={selectCouponTempt(coupon.id)}
                   disabled={totalPrice < coupon.minimumPrice}
                   benefit={couponBenefitText(coupon.type, coupon.value)}
                   condition={couponCondition(coupon.minimumPrice)}
