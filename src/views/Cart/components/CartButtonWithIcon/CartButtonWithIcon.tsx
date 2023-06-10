@@ -1,12 +1,11 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
-import * as S from './CartButtonWithIcon.style';
+import { useRefreshCart } from "@views/Cart/recoil/cartState";
+import { useRefreshProduct } from "@views/Product/recoil/productListState";
+import { useCart } from "@views/Cart/hooks/useCart";
 
-import { useRefreshCart } from '@views/Cart/recoil/cartState';
-import { useRefreshProduct } from '@views/Product/recoil/productListState';
-
-import { FiShoppingCart } from 'react-icons/fi';
-import { useCart } from '@views/Cart/hooks/useCart';
+import * as S from "./CartButtonWithIcon.style";
+import { FiShoppingCart } from "react-icons/fi";
 
 function CartButtonWithIcon() {
   const navigate = useNavigate();
@@ -23,7 +22,7 @@ function CartButtonWithIcon() {
       onClick={() => {
         refreshCart();
         refreshProduct();
-        navigate('/cart');
+        navigate("/cart");
       }}
     >
       <S.CartWrapper>

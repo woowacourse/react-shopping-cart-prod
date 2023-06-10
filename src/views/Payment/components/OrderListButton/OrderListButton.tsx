@@ -1,8 +1,7 @@
-import { styled } from "styled-components";
-import { CgProfile } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
 import ROUTER_PATH from "@router/constants/routerPath";
 import * as S from "./OrderListButton.style";
+import { CgProfile } from "react-icons/cg";
 
 function OrderListButton() {
   const navigate = useNavigate();

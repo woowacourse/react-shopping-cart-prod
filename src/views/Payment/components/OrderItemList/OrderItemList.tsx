@@ -1,6 +1,5 @@
-import { styled } from 'styled-components';
-import { OrderItemType } from 'types/OrderType';
-import * as S from './OrderItemList.style'
+import { OrderItemType } from "types/OrderType";
+import * as S from "./OrderItemList.style";
 
 function OrderItemList({ orderItems }: { orderItems: OrderItemType[] }) {
   return (
@@ -21,5 +20,3 @@ function OrderItemList({ orderItems }: { orderItems: OrderItemType[] }) {
 }
 
 export default OrderItemList;
-
-

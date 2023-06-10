@@ -1,8 +1,10 @@
-import { FaTrashAlt } from "react-icons/fa";
 import { Stepper } from "@common/Stepper";
 import { useCart } from "@views/Cart/hooks/useCart";
-import * as S from "./CartProductInfo.style";
+
 import { ProductItemType } from "../../../../types/ProductType";
+
+import * as S from "./CartProductInfo.style";
+import { FaTrashAlt } from "react-icons/fa";
 
 interface CartProductInfoProps {
   cartItemId: number;

@@ -1,11 +1,10 @@
 import { CheckBox } from "@common/CheckBox";
-
-import * as S from "./CartItemBox.style";
+import { useCheckCart } from "@views/Cart/hooks/useCart";
+import { CartProductInfo } from "@views/Cart/components/CartProductInfo";
 
 import { ProductItemType } from "types/ProductType";
 
-import { useCheckCart } from "@views/Cart/hooks/useCart";
-import { CartProductInfo } from "@views/Cart/components/CartProductInfo";
+import * as S from "./CartItemBox.style";
 
 interface CartItemProps {
   cartItemId: number;

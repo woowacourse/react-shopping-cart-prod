@@ -1,9 +1,9 @@
-import * as S from "./CartItemList.style";
 import { CartItemBox } from "@views/Cart/components/CartItemBox";
 import { CheckBox } from "@common/CheckBox";
-
-import empty from "@assets/empty.png";
 import { useCheckCart } from "@views/Cart/hooks/useCart";
+
+import * as S from "./CartItemList.style";
+import empty from "@assets/empty.png";
 
 function CartItemList() {
   const {

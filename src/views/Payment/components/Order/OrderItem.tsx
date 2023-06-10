@@ -1,9 +1,11 @@
-import { OrderType } from "types/OrderType";
-import { VscChevronRight } from "react-icons/vsc";
-import { OrderItemList } from "../OrderItemList";
 import { useNavigate } from "react-router-dom";
-import * as S from "./OrderItem.style";
+import { OrderItemList } from "../OrderItemList";
 import ROUTER_PATH from "@router/constants/routerPath";
+
+import { OrderType } from "types/OrderType";
+
+import * as S from "./OrderItem.style";
+import { VscChevronRight } from "react-icons/vsc";
 
 interface OrderItemParams {
   order: OrderType;

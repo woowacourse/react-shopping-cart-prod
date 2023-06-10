@@ -1,6 +1,6 @@
-import { Column, Row } from '@styles/style';
-import { ProductItem } from '@views/Product/components/ProductItem';
-import { useProductList } from '@views/Product/recoil/productListState';
+import { ProductItem } from "@views/Product/components/ProductItem";
+import { useProductList } from "@views/Product/recoil/productListState";
+import { Column, Row } from "@styles/style";
 
 function ProductList() {
   const productList = useProductList();

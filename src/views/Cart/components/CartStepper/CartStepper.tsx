@@ -1,10 +1,10 @@
-import * as S from "./CartStepper.style";
+import { Stepper } from "@common/Stepper";
+import { useCart } from "@views/Cart/hooks/useCart";
 
 import { ProductItemType } from "types/ProductType";
-import { Stepper } from "@common/Stepper";
 
+import * as S from "./CartStepper.style";
 import { BsCartPlus } from "react-icons/bs";
-import { useCart } from "@views/Cart/hooks/useCart";
 
 interface CartQuantityFieldProps {
   product: ProductItemType;

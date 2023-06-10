@@ -1,13 +1,10 @@
-import { Modal } from "@common/Modal";
-
-import { useTotalPrice } from "@views/Cart/recoil/cartState";
-
-import { styled } from "styled-components";
-
-import { CouponItem } from "../CouponItem";
-import { Button } from "@common/Button";
 import { useState } from "react";
 import useCouponList from "@views/Payment/hooks/useCouponList";
+import { Modal } from "@common/Modal";
+import { useTotalPrice } from "@views/Cart/recoil/cartState";
+import { Button } from "@common/Button";
+import { CouponItem } from "../CouponItem";
+
 import * as S from "./CouponModal.style";
 import useModalExternal from "@common/hooks/useModalExternal";
 

@@ -1,22 +1,17 @@
-import { FlexWrapper } from "@pages/CartPage/CartPage.style";
-import * as S from "./ExpectedPayment.style";
-
-import { useTotalPrice } from "@views/Cart/recoil/cartState";
-import { DELIVERY_FEE_BASIC } from "@views/Payment/constants/orderConstants";
-
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useCheckCart } from "@views/Cart/hooks/useCart";
 import { CouponModal } from "../CouponModal";
 import { useCouponSelected } from "@views/Payment/recoil/couponListState";
-
-import { RiCoupon2Line } from "react-icons/ri";
 import { Button } from "@common/Button";
 import { CouponMessage } from "../CouponMessage";
-import useFetchOrders from "@views/Payment/hooks/useFetchOrders";
-import { useNavigate } from "react-router-dom";
-import ROUTER_PATH from "@router/constants/routerPath";
 import useExpectedPrice from "@views/Payment/hooks/useExpectedPrice";
-import { useCheckCart } from "@views/Cart/hooks/useCart";
+import useFetchOrders from "@views/Payment/hooks/useFetchOrders";
 import useModalExternal from "@common/hooks/useModalExternal";
+import ROUTER_PATH from "@router/constants/routerPath";
+
+import * as S from "./ExpectedPayment.style";
+import { RiCoupon2Line } from "react-icons/ri";
+import { FlexWrapper } from "@pages/CartPage/CartPage.style";
 
 function ExpectedPayment() {
   const { isOpen, closeModal, openModal } = useModalExternal();
