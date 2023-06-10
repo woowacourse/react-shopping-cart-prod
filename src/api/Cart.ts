@@ -1,6 +1,6 @@
 import { USER_AUTH_TOKEN } from '../constant';
-import { CartProduct, Product } from '../types/product';
-import { ServerName } from '../types/server';
+import type { CartProduct, Product } from '../types/product';
+import type { ServerName } from '../types/server';
 import ServerUtil from '../utils/ServerUrl';
 
 const getAllList = async (serverName: ServerName): Promise<CartProduct[]> => {

@@ -1,7 +1,7 @@
 import { USER_AUTH_TOKEN } from '../constant';
-import { OrderInfo } from '../types/order';
-import { CartProduct } from '../types/product';
-import { ServerName } from '../types/server';
+import type { OrderInfo } from '../types/order';
+import type { CartProduct } from '../types/product';
+import type { ServerName } from '../types/server';
 import ServerUtil from '../utils/ServerUrl';
 
 const getAllList = async (serverName: ServerName): Promise<OrderInfo[]> => {
@@ -16,9 +16,9 @@ const getAllList = async (serverName: ServerName): Promise<OrderInfo[]> => {
 
   if (response.status !== 200) throw new Error('주문목록 불러오기를 실패했어요.');
 
-  const data: OrderInfo[] = await response.json();
+  const { orders }: { orders: OrderInfo[] } = await response.json();
 
-  return data;
+  return orders;
 };
 
 const purchase = async (
