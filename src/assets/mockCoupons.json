@@ -1,0 +1,30 @@
+[
+  {
+    "id": 0,
+    "couponName": "언제나 5% 할인 쿠폰",
+    "discountPercent": 5,
+    "discountAmount": 0,
+    "minAmount": 0
+  },
+  {
+    "id": 1,
+    "couponName": "언제나 1000원 할인",
+    "discountPercent": 0,
+    "discountAmount": 1000,
+    "minAmount": 0
+  },
+  {
+    "id": 2,
+    "couponName": "10만원 이상 구매 시 10000원 할인",
+    "discountPercent": 0,
+    "discountAmount": 10000,
+    "minAmount": 100000
+  },
+  {
+    "id": 3,
+    "couponName": "50만원 이상 구매 시 10% 할인",
+    "discountPercent": 10,
+    "discountAmount": 0,
+    "minAmount": 500000
+  }
+]

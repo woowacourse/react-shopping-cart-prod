@@ -1,0 +1,32 @@
+[
+  {
+    "id": 0,
+    "name": "파인",
+    "email": "fine@fine.com",
+    "password": "123"
+  },
+  {
+    "id": 1,
+    "name": "가브리엘",
+    "email": "gabriel@gabriel.com",
+    "password": "1234"
+  },
+  {
+    "id": 2,
+    "name": "비버",
+    "email": "beaver@beaver.com",
+    "password": "1234"
+  },
+  {
+    "id": 3,
+    "name": "레오",
+    "email": "leo@leo.com",
+    "password": "1234"
+  },
+  {
+    "id": 4,
+    "name": "디노",
+    "email": "deno@deno.com",
+    "password": "1234"
+  }
+]

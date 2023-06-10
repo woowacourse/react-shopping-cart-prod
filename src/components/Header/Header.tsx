@@ -1,42 +1,42 @@
 import titleLogo from "../../assets/logo.png";
-import { useNavigate } from "react-router-dom";
-import { Container } from "../../style/style";
+import {useNavigate} from "react-router-dom";
+import {Container} from "../../style/style";
 import {
-  CartCount,
-  CartCountWrapper,
-  CartTitle,
   NavBar,
   HeaderContent,
   LogoImage,
   LogoWrapper,
   HeaderWrapper,
-  CartWrapper,
+  LoginButton,
 } from "./Header.style";
-import { useRecoilValue } from "recoil";
-import { cartCountSelector } from "../../recoil/cartAtoms";
-import ServerSelectBox from "../ServerSelectBox/ServerSelectBox.tsx";
+import {useRecoilValue} from "recoil";
+import ServerSelectBox from "../ServerSelectBox";
+import Login from "../Login";
+import {userState} from "../../app/recoil/user/userAtom.tsx";
+import PersonalDropdown from "../PersonalDropdown";
+import {modalRepository} from "../../app/recoil/modal/modalRepository.tsx";
 
 function Header() {
   const navigate = useNavigate();
-  const cartCount = useRecoilValue(cartCountSelector);
+  const user = useRecoilValue(userState);
+  const {openModal} = useRecoilValue(modalRepository);
 
   return (
     <HeaderWrapper>
       <Container>
         <HeaderContent>
           <LogoWrapper onClick={() => navigate("/")}>
-            <LogoImage src={titleLogo} />
+            <LogoImage src={titleLogo}/>
           </LogoWrapper>
           <NavBar>
-            <ServerSelectBox />
-            <CartWrapper
-              onClick={() => navigate("/cart")}
-            >
-              <CartTitle>장바구니</CartTitle>
-              <CartCountWrapper>
-                <CartCount>{cartCount}</CartCount>
-              </CartCountWrapper>
-            </CartWrapper>
+            <ServerSelectBox/>
+            {user ? (
+              <PersonalDropdown/>
+            ) : (
+              <LoginButton onClick={() => openModal(<Login/>)}>
+                로그인
+              </LoginButton>
+            )}
           </NavBar>
         </HeaderContent>
       </Container>

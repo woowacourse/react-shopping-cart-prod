@@ -1,4 +1,4 @@
-import type { CartItem } from "../../types/types";
+import type {CartItem} from "../../types/types";
 import CartController from "../CartController";
 import {
   CartItemControllerWrapper,
@@ -11,21 +11,35 @@ import {
   CartItemTrashImage,
 } from "./CartItem.style";
 import trashIcon from "../../assets/trash.png";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import {
-  cartState,
-  switchCartCheckboxSelector,
-} from "../../recoil/cartAtoms.ts";
-import { serverState } from "../../recoil/serverAtom.ts";
-import { fetchCartList } from "../../api/api.ts";
-import { fetchDeleteCart } from "../../api/api.ts";
+import {useRecoilCallback, useRecoilValue, useSetRecoilState} from "recoil";
+import {cartState} from "../../app/recoil/cart/cartAtoms.ts";
+import {serverState} from "../../app/recoil/serverAtom.ts";
+import {fetchCartList} from "../../app/api/api.ts";
+import {fetchDeleteCart} from "../../app/api/api.ts";
 
 interface CartItemProps {
   cart: CartItem;
 }
 
-function CartItem({ cart }: CartItemProps) {
-  const switchCheckbox = useSetRecoilState(switchCartCheckboxSelector);
+function CartItem({cart}: CartItemProps) {
+  const switchCheckbox = useRecoilCallback(
+    ({snapshot, set}) =>
+      async (id: number) => {
+        const cartList = [...(await snapshot.getPromise(cartState))];
+        const targetIndex = cartList.findIndex(
+          (cartItem) => cartItem.id === id
+        );
+        const targetCart = cartList[targetIndex];
+        const updatedCart = {
+          ...targetCart,
+          checked: !targetCart.checked,
+        };
+        cartList[targetIndex] = updatedCart;
+        set(cartState, cartList);
+      },
+    []
+  );
+
   const setCartList = useSetRecoilState(cartState);
   const server = useRecoilValue(serverState);
 
@@ -68,7 +82,7 @@ function CartItem({ cart }: CartItemProps) {
               src={trashIcon}
               onClick={() => removeCartItem(cart.id)}
             />
-            <CartController product={cart.product} />
+            <CartController product={cart.product}/>
           </CartItemControllerWrapper>
         </CartItemInfo>
         <CartItemPrice>{cart.product.price.toLocaleString()}원</CartItemPrice>

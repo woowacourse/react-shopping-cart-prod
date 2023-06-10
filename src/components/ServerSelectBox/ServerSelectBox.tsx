@@ -1,27 +1,32 @@
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { Select } from "./ServerSelectBox.style";
-import { serverState } from "../../recoil/serverAtom";
-import { ChangeEvent, useEffect } from "react";
-import { fetchCartList } from "../../api/api";
-import { cartState } from "../../recoil/cartAtoms";
+import {useRecoilState, useRecoilValue} from "recoil";
+import {Select} from "./ServerSelectBox.style";
+import {serverState} from "../../app/recoil/serverAtom";
+import {ChangeEvent, useEffect} from "react";
+import {userState} from "../../app/recoil/user/userAtom.tsx";
+import {userRepository} from "../../app/recoil/user/userRepository.tsx";
+import {cartRepository} from "../../app/recoil/cart/cartRepository.ts";
 
 function ServerSelectBox() {
+  const {loadCartList} = useRecoilValue(cartRepository);
   const [server, setServer] = useRecoilState(serverState);
+  const user = useRecoilValue(userState);
+
+  const {logout} = useRecoilValue(userRepository);
 
   const onChangeServer = (e: ChangeEvent<HTMLSelectElement>) => {
-    setServer(e.target.value);
-  };
-
-  const setCartList = useSetRecoilState(cartState);
-
-  const loadCartList = async () => {
-    const checkedCartItems = await fetchCartList(server);
-    setCartList(checkedCartItems);
+    if (user) {
+      if (confirm("로그아웃 하시겠습니까?")) {
+        logout();
+        setServer(e.target.value);
+      }
+    } else {
+      setServer(e.target.value);
+    }
   };
 
   useEffect(() => {
     loadCartList();
-  }, [server]);
+  }, [server, user]);
 
   return (
     <Select value={server} onChange={onChangeServer}>

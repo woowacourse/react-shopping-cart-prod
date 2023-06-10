@@ -5,13 +5,13 @@ export const PurchaseBoxWrapper = styled.div`
   box-sizing: border-box;
   padding: 25px;
 
-  @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+  @media screen and (min-width: ${({theme}) => theme.breakpoints.lg}) {
     width: 33.33%;
   }
 `;
 
 export const PurchaseWrapper = styled.div`
-  border: 1px solid ${({ theme }) => theme.color.secondary};
+  border: 1px solid ${({theme}) => theme.color.secondary};
   padding: 30px;
 `;
 
@@ -27,10 +27,43 @@ export const PurchaseTitle = styled.div`
 export const PurchaseText = styled.div`
   font-style: normal;
   font-weight: 700;
-  font-size: 20px;
+  font-size: 19px;
   line-height: 27px;
 
   letter-spacing: 0.5px;
+
+  @media screen and (min-width: ${({theme}) => theme.breakpoints.lg}) {
+    font-size: 16px;
+  }
+
+  @media screen and (min-width: ${({theme}) => theme.breakpoints.xl}) {
+    font-size: 19px;
+  }
+`;
+
+export const DiscountText = styled.div`
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 27px;
+
+  letter-spacing: 0.5px;
+`;
+
+export const RealPriceText = styled.div`
+  font-style: normal;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 27px;
+
+  letter-spacing: 0.5px;
+
+  @media screen and (min-width: ${({theme}) => theme.breakpoints.lg}) {
+    font-size: 18px;
+  }
+  @media screen and (min-width: ${({theme}) => theme.breakpoints.xl}) {
+    font-size: 22px;
+  }
 `;
 
 export const PurchasePropertyWrapper = styled.div`
@@ -39,10 +72,14 @@ export const PurchasePropertyWrapper = styled.div`
 `;
 
 export const PurchaseButtonWrapper = styled.div`
-  margin-top: 40px;
+  margin-top: 20px;
 `;
 
-export const PurchaseButton = styled.button`
+interface PurchaseButtonProps {
+  disabled?: boolean;
+}
+
+export const PurchaseButton = styled.button<PurchaseButtonProps>`
   padding: 26px 0px 26px 0px;
   background-color: black;
   color: white;
@@ -52,6 +89,11 @@ export const PurchaseButton = styled.button`
   font-weight: 400;
   font-size: 24px;
   line-height: 21px;
+
+  ${({disabled}) => disabled && `
+      opacity: 0.5;
+      pointer-events: none;
+    `}
 `;
 
 export const Vacant = styled.div`
