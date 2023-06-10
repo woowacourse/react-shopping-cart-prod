@@ -2,6 +2,7 @@ import { useRecoilState } from "recoil";
 import useFetchCart from "./useFetchCart";
 import cartState from "../recoil/cartState";
 import { CartItemType } from "types/ProductType";
+import validateCart from "@views/Payment/utils/validateCart";
 
 export const useCart = () => {
   const [cart, setCart] = useRecoilState(cartState);
@@ -38,14 +39,7 @@ export const useCart = () => {
   };
 
   const updateCartItemQuantity = (cartId: number, quantity: number) => {
-    if (!cart.some((cartItem) => cartItem.id === cartId)) {
-      console.error(
-        "수량 변경하였지만 recoil에서 관리하는 cartState에서 cartItem의 id를 찾을 수 없습니다. "
-      );
-
-      return;
-    }
-
+    validateCart(cart, cartId);
     // DELETE
     if (quantity === 0) {
       setCart(cart.filter((cartItem) => cartItem.id !== cartId));
@@ -67,6 +61,26 @@ export const useCart = () => {
     );
     fetchCart.PATCH(cartId, quantity);
   };
+
+  const totalPrice = cart.reduce((totalPrice, cartItem) => {
+    return cartItem.checked
+      ? totalPrice + cartItem.product.price * cartItem.quantity
+      : totalPrice;
+  }, 0);
+
+  return {
+    cart,
+    setCart,
+    getCartItemQuantity,
+    getCartItemId,
+    updateCartItemQuantity,
+    addCartItem,
+    totalPrice,
+  };
+};
+
+export const useCheckCart = () => {
+  const [cart, setCart] = useRecoilState(cartState);
 
   const isAllChecked = cart.every((cartItem) => cartItem.checked);
 
@@ -122,12 +136,6 @@ export const useCart = () => {
 
   return {
     cart,
-    setCart,
-    getCartItemQuantity,
-    getCartItemId,
-    updateCartItemQuantity,
-    addCartItem,
-
     isAllChecked,
     checkedCartCount,
     getCartItemIsChecked,
@@ -135,7 +143,5 @@ export const useCart = () => {
     toggleAllCartItem,
     deleteCheckedItems,
     getCheckedItemIds,
-
-    totalPrice,
   };
 };
