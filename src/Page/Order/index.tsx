@@ -24,6 +24,7 @@ function Order() {
         ) : (
           orderList?.map((order: OrderType) => (
             <OrderItemList
+              key={order.id}
               orderItemList={order.productList}
               orderNumber={order.id}
               orderTime={formatDateToKorean(order.orderTime)}

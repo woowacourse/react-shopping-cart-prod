@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import { Link } from 'react-router-dom';
 import { OrderProduct } from '../../types';
 import OrderItem from '../OrderItem';
@@ -26,7 +27,7 @@ function OrderItemList({ orderItemList, orderNumber, orderTime }: OrderItemListP
       </div>
       <li className={styles.list}>
         {orderItemList.map(orderItem => (
-          <OrderItem {...orderItem} />
+          <OrderItem {...orderItem} key={orderNumber} />
         ))}
       </li>
     </div>
