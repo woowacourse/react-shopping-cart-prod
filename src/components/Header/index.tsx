@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { ReactComponent as Logo } from '../../assets/logo.svg';
@@ -17,8 +18,12 @@ function Header() {
   const setCurrentServerUrl = useSetRecoilState($CurrentServerUrl);
   const Toast = useToast();
 
-  const userNameList = Object.keys(userServerUrlList);
-  const index = userNameList.findIndex(name => name === getLocalStorage('name', 'MSW'));
+  const { keys: userNameList, index: currentOptionIndex } = useMemo(() => {
+    const keys = Object.keys(userServerUrlList);
+    const index = keys.findIndex(name => name === getLocalStorage('name', 'MSW'));
+
+    return { keys, index };
+  }, []);
 
   const serverSelectChange = (target: HTMLLIElement) => {
     const { textContent } = target;
@@ -42,7 +47,11 @@ function Header() {
         <Logo width={240} />
       </Link>
       <nav className={styles.nav}>
-        <DropDown options={userNameList} selectedListHandler={serverSelectChange} currentOptionIndex={index} />
+        <DropDown
+          options={userNameList}
+          selectedListHandler={serverSelectChange}
+          currentOptionIndex={currentOptionIndex}
+        />
         <Link to="/order">
           <button type="button" className={styles.order}>
             <User />
