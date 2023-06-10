@@ -1,14 +1,13 @@
 import Header from "components/Header";
 import Page from "components/common/Page";
-import CartItemList from "components/cart/CartItemList";
-import PurchaseOrder from "components/cart/PurchaseOrder";
 import React from "react";
 import Skeleton from "components/common/Skeleton";
 import LoadingSpinner from "components/common/LoadingSpinner";
+import { Outlet } from "react-router-dom";
 import { ErrorBoundary } from "react-error-boundary";
 import Fallback from "./Fallback";
 
-const Cart = () => {
+const OrderList = () => {
   return (
     <ErrorBoundary FallbackComponent={Fallback}>
       <React.Suspense
@@ -18,12 +17,11 @@ const Cart = () => {
       </React.Suspense>
       <Page>
         <React.Suspense fallback={<LoadingSpinner />}>
-          <CartItemList />
-          <PurchaseOrder />
+          <Outlet />
         </React.Suspense>
       </Page>
     </ErrorBoundary>
   );
 };
 
-export default Cart;
+export default OrderList;

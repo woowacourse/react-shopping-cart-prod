@@ -5,8 +5,8 @@ import GlobalStyle from "../src/style/GlobalStyle";
 import { RecoilRoot } from "recoil";
 import { initializeWorker, mswDecorator } from "msw-storybook-addon";
 import { rest } from "msw";
-import products from "../src/mocks/mockData.json";
-import { SERVER_LIST } from "../src/api/constants";
+import products from "../src/mocks/data/products.json";
+import coupons from "../src/mocks/data/coupons.json";
 
 initializeWorker();
 
@@ -21,10 +21,8 @@ const preview: Preview = {
     },
     msw: {
       handlers: [
-        rest.get(`${SERVER_LIST["power-server"]}/products`, (req, res, ctx) =>
-          res(ctx.status(200), ctx.json(products))
-        ),
-        rest.get(`${SERVER_LIST["power-server"]}/cart-items`, (req, res, ctx) =>
+        rest.get("*/products", (req, res, ctx) => res(ctx.status(200), ctx.json(products))),
+        rest.get("*/cart-items", (req, res, ctx) =>
           res(
             ctx.status(200),
             ctx.json([
@@ -53,6 +51,7 @@ const preview: Preview = {
             ])
           )
         ),
+        rest.get("*/coupons", (req, res, ctx) => res(ctx.status(200), ctx.json(coupons))),
       ],
     },
   },

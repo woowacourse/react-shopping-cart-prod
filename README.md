@@ -2,11 +2,7 @@
 
 우아한테크코스 레벨2 장바구니 미션
 
-## 페어 프로그래밍 [가람](https://github.com/guridaek) & [수아](https://github.com/chsua)
-
-## [배포 페이지](https://react-shopping-cart-prod-git-step1-guridaek.vercel.app/)
-
-## [스토리북](https://6463267aee5d3c7105342735-qhngbdqxgh.chromatic.com)
+## [배포 페이지](https://react-shopping-cart-prod-git-step2-guridaek.vercel.app/)
 
 ## 패키지 설치
 

@@ -1,5 +1,5 @@
 import { StoryFn, Meta } from "@storybook/react";
-import PurchaseOrder from "components/PurchaseOrder";
+import PurchaseOrder from "components/cart/PurchaseOrder";
 
 export default {
   title: "PurchaseOrder",

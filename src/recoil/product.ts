@@ -1,5 +1,5 @@
 import { atom, selector, selectorFamily } from "recoil";
-import { Product } from "types/domain";
+import { Product } from "api/products";
 import { getProducts } from "api/products";
 import { serverSelectState } from "./server";
 

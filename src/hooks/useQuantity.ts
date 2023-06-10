@@ -17,7 +17,7 @@ export const useQuantity = (productId: number) => {
     if (Number(newQuantity) > MAX_QUANTITY || Number(newQuantity) < MIN_QUANTITY) return;
 
     if (!cartItem) {
-      alert(`장바구니 상품 수량 변경 실패!`);
+      alert(`서버와의 통신이 원활하지 않습니다. 잠시후 다시 시도해주세요.`);
       return;
     }
 
@@ -27,7 +27,7 @@ export const useQuantity = (productId: number) => {
         : await removeCartItem(selectedServer, cartItem.id);
 
     if (!result) {
-      alert(`장바구니 상품 수량 변경 실패!`);
+      alert(`서버와의 통신이 원활하지 않습니다. 잠시후 다시 시도해주세요.`);
       return;
     }
 

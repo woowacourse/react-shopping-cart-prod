@@ -1,8 +1,8 @@
 import { ServerId } from "recoil/server";
-import { Product } from "types/domain";
+import { Product } from "./products";
 import { SERVER_LIST, USER_TOKEN } from "./constants";
 
-interface CartItem {
+export interface CartItem {
   id: number;
   quantity: number;
   product: Product;
@@ -16,7 +16,12 @@ export const getCartItems = async (serverId: ServerId): Promise<CartItem[]> => {
     },
   });
 
-  return response.json();
+  const data = await response.json();
+
+  if (!response.ok)
+    throw new Error(data.message ?? "오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+
+  return data;
 };
 
 export const addCartItem = async (serverId: ServerId, productId: number) => {
@@ -31,7 +36,7 @@ export const addCartItem = async (serverId: ServerId, productId: number) => {
 
   const cartItemId = response.headers.get("Location")?.split("/")[2];
 
-  return response.status === 201 && cartItemId;
+  return response.ok && cartItemId;
 };
 
 export const changeItemQuantity = async (
@@ -48,7 +53,7 @@ export const changeItemQuantity = async (
     body: JSON.stringify({ quantity: quantity }),
   });
 
-  return response.status;
+  return response.ok;
 };
 
 export const removeCartItem = async (serverId: ServerId, cartItemId: number) => {
@@ -59,5 +64,5 @@ export const removeCartItem = async (serverId: ServerId, cartItemId: number) => 
     },
   });
 
-  return response.status === 204;
+  return response.ok;
 };

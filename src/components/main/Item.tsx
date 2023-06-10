@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import QuantityCounter from "components/QuantityCounter";
-import { Product } from "types/domain";
+import { Product } from "api/products";
 import { addCartItem } from "api/cartItems";
 import { cartSelector } from "recoil/cart";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -14,7 +14,7 @@ const Item = (item: Product) => {
     const cartItemId = await addCartItem(selectedServer, item.id);
 
     if (!cartItemId) {
-      alert("장바구니 상품 추가 실패!");
+      alert("서버와의 통신이 원활하지 않습니다. 잠시후 다시 시도해주세요.");
       return;
     }
 
@@ -72,7 +72,7 @@ const ImageBox = styled.div`
   }
 
   &:hover {
-    background-color: rgba(0, 0, 0, 0.25);
+    scale: 1.1;
     box-shadow: 0 10px 10px -3px rgba(0, 0, 0, 0.25);
     transition: all 0.3s ease;
   }
@@ -80,9 +80,9 @@ const ImageBox = styled.div`
 
 const NameBox = styled.div`
   width: 190px;
-  margin: 15px 0 10px 10px;
+  margin: 10px 0 10px 10px;
 
-  font-size: 16px;
+  font-size: 17px;
   white-space: nowrap;
 
   word-break: break-all;
@@ -90,7 +90,8 @@ const NameBox = styled.div`
   overflow: hidden;
 
   @media screen and (max-width: 800px) {
-    font-size: 13px;
+    margin: 5px 0 5px 5px;
+    font-size: 18px;
   }
 `;
 
@@ -100,7 +101,9 @@ const PriceBox = styled.p`
   font-size: 20px;
 
   @media screen and (max-width: 800px) {
-    font-size: 16px;
+    margin-left: 5px;
+
+    font-size: 20px;
   }
 `;
 
