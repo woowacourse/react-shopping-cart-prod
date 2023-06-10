@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import LoadingSpinner from '../../components/Common/LoadingSpinner';
 import OrderSuccessModal from '../../components/OrderSuccessModal';
@@ -7,6 +7,8 @@ import usePaymentsData from '../../hooks/usePaymentsData';
 import useToast from '../../hooks/useToast';
 import { $CartList, $CheckedCartIdList, $CurrentServerUrl } from '../../recoil/atom';
 import styles from './index.module.scss';
+
+const deliveryLocation = '서울특별시 강남구 테헤란로411, 성담빌딩 13층 우아한테크코스';
 
 function OrderCheckout() {
   const currentServerUrl = useRecoilValue($CurrentServerUrl);
@@ -28,17 +30,19 @@ function OrderCheckout() {
     },
   });
 
-  const checkedCartList = cartList.filter(item => checkedCartIdList.includes(item.id));
-  const checkedCartProductNameList = checkedCartList.map(cart => cart.product.name);
-  const deliveryLocation = '서울특별시 강남구 테헤란로411, 성담빌딩 13층 우아한테크코스';
+  const { filteredList: checkedCartList, mappingList: checkedCartProductNameList } = useMemo(() => {
+    const filteredList = cartList.filter(item => checkedCartIdList.includes(item.id));
+    const mappingList = filteredList.map(cart => cart.product.name);
+
+    return { filteredList, mappingList };
+  }, [cartList, checkedCartIdList]);
 
   const handleCheckPolicy: React.ChangeEventHandler<HTMLInputElement> = ({ target }) => {
     const policy = target.value;
 
-    if (target.checked) {
-      setCheckedPolicyList(prev => prev.filter(prevPolicy => prevPolicy !== policy));
-    }
-    setCheckedPolicyList(prev => [...prev, policy]);
+    return target.checked
+      ? setCheckedPolicyList(prev => prev.filter(prevPolicy => prevPolicy !== policy))
+      : setCheckedPolicyList(prev => [...prev, policy]);
   };
 
   const handleOrder = async () => {
