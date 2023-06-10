@@ -4,8 +4,6 @@ import { useCallback } from 'react';
 import serverNameState from '../../../globalState/atoms/serverName';
 import usePromise from '../../../hooks/usePromise';
 import type { CouponInfo } from '../../../types/coupon';
-import ServerUtil from '../../../utils/ServerUrl';
-import { USER_AUTH_TOKEN } from '../../../constant';
 import Coupon from '../../common/Coupon/Coupon';
 import CouponApi from '../../../api/Coupon';
 
@@ -18,28 +16,13 @@ const CouponList = () => {
   const coupons = getData();
 
   const makeDownloadCouponFunction = (couponId: number) => async () => {
-    const url = ServerUtil.getUserCouponsUrl(serverName);
-
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Basic ${USER_AUTH_TOKEN}`,
-      },
-      body: JSON.stringify({ couponId }),
-    });
-
-    if (Math.floor(response.status / 100) === 5) {
-      alert('서버 문제로 쿠폰 발급에 실패하였습니다.');
-      return;
+    try {
+      await CouponApi.download(serverName, couponId);
+      alert('쿠폰이 발급되었어요.');
+    } catch (error) {
+      if (error instanceof Error) alert(error.message);
+      else throw error;
     }
-
-    if (Math.floor(response.status / 100) === 4) {
-      alert('이미 발급받은 쿠폰입니다!');
-      return;
-    }
-
-    alert('쿠폰이 발급되었습니다.');
   };
 
   return (
