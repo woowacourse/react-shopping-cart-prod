@@ -16,9 +16,10 @@ import { useNavigate } from "react-router-dom";
 import ROUTER_PATH from "@router/constants/routerPath";
 import useExpectedPrice from "@views/Payment/hooks/useExpectedPrice";
 import { useCheckCart } from "@views/Cart/hooks/useCart";
+import useModalExternal from "@common/hooks/useModalExternal";
 
 function ExpectedPayment() {
-  const [isCouponOpen, setIsCouponOpen] = useState(false);
+  const { isOpen, closeModal, openModal } = useModalExternal();
 
   const fetchOrders = useFetchOrders();
   const couponSelected = useCouponSelected();
@@ -28,10 +29,6 @@ function ExpectedPayment() {
     useExpectedPrice(couponSelected);
 
   const navigate = useNavigate();
-
-  const handleSeeCoupons = () => {
-    setIsCouponOpen(true);
-  };
 
   const handlePay = async () => {
     const requestBody = {
@@ -59,7 +56,7 @@ function ExpectedPayment() {
           <CouponMessage />
           <S.CouponButton
             size="m"
-            onClick={handleSeeCoupons}
+            onClick={openModal}
             disabled={totalPrice === 0}
           >
             쿠폰선택
@@ -69,7 +66,6 @@ function ExpectedPayment() {
           <FlexWrapper>
             <S.ContentText>총 상품 가격</S.ContentText>
             <S.ContentText>
-              {" "}
               {totalPrice.toLocaleString("ko-KR")}원
             </S.ContentText>
           </FlexWrapper>
@@ -99,12 +95,7 @@ function ExpectedPayment() {
           결제하기
         </Button>
       </S.PayingBox>
-      <CouponModal
-        isOpen={isCouponOpen}
-        closeModal={() => {
-          setIsCouponOpen(false);
-        }}
-      />
+      <CouponModal isOpen={isOpen} closeModal={closeModal} />
     </S.PayingContainer>
   );
 }

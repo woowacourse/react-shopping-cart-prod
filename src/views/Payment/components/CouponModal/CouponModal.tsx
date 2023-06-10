@@ -9,6 +9,7 @@ import { Button } from "@common/Button";
 import { useState } from "react";
 import useCouponList from "@views/Payment/hooks/useCouponList";
 import * as S from "./CouponModal.style";
+import useModalExternal from "@common/hooks/useModalExternal";
 
 interface CouponModalProps {
   isOpen: boolean;

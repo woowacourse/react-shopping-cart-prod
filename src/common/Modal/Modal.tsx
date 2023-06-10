@@ -1,9 +1,9 @@
-import useModalExternal from '@common/hooks/useModalExternal';
-import { Container } from '@styles/style';
-import { PropsWithChildren } from 'react';
-import { AiOutlineClose } from 'react-icons/ai';
-import { createPortal } from 'react-dom';
-import { styled } from 'styled-components';
+import useModalExternal from "@common/hooks/useModalExternal";
+import { Container } from "@styles/style";
+import { PropsWithChildren } from "react";
+import { AiOutlineClose } from "react-icons/ai";
+import { createPortal } from "react-dom";
+import { styled } from "styled-components";
 
 interface ModalProps extends PropsWithChildren {
   isOpen: boolean;
@@ -14,8 +14,6 @@ function Modal({ isOpen, closeModal, children }: ModalProps) {
   if (!isOpen) {
     return null;
   }
-
-  useModalExternal({ isOpen, closeModal });
 
   return (
     <>
