@@ -31,9 +31,9 @@ const useCart = () => {
     }
   }, [isAdded]);
 
-  const updateCart = (cartItem: CartItemData) => {
+  const updateCart = useCallback((cartItem: CartItemData) => {
     setCartListState((prevCartList) => [...prevCartList, cartItem]);
-  };
+  }, []);
 
   const handleCartError = useCallback(
     (error: HTTPError, errorMessage: APIErrorMessage) => {
