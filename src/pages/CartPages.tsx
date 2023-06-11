@@ -1,57 +1,26 @@
 import { styled } from 'styled-components';
-import Header from '../components/common/Header/Header';
-import CartList from '../components/cart/CartList/CartList';
-import PaymentAmount from '../components/cart/PaymentAmount/PaymentAmount';
+import { Suspense } from 'react';
 import CheckedCartListProvider from '../provider/CheckedListProvider';
-import useCartService from '../hooks/useCartService';
-import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
-import { useRecoilValue } from 'recoil';
-import cartLoadingState from '../globalState/atoms/cartLoadingState';
-import serverNameState from '../globalState/atoms/serverName';
+import CartContents from '../components/cart/CartContents/CartContents';
 import LoadingSpinner from '../components/common/LoadingSpinner/LoadingSpinner';
+import Colors from '../constant/Colors';
 
 const CartPage = () => {
-  const navigate = useNavigate();
-  const { cartList, fetchCartItem } = useCartService();
-  const isCartLoading = useRecoilValue(cartLoadingState);
-  const serverName = useRecoilValue(serverNameState);
-
-  const handleLinkButtonClick = () => {
-    navigate('/');
-  };
-
-  useEffect(() => {
-    fetchCartItem();
-  }, [serverName]);
-
   return (
-    <CheckedCartListProvider>
-      <Header />
-      <Layout>
-        <Title>장바구니</Title>
-        {isCartLoading ? (
-          <EmptyCartView>
-            <LoadingSpinner color="#06c09e" />
-          </EmptyCartView>
-        ) : cartList.length ? (
-          <Contents>
-            <>
-              <CartList />
-              <PaymentAmount />
-            </>
-          </Contents>
-        ) : (
-          <EmptyCartView>
-            장바구니에 상품이 존재하지 않습니다.
-            <LinkButton onClick={handleLinkButtonClick}>
-              상품 담으러 가기
-            </LinkButton>
-          </EmptyCartView>
-        )}
-        {/* </Suspense> */}
-      </Layout>
-    </CheckedCartListProvider>
+    <Layout>
+      <Title>장바구니</Title>
+      <Suspense
+        fallback={
+          <Fallback>
+            <LoadingSpinner color={Colors.staleTurquoise} />
+          </Fallback>
+        }
+      >
+        <CheckedCartListProvider>
+          <CartContents />
+        </CheckedCartListProvider>
+      </Suspense>
+    </Layout>
   );
 };
 
@@ -71,48 +40,17 @@ const Title = styled.h2`
   font-size: 32px;
 
   padding: 30px 0;
-  border-bottom: 4px solid #333333;
+  border-bottom: 4px solid ${Colors.grey1};
 
   text-align: center;
 `;
 
-const Contents = styled.div`
+const Fallback = styled.div`
   display: flex;
-  justify-content: space-between;
-
-  margin-top: 34px;
-
-  @media screen and (max-width: 1320px) {
-    flex-direction: column;
-    justify-content: baseline;
-    gap: 100px;
-  }
-`;
-
-const EmptyCartView = styled.div`
-  display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  gap: 20px;
 
   margin-top: 200px;
-
-  font-weight: 500;
-  font-size: 30px;
-`;
-
-const LinkButton = styled.button`
-  width: 300px;
-  padding: 20px 50px;
-  background-color: #333;
-
-  border: none;
-  border-radius: 15px;
-
-  font-size: 20px;
-  color: white;
-
-  cursor: pointer;
 `;
 
 export default CartPage;

@@ -39,7 +39,7 @@ const useCounterHandler = ({
   };
 
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    const value = event.target.value;
+    const { value } = event.target;
 
     if (!isNumericString(value)) return;
 

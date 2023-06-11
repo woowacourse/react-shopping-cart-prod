@@ -1,5 +1,6 @@
 import { styled } from 'styled-components';
-import CheckIcon from '../../../assets/icons/CheckIcon';
+import { BsCheckLg } from 'react-icons/bs';
+import Colors from '../../../constant/Colors';
 
 interface CheckBoxProps {
   isChecked: boolean;
@@ -14,7 +15,7 @@ const CheckBox = ({ isChecked, onChange, labelText }: CheckBoxProps) => {
         <Input checked={isChecked} onChange={onChange} />
         {isChecked && (
           <IconWrapper>
-            <CheckIcon />
+            <BsCheckLg color={Colors.white} size="24px" />
           </IconWrapper>
         )}
       </InputWrapper>
@@ -41,12 +42,12 @@ const Input = styled.input.attrs({ type: 'checkbox' })`
   width: 28px;
   height: 28px;
 
-  border: 1px solid #22a6a2;
+  border: 1px solid ${Colors.staleTurquoise};
   border-radius: 2px;
 
   &:checked {
-    border: 1px solid #3288ff;
-    background-color: #333;
+    border: 1px solid ${Colors.blue};
+    background-color: ${Colors.grey1};
   }
 `;
 
@@ -54,8 +55,10 @@ const IconWrapper = styled.span`
   position: absolute;
   top: 50%;
   left: 50%;
-
   transform: translate(-50%, -50%);
+
+  width: 24px;
+  height: 24px;
 `;
 
 const LabelText = styled.span`
@@ -64,7 +67,7 @@ const LabelText = styled.span`
 
   font-weight: 400;
   font-size: 16px;
-  color: #333;
+  color: ${Colors.grey1};
 `;
 
 export default CheckBox;

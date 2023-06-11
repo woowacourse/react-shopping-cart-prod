@@ -1,36 +1,26 @@
 import { styled } from 'styled-components';
-import ProductItem from '../ProductItem/ProductItem';
-import useFetch from '../../../hooks/api/useFetch';
-import { Product } from '../../../types/product';
 import { useRecoilValue } from 'recoil';
+import { useCallback } from 'react';
+import ProductItem from '../ProductItem/ProductItem';
+import usePromise from '../../../hooks/usePromise';
+import type { Product } from '../../../types/product';
 import serverNameState from '../../../globalState/atoms/serverName';
-import ServerUtil from '../../../utils/ServerUrl';
-import { useEffect } from 'react';
-import useCartService from '../../../hooks/useCartService';
+import ProductsApi from '../../../api/Products';
 
 const ProductList = () => {
-  const { fetchCartItem } = useCartService();
   const serverName = useRecoilValue(serverNameState);
-  const productsUrl = ServerUtil.getProductsUrl(serverName);
 
-  const { getData, error } = useFetch<Product[]>(productsUrl);
-
-  if (error) {
-    throw error;
-  }
+  const productsFetcher = useCallback(() => ProductsApi.getAllList(serverName), [serverName]);
+  const { getData } = usePromise<Product[]>(productsFetcher);
 
   const productList = getData();
-
-  useEffect(() => {
-    fetchCartItem();
-  }, [serverName]);
 
   return (
     <section>
       <ProductListContainer>
-        {productList?.map((product) => (
-          <li key={product.id}>
-            <ProductItem {...product} />
+        {productList?.map(({ id, name, price, imageUrl }) => (
+          <li key={id}>
+            <ProductItem id={id} name={name} price={price} imageUrl={imageUrl} />
           </li>
         ))}
       </ProductListContainer>

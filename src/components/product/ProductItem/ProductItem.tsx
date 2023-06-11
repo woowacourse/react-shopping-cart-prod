@@ -1,76 +1,28 @@
-import { useEffect, useState } from 'react';
-import { useRecoilValue } from 'recoil';
+import { Suspense } from 'react';
 import { styled } from 'styled-components';
-import Counter from '../../common/Counter/Counter';
 import Image from '../../common/Image/Image';
-import SmallCartIcon from '../../../assets/icons/SmallCartIcon';
 import { formatPrice } from '../../../utils/formatPrice';
-import useCartService from '../../../hooks/useCartService';
-import productQuantityInCart from '../../../globalState/selectors/productQuantityInCart';
 import type { Product } from '../../../types/product';
-import cartLoadingState from '../../../globalState/atoms/cartLoadingState';
+import ProductCounter from '../ProductCounter/ProductCounter';
+import LoadingSpinner from '../../common/LoadingSpinner/LoadingSpinner';
+import Colors from '../../../constant/Colors';
 
 const ProductItem = (product: Product) => {
-  const { id: productId, name, price, imageUrl } = product;
-  const { addCartItem, updateCartItemQuantity, deleteCartItem, getCartId } =
-    useCartService();
-  const isCartLoading = useRecoilValue(cartLoadingState);
-
-  const quantityInCart = useRecoilValue(productQuantityInCart(productId));
-
-  const [count, setCount] = useState(quantityInCart);
-  const [isDisplayCounter, setIsDisplayCounter] = useState(!!quantityInCart);
-
-  useEffect(() => {
-    if (isCartLoading) return;
-
-    setCount(quantityInCart);
-    setIsDisplayCounter(!!quantityInCart);
-  }, [isCartLoading]);
-
-  const updateCount = (quantity: number) => {
-    setCount(quantity);
-
-    if (quantity === 0) return;
-    updateCartItemQuantity(getCartId(productId))(quantity);
-  };
-
-  const handleAddCartButtonClick = () => {
-    addCartItem(product);
-    setIsDisplayCounter(true);
-    setCount(1);
-  };
-
-  const handleNoQuantityAction = (quantity: number) => {
-    if (quantity !== 0) return;
-
-    const cartId = getCartId(productId);
-    deleteCartItem(cartId);
-    setIsDisplayCounter(false);
-  };
+  const { id, name, price, imageUrl } = product;
 
   return (
     <ItemContainer>
       <ProductImageWrapper>
         <Image src={imageUrl} alt={name} size="large" />
-        <CartButtonWrapper>
-          {isDisplayCounter ? (
-            <Counter
-              count={count}
-              updateCount={updateCount}
-              onClickedButton={handleNoQuantityAction}
-              onBlurredInput={handleNoQuantityAction}
-            />
-          ) : (
-            <CartButton
-              type="button"
-              aria-label="장바구니에 추가하기"
-              onClick={handleAddCartButtonClick}
-            >
-              <SmallCartIcon />
-            </CartButton>
-          )}
-        </CartButtonWrapper>
+        <Suspense
+          fallback={
+            <Fallback>
+              <LoadingSpinner color={Colors.staleTurquoise} spinnerWidth="5px" diameter="22px" />
+            </Fallback>
+          }
+        >
+          <ProductCounter id={id} name={name} price={price} imageUrl={imageUrl} />
+        </Suspense>
       </ProductImageWrapper>
       <Contents>
         <div>
@@ -94,12 +46,6 @@ const ProductImageWrapper = styled.div`
   position: relative;
 `;
 
-const CartButtonWrapper = styled.div`
-  position: absolute;
-  right: 8px;
-  bottom: 8px;
-`;
-
 const Contents = styled.div`
   display: flex;
   justify-content: space-between;
@@ -118,13 +64,15 @@ const Price = styled.p`
   font-weight: 400;
 `;
 
-const CartButton = styled.button`
-  background: #fff;
-  border: 1px solid #dddddd;
+const Fallback = styled.div`
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
 
   padding: 7px;
 
-  cursor: pointer;
+  background: ${Colors.white};
+  border: 1px solid ${Colors.grey4};
 `;
 
 export default ProductItem;

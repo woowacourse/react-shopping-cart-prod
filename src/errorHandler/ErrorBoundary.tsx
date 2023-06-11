@@ -1,38 +1,46 @@
-import React, { ErrorInfo, ReactNode } from 'react';
-
-interface ErrorBoundaryProps {
-  children?: ReactNode;
-}
+import React, { PropsWithChildren } from 'react';
 
 interface ErrorBoundaryState {
   hasError: boolean;
-  errorMessage: string;
 }
 
-class ErrorBoundary extends React.Component<
-  ErrorBoundaryProps,
-  ErrorBoundaryState
-> {
-  state: ErrorBoundaryState = {
-    hasError: false,
-    errorMessage: '',
-  };
+interface ErrorBoundaryProps extends PropsWithChildren {
+  message?: string;
+}
+
+class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+
+    this.state = {
+      hasError: false,
+    };
+  }
 
   static getDerivedStateFromError() {
     return { hasError: true };
   }
 
-  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error('Uncaught error:', error, errorInfo);
-    this.setState({ errorMessage: error.message });
+  retry() {
+    this.setState({
+      hasError: false,
+    });
   }
 
   render() {
-    if (this.state.hasError) {
-      return <h1>{this.state.errorMessage}</h1>;
-    }
+    const { hasError } = this.state;
+    const { children } = this.props;
 
-    return this.props.children;
+    return hasError ? (
+      <>
+        <p>오류가 발생하였습니다.</p>
+        <button type="button" onClick={this.retry}>
+          재시도하기
+        </button>
+      </>
+    ) : (
+      children
+    );
   }
 }
 

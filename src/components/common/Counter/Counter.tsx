@@ -1,7 +1,7 @@
 import { css, styled } from 'styled-components';
-import PlusIcon from '../../../assets/icons/PlusIcon';
-import MinusIcon from '../../../assets/icons/MinusIcon';
+import { HiPlusSmall, HiMinusSmall } from 'react-icons/hi2';
 import useCounterHandler from './useCounterHandler';
+import Colors from '../../../constant/Colors';
 
 export type CounterSize = 'medium' | 'small';
 
@@ -44,16 +44,11 @@ const Counter = ({
   return (
     <CounterContainer size={size}>
       <CounterButton onClick={handleDecreaseButtonClick}>
-        <MinusIcon />
+        <HiMinusSmall size="32px" />
       </CounterButton>
-      <Input
-        type="text"
-        value={count}
-        onChange={handleInputChange}
-        onBlur={handleInputBlur}
-      />
+      <Input type="text" value={count} onChange={handleInputChange} onBlur={handleInputBlur} />
       <CounterButton onClick={handleIncreaseButtonClick}>
-        <PlusIcon />
+        <HiPlusSmall size="32px" />
       </CounterButton>
     </CounterContainer>
   );
@@ -62,7 +57,7 @@ const Counter = ({
 const CounterContainer = styled.span<{ size: CounterSize }>`
   display: flex;
 
-  border: 1px solid #dddddd;
+  border: 1px solid ${Colors.grey4};
 
   ${({ size }) =>
     (size === 'medium' &&
@@ -94,7 +89,7 @@ const Input = styled.input`
   border: none;
 
   font-weight: 400;
-  color: #333;
+  color: ${Colors.grey1};
 
   text-align: center;
 `;
@@ -104,7 +99,7 @@ const CounterButton = styled.button`
   align-items: center;
   justify-content: center;
 
-  background-color: #fff;
+  background-color: ${Colors.white};
   border: none;
 
   cursor: pointer;

@@ -3,8 +3,10 @@ import { keyframes, styled } from 'styled-components';
 const ProductFallBack = () => {
   return (
     <ProductFallBackContainer>
-      {Array.from({ length: 12 }).map((_, i) => (
-        <li key={i}>
+      {Array.from({ length: 12 }).map((_, index) => (
+        // 스켈레톤은 따로 정해진 이름이 없고 순서가 꼬일 일이 없으므로 key를 index로 사용함
+        // eslint-disable-next-line react/no-array-index-key
+        <li key={`Skeleton${index}`}>
           <SkeletonItem>
             <SkeletonImage />
             <SkeletonName />

@@ -1,19 +1,19 @@
 import { styled } from 'styled-components';
+import { useRecoilState } from 'recoil';
 import CartItem from '../CartItem/CartItem';
 import CheckBox from '../../common/CheckBox/CheckBox';
-import useCartService from '../../../hooks/useCartService';
+import useCartItemApi from '../../../hooks/api/useCartItemApi';
 import { useCheckedCartListValue } from '../../../provider/CheckedListProvider';
+import cartState from '../../../globalState/atoms/cartState';
+import Colors from '../../../constant/Colors';
 
 const CartList = () => {
-  const {
-    checkedCartList,
-    addAllCheckedItem,
-    deleteAllCheckedItem,
-    isAllChecked,
-  } = useCheckedCartListValue();
-  const { cartList, deleteCartItem } = useCartService();
+  const { checkedCartList, addAllCheckedItem, deleteAllCheckedItem, isAllChecked } =
+    useCheckedCartListValue();
+  const { deleteCartItem } = useCartItemApi();
+  const [cartList, setCartList] = useRecoilState(cartState);
 
-  const handleAllCheckBoxChange = () => {
+  const setAllCheckedCartList = () => {
     if (isAllChecked()) {
       deleteAllCheckedItem();
       return;
@@ -22,18 +22,12 @@ const CartList = () => {
     addAllCheckedItem();
   };
 
-  const handleDeleteCheckedListButtonClick = () => {
-    if (
-      !window.confirm(
-        `${checkedCartList.length}개의 선택한 품목들을 삭제하시겠습니까?`,
-      )
-    )
-      return;
+  const deleteCheckedCartItems = () => {
+    if (!window.confirm(`${checkedCartList.length}개의 선택한 품목들을 삭제하시겠습니까?`)) return;
 
-    checkedCartList.forEach((checkedCartItem) =>
-      deleteCartItem(checkedCartItem),
-    );
+    checkedCartList.forEach((checkedCartItem) => deleteCartItem(checkedCartItem));
     deleteAllCheckedItem();
+    setCartList((prevCart) => prevCart.filter(({ id }) => !checkedCartList.includes(id)));
   };
 
   return (
@@ -51,10 +45,10 @@ const CartList = () => {
         <CheckBox
           isChecked={isAllChecked()}
           labelText={`전체 선택 (${checkedCartList.length}/${cartList.length})`}
-          onChange={handleAllCheckBoxChange}
+          onChange={setAllCheckedCartList}
         />
         {!!checkedCartList.length && (
-          <DeleteCheckedListButton onClick={handleDeleteCheckedListButtonClick}>
+          <DeleteCheckedListButton onClick={deleteCheckedCartItems}>
             선택 삭제
           </DeleteCheckedListButton>
         )}
@@ -74,15 +68,15 @@ const CartListContainer = styled.div`
 const NumberOfCartItem = styled.h3`
   padding: 20px 0;
 
-  border-bottom: 4px solid #aaaaaa;
+  border-bottom: 4px solid ${Colors.grey3};
 
   font-weight: 400;
   font-size: 20px;
-  color: #333;
+  color: ${Colors.grey1};
 `;
 
 const Seperator = styled.div`
-  border-bottom: 1.5px solid #cccccc;
+  border-bottom: 1.5px solid ${Colors.grey4};
 `;
 
 const AllCheckContainer = styled.div`
@@ -98,7 +92,7 @@ const DeleteCheckedListButton = styled.button`
   height: 35px;
 
   background: none;
-  border: 1px solid #bbbbbb;
+  border: 1px solid ${Colors.grey3};
 
   font-weight: 400;
   font-size: 16px;

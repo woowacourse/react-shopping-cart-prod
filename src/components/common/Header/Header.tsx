@@ -1,51 +1,34 @@
 import styled from 'styled-components';
-import CartIcon from '../../../assets/icons/CartIcon';
-import { useNavigate } from 'react-router-dom';
-import useCartService from '../../../hooks/useCartService';
-import { BASE_URL } from '../../../constant';
-import { useRecoilState } from 'recoil';
-import serverNameState from '../../../globalState/atoms/serverName';
-import { isProperServerName } from '../../../types/server';
+import { Link } from 'react-router-dom';
+import { Suspense } from 'react';
+import { GiShoppingCart } from 'react-icons/gi';
+import ServerSelector from '../../ServerSelector/ServerSelector';
+import CartButton from './CartButton';
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
+import HeaderCartErrorBoundary from '../../../errorHandler/HeaderCartErrorBoundary';
+import Colors from '../../../constant/Colors';
 
 const Header = () => {
-  const navigate = useNavigate();
-  const { cartList } = useCartService();
-  const [serverName, setServerName] = useRecoilState(serverNameState);
-
-  const handleLogoClick = () => {
-    navigate('/');
-  };
-
-  const handleServerNameSelectChange: React.ChangeEventHandler<
-    HTMLSelectElement
-  > = (event) => {
-    const selectedServerName = event.target.value;
-
-    if (!isProperServerName(selectedServerName)) return;
-
-    setServerName(selectedServerName);
-  };
-
-  const handleCartButtonClick = () => {
-    navigate('/cart');
-  };
-
   return (
     <HeaderContainer>
-      <Logo onClick={handleLogoClick}>
-        <CartIcon />
+      <LogoLink to="/">
+        <GiShoppingCart color={Colors.white} size="55px" />
         <Title>SHOP</Title>
-      </Logo>
+      </LogoLink>
+      <ServerSelector />
       <RightContainer>
-        <select onChange={handleServerNameSelectChange} value={serverName}>
-          {Object.keys(BASE_URL).map((serverNameOption) => (
-            <option key={serverNameOption}>{serverNameOption}</option>
-          ))}
-        </select>
-        <CartButton onClick={handleCartButtonClick}>
-          <p>장바구니</p>
-          <CartTotalQuantity>{cartList.length}</CartTotalQuantity>
-        </CartButton>
+        <HeaderCartErrorBoundary>
+          <Suspense
+            fallback={
+              <LoadingSpinner color={Colors.staleTurquoise} diameter="32px" spinnerWidth="5px" />
+            }
+          >
+            <HeaderLink to="/cart">
+              <CartButton />
+            </HeaderLink>
+          </Suspense>
+        </HeaderCartErrorBoundary>
+        <HeaderLink to="/orders">주문목록</HeaderLink>
       </RightContainer>
     </HeaderContainer>
   );
@@ -63,58 +46,49 @@ const HeaderContainer = styled.header`
 
   padding: 0 10%;
 
-  background-color: #333;
+  background-color: ${Colors.grey1};
 
-  color: #fff;
+  color: ${Colors.white};
 
   z-index: 1;
 `;
 
-const Logo = styled.div`
+const StyledLink = styled(Link)`
   display: flex;
   align-items: center;
-  column-gap: 15px;
+  justify-content: center;
 
-  cursor: pointer;
+  text-decoration: none;
+  color: ${Colors.white};
+`;
+
+const LogoLink = styled(StyledLink)`
+  column-gap: 15px;
 `;
 
 const Title = styled.h1`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   font-size: 40px;
   font-weight: 900;
-  padding-top: 8px;
 `;
 
 const RightContainer = styled.div`
   display: flex;
-  gap: 25px;
-`;
-
-const CartButton = styled.div`
-  display: flex;
-  column-gap: 6px;
-  font-size: 24px;
-
-  cursor: pointer;
-
-  @media screen and (max-width: 520px) {
-    & > p {
-      display: none;
-    }
-  }
-`;
-
-const CartTotalQuantity = styled.span`
-  display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  column-gap: 20px;
 
-  width: 26px;
-  height: 26px;
+  margin-left: 20px;
+  height: 40px;
+`;
 
-  border-radius: 50%;
-  background: #04c09e;
+const HeaderLink = styled(StyledLink)`
+  column-gap: 6px;
 
-  font-size: 16px;
+  font-size: 24px;
 `;
 
 export default Header;

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import CheckBox from './CheckBox';
 import { useState } from 'react';
+import CheckBox from './CheckBox';
 
 const CheckBoxWithState = ({ labelText }: { labelText?: string }) => {
   const [isChecked, setIsChecked] = useState(false);

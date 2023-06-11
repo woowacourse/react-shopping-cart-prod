@@ -1,0 +1,32 @@
+[
+  {
+    "id": "1",
+    "quantity": 3,
+    "product": {
+      "id": 1,
+      "name": "지빠귀",
+      "price": 10000,
+      "imageUrl": "https://images.unsplash.com/photo-1606567595334-d39972c85dbe"
+    }
+  },
+  {
+    "id": "2",
+    "quantity": 2,
+    "product": {
+      "id": 2,
+      "name": "참새",
+      "price": 2147483647,
+      "imageUrl": "https://images.unsplash.com/photo-1606071548917-78ed9809141f"
+    }
+  },
+  {
+    "id": "3",
+    "quantity": 1,
+    "product": {
+      "id": 3,
+      "name": "앵무새",
+      "price": 8000,
+      "imageUrl": "https://images.unsplash.com/photo-1552728089-57bdde30beb3"
+    }
+  }
+]
