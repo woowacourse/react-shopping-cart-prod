@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { css } from 'styled-components';
+import { css, styled } from 'styled-components';
 import IconComponent from '../../../components/common/Icon';
 import { CART_PATH } from '../../../constants/svgPath';
 
@@ -81,17 +81,9 @@ export const HeaderCart: Story = {
   decorators: [
     (Story) => {
       return (
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            width: 'calc(100vw - 36vw)',
-            padding: '20px',
-            background: '#333',
-          }}
-        >
+        <S.Wrapper>
           <Story />
-        </div>
+        </S.Wrapper>
       );
     },
   ],
@@ -99,7 +91,7 @@ export const HeaderCart: Story = {
   args: {
     width: '50',
     height: '44',
-    fill: '#fff',
+    fill: 'var(--white-color)',
     path: CART_PATH,
     viewBox: '0 0 51 44',
   },
@@ -134,4 +126,11 @@ export const HeaderCart: Story = {
       },
     },
   },
+};
+
+const S = {
+  Wrapper: styled.div`
+    width: calc(100vw - 38vw);
+    background: #333;
+  `,
 };

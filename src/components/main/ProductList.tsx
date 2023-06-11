@@ -1,35 +1,10 @@
-import { useEffect } from 'react';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { styled } from 'styled-components';
-import { CART_URL, PRODUCT_LIST_URL } from '../../constants/url';
-import { useFetchData } from '../../hooks/useFetchData';
-import { cartState, productListState, serverState } from '../../recoil';
-import Spinner from '../Spinner';
+import { useGetProductList } from '../../hooks/useGetProductList';
+import Spinner from '../common/Spinner';
 import ProductItem from './ProductItem';
 
 const ProductList = () => {
-  const [productList, setProductList] = useRecoilState(productListState);
-  const server = useRecoilValue(serverState);
-  const setCart = useSetRecoilState(cartState);
-
-  const { api, isLoading } = useFetchData();
-
-  useEffect(() => {
-    api.get(`${server}${PRODUCT_LIST_URL}`).then((data) => {
-      setProductList(data);
-    });
-
-    api
-      .get(`${server}${CART_URL}`, {
-        Authorization: 'Basic YUBhLmNvbToxMjM0',
-        'Content-Type': 'application/json',
-      })
-      .then((data) => {
-        setCart(data);
-      });
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [server]);
+  const { productList, isLoading } = useGetProductList();
 
   if (isLoading) return <Spinner />;
 

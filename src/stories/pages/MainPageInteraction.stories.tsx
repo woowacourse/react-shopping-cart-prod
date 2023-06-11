@@ -2,16 +2,24 @@ import { expect } from '@storybook/jest';
 import { Meta, StoryObj } from '@storybook/react';
 import { screen, userEvent, waitFor, within } from '@storybook/testing-library';
 import MainPage from '../../pages/MainPage';
+import { Header } from '../components/common/Header.stories';
 
 const meta = {
   title: 'Pages/MainPage',
+  decorators: [
+    (Story) => (
+      <>
+        <Header title='STORE' />
+        <Story />
+      </>
+    ),
+  ],
 } satisfies Meta<typeof MainPage>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const TYPING_SPEED = { delay: 500 };
 const pause = () => new Promise((resolve) => setTimeout(resolve, 2000));
 
 export const SuccessInteraction: Story = {
@@ -20,10 +28,8 @@ export const SuccessInteraction: Story = {
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    localStorage.clear();
-
     const purchaseProduct = (productOrder: number) => {
-      const allCartIconButtons = canvas.getAllByLabelText('cart-icon-button');
+      const allCartIconButtons = canvas.getAllByLabelText('장바구니에 담기');
       const selectedCartIconButton = allCartIconButtons[productOrder];
 
       expect(selectedCartIconButton).toBeVisible();
@@ -35,8 +41,6 @@ export const SuccessInteraction: Story = {
 
     await step('Purchase Product', async () => {
       await waitFor(() => {
-        localStorage.clear();
-
         const secondCartIconButton = purchaseProduct(1);
 
         userEvent.click(secondCartIconButton);
@@ -45,17 +49,20 @@ export const SuccessInteraction: Story = {
 
     await pause();
 
-    await step('Raise Quantity', () => {
-      const quantityInputButton = screen.getByRole('spinbutton');
+    await step('Raise Quantity', async () => {
+      const quantity = screen.getByLabelText('상품 개수 : 1개');
 
-      expect(quantityInputButton).toBeInTheDocument();
+      expect(quantity).toBeInTheDocument();
 
-      const quantityInput = screen.getByLabelText('quantity-input');
+      const quantityButton = screen.getByLabelText('상품 수량 1개 더하기');
 
-      expect(quantityInput).toHaveValue(1);
+      userEvent.click(quantityButton);
 
-      userEvent.clear(quantityInput);
-      userEvent.type(quantityInput, '12', TYPING_SPEED);
+      await waitFor(() => {
+        const raisedQuantity = screen.getByLabelText('상품 개수 : 2개');
+
+        expect(raisedQuantity).toBeInTheDocument();
+      });
     });
 
     await pause();
@@ -88,16 +95,18 @@ export const SuccessInteraction: Story = {
 
     await step('Cancel Purchasing Product', async () => {
       await waitFor(() => {
-        const quantityInputs = screen.getAllByLabelText('quantity-input');
-        const firstInput = quantityInputs[0];
+        const quantityButton = screen.getAllByLabelText('상품 수량 1개 줄이기');
+        const firstButton = quantityButton[0];
 
-        expect(firstInput).toBeInTheDocument();
+        expect(firstButton).toBeInTheDocument();
 
-        userEvent.clear(firstInput);
-        userEvent.type(firstInput, '0', TYPING_SPEED);
+        userEvent.click(firstButton);
+
+        const allCartIconButtons = canvas.getAllByLabelText('장바구니에 담기');
+        const firstCartIcon = allCartIconButtons[0];
+
+        expect(firstCartIcon).toBeInTheDocument();
       });
     });
-
-    localStorage.clear();
   },
 };

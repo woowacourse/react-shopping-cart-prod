@@ -1,19 +1,19 @@
 import { CSSProp, styled } from 'styled-components';
 
 interface Props {
-  price: number;
+  value: number;
   tag?: string;
   description?: string;
   css?: CSSProp;
 }
 
-const Price = ({ price, tag, description, css }: Props) => {
+const Price = ({ value, tag, description, css }: Props) => {
   const priceTag = tag || 'p';
 
   return (
     <S.Price as={priceTag} css={css}>
       {description}
-      <span>{price.toLocaleString()}원</span>
+      <span>{value.toLocaleString()}원</span>
     </S.Price>
   );
 };
@@ -24,8 +24,6 @@ const S = {
     letter-spacing: 0.5px;
     color: var(--text-color);
 
-    ${(props) => props.css}
-
     @media (max-width: 1270px) {
       font-size: 16px;
     }
@@ -33,6 +31,8 @@ const S = {
     @media (max-width: 768px) {
       font-size: 15px;
     }
+
+    ${(props) => props.css}
   `,
 };
 

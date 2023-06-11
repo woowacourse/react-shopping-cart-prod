@@ -12,6 +12,7 @@ const Spinner = () => {
       viewBox='0 0 100 100'
       enableBackground='new 0 0 0 0'
       xmlSpace='preserve'
+      aria-label='로딩중 입니다'
     >
       <path
         fill='#000'
@@ -33,7 +34,7 @@ const Spinner = () => {
 
 const S = {
   Svg: styled.svg`
-    position: fixed;
+    position: absolute;
     top: 50%;
     left: 50%;
     width: 100px;

@@ -33,7 +33,7 @@ export const useFetchData = () => {
         body: JSON.stringify(body),
       });
     },
-    patch: <T>(url: string, body: T) => {
+    patch: <T>(url: string, body?: T) => {
       return fetchData(url, {
         method: 'PATCH',
         headers: {
@@ -43,12 +43,14 @@ export const useFetchData = () => {
         body: JSON.stringify(body),
       });
     },
-    delete: (url: string) => {
+    delete: <T>(url: string, body?: T) => {
       return fetchData(url, {
         method: 'DELETE',
         headers: {
           Authorization: 'Basic YUBhLmNvbToxMjM0',
+          'Content-Type': 'application/json',
         },
+        body: JSON.stringify(body),
       });
     },
   };

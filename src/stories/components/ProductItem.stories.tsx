@@ -1,19 +1,27 @@
 import { Meta } from '@storybook/react';
-import { useEffect } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
+import { styled } from 'styled-components';
 import ProductItemComponent from '../../components/main/ProductItem';
-import { PRODUCT_LIST_URL } from '../../constants/url';
-import { useFetchData } from '../../hooks/useFetchData';
-import { productListState, serverState } from '../../recoil';
+import productList from '../../mock/productList.json';
+import { productListState } from '../../recoil';
 import { Product } from '../../types';
 
 const meta = {
   component: ProductItemComponent,
   title: 'Components/Main/ProductItem',
   tags: ['autodocs'],
+  decorators: [
+    (Story) => {
+      return (
+        <S.Wrapper>
+          <Story />
+        </S.Wrapper>
+      );
+    },
+  ],
   args: {
     id: 1,
-    imageUrl: `${process.env.PUBLIC_URL}/assets/product1.svg`,
+    imageUrl: `${productList[0].imageUrl}`,
     name: 'PET보틀-정사각(420ml)',
     price: 43400,
   },
@@ -27,7 +35,13 @@ const meta = {
     },
 
     imageUrl: {
-      options: Array.from({ length: 8 }).map((_, index) => `/assets/product${index + 1}.svg`),
+      options: Array.from({ length: 11 })
+        .map((_, index) => ({
+          [`product${index + 1}`]: productList[index].imageUrl,
+        }))
+        .reduce((acc, cur) => {
+          return { ...acc, ...cur };
+        }, {}),
       control: {
         type: 'select',
       },
@@ -51,15 +65,16 @@ const meta = {
 export default meta;
 
 export const ProductItem = (args: Product) => {
-  const { api } = useFetchData();
   const setProductList = useSetRecoilState(productListState);
-  const server = useRecoilValue(serverState);
-  useEffect(() => {
-    api.get(`${server}${PRODUCT_LIST_URL}`).then((data) => {
-      setProductList(data);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [server]);
+
+  setProductList(productList);
 
   return <ProductItemComponent {...args} />;
+};
+
+const S = {
+  Wrapper: styled.div`
+    width: 300px;
+    margin: 0 auto;
+  `,
 };

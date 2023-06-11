@@ -1,16 +1,15 @@
 import { useRecoilState } from 'recoil';
-import { css, styled } from 'styled-components';
-import { useSetCart } from '../../hooks/useCart';
+import { styled } from 'styled-components';
+import { useCart } from '../../hooks/useCart';
 import { checkedItemList } from '../../recoil';
-import { Product } from '../../types';
+import { Cart } from '../../types';
 import Button from '../common/Button';
-import { Checkbox } from '../common/CheckboxStyle';
 import TrashCanIcon from '../icons/TrashCanIcon';
 import Price from '../Price';
-import QuantityButton from './QuantityButton';
+import QuantityButton from '../QuantityButton';
+import { Checkbox } from './CheckboxStyle';
 
-interface Props extends Product {
-  quantity: number;
+interface Props extends Cart {
   productId: number;
 }
 
@@ -22,19 +21,19 @@ const SelectedProductItem = ({
   price,
   quantity,
 }: Props) => {
-  const { removeItemFromCart } = useSetCart(productId);
-  const [checkedItems, setCheckedItems] = useRecoilState<number[]>(checkedItemList);
+  const { removeItemFromCart } = useCart(productId);
+  const [checkedItemIdList, setCheckedItemIdList] = useRecoilState(checkedItemList);
 
-  const isChecked = checkedItems.includes(cartItemId);
+  const isChecked = checkedItemIdList.includes(cartItemId);
 
-  const handleCheckedItem = () => {
-    isChecked
-      ? setCheckedItems((prev) => prev.filter((itemId) => itemId !== cartItemId))
-      : setCheckedItems((prev) => [...prev, cartItemId]);
+  const handleCheckedItemToggle = () => {
+    if (isChecked) return setCheckedItemIdList((prev) => prev.filter((id) => id !== cartItemId));
+
+    setCheckedItemIdList((prev) => [...prev, cartItemId]);
   };
 
-  const handleTrashCanClick = () => {
-    setCheckedItems((prev) => prev.filter((itemId) => itemId !== cartItemId));
+  const handleItemRemove = () => {
+    setCheckedItemIdList((prev) => prev.filter((id) => id !== cartItemId));
     removeItemFromCart();
   };
 
@@ -44,20 +43,20 @@ const SelectedProductItem = ({
         <Checkbox
           type='checkbox'
           id={`${cartItemId}-checkbox`}
-          name={name}
+          name='checkbox-in-cart'
           checked={isChecked}
-          onChange={handleCheckedItem}
+          onChange={handleCheckedItemToggle}
         />
-        <S.Image src={`${imageUrl}`} alt={name} />
+        <S.Image src={`${imageUrl}`} alt={name} loading='lazy' />
         <S.Name htmlFor={`${cartItemId}-checkbox`} title={name}>
           {name}
         </S.Name>
         <S.Wrapper>
-          <Button css={trashCanButtonStyle} onClick={handleTrashCanClick}>
+          <Button onClick={handleItemRemove}>
             <TrashCanIcon patternId={cartItemId} imageSize={{ width: '40', height: '40' }} />
           </Button>
           <QuantityButton productId={productId} quantity={quantity} />
-          <Price price={price * quantity} />
+          <Price value={price * quantity} />
         </S.Wrapper>
       </S.Fieldset>
     </div>
@@ -67,13 +66,12 @@ const SelectedProductItem = ({
 const S = {
   Fieldset: styled.fieldset`
     display: flex;
-    margin: 28px 10px 0 0;
+    margin-top: 28px;
     padding-bottom: 32px;
     border-bottom: 1.5px solid #ccc;
 
     @media (max-width: 420px) {
       flex-wrap: wrap;
-      margin-right: 0;
     }
   `,
 
@@ -126,9 +124,5 @@ const S = {
     }
   `,
 };
-
-const trashCanButtonStyle = css`
-  background: none;
-`;
 
 export default SelectedProductItem;

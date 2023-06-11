@@ -1,10 +1,19 @@
 import { Meta, StoryObj } from '@storybook/react';
+import { styled } from 'styled-components';
 import SelectedProductItemComponent from '../../components/cart/SelectedProductItem';
+import productList from '../../mock/productList.json';
 
 const meta = {
   component: SelectedProductItemComponent,
   title: 'Components/Cart/SelectedProductItem',
   tags: ['autodocs'],
+  decorators: [
+    (Story) => (
+      <S.Wrapper>
+        <Story />
+      </S.Wrapper>
+    ),
+  ],
 } satisfies Meta<typeof SelectedProductItemComponent>;
 
 export default meta;
@@ -14,7 +23,7 @@ type Story = StoryObj<typeof SelectedProductItemComponent>;
 export const SelectedProductItem: Story = {
   args: {
     id: 1,
-    imageUrl: `${process.env.PUBLIC_URL}/assets/product1.svg`,
+    imageUrl: `${productList[0].imageUrl}`,
     name: 'PET보틀-정사각(420ml)',
     price: 43400,
     quantity: 1,
@@ -30,7 +39,13 @@ export const SelectedProductItem: Story = {
     },
 
     imageUrl: {
-      options: Array.from({ length: 8 }).map((_, index) => `/assets/product${index + 1}.svg`),
+      options: Array.from({ length: 11 })
+        .map((_, index) => ({
+          [`product${index + 1}`]: productList[index].imageUrl,
+        }))
+        .reduce((acc, cur) => {
+          return { ...acc, ...cur };
+        }, {}),
       control: {
         type: 'select',
       },
@@ -57,4 +72,10 @@ export const SelectedProductItem: Story = {
       description: '상품의 수량을 바꿀 수 있습니다.<br> 수량을 변경하면 상품의 가격도 변경됩니다.',
     },
   },
+};
+
+const S = {
+  Wrapper: styled.div`
+    pointer-events: none;
+  `,
 };

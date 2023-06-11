@@ -1,5 +1,6 @@
 import React from 'react';
 import type { Preview } from '@storybook/react';
+import { styled } from 'styled-components';
 import { GlobalStyle } from '../src/GlobalStyle';
 import { initialize, mswDecorator } from 'msw-storybook-addon';
 import { RecoilRoot } from 'recoil';
@@ -10,7 +11,7 @@ let options = {};
 if (location.hostname === 'feb-dain.github.io') {
   options = {
     serviceWorker: {
-      url: '/react-shopping-cart/mockServiceWorker.js',
+      url: '/react-shopping-cart-prod/mockServiceWorker.js',
     },
   };
 }
@@ -26,6 +27,32 @@ const preview: Preview = {
       matchers: {
         color: /(background|color)$/i,
         date: /Date$/,
+      },
+    },
+    viewport: {
+      defaultViewport: 'Desktop',
+      viewports: {
+        iphone6: {
+          name: 'iPhone SE',
+          styles: {
+            width: '375px',
+            height: '667px',
+          },
+        },
+        ipad: {
+          name: 'IPad',
+          styles: {
+            width: '768px',
+            height: '1024px',
+          },
+        },
+        desktop: {
+          name: 'Desktop',
+          styles: {
+            width: '1440px',
+            height: '900px',
+          },
+        },
       },
     },
     backgrounds: {

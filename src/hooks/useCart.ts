@@ -1,34 +1,17 @@
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { FIRST_INDEX, ONE_ITEM_IN_CART } from '../constants';
 import { QUANTITY } from '../constants';
 import { CART_URL } from '../constants/url';
 import { cartState, productSelector, serverState } from '../recoil';
-import { CartItem } from '../types';
 import { useFetchData } from './useFetchData';
 
-export const useSetCart = (productId: number) => {
+export const useCart = (productId?: number) => {
   const [cart, setCart] = useRecoilState(cartState);
   const selectedProduct = useRecoilValue(productSelector(productId));
 
   const server = useRecoilValue(serverState);
-
   const { api } = useFetchData();
 
-  const findCartItemIndex = (prev: CartItem[]) => {
-    const cart = [...prev];
-    const cartItemIndex = prev.findIndex((item) => item.product.id === productId);
-    const alreadyHasCartItem = cartItemIndex >= FIRST_INDEX;
-
-    return { cart, cartItemIndex, alreadyHasCartItem };
-  };
-
   const findCartItemId = () => cart.find((item) => item.product.id === productId)?.id;
-
-  const removeProduct = (cart: CartItem[], cartItemIndex: number) => {
-    if (cartItemIndex >= FIRST_INDEX) cart.splice(cartItemIndex, ONE_ITEM_IN_CART);
-
-    return cart;
-  };
 
   const updateCart = (value: number) => {
     const quantity = value;
@@ -37,18 +20,13 @@ export const useSetCart = (productId: number) => {
     api
       .patch(`${server}${CART_URL}/${cartItemId}`, { quantity })
       .then(() => {
-        setCart((prev) => {
-          const { cart, cartItemIndex } = findCartItemIndex(prev);
-
-          const updatedItem = { ...prev[cartItemIndex], quantity: Number(value) };
-          cart[cartItemIndex] = updatedItem;
-
-          return cart;
-        });
+        setCart((prev) =>
+          prev.map((cartItem) =>
+            cartItem.product.id === productId ? { ...cartItem, quantity } : cartItem
+          )
+        );
       })
-      .catch((error) => {
-        alert(error.message);
-      });
+      .catch((error) => alert(error.message));
   };
 
   const addToCart = async () => {
@@ -68,27 +46,19 @@ export const useSetCart = (productId: number) => {
         },
       ]);
     } catch (error) {
-      alert(error);
+      if (error instanceof Error) alert(error.message);
     }
   };
 
-  const removeItemFromCart = () => {
-    const cartItemId = findCartItemId();
+  const removeItemFromCart = (checkedItemIdList?: number[]) => {
+    const cartItemIdList = checkedItemIdList ? checkedItemIdList : [findCartItemId()];
 
     api
-      .delete(`${server}${CART_URL}/${cartItemId}`)
+      .delete(`${server}${CART_URL}`, { cartItemIdList })
       .then(() => {
-        setCart((prev) => {
-          const { cart, cartItemIndex, alreadyHasCartItem } = findCartItemIndex(prev);
-
-          if (alreadyHasCartItem) return removeProduct(cart, cartItemIndex);
-
-          return prev;
-        });
+        setCart((prev) => [...prev].filter((item) => !cartItemIdList.includes(item.id)));
       })
-      .catch((error) => {
-        alert(error.message);
-      });
+      .catch((error) => alert(error.message));
   };
 
   return { addToCart, removeItemFromCart, updateCart };

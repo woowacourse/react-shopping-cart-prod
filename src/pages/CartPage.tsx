@@ -1,46 +1,41 @@
 import { styled } from 'styled-components';
 import Order from '../components/cart/Order';
 import SelectedProductList from '../components/cart/SelectedProductList';
+import Nothing from '../components/common/Nothing';
+import Spinner from '../components/common/Spinner';
+import Title from '../components/common/Title';
+import MainLayout from '../components/PageMainLayout';
+import { IMAGE_PATH } from '../constants';
+import { useGetSelectedProductList } from '../hooks/useGetSelectedProductList';
 
 const CartPage = () => {
+  const { cart, checkedItemIdList, setCheckedItemIdList, isLoading } = useGetSelectedProductList();
+  const productCountInCart = cart.length;
+
+  if (isLoading) return <Spinner />;
+
+  if (productCountInCart === 0)
+    return <Nothing src={IMAGE_PATH.EMPTY_CART} alt='장바구니가 텅 비었어요' />;
+
   return (
-    <>
-      <S.Main>
-        <S.Title>장바구니</S.Title>
+    <MainLayout>
+      <>
+        <Title value='장바구니' />
         <S.Wrapper>
-          <SelectedProductList />
+          <SelectedProductList
+            productCountInCart={productCountInCart}
+            cart={cart}
+            checkedItemIdList={checkedItemIdList}
+            setCheckedItemIdList={setCheckedItemIdList}
+          />
           <Order />
         </S.Wrapper>
-      </S.Main>
-    </>
+      </>
+    </MainLayout>
   );
 };
 
 const S = {
-  Main: styled.main`
-    max-width: 1320px;
-    margin: 0 auto;
-    padding: 0 20px;
-
-    @media (max-width: 1270px) {
-      padding: 0 36px;
-    }
-
-    @media (max-width: 420px) {
-      padding: 0 28px;
-    }
-  `,
-
-  Title: styled.h2`
-    width: 100%;
-    padding-bottom: 30px;
-    border-bottom: 4px solid var(--text-color);
-    font-size: 32px;
-    font-weight: 700;
-    text-align: center;
-    color: var(--text-color);
-  `,
-
   Wrapper: styled.div`
     display: flex;
     justify-content: space-between;

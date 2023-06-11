@@ -1,7 +1,7 @@
-import { DefaultValue, atom, selector, selectorFamily } from 'recoil';
-import { QUANTITY } from '../constants';
+import { atom, selector, selectorFamily } from 'recoil';
+import { DEFAULT_SERVER, INITIAL_COUPON_STATE, KEY_SERVER, QUANTITY } from '../constants';
 import { SERVERS } from '../constants/url';
-import { CartItem, Product } from '../types';
+import { CartItem, CouponItem, OrderList, Product } from '../types';
 
 export const productListState = atom<Product[]>({
   key: 'productListState',
@@ -36,21 +36,6 @@ export const quantitySelector = selectorFamily({
       if (!selectedCartItem) return QUANTITY.NONE;
       return selectedCartItem.quantity;
     },
-
-  set:
-    (id) =>
-    ({ get, set }, newQuantity) => {
-      const cart = get(cartState);
-      const selectedCartItem = cart.find((item) => item.product.id === id);
-
-      const quantity = newQuantity instanceof DefaultValue ? QUANTITY.INITIAL : newQuantity;
-
-      const newCart = cart.map((cartItem) =>
-        cartItem === selectedCartItem ? { ...cartItem, quantity } : cartItem
-      );
-
-      set(cartState, newCart);
-    },
 });
 
 export const cartBadgeSelector = selector({
@@ -64,7 +49,7 @@ export const cartBadgeSelector = selector({
 });
 
 export const checkedItemList = atom<number[]>({
-  key: 'checkedItems',
+  key: 'checkedItemIdList',
   default: [],
 });
 
@@ -72,8 +57,8 @@ export const totalPriceSelector = selector<number>({
   key: 'totalPriceSelector',
   get: ({ get }) => {
     const cart = get(cartState);
-    const checkedItems = get(checkedItemList);
-    const checkedProductsInCart = cart.filter((item) => checkedItems.includes(item.id));
+    const checkedItemIdList = get(checkedItemList);
+    const checkedProductsInCart = cart.filter((item) => checkedItemIdList.includes(item.id));
 
     const totalPrice = checkedProductsInCart.reduce((acc, cur) => {
       return acc + cur.product.price * cur.quantity;
@@ -85,5 +70,15 @@ export const totalPriceSelector = selector<number>({
 
 export const serverState = atom({
   key: 'serverState',
-  default: `${SERVERS.준팍}`,
+  default: localStorage.getItem(KEY_SERVER) ?? `${SERVERS[DEFAULT_SERVER]}`,
+});
+
+export const selectedCoupon = atom<CouponItem>({
+  key: 'selectedCoupon',
+  default: INITIAL_COUPON_STATE,
+});
+
+export const orderListState = atom<OrderList[]>({
+  key: 'orderListState',
+  default: [],
 });

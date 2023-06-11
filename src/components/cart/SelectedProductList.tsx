@@ -1,65 +1,48 @@
-import { useEffect } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { SetterOrUpdater } from 'recoil';
+import { Modal } from 'simple-yummy-modal';
 import { css, styled } from 'styled-components';
-import { CART_URL } from '../../constants/url';
-import { useFetchData } from '../../hooks/useFetchData';
-import { useRemoveCheckedItemsFromCart } from '../../hooks/useRemoveCheckedItemsFromCart';
-import { cartState, checkedItemList, serverState } from '../../recoil';
+import { useCart } from '../../hooks/useCart';
+import { useModal } from '../../hooks/useModal';
+import { CartItem } from '../../types';
 import Button from '../common/Button';
-import { Checkbox } from '../common/CheckboxStyle';
-import Spinner from '../Spinner';
+import CouponList from '../modal/CouponList';
+import { Checkbox } from './CheckboxStyle';
 import SelectedProductItem from './SelectedProductItem';
 
-const SelectedProductList = () => {
-  const [cart, setCart] = useRecoilState(cartState);
-  const [checkedItems, setCheckedItems] = useRecoilState<number[]>(checkedItemList);
-  const removeCheckedItemsFromCart = useRemoveCheckedItemsFromCart(checkedItems);
-  const server = useRecoilValue(serverState);
-  const { api, isLoading } = useFetchData();
+interface Props {
+  productCountInCart: number;
+  cart: CartItem[];
+  checkedItemIdList: number[];
+  setCheckedItemIdList: SetterOrUpdater<number[]>;
+}
 
-  const initialCheckedItems = cart.map((item) => item.id);
+const SelectedProductList = ({
+  productCountInCart,
+  cart,
+  checkedItemIdList,
+  setCheckedItemIdList,
+}: Props) => {
+  const { removeItemFromCart } = useCart();
+  const { handleModalOpen, isModalOpen, setIsModalOpen, initialState, coupon } = useModal();
 
-  useEffect(() => {
-    setCheckedItems(initialCheckedItems);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const isAllChecked = checkedItemIdList.length === productCountInCart && productCountInCart !== 0;
 
-  useEffect(() => {
-    api
-      .get(`${server}${CART_URL}`, {
-        Authorization: 'Basic YUBhLmNvbToxMjM0',
-        'Content-Type': 'application/json',
-      })
-      .then((data) => {
-        setCart(data);
-      });
+  const handleAllCheckedItemToggle = () => {
+    const initialCheckedItemIdList = cart.map((item) => item.id);
+    const checkedAllItemIdList = isAllChecked ? [] : initialCheckedItemIdList;
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [server]);
-
-  const productCountInCart = cart.length;
-  const isAllChecked = checkedItems.length === productCountInCart && productCountInCart !== 0;
-
-  const handleAllItemsCheck = () => {
-    isAllChecked ? setCheckedItems([]) : setCheckedItems(initialCheckedItems);
+    setCheckedItemIdList(checkedAllItemIdList);
   };
 
   const handleCheckedItemRemove = () => {
-    removeCheckedItemsFromCart();
-    setCheckedItems([]);
+    removeItemFromCart(checkedItemIdList);
+    setCheckedItemIdList([]);
   };
 
-  if (isLoading) return <Spinner />;
-
   return (
-    <S.Wrapper>
-      <S.Title>{`든든배송 상품 (${productCountInCart}개)`}</S.Title>
-      {productCountInCart === 0 ? (
-        <S.Nothing
-          src={`${process.env.PUBLIC_URL}/assets/nothing.png`}
-          alt='장바구니가 텅 비었어요'
-        />
-      ) : (
+    <>
+      <S.Wrapper>
+        <S.Title>{`든든배송 상품 (${productCountInCart}개)`}</S.Title>
         <div>
           {cart.map((item) => (
             <SelectedProductItem
@@ -73,22 +56,36 @@ const SelectedProductList = () => {
             />
           ))}
         </div>
-      )}
+        <S.Fieldset>
+          <Checkbox
+            type='checkbox'
+            id='select-all'
+            name='select-all-checkbox'
+            checked={isAllChecked}
+            onChange={handleAllCheckedItemToggle}
+          />
+          <label htmlFor='select-all'>{`전체선택 (${checkedItemIdList.length}/${productCountInCart})`}</label>
+          <Button css={deleteButtonStyle} onClick={handleCheckedItemRemove}>
+            선택 삭제
+          </Button>
+          <Button css={couponButtonStyle} onClick={handleModalOpen}>
+            쿠폰 선택
+          </Button>
+        </S.Fieldset>
+      </S.Wrapper>
 
-      <S.Fieldset>
-        <Checkbox
-          type='checkbox'
-          id='select-all'
-          name='select-all'
-          checked={isAllChecked}
-          onChange={handleAllItemsCheck}
-        />
-        <label htmlFor='select-all'>{`전체선택 (${checkedItems.length}/${productCountInCart})`}</label>
-        <Button css={deleteButtonStyle} onClick={handleCheckedItemRemove}>
-          선택삭제
-        </Button>
-      </S.Fieldset>
-    </S.Wrapper>
+      <Modal
+        openTrigger={setIsModalOpen}
+        isTriggered={isModalOpen}
+        initialState={initialState}
+        direction='center'
+        modalStyle={modalStyle}
+        buttonContent={coupon.priceDiscount ? '쿠폰을 선택했어요' : '나중에 선택할게요'}
+        modalButtonStyle={closeButtonStyle}
+      >
+        <CouponList />
+      </Modal>
+    </>
   );
 };
 
@@ -105,42 +102,13 @@ const S = {
     border-bottom: 2px solid var(--gray-color-300);
 
     & + div {
-      height: 410px;
+      padding-right: 12px;
       max-height: 410px;
       overflow-y: auto;
 
-      /* Scroll bar */
-      &::-webkit-scrollbar {
-        width: 5px;
-      }
-      &::-webkit-scrollbar-thumb {
-        border-radius: 8px;
-        background: var(--text-color);
-      }
-      &::-webkit-scrollbar-track {
-        border-radius: 8px;
-        background: var(--gray-color-100);
-      }
-      &::-webkit-scrollbar-button:start:decrement,
-      &::-webkit-scrollbar-button:end:increment {
-        display: block;
-        height: 6px;
-        background: #fff;
-      }
-
       @media (max-width: 420px) {
-        padding: 0 10px;
+        padding: 0 20px;
       }
-    }
-  `,
-
-  Nothing: styled.img`
-    display: block;
-    width: 50%;
-    margin: 0 auto;
-
-    @media (max-width: 768px) {
-      width: 100%;
     }
   `,
 
@@ -149,6 +117,13 @@ const S = {
     align-items: center;
     padding: 36px 0 48px;
     font-size: 16px;
+    word-break: keep-all;
+    word-wrap: break-word;
+
+    & > label {
+      text-align: center;
+      line-height: 1.26;
+    }
 
     @media (max-width: 548px) {
       font-size: 14px;
@@ -160,11 +135,45 @@ const S = {
 const deleteButtonStyle = css`
   margin-left: 20px;
   padding: 6px 12px 7px;
-  background: none;
   border: 1px solid var(--gray-color-100);
 
   @media (max-width: 548px) {
     margin-left: 12px;
+  }
+`;
+
+const couponButtonStyle = css`
+  margin-left: auto;
+  padding: 4px 10px 5px;
+  border: 3px double var(--gray-color-100);
+
+  &:hover {
+    color: var(--white-color);
+    background: var(--text-color);
+  }
+`;
+
+/* Modal Style */
+const modalStyle = css`
+  width: 400px;
+  padding: 28px 20px 32px;
+  background: #fafafa;
+
+  @media (max-width: 420px) {
+    width: 100%;
+    padding: 28px 16px 32px;
+  }
+`;
+
+const closeButtonStyle = css`
+  margin-top: 34px;
+  padding: 14px 0;
+  font-size: 15px;
+  border: 1px solid #888888;
+
+  &:hover {
+    color: var(--white-color);
+    background: var(--text-color);
   }
 `;
 

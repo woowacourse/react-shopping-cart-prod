@@ -10,7 +10,7 @@ const CartIcon = ({ css, ...props }: IconProps) => {
       fill='#AAA'
       path={CART_PATH}
       viewBox='0 0 51 44'
-      aria-label='cart-icon-button'
+      aria-label='장바구니에 담기'
       css={css}
       {...props}
     />
