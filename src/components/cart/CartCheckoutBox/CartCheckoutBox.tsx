@@ -4,6 +4,7 @@ import { SHIPPING_FEE } from '../../../constants';
 import { CART_LIST_CHECKBOX_KEY } from '../../../constants/store';
 import { useOrder } from '../../../hooks/useOrder';
 import {
+  cartListCheckedItemCostInformationFamily,
   cartListCheckedItemCostInformationState,
   checkedCartItemListState,
 } from '../../../store/cart';
@@ -31,29 +32,17 @@ const CartCheckoutBox = () => {
     cartListCheckedItemCostInformationState
   );
   const isLoading = cartListCheckedItemCostInformation.state === 'loading';
-  const cartListCheckedItemCostInformationValue = cartListCheckedItemCostInformation.contents;
 
   const isCartEmpty = checkedCartIdList.size === 0;
-  const totalItemPrice =
-    cartListCheckedItemCostInformationValue.totalItemPrice > 0
-      ? cartListCheckedItemCostInformationValue.totalItemPrice
-      : 0;
-  const totalItemDiscountAmount =
-    cartListCheckedItemCostInformationValue.totalItemDiscountAmount > 0
-      ? cartListCheckedItemCostInformationValue.totalItemDiscountAmount
-      : 0;
-  const totalMemberDiscountAmount =
-    cartListCheckedItemCostInformationValue.totalMemberDiscountAmount > 0
-      ? cartListCheckedItemCostInformationValue.totalMemberDiscountAmount
-      : 0;
-  const shippingFee =
-    cartListCheckedItemCostInformationValue.shippingFee > 0
-      ? cartListCheckedItemCostInformationValue.shippingFee
-      : 0;
-  const totalPrice =
-    cartListCheckedItemCostInformationValue.totalPrice > 0
-      ? cartListCheckedItemCostInformationValue.totalPrice
-      : 0;
+  const totalItemPrice = useRecoilValue(cartListCheckedItemCostInformationFamily('totalItemPrice'));
+  const totalItemDiscountAmount = useRecoilValue(
+    cartListCheckedItemCostInformationFamily('totalItemDiscountAmount')
+  );
+  const totalMemberDiscountAmount = useRecoilValue(
+    cartListCheckedItemCostInformationFamily('totalMemberDiscountAmount')
+  );
+  const shippingFee = useRecoilValue(cartListCheckedItemCostInformationFamily('shippingFee'));
+  const totalPrice = useRecoilValue(cartListCheckedItemCostInformationFamily('totalPrice'));
 
   return (
     <S.CartCheckoutBoxWrapper>

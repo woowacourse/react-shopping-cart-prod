@@ -1,9 +1,9 @@
-import { DefaultValue, atom, selector, selectorFamily } from 'recoil';
+import { DefaultValue, atom, atomFamily, selector, selectorFamily } from 'recoil';
 
 import { getCartAPI } from '../api/cartAPI';
 import { CART_LIST_CHECKBOX_KEY } from '../constants/store';
 import { changeCartItemQuantity } from '../domain/cart';
-import { CartItemData } from '../types';
+import { CartItemData, CartPriceData } from '../types';
 import { PostCartItemRequestBody, PostOrdersRequestBody } from '../types/api';
 import { checkedListState } from './checkbox';
 import { currentServerState } from './server';
@@ -100,6 +100,20 @@ const cartListCheckedItemCostInformationState = selector({
   },
 });
 
+const cartListCheckedItemCostInformationFamily = atomFamily({
+  key: 'cartListCheckedItemCostInformationFamily',
+  default: selectorFamily({
+    key: 'cartListCheckedItemCostInformationFamily/Default',
+    get:
+      (key: keyof CartPriceData) =>
+      ({ get }) => {
+        const cartListCheckedItemCostInformation = get(cartListCheckedItemCostInformationState);
+        const value = cartListCheckedItemCostInformation[key];
+        return value > 0 ? value : 0;
+      },
+  }),
+});
+
 export {
   cartListState,
   cartIdListState,
@@ -108,4 +122,5 @@ export {
   cartItemQuantityState,
   checkedCartItemListState,
   cartListCheckedItemCostInformationState,
+  cartListCheckedItemCostInformationFamily,
 };
