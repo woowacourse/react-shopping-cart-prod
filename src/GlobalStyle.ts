@@ -11,12 +11,15 @@ const GlobalStyle = createGlobalStyle`
   }
 
   :root {
-    --primary-color: #5f0080;
+    --primary-color: #00B9B3;
+    --blue: #006DF9;
+
     --grey-100: #ffffff;
-    --grey-200: #dddddd;
-    --grey-300: #aaaaaa;
+    --grey-200: #F1F3F6;
+    --grey-300: #E5E5E5;
     --grey-400: #333333;
-    --grey-500: #000000;
+
+    --red: #FF5C23;
   }
 
   *, *::before, *::after {
@@ -26,6 +29,8 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     font-family: 'Baemin';
+    
+    color:var(--grey-400)
   }
 
   input[type="checkbox"] {
@@ -65,6 +70,10 @@ const GlobalStyle = createGlobalStyle`
     list-style: none;
     padding-left: 0;
     margin:0;
+  }
+
+  li {
+    list-style: none;
   }
 
   a {
