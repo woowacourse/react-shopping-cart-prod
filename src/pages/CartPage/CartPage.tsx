@@ -18,7 +18,7 @@ const CartPage = () => {
     if (cartIdList.state === 'hasValue') {
       setInitialCheckedList(cartIdList.contents);
     }
-  }, [cartIdList.contents, cartIdList.state, setInitialCheckedList]);
+  }, [cartIdList.state]);
 
   return (
     <>
