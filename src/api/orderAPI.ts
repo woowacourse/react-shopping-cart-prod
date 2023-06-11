@@ -1,39 +1,18 @@
-import { API_ENDPOINT, CART_FETCH_OPTION_HEADERS } from '../constants/api';
+import { API_ENDPOINT } from '../constants/api';
 import { Member, OrderData } from '../types';
 import { PostOrdersRequestBody } from '../types/api';
-import { fetchAPI } from './fetchAPI';
+import { JsonAPI } from './fetchAPI';
 
 export const getOrderAPI = (baseUrl: string) => {
-  const getOrderList = async (): Promise<OrderData[]> => {
-    return await fetchAPI(`${baseUrl}${API_ENDPOINT.ORDERS}`, {
-      method: 'GET',
-      headers: { ...CART_FETCH_OPTION_HEADERS },
-    });
-  };
+  const getOrderList = (): Promise<OrderData[]> => JsonAPI.get(`${baseUrl}${API_ENDPOINT.ORDERS}`);
 
-  const getOrder = async (orderId: OrderData['id']): Promise<Omit<OrderData, 'id'>> => {
-    return await fetchAPI(`${baseUrl}${API_ENDPOINT.ORDERS}/${orderId}`, {
-      method: 'GET',
-      headers: { ...CART_FETCH_OPTION_HEADERS },
-    });
-  };
+  const getOrder = (orderId: OrderData['id']): Promise<Omit<OrderData, 'id'>> =>
+    JsonAPI.get(`${baseUrl}${API_ENDPOINT.ORDERS}/${orderId}`);
 
-  const getMember = async (): Promise<Member> => {
-    return await fetchAPI(`${baseUrl}${API_ENDPOINT.MEMBER}`, {
-      method: 'GET',
-      headers: { ...CART_FETCH_OPTION_HEADERS },
-    });
-  };
+  const getMember = (): Promise<Member> => JsonAPI.get(`${baseUrl}${API_ENDPOINT.MEMBER}`);
 
-  const postOrderList = async (orderList: PostOrdersRequestBody): Promise<Response> => {
-    const jsonData = JSON.stringify(orderList);
-
-    return await fetchAPI(`${baseUrl}${API_ENDPOINT.ORDERS}`, {
-      method: 'POST',
-      headers: { ...CART_FETCH_OPTION_HEADERS },
-      body: jsonData,
-    });
-  };
+  const postOrderList = (orderList: PostOrdersRequestBody): Promise<Response> =>
+    JsonAPI.post(`${baseUrl}${API_ENDPOINT.ORDERS}`, true, { body: JSON.stringify(orderList) });
 
   return { getOrderList, getOrder, getMember, postOrderList };
 };

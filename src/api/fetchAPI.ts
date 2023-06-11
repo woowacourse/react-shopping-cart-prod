@@ -1,4 +1,4 @@
-import { FETCH_DEFAULT_OPTION } from '../constants/api';
+import { FETCH_DEFAULT_OPTION, FETCH_OPTION_HEADERS_AUTH } from '../constants/api';
 import HTTPError from './HTTPError';
 import { handleAPIError } from './apiError';
 
@@ -27,4 +27,38 @@ const fetchAPI = async (
   }
 };
 
-export { fetchAPI };
+const JsonAPI = {
+  get(endpoint: RequestInfo | URL, withAuth = true, option: RequestInit = FETCH_DEFAULT_OPTION) {
+    return fetchAPI(endpoint, {
+      method: 'GET',
+      ...(withAuth ? { headers: FETCH_OPTION_HEADERS_AUTH } : {}),
+      ...option,
+    });
+  },
+
+  post(endpoint: RequestInfo | URL, withAuth = true, option: RequestInit = FETCH_DEFAULT_OPTION) {
+    return fetchAPI(endpoint, {
+      method: 'POST',
+      ...(withAuth ? { headers: FETCH_OPTION_HEADERS_AUTH } : {}),
+      ...option,
+    });
+  },
+
+  patch(endpoint: RequestInfo | URL, withAuth = true, option: RequestInit = FETCH_DEFAULT_OPTION) {
+    return fetchAPI(endpoint, {
+      method: 'PATCH',
+      ...(withAuth ? { headers: FETCH_OPTION_HEADERS_AUTH } : {}),
+      ...option,
+    });
+  },
+
+  delete(endpoint: RequestInfo | URL, withAuth = true, option: RequestInit = FETCH_DEFAULT_OPTION) {
+    return fetchAPI(endpoint, {
+      method: 'DELETE',
+      ...(withAuth ? { headers: FETCH_OPTION_HEADERS_AUTH } : {}),
+      ...option,
+    });
+  },
+};
+
+export { JsonAPI };
