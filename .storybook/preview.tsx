@@ -1,24 +1,30 @@
 import React from 'react';
-import type { Preview } from '@storybook/react';
-import { withThemeFromJSXProvider } from '@storybook/addon-styling';
-import GlobalStyles from '../src/styles/GlobalStyles';
 import { RecoilRoot } from 'recoil';
+import { BrowserRouter } from 'react-router-dom';
+import { withThemeFromJSXProvider } from '@storybook/addon-styling';
+import { initialize, mswDecorator } from 'msw-storybook-addon';
+import GlobalStyles from '../src/styles/GlobalStyles';
+import type { Preview } from '@storybook/react';
+import handler from '../src/mocks/handlers';
+import { CheckOutPointCostProvider } from '../src/context/CheckOutPointCostProvider';
 
 const customViewport = {
   Default: {
-    name: 'FHD',
-    styles: {
-      width: '1920px',
-      height: '1080px',
-    },
-  },
-  HD: {
     name: 'HD',
     styles: {
       width: '1280px',
       height: '720px',
     },
   },
+
+  FHD: {
+    name: 'FHD',
+    styles: {
+      width: '1920px',
+      height: '1080px',
+    },
+  },
+
   tablet: {
     name: 'tablet',
     styles: {
@@ -26,6 +32,7 @@ const customViewport = {
       height: '1024px',
     },
   },
+
   mobile: {
     name: 'mobile',
     styles: {
@@ -34,6 +41,8 @@ const customViewport = {
     },
   },
 };
+
+initialize({ serviceWorker: { url: `${process.env.PUBLIC_URL}/mockServiceWorker.js` } });
 
 const preview: Preview = {
   parameters: {
@@ -48,16 +57,24 @@ const preview: Preview = {
       viewports: { ...customViewport },
       defaultViewport: 'Default',
     },
+    msw: {
+      handlers: [...handler],
+    },
   },
+  decorators: [
+    (Story) => (
+      <BrowserRouter>
+        <RecoilRoot>
+          <CheckOutPointCostProvider>
+            <Story />
+          </CheckOutPointCostProvider>
+        </RecoilRoot>
+      </BrowserRouter>
+    ),
+
+    mswDecorator,
+    withThemeFromJSXProvider({ GlobalStyles }),
+  ],
 };
 
 export default preview;
-
-export const decorators = [
-  (Story) => (
-    <RecoilRoot>
-      <Story />
-    </RecoilRoot>
-  ),
-  withThemeFromJSXProvider({ GlobalStyles }),
-];

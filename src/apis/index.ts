@@ -3,12 +3,10 @@ import { USER_1 } from 'constants/basicKey';
 import { SERVER_OWNER } from 'constants/storeKey';
 import type { ServerOwner } from 'types/serverOwner';
 import getBasicKey from 'utils/getBasicKey';
+import store from 'utils/storage';
 
 export type ErrorResponse = {
-  timestamp: string;
-  status: number;
-  error: string;
-  path: string;
+  message: string;
 };
 
 type FetchedData<T> = {
@@ -49,10 +47,7 @@ class API {
         errorResponse = await response.json();
       } catch (error) {
         errorResponse = {
-          timestamp: new Date().toISOString(),
-          status: 500,
-          error: '에러 응답이 json 형식이 아닙니다.',
-          path: url,
+          message: '에러 응답이 json 형식이 아닙니다.',
         };
       }
 
@@ -71,10 +66,7 @@ class API {
         data = await response.json();
       } catch {
         const errorResponse: ErrorResponse = {
-          timestamp: new Date().toISOString(),
-          status: 500,
-          error: '서버 응답 형식이 json 형식이 아닙니다.',
-          path: url,
+          message: '서버 응답 형식이 json 형식이 아닙니다.',
         };
 
         throw errorResponse;
@@ -92,8 +84,8 @@ class API {
     return await this.fetcher<T>(url, 'POST', body);
   }
 
-  async remove<T>(url: string): Promise<FetchedData<T>> {
-    return await this.fetcher<T>(url, 'DELETE');
+  async remove<T>(url: string, body: unknown): Promise<FetchedData<T>> {
+    return await this.fetcher<T>(url, 'DELETE', body);
   }
 
   async patch<T>(url: string, body: unknown): Promise<FetchedData<T>> {
@@ -105,7 +97,7 @@ class API {
   }
 }
 
-const serverOwner = (localStorage.getItem(SERVER_OWNER) ?? '다즐') as ServerOwner;
+const serverOwner = store.getStorage<ServerOwner>(SERVER_OWNER) ?? '헙크';
 const api = new API(BASE_URL[serverOwner]);
 
 export default api;

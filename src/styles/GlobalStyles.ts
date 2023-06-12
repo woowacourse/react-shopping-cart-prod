@@ -28,6 +28,13 @@ const GlobalStyles = createGlobalStyle`
     --header-height: 80px;
     --color-primary: #30e3dd;
     --color-primary-tone-down: #00a5ae;
+    --color-pure-white: #ffffff; 
+    --color-grayscale-100: #f2f2f2;
+    --color-grayscale-200: #d9d9d9;
+    --color-grayscale-300: #bfbfbf;
+    --color-grayscale-400: #a6a6a6;
+    --color-grayscale-500: #999999;
+    --color-pure-dark: #000000; 
   }
 `;
 

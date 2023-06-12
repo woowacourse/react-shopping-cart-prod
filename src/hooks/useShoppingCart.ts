@@ -1,23 +1,24 @@
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { cartProductIdStoreState } from 'state/cartProductIdStore';
 import { cartProductsState } from 'state/cartProducts';
-import { addCartProducts, updateCartProductsQuantity, removeCartProduct } from 'apis/cart';
+import { postCartProducts, updateCartProductsQuantity, removeCartProduct } from 'apis/cart';
 import type { CheckedCartProducts, Product } from 'types/product';
+import { checkedCartProductIdsState } from 'state/checkedCartProductIds';
 
 const useShoppingCart = () => {
   const [cartProducts, setCartProducts] = useRecoilState(cartProductsState);
-  const [cartProductIdStore, setCartProductIdStore] = useRecoilState(cartProductIdStoreState);
+  const cartProductIdStore = useRecoilValue(cartProductIdStoreState);
+  const setCheckedCartProductIds = useSetRecoilState(checkedCartProductIdsState);
 
   const initialAddCart = async (product: Product) => {
     try {
-      const cartProductId = await addCartProducts(product.id);
+      const cartProductId = await postCartProducts(product.id);
 
-      setCartProductIdStore((prev) => ({ ...prev, [product.id]: cartProductId }));
-
+      setCheckedCartProductIds((prev) => new Set(prev.add(cartProductId)));
       setCartProducts((prev) => {
-        const newCartProducts = new Map(prev.entries());
+        prev.set(cartProductId, { quantity: 1, product });
 
-        return newCartProducts.set(cartProductId, { quantity: 1, product });
+        return new Map(prev.entries());
       });
     } catch (error) {
       console.error(error);
@@ -46,12 +47,12 @@ const useShoppingCart = () => {
     }
 
     setCartProducts((prev) => {
-      const newCartProducts = new Map(prev.entries());
-
-      return newCartProducts.set(cartProductIdStore[id], {
+      prev.set(cartProductIdStore[id], {
         quantity: prevQuantity - 1,
         product: targetCartProduct.product,
       });
+
+      return new Map(prev.entries());
     });
   };
 
@@ -70,12 +71,12 @@ const useShoppingCart = () => {
     }
 
     setCartProducts((prev) => {
-      const newCartProducts = new Map(prev.entries());
-
-      return newCartProducts.set(cartProductIdStore[id], {
+      prev.set(cartProductIdStore[id], {
         quantity: prevQuantity + 1,
         product: targetCartProduct.product,
       });
+
+      return new Map(prev.entries());
     });
   };
 
@@ -84,18 +85,12 @@ const useShoppingCart = () => {
     if (!targetCartProduct) return;
 
     try {
-      await removeCartProduct(cartProductIdStore[id]);
+      await removeCartProduct([cartProductIdStore[id]]);
     } catch (error) {
       console.error(error);
       alert('상품을 삭제하지 못했어요. 다시 시도해주세요');
       return;
     }
-
-    setCartProductIdStore((prev) => {
-      const { [id]: cartProductId, ...otherIds } = prev;
-
-      return { ...otherIds };
-    });
 
     setCartProducts((prev) => {
       prev.delete(cartProductIdStore[id]);
@@ -104,13 +99,21 @@ const useShoppingCart = () => {
     });
   };
 
-  const deleteCheckedCartProducts = (checkedCartProducts: CheckedCartProducts) => {
-    [...checkedCartProducts].forEach(async (productCartId) => {
-      const productId = Object.keys(cartProductIdStore).find((productId) => {
-        return cartProductIdStore[Number(productId)] === productCartId;
+  const deleteCheckedCartProducts = async (checkedCartProducts: CheckedCartProducts) => {
+    try {
+      await removeCartProduct([...checkedCartProducts]);
+    } catch (error) {
+      console.error(error);
+      alert('상품을 삭제하지 못했어요. 다시 시도해주세요');
+      return;
+    }
+
+    setCartProducts((prev) => {
+      checkedCartProducts.forEach((id) => {
+        prev.delete(id);
       });
 
-      await deleteCartProduct(Number(productId));
+      return new Map(prev.entries());
     });
   };
 

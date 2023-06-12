@@ -1,4 +1,4 @@
 export const USER_1 = {
-  id: 'a@a.com',
-  password: '1234',
+  id: `${process.env.REACT_APP_ID}`,
+  password: `${process.env.REACT_APP_PASSWORD}`,
 };

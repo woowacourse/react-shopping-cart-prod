@@ -1,4 +1,4 @@
-import { CartProduct, CartProducts, Product } from 'types/product';
+import { CartPriceInfo, CartProduct, CartProducts, Product } from 'types/product';
 import api from 'apis';
 
 const URL = '/cart-items';
@@ -26,16 +26,15 @@ const cartProductsParser = (data: any): CartProducts => {
 };
 
 export const getCartProducts = async (): Promise<CartProducts> => {
-  const fetchedData = await api.get<ServerCartProduct[]>(URL);
-  const cartProducts = fetchedData.data;
+  const { data: cartProducts } = await api.get<ServerCartProduct[]>(URL);
 
   return cartProductsParser(cartProducts);
 };
 
-export const addCartProducts = async (productId: Product['id']): Promise<number> => {
-  const fetchedData = await api.post(URL, { productId });
+export const postCartProducts = async (productId: Product['id']): Promise<number> => {
+  const { headers } = await api.post(URL, { productId });
 
-  const location = fetchedData.headers.get('Location');
+  const location = headers.get('Location');
   if (!location) {
     throw new Error(`장바구니 상품 추가 요청 성공시 반환되는 location이 없습니다.`);
   }
@@ -49,6 +48,15 @@ export const updateCartProductsQuantity = async (quantity: CartProduct['quantity
   await api.patch(`${URL}/${cartProductId}`, { quantity });
 };
 
-export const removeCartProduct = async (cartProductId: number) => {
-  await api.remove(`${URL}/${cartProductId}`);
+export const removeCartProduct = async (cartProductIds: number[]) => {
+  await api.remove(URL, { cartItemIds: cartProductIds });
+};
+
+export const getCartPriceInfo = async (checkedCartProductIds: number[]): Promise<CartPriceInfo> => {
+  const params = new URLSearchParams();
+  checkedCartProductIds.forEach((id) => params.append('item', `${id}`));
+
+  const { data: cartPriceInfo } = await api.get<CartPriceInfo>(`${URL}/price?${params.toString()}`);
+
+  return cartPriceInfo;
 };

@@ -1,14 +1,11 @@
 import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
-import Header from 'components/Layout/Header';
-import { Suspense } from 'react';
+import Header from 'components/Layout/Header/Header';
 
 const Layout = () => {
   return (
     <>
-      <Suspense fallback={<div>장바구니 상태 로딩중...</div>}>
-        <Header>우아한장바구니</Header>
-      </Suspense>
+      <Header />
       <MainContainer>
         <Outlet />
       </MainContainer>
@@ -30,6 +27,7 @@ const MainContainer = styled.main`
 
   @media (max-width: 768px) {
     padding: 0 4.16%;
+    margin-top: 20px;
     margin-bottom: 0;
   }
 `;

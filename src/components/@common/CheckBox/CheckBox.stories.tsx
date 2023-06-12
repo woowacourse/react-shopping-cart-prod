@@ -4,7 +4,7 @@ import { PropsWithChildren, useState } from 'react';
 
 const meta = {
   component: CheckBox,
-  title: 'CheckBox',
+  title: 'Common/CheckBox',
   argTypes: {
     checked: {
       description: '체크박스의 체크 상태입니다.',

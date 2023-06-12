@@ -1,7 +1,9 @@
 const ROUTE_PATH = {
-  root: '/',
-  cart: 'cart',
-  other: '*',
-};
+  ROOT: '/',
+  CART: '/cart',
+  CHECKOUT: '/checkout',
+  ORDER_LIST: '/orders',
+  OTHER: '*',
+} as const;
 
 export default ROUTE_PATH;

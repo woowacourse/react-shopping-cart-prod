@@ -1,4 +1,4 @@
-import FlexBox from 'components/@common/FlexBox';
+import Box from 'components/@common/Box';
 import Modal from 'components/@common/Modal/Modal';
 import type { ModalProps } from 'components/@common/Modal/Modal';
 import { PropsWithChildren } from 'react';
@@ -16,23 +16,18 @@ const ConfirmModal = ({ children, isOpen, closeModal, onClickConfirmButton }: Pr
 
   return (
     <Modal isOpen={isOpen} closeModal={closeModal}>
-      <Container flexDirection="column">
+      <Box sizing={{ width: '300px', minHeight: '100px' }} flex={{ flexDirection: 'column' }}>
         <MessageWrapper>{children}</MessageWrapper>
-        <ButtonContainer>
+        <ButtonContainer sizing={{ width: '100%', height: '50px' }}>
           <Button onClick={closeModal}>취소</Button>
           <Button onClick={handleConfirm}>확인</Button>
         </ButtonContainer>
-      </Container>
+      </Box>
     </Modal>
   );
 };
 
 export default ConfirmModal;
-
-const Container = styled(FlexBox)`
-  width: 300px;
-  min-height: 100px;
-`;
 
 const MessageWrapper = styled.div`
   width: 100%;
@@ -44,13 +39,11 @@ const MessageWrapper = styled.div`
   text-align: center;
 `;
 
-const ButtonContainer = styled(FlexBox)`
-  width: 100%;
-  height: 50px;
-  border-top: 1px solid #eeeeee;
+const ButtonContainer = styled(Box)`
+  border-top: 1px solid var(--color-grayscale-200);
 
   button:first-child {
-    border-right: 1px solid #eeeeee;
+    border-right: 1px solid var(--color-grayscale-200);
   }
 `;
 

@@ -13,3 +13,8 @@ export type CartProduct = {
 export type CartProducts = Map<number, CartProduct>;
 
 export type CheckedCartProducts = Set<number>;
+
+export type CartPriceInfo = {
+  totalPrice: number;
+  deliveryFee: number;
+};
