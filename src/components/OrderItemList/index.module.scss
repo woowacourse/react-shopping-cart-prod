@@ -1,0 +1,32 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+}
+
+.list-title {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 24px;
+  align-items: center;
+
+  font-size: 16px;
+  line-height: 20px;
+  background: #f6f6f6;
+}
+
+.show-detail-button {
+  font-size: 16px;
+  line-height: 16px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+
+  & > * {
+    padding: 24px;
+    border-top: 1px solid #e0e0e0;
+  }
+}

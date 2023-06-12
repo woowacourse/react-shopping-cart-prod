@@ -1,0 +1,39 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  row-gap: 32px;
+  letter-spacing: 0.5px;
+  width: 90%;
+}
+
+.title {
+  font-family: 'SUIT-Bold';
+  font-size: 26px;
+  line-height: 26px;
+  text-align: center;
+  width: 100%;
+
+  padding: 28px;
+}
+
+.order-list {
+  display: flex;
+  flex-direction: column;
+  row-gap: 50px;
+}
+
+.main-view-blank {
+  display: flex;
+  flex-direction: column;
+  row-gap: 24px;
+
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+
+  & > p {
+    font-family: 'SUIT-Regular';
+    font-size: 28px;
+  }
+}

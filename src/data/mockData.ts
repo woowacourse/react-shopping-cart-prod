@@ -1,8 +1,18 @@
 import { LOCAL_STORAGE_KEY } from '../constants';
 import { getLocalStorage } from '../utils/localStorage';
-import type { CartItem, Product } from '../types';
+import type { CartItem, OrderType, PaymentsData, Product } from '../types';
 
 export const cartItems: CartItem[] = getLocalStorage<CartItem[]>(LOCAL_STORAGE_KEY.CART_ITEM, []);
+
+export const paymentsData: PaymentsData = getLocalStorage<PaymentsData>(LOCAL_STORAGE_KEY.PAYMENTS, {
+  originalPrice: 0,
+  discounts: [],
+  discountedPrice: 0,
+  deliveryFee: 0,
+  finalPrice: 0,
+});
+
+export const orderList: OrderType[] = getLocalStorage<OrderType[]>(LOCAL_STORAGE_KEY.ORDERS, []);
 
 export const products: Product[] = [
   {

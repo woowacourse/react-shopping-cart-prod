@@ -16,12 +16,10 @@ function CartProductItem({ cartItem, toggleCheck, checked, mutateQuantity, delet
   const { id, product, quantity } = cartItem;
   const { name, imageUrl, price } = product;
 
-  const handleDeleteButton = () => {
-    deleteCartItem(id);
-  };
-  const handleUpButton = () => {
-    mutateQuantity(id, quantity + 1);
-  };
+  const handleDeleteButton = () => deleteCartItem(id);
+
+  const handleUpButton = () => mutateQuantity(id, quantity + 1);
+
   const handleDownButton = () => {
     if (quantity > 1) {
       mutateQuantity(id, quantity - 1);
@@ -29,9 +27,9 @@ function CartProductItem({ cartItem, toggleCheck, checked, mutateQuantity, delet
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles['cart-item']}>
       <input type="checkbox" className={styles['check-box']} onChange={toggleCheck} checked={checked} />
-      <img src={imageUrl} alt={name} className={styles.image} />
+      <img src={imageUrl} alt={name} className={styles.image} loading="lazy" />
       <div className={styles['item-info']}>
         <div>
           <div className={styles['product-title']}>{name}</div>
@@ -39,12 +37,15 @@ function CartProductItem({ cartItem, toggleCheck, checked, mutateQuantity, delet
             <TrashBox size={24} />
           </button>
         </div>
-        <CountButton
-          size="large"
-          count={quantity}
-          handleUpButton={handleUpButton}
-          handleDownButton={handleDownButton}
-        />
+        <div className={styles['count-detail']}>
+          <p>단일 금액 : {price} 원</p>
+          <CountButton
+            size="large"
+            count={quantity}
+            handleUpButton={handleUpButton}
+            handleDownButton={handleDownButton}
+          />
+        </div>
         <div className={styles['product-price']}>{(price * quantity).toLocaleString()} 원</div>
       </div>
     </div>

@@ -29,11 +29,25 @@ function CartProductItemList() {
 
   const deleteCheckedCartItem = () => {
     Promise.all(checkedCartIdList.map(id => deleteCartItem(id)));
+    setCheckedCartIdList(cartList.map(item => item.id));
   };
 
   return (
     <div className={styles.container}>
-      <h3 className={styles.title}>배송 상품 {`(${cartList.length}개)`}</h3>
+      <div className={styles['check-menu']}>
+        <div>
+          <input
+            type="checkbox"
+            className={styles['check-box']}
+            onChange={checkAllCartItem}
+            checked={cartList.length === checkedCartIdList.length}
+          />
+          <div>모두선택 ({`${checkedCartIdList.length}/${cartList.length}`})</div>
+        </div>
+        <button type="button" onClick={deleteCheckedCartItem}>
+          선택 삭제
+        </button>
+      </div>
       <section className={styles['cart-container']}>
         {cartList?.map((item: CartItem) => (
           <CartProductItem
@@ -46,18 +60,6 @@ function CartProductItemList() {
           />
         ))}
       </section>
-      <div className={styles['check-menu']}>
-        <input
-          type="checkbox"
-          className={styles['check-box']}
-          onChange={checkAllCartItem}
-          checked={cartList.length === checkedCartIdList.length}
-        />
-        <div>전체 선택 ({`${checkedCartIdList.length}/${cartList.length}`})</div>
-        <button type="button" onClick={deleteCheckedCartItem}>
-          선택 삭제
-        </button>
-      </div>
     </div>
   );
 }

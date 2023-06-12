@@ -1,5 +1,5 @@
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { MESSAGE, USER } from '../constants';
+import { MESSAGE } from '../constants';
 import { $CartList, $CheckedCartIdList, $CurrentServerUrl } from '../recoil/atom';
 import useMutation from './useMutation';
 import useToast from './useToast';
@@ -68,10 +68,6 @@ const useCart = () => {
       url: `${currentServerUrl}/cart-items/${cartId}`,
       method: 'PATCH',
       bodyData: { quantity },
-      headers: {
-        Authorization: `Basic ${btoa(USER)}`,
-        'Content-Type': 'application/json',
-      },
     });
   };
 
@@ -79,9 +75,6 @@ const useCart = () => {
     await deleteCartQuery({
       url: `${currentServerUrl}/cart-items/${cartId}`,
       method: 'DELETE',
-      headers: {
-        Authorization: `Basic ${btoa(USER)}`,
-      },
     });
   };
 
@@ -90,10 +83,6 @@ const useCart = () => {
       url: `${currentServerUrl}/cart-items`,
       method: 'POST',
       bodyData: { productId: product.id },
-      headers: {
-        Authorization: `Basic ${btoa(USER)}`,
-        'Content-Type': 'application/json',
-      },
       referenceData: product,
     });
   };

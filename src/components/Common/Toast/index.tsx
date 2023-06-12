@@ -23,12 +23,15 @@ function Toast({ type, message, showTime = 2000 }: ToastProps) {
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      setStartHide(true);
-    }, showTime);
-    setTimeout(() => {
+    const animationStart = setTimeout(() => setStartHide(true), showTime);
+    const animationEnd = setTimeout(() => {
       setShow(false);
+      clearTimeout(animationStart);
     }, showTime + 300);
+
+    return () => {
+      clearTimeout(animationEnd);
+    };
   }, [showTime]);
 
   return (

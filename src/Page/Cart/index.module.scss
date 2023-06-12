@@ -1,39 +1,41 @@
 .container {
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
-  row-gap: 32px;
+  align-items: center;
   letter-spacing: 0.5px;
-  width: 90%;
+  width: 100%;
+  min-height: 100vh;
+  height: fit-content;
 
+  background: #f6f6f6;
+
+  padding-bottom: 32px;
   color: #333333;
 }
 
 .title {
-  font-weight: 700;
-  font-size: 32px;
-  line-height: 37px;
-  width: 100%;
-
+  font-family: 'SUIT-Bold';
+  font-size: 26px;
+  line-height: 26px;
+  width: 90%;
   padding: 28px 0;
-  border-bottom: 4px solid var(--primary-color);
+  text-align: center;
 }
 
 .main-view {
   display: grid;
-  width: 100%;
-  grid-template-columns: 2fr 1fr;
+  width: 90%;
+  height: 100%;
+  grid-template-columns: 7fr 3fr;
 
-  column-gap: 32px;
+  column-gap: 20px;
 }
 
-@media screen and (max-width: 1024px) {
-  .main-view {
-    display: flex;
-    flex-direction: column;
-    row-gap: 32px;
-    margin-bottom: 32px;
-  }
+.sticky-view {
+  height: fit-content;
+  position: sticky;
+  min-width: 400px;
+  top: 80px;
 }
 
 .main-view-blank {
@@ -46,7 +48,51 @@
   justify-content: center;
 
   & > p {
-    font-weight: 700;
+    font-family: 'SUIT-Regular';
     font-size: 28px;
+  }
+}
+
+.payments {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 24px;
+}
+
+.payments-button {
+  font-family: 'SUIT-Bold';
+  font-size: 18px;
+  display: flex;
+  width: 100%;
+  height: 60px;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+
+  color: var(--white-color);
+  background: var(--mint-color);
+  transition: background 0.1s ease-in-out;
+
+  &:hover {
+    background: #439a97;
+  }
+  &:disabled {
+    background: #aaaaaa;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .main-view {
+    display: flex;
+    flex-direction: column;
+    row-gap: 32px;
+    margin-bottom: 32px;
+    height: 100px;
+  }
+
+  .payments-button {
+    max-width: 100%;
   }
 }

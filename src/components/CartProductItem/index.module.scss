@@ -1,6 +1,7 @@
-.container {
+.cart-item {
   display: flex;
-  column-gap: 16px;
+  background: var(--white-color);
+  column-gap: 12px;
   width: 100%;
 
   & > img {
@@ -27,8 +28,16 @@
   transform: translateY(0%);
 
   &:checked {
-    background: #333333;
-    border: 1px solid #3288ff;
+    background: var(--mint-color);
+    border: 1px solid var(--mint-color);
+    &:hover {
+      background: var(--mint-color-hover);
+      border: 1px solid var(--mint-color-hover);
+    }
+  }
+
+  &:hover {
+    background: #f8fcfb;
   }
 
   &:after {
@@ -39,7 +48,7 @@
     left: 0;
     top: 0;
     background-image: url('../../assets/checked.svg');
-    background-size: 20px;
+    background-size: 16px;
     background-repeat: no-repeat;
     background-position: center;
   }
@@ -49,7 +58,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  row-gap: 20px;
+  row-gap: 8px;
   align-items: flex-end;
 
   & > div:first-child {
@@ -67,6 +76,26 @@
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+}
+
+.count-detail {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  & > :first-child {
+    font-size: 14px;
+    color: #bdbdbd;
+  }
+}
+
+.product-price {
+  display: flex;
+
+  font-family: 'SUIT-Bold';
+  height: 100%;
+  align-items: flex-end;
 }

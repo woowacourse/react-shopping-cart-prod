@@ -1,0 +1,77 @@
+.modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 70%;
+  min-width: 512px;
+}
+
+.success-image {
+  width: 256px;
+}
+
+.payments-information {
+  display: flex;
+  flex-direction: column;
+  margin: 0 24px;
+
+  & > tr {
+    display: flex;
+    border-top: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+    border-collapse: collapse;
+    align-items: center;
+
+    & > th:first-child {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-right: 1px solid #e0e0e0;
+
+      min-width: 96px;
+      height: 48px;
+      background: #f2f2f2;
+    }
+
+    & > th:last-child {
+      font-size: 14px;
+    }
+  }
+}
+
+.modal-button-container {
+  display: grid;
+  width: 90%;
+
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 24px 0;
+
+  & > button {
+    font-family: 'SUIT-Bold';
+    padding: 24px 48px;
+    font-size: 18px;
+
+    border: 1px solid var(--mint-color);
+    border-radius: 6px;
+  }
+
+  & > button:first-child {
+    color: var(--mint-color);
+
+    &:hover {
+      border: 1px solid var(--mint-color-hover);
+      color: var(--mint-color-hover);
+    }
+  }
+
+  & > button:last-child {
+    color: var(--white-color);
+    background: var(--mint-color);
+
+    &:hover {
+      border: 1px solid var(--mint-color-hover);
+      background: var(--mint-color-hover);
+    }
+  }
+}

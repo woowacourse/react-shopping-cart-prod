@@ -11,6 +11,7 @@ interface AddCardButtonProps {
 
 function AddCartButton({ product }: AddCardButtonProps) {
   const { cartList, addCartItem, mutateQuantity, deleteCartItem, loading } = useCart();
+
   const cart = cartList?.find(cartItem => cartItem.product.id === product.id);
 
   const handleClick = async () => {
@@ -29,6 +30,7 @@ function AddCartButton({ product }: AddCardButtonProps) {
         await deleteCartItem(cart.id);
         return;
       }
+
       await mutateQuantity(cart.id, cart.quantity - 1);
     }
   };
