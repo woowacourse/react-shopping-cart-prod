@@ -1,5 +1,7 @@
 import { DefaultTheme } from 'styled-components';
 
+import { RANK } from '../types';
+
 const color = {
   white: 'white',
   gray1: '#f8f8f8',
@@ -21,6 +23,15 @@ const color = {
   lightRed3: '#eb7171',
   red: '#ce0000',
   darkRed: '#9f0000',
+  lightRed: '#ff403e',
+
+  rank: {
+    [RANK.normal]: '#C0C0C0',
+    [RANK.silver]: '#727272',
+    [RANK.gold]: '#D4AF37',
+    [RANK.platinum]: '#04c09e',
+    [RANK.diamond]: '#0072B2',
+  },
 };
 
 const spacer = {

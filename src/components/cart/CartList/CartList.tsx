@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
@@ -14,6 +14,8 @@ const CartList = () => {
   const cartList = useRecoilValue(cartListState);
   const navigate = useNavigate();
 
+  const goRoot = useCallback(() => navigate(PATH.ROOT), [navigate]);
+
   if (cartList.length === 0) {
     return (
       <S.CartListContainer className="center">
@@ -21,7 +23,7 @@ const CartList = () => {
         <S.CartListEmptyMessage size="large">
           장바구니에 담긴 상품이 없습니다.
         </S.CartListEmptyMessage>
-        <Button variant="primary" onClick={() => navigate(PATH.ROOT)}>
+        <Button variant="primary" onClick={goRoot}>
           홈으로 이동하기
         </Button>
       </S.CartListContainer>

@@ -19,6 +19,9 @@ const DEFAULT_API_BASE_URL = API_BASE_URL_LIST[MEMBER[0]];
 const API_ENDPOINT = {
   PRODUCTS: '/products',
   CART_ITEMS: '/cart-items',
+  MEMBER: '/member',
+  ORDERS: '/orders',
+  COSTS: '/costs',
 } as const;
 
 const FETCH_DEFAULT_OPTION = {
@@ -27,13 +30,14 @@ const FETCH_DEFAULT_OPTION = {
   },
 } as const;
 
-const CART_FETCH_OPTION_HEADERS = {
+const FETCH_OPTION_HEADERS_AUTH = {
   'Content-Type': 'application/json',
   Authorization: `Basic ${BASE64}`,
 } as const;
 
 const HTTP_STATUS_CODE = {
   OK: 200,
+  CREATED: 201,
   NO_CONTENT: 204,
   BAD_REQUEST: 400,
   NOT_FOUND: 404,
@@ -82,7 +86,7 @@ export {
   DEFAULT_API_BASE_URL,
   API_ENDPOINT,
   FETCH_DEFAULT_OPTION,
-  CART_FETCH_OPTION_HEADERS,
+  FETCH_OPTION_HEADERS_AUTH,
   HTTP_STATUS_CODE,
   HTTP_ERROR_MESSAGE,
   CART_API_ERROR_MESSAGE,

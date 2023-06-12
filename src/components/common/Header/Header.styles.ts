@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
+import { VerticalLine } from '../../../styles/mixin';
+import { Member, RANK } from '../../../types';
 import { Button } from '../Button/Button.styles';
+import { Text } from '../Text/Text.styles';
 
 const HeaderContainer = styled.header`
   position: fixed;
@@ -35,9 +38,48 @@ const HeaderRightContainer = styled.section`
 const Logo = styled.img`
   height: 40px;
 `;
+const RankAndIdContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+`;
+
+const MemberRank = styled.span<{ rank: Member['rank'] }>`
+  display: inline-block;
+  min-width: 38px;
+  height: 16px px;
+  margin-right: 4px;
+  padding: 0px 4px;
+  border-radius: 30px;
+  font-size: 10px;
+  line-height: 14px;
+  text-align: center;
+  letter-spacing: -0.3px;
+  vertical-align: 0px;
+  border: 1px solid ${({ theme, rank }) => theme.color.rank[rank]};
+  color: ${({ theme, rank }) => theme.color.rank[rank]};
+`;
+
+const MemberId = styled(Text)`
+  margin-right: 4px;
+`;
+
+const OrderPageButton = styled(Button)`
+  position: relative;
+  width: initial;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const DividerLine = styled(VerticalLine)`
+  height: 24px;
+`;
 
 const CartButton = styled(Button)`
-  position: absolute;
+  position: relative;
   width: initial;
   padding: 8px;
   display: flex;
@@ -70,7 +112,7 @@ const CartItemCount = styled.span`
   transform: translateX(calc(50% - 7px));
 `;
 
-const CartIcon = styled.img`
+const Icon = styled.img`
   width: 32px;
   height: 32px;
   margin-bottom: ${({ theme }) => theme.spacer.spacing1};
@@ -85,9 +127,14 @@ export {
   HeaderContainer,
   HeaderContentContainer,
   HeaderRightContainer,
+  RankAndIdContainer,
   Logo,
+  MemberRank,
+  MemberId,
+  OrderPageButton,
+  DividerLine,
   CartButton,
   CartItemCount,
-  CartIcon,
+  Icon,
   HeaderButtonLabel,
 };

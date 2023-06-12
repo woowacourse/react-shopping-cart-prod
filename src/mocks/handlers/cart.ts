@@ -8,7 +8,8 @@ import {
   removeCartItem,
   setCartData,
 } from '../../domain/cart';
-import { PostCartItemRequestBody } from '../../types';
+import { getCartPriceInformation } from '../../store/utils';
+import { PostCartItemRequestBody } from '../../types/api';
 import { PatchCartItemRequestBody } from '../../types/api';
 
 const cartHandlers = [
@@ -31,7 +32,7 @@ const cartHandlers = [
     setCartData(newCartList);
 
     return res(
-      ctx.status(201),
+      ctx.status(HTTP_STATUS_CODE.CREATED),
       ctx.set('Location', `${API_ENDPOINT.CART_ITEMS}/${newCartList.at(-1)?.id}`)
     );
   }),
@@ -64,6 +65,15 @@ const cartHandlers = [
     setCartData(newCartList);
 
     return res(ctx.status(HTTP_STATUS_CODE.NO_CONTENT));
+  }),
+
+  // 장바구니 금액 정보
+  rest.get(`/costs`, (req, res, ctx) => {
+    const cartItemDataList = getCartData();
+
+    const costs = getCartPriceInformation(cartItemDataList);
+
+    return res(ctx.status(200), ctx.json(costs));
   }),
 ];
 

@@ -1,3 +1,4 @@
+import { CartItemData, CartPriceData } from '.';
 import { HTTP_ERROR_MESSAGE } from '../constants/api';
 
 type HTTPErrorMessageCode = keyof typeof HTTP_ERROR_MESSAGE;
@@ -10,7 +11,6 @@ type APIErrorMessage = {
 
 interface PostCartItemRequestBody {
   productId: number;
-  quantity: number;
 }
 
 interface PatchCartItemRequestBody {
@@ -18,9 +18,14 @@ interface PatchCartItemRequestBody {
   quantity: number;
 }
 
+interface PostOrdersRequestBody extends CartPriceData {
+  cartItemIds: CartItemData['id'][];
+}
+
 export type {
   HTTPErrorMessageCode,
   APIErrorMessage,
   PostCartItemRequestBody,
   PatchCartItemRequestBody,
+  PostOrdersRequestBody,
 };

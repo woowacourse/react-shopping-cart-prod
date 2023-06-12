@@ -38,12 +38,12 @@ const changeCartItemQuantity = (cartList: CartItemData[], cartItemId: number, qu
   });
 };
 
-const removeCartItem = (cartList: CartItemData[], cartItemId: number) => {
-  const hasItem = checkItemInCart(cartList, cartItemId);
+const removeCartItem = (cartList: CartItemData[], cartItemId: number | number[]) => {
+  let cartItemIdArray: number[] = [];
 
-  if (!hasItem) return null;
+  cartItemIdArray = Array.isArray(cartItemId) ? cartItemId : [cartItemId];
 
-  return cartList.filter((cartItem) => cartItem.id !== cartItemId);
+  return cartList.filter((cartItem) => !cartItemIdArray.includes(cartItem.id));
 };
 
 export {

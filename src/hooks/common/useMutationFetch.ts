@@ -29,14 +29,15 @@ const useMutationFetch = <T, V = undefined>(
       setIsLoading(true);
       mutationFn(variables)
         .then((data) => {
-          setIsLoading(false);
           setError(null);
           onSuccess?.(data);
         })
         .catch((error) => {
-          setIsLoading(false);
           setError(error);
           onError?.(error);
+        })
+        .finally(() => {
+          setIsLoading(false);
         });
     },
     [mutationFn, onSuccess, onError]

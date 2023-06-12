@@ -1,11 +1,13 @@
-import { DefaultValue, atom, selector, selectorFamily } from 'recoil';
+import { DefaultValue, atom, atomFamily, selector, selectorFamily } from 'recoil';
 
 import { getCartAPI } from '../api/cartAPI';
 import { CART_LIST_CHECKBOX_KEY } from '../constants/store';
 import { changeCartItemQuantity } from '../domain/cart';
-import { CartItemData } from '../types';
+import { CartItemData, CartPriceData } from '../types';
+import { PostCartItemRequestBody, PostOrdersRequestBody } from '../types/api';
 import { checkedListState } from './checkbox';
 import { currentServerState } from './server';
+import { getCartPriceInformation } from './utils';
 
 const cartListState = atom<CartItemData[]>({
   key: 'cartList',
@@ -67,18 +69,49 @@ const cartItemQuantityState = selectorFamily<number, number>({
     },
 });
 
-const cartListSubTotalState = selector({
-  key: 'cartListSubTotal',
+const checkedCartItemListState = selector({
+  key: 'checkedCartItemList',
   get: ({ get }) => {
     const cartList = get(cartListState);
-    const checkedCartItemList = get(checkedListState(CART_LIST_CHECKBOX_KEY));
+    const checkedCartItemIdList = get(checkedListState(CART_LIST_CHECKBOX_KEY));
 
-    const subTotal = cartList
-      .filter((cartItem) => checkedCartItemList.has(cartItem.id))
-      .reduce((acc, curr) => acc + curr.product.price * curr.quantity, 0);
+    const checkedCartItemList = cartList.filter((cartItem) =>
+      checkedCartItemIdList.has(cartItem.id)
+    );
 
-    return subTotal;
+    return checkedCartItemList;
   },
+});
+
+const cartListCheckedItemCostInformationState = selector({
+  key: 'cartListCheckedItemCostInformation',
+  get: ({ get }): PostOrdersRequestBody => {
+    const checkedCartItemIdList = get(checkedListState(CART_LIST_CHECKBOX_KEY));
+
+    const checkedCartItemList = get(checkedCartItemListState);
+    const costs = getCartPriceInformation(checkedCartItemList);
+
+    const costInformation = {
+      cartItemIds: [...checkedCartItemIdList],
+      ...costs,
+    };
+
+    return costInformation;
+  },
+});
+
+const cartListCheckedItemCostInformationFamily = atomFamily({
+  key: 'cartListCheckedItemCostInformationFamily',
+  default: selectorFamily({
+    key: 'cartListCheckedItemCostInformationFamily/Default',
+    get:
+      (key: keyof CartPriceData) =>
+      ({ get }) => {
+        const cartListCheckedItemCostInformation = get(cartListCheckedItemCostInformationState);
+        const value = cartListCheckedItemCostInformation[key];
+        return value > 0 ? value : 0;
+      },
+  }),
 });
 
 export {
@@ -87,5 +120,7 @@ export {
   cartItemIdState,
   cartListItemCountState,
   cartItemQuantityState,
-  cartListSubTotalState,
+  checkedCartItemListState,
+  cartListCheckedItemCostInformationState,
+  cartListCheckedItemCostInformationFamily,
 };

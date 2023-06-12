@@ -1,11 +1,15 @@
 import styled, { css } from 'styled-components';
 
 export interface TextProps {
-  size?: 'xSmall' | 'small' | 'medium' | 'large';
+  size?: 'xLarge' | 'xSmall' | 'small' | 'medium' | 'large';
 }
 
 const getSizeStyling = (size: Required<TextProps>['size']) => {
   const style = {
+    xLarge: css`
+      font-size: 20px;
+      line-height: 30px;
+    `,
     large: css`
       font-size: 18px;
       line-height: 28px;

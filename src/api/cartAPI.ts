@@ -1,49 +1,29 @@
-import { API_ENDPOINT, CART_FETCH_OPTION_HEADERS } from '../constants/api';
-import { CartItemData } from '../types';
-import { fetchAPI } from './fetchAPI';
+import { API_ENDPOINT } from '../constants/api';
+import { CartItemData, CartPriceData } from '../types';
+import { JsonAPI } from './fetchAPI';
 
 const getCartAPI = (baseUrl: string) => {
-  const getCartList = async (): Promise<CartItemData[]> => {
-    return await fetchAPI(`${baseUrl}${API_ENDPOINT.CART_ITEMS}`, {
-      method: 'GET',
-      headers: { ...CART_FETCH_OPTION_HEADERS },
+  const getCartList = (): Promise<CartItemData[]> =>
+    JsonAPI.get(`${baseUrl}${API_ENDPOINT.CART_ITEMS}`);
+
+  const postCartItem = (productId: number): Promise<Response> =>
+    JsonAPI.post(`${baseUrl}${API_ENDPOINT.CART_ITEMS}`, true, {
+      body: JSON.stringify({ productId }),
+    });
+
+  const patchCartItem = (cartItemId: number, quantity: number): Promise<Response> => {
+    return JsonAPI.patch(`${baseUrl}${API_ENDPOINT.CART_ITEMS}/${cartItemId}`, true, {
+      body: JSON.stringify({ quantity }),
     });
   };
 
-  const postCartItem = async (productId: number): Promise<Response> => {
-    const data = {
-      productId,
-    };
-    const jsonData = JSON.stringify(data);
+  const deleteCartItem = (cartItemId: number): Promise<Response> =>
+    JsonAPI.delete(`${baseUrl}${API_ENDPOINT.CART_ITEMS}/${cartItemId}`);
 
-    return await fetchAPI(`${baseUrl}${API_ENDPOINT.CART_ITEMS}`, {
-      method: 'POST',
-      headers: { ...CART_FETCH_OPTION_HEADERS },
-      body: jsonData,
-    });
-  };
+  const getCosts = async (): Promise<CartPriceData> =>
+    JsonAPI.get(`${baseUrl}${API_ENDPOINT.COSTS}`);
 
-  const patchCartItem = async (cartItemId: number, quantity: number): Promise<Response> => {
-    const data = {
-      quantity,
-    };
-    const jsonData = JSON.stringify(data);
-
-    return await fetchAPI(`${baseUrl}${API_ENDPOINT.CART_ITEMS}/${cartItemId}`, {
-      method: 'PATCH',
-      headers: { ...CART_FETCH_OPTION_HEADERS },
-      body: jsonData,
-    });
-  };
-
-  const deleteCartItem = async (cartItemId: number): Promise<Response> => {
-    return await fetchAPI(`${baseUrl}${API_ENDPOINT.CART_ITEMS}/${cartItemId}`, {
-      method: 'DELETE',
-      headers: { Authorization: CART_FETCH_OPTION_HEADERS.Authorization },
-    });
-  };
-
-  return { getCartList, postCartItem, patchCartItem, deleteCartItem };
+  return { getCartList, postCartItem, patchCartItem, deleteCartItem, getCosts };
 };
 
 export { getCartAPI };

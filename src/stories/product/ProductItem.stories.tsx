@@ -10,6 +10,8 @@ const meta = {
     id: 1,
     name: '치킨',
     price: 10000,
+    discountRate: 10,
+    discountedPrice: 9000,
     imageUrl: 'https://www.asiaa.co.kr/news/photo/202204/83451_94243_5547.png',
   },
 } satisfies Meta<typeof ProductItem>;

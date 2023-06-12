@@ -27,15 +27,4 @@ const CartItemPartialSelectDeleteButton = styled(Text)`
   }
 `;
 
-const VerticalLine = styled.div`
-  height: 16px;
-  margin-left: ${({ theme }) => theme.spacer.spacing3};
-  border-left: 1px solid ${({ theme }) => theme.color.gray2};
-`;
-
-export {
-  CartListHeaderContainer,
-  CartItemAllSelectText,
-  CartItemPartialSelectDeleteButton,
-  VerticalLine,
-};
+export { CartListHeaderContainer, CartItemAllSelectText, CartItemPartialSelectDeleteButton };
