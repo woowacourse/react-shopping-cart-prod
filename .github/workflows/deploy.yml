@@ -4,7 +4,7 @@ name: Deploy static content to Pages
 on:
   # 기본 브랜치에 대한 푸시 이벤트 발생 시 실행
   push:
-    branches: ['step1']
+    branches: ['step2']
 
   # Actions 탭에서 수동으로 워크플로우를 실행할 수 있도록 구성
   workflow_dispatch:
@@ -37,8 +37,12 @@ jobs:
           cache: 'npm'
       - name: Install dependencies
         run: yarn install
+
       - name: Build
-        run: yarn build
+        run: |
+          yarn build
+          cp ./dist/index.html ./dist/404.html
+
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact

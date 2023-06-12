@@ -3,10 +3,14 @@ import { createGlobalStyle } from 'styled-components';
 const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
-      'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    font-family: -apple-system,'Do Hyeon','Noto Sans KR', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    
+  }
+
+  main {
+    padding-top: 80px;
   }
 
   code {
@@ -32,14 +36,12 @@ const GlobalStyle = createGlobalStyle`
     cursor: pointer;
     transition: ${(props) => props.theme.transitions.default};
 
-    &:hover {
-      transform: ${({ theme }) => theme.effects.hoverScaleUp};
-    }
+
   }
 
   html,
   body {
-    font-family: sans-serif;
+
     margin: 0 auto;
     font-size: 62.5%;
 

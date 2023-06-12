@@ -1,19 +1,25 @@
-import * as S from './CartItemList.style';
-import { CartItemBox } from '@views/Cart/components/CartItemBox';
-import { CheckBox } from '@common/CheckBox';
-import { useCartReadOnly, useCheckCart } from '@views/Cart/recoil/cartState';
+import { CartItemBox } from "@views/Cart/components/CartItemBox";
+import { CheckBox } from "@common/CheckBox";
+import { useCheckCart } from "@views/Cart/hooks/useCart";
+
+import * as S from "./CartItemList.style";
+import empty from "@assets/empty.png";
 
 function CartItemList() {
-  const cart = useCartReadOnly();
-
-  const { isAllChecked, checkedCount, toggleAllCartItem, deleteCheckedItems } = useCheckCart();
+  const {
+    cart,
+    toggleAllCartItem,
+    deleteCheckedItems,
+    checkedCartCount,
+    isAllChecked,
+  } = useCheckCart();
 
   const cartLength = cart.length;
 
   if (cartLength === 0) {
     return (
       <S.CartWrapper>
-        <span style={{ textAlign: 'center', fontSize: '30px', margin: 'auto' }}>텅</span>
+        <S.CartImage src={empty} />
       </S.CartWrapper>
     );
   }
@@ -31,12 +37,12 @@ function CartItemList() {
         <CheckBox
           type="checkbox"
           checked={isAllChecked}
-          onChange={() => {
-            toggleAllCartItem();
-          }}
+          onChange={toggleAllCartItem}
         />
-        <S.CheckAllSpan>{`전체 선택 (${checkedCount} / ${cartLength})`}</S.CheckAllSpan>
-        <S.DeleteCheckBox onClick={deleteCheckedItems}>선택삭제</S.DeleteCheckBox>
+        <S.CheckAllSpan>{`전체 선택 (${checkedCartCount} / ${cartLength})`}</S.CheckAllSpan>
+        <S.DeleteCheckBox onClick={deleteCheckedItems}>
+          선택삭제
+        </S.DeleteCheckBox>
       </S.CartItemListContainer>
     </S.CartWrapper>
   );

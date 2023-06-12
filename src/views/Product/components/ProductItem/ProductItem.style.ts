@@ -2,7 +2,8 @@ import styled from 'styled-components';
 
 export const ProductItemBox = styled.div`
   /*  height: 350px; */
-  padding: 8px;
+  width: 80%;
+  margin: 0 auto;
 `;
 
 export const ProductItemImageBox = styled.div`
@@ -10,17 +11,12 @@ export const ProductItemImageBox = styled.div`
   justify-content: center;
   position: relative;
   transition: ${(props) => props.theme.transitions.default};
-
-  &:hover {
-    transform: ${({ theme }) => theme.effects.hoverScale};
-  }
 `;
 
 export const ProductItemImage = styled.img`
-  width: 90%;
+  width: 100%;
   aspect-ratio: 1/1;
-  border-radius: 8px;
-  box-shadow: ${(props) => props.theme.shadows.large};
+  border-radius: 4px;
 
   object-fit: cover;
 `;
@@ -39,14 +35,18 @@ export const ProductName = styled.div`
   margin: 0.5rem 0;
   width: 100%;
 
+  color: ${({ theme }) => theme.primaryColor};
+
   /* TODO: 변수표현해볼것 */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 `;
 export const ProductPrice = styled.div`
-  font-size: 2rem;
+  font-size: 2.4rem;
   margin: 0.5rem 0;
+
+  color: ${({ theme }) => theme.darkColor};
 `;
 
 export const ProductInfo = styled.div`
@@ -55,3 +55,10 @@ export const ProductInfo = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
 `;
+
+export const CartStepperWrapper = styled.div`
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+`;
+

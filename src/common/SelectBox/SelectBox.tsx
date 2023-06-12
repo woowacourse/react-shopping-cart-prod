@@ -23,7 +23,15 @@ function SelectBox({ options, ...restProps }: SelectBoxProps) {
 
 const Select = styled.select`
   padding: 0.4rem 0.8rem;
-  border: 1px solid black;
+  border: none;
+  border-radius: 4px;
+  background-color: transparent;
+
+  color: ${({ theme }) => theme.lightColor};
+  font-weight: 600;
+  font-size: 1.4rem;
+  border: ${({ theme }) => theme.secondaryColor} 1px solid;
+
   text-align: center;
 `;
 

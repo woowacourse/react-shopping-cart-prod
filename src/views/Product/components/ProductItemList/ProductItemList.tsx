@@ -1,9 +1,9 @@
-import { useProductListReadOnly } from '@views/Product/recoil/productListState';
-import { Column, Row } from '@styles/style';
-import { ProductItem } from '@views/Product/components/ProductItem';
+import { ProductItem } from "@views/Product/components/ProductItem";
+import { useProductList } from "@views/Product/recoil/productListState";
+import { Column, Row } from "@styles/style";
 
 function ProductList() {
-  const productList = useProductListReadOnly();
+  const productList = useProductList();
 
   return (
     <Row>
